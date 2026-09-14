@@ -34,38 +34,38 @@ export const lightTheme = {
   breakpoints,
 };
 
-export const darkTheme = {
-  mode: "dark",
-  background: {
-    primary: "#141518",
-    secondary: "#2E9B57",
-    brand: "#195530",
-    brandDark: "#195530",
-  },
-  icon: {
-    primary: "#E9EAED",
-    secondary: "#9EA4B1",
-    brand: "#2A8D4F",
-    brandInvert: "#E9EAED",
-  },
-  text: {
-    primary: "#E9EAED",
-    secondary: "#9EA4B1",
-    tertiary: "#6C7485",
-    quaternary: "#474C57",
-    brand: "#2A8D4F",
-    brandLight: "#9FD1B2",
-    brandInvert: "#E9EAED",
-  },
-  surface: { primary: "#414245", secondary: "#414245", brand: "#2A8D4F" },
-  line: {
-    brand: "#2A8D4F",
-    brandInvert: "#E9EAED",
-    primary: "#6C7485",
-    secondary: "#474C57",
-  },
-  button: { primary: "#222429", brandInvert: "#FFFFFF", disabled: "#474C57" },
-  breakpoints,
-};
+// export const darkTheme = {
+//   mode: "dark",
+//   background: {
+//     primary: "#141518",
+//     secondary: "#2E9B57",
+//     brand: "#195530",
+//     brandDark: "#195530",
+//   },
+//   icon: {
+//     primary: "#E9EAED",
+//     secondary: "#9EA4B1",
+//     brand: "#2A8D4F",
+//     brandInvert: "#E9EAED",
+//   },
+//   text: {
+//     primary: "#E9EAED",
+//     secondary: "#9EA4B1",
+//     tertiary: "#6C7485",
+//     quaternary: "#474C57",
+//     brand: "#2A8D4F",
+//     brandLight: "#9FD1B2",
+//     brandInvert: "#E9EAED",
+//   },
+//   surface: { primary: "#414245", secondary: "#414245", brand: "#2A8D4F" },
+//   line: {
+//     brand: "#2A8D4F",
+//     brandInvert: "#E9EAED",
+//     primary: "#6C7485",
+//     secondary: "#474C57",
+//   },
+//   button: { primary: "#222429", brandInvert: "#FFFFFF", disabled: "#474C57" },
+//   breakpoints,
+// };
 
 export default lightTheme;

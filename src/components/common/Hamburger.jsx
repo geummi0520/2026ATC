@@ -95,5 +95,5 @@ const Group = styled.div`
   border-top: 1px solid currentColor;
   &:first-child { border-top: 0; }
 `;
-const MainLink = styled(Link)`display: block; font-family: Georgia, serif; font-size: clamp(3.2rem, 5vw, 4rem);`;
+const MainLink = styled(Link)`display: block; font-size: clamp(3.2rem, 5vw, 4rem);`;
 const SubLink = styled(Link)`display: block; width: fit-content; margin-top: 2.4rem; font-size: clamp(2.2rem, 3.5vw, 3rem); text-decoration: underline;`;
