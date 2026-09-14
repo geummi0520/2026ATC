@@ -1,0 +1,69 @@
+name: Pull Request Check
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - staging
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  branch-policy:
+    name: Branch Policy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate branch flow
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          case "${BASE_BRANCH}:${HEAD_BRANCH}" in
+            dev:feat/*|dev:fix/*|dev:chore/*|dev:docs/*|dev:ci/*|dev:refactor/*)
+              echo "Allowed: ${HEAD_BRANCH} -> ${BASE_BRANCH}"
+              ;;
+            staging:dev)
+              echo "Allowed: dev -> staging"
+              ;;
+            main:staging)
+              echo "Allowed: staging -> main"
+              ;;
+            *)
+              echo "Invalid branch flow: ${HEAD_BRANCH} -> ${BASE_BRANCH}"
+              echo "Allowed flows:"
+              echo "  feat/*, fix/*, chore/*, docs/*, ci/*, refactor/* -> dev"
+              echo "  dev -> staging"
+              echo "  staging -> main"
+              exit 1
+              ;;
+          esac
+
+  quality:
+    name: Lint and Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run production build
+        run: npm run build
