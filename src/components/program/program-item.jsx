@@ -13,46 +13,79 @@ export default function ProgramItem({ title, imgUrl, date, site, description }) 
     };
 
     return (
-        <Container onClick={handleToggle} $isOpen={isOpen}>
-            <ImageContainer
-                src={imgUrl}
-                alt="program image"
-                width={"164px"}
-            />
+        <Wrapper>
 
-            <InfoContainer>
-                <Title>{title}</Title>
-                {isOpen && (
-                    <DescriptionWrapper>
+            <Container onClick={handleToggle} $isOpen={isOpen}>
+                <GreenBackground $isOpen={isOpen} />
+
+                <ProgramImg
+                    src={imgUrl}
+                    alt="program image"
+                    width={"164px"}
+                />
+
+                <ProgramInfo>
+                    <Title>{title}</Title>
+                    {isOpen && (
                         <Description>
                             <span>{description}</span>
                         </Description>
-                    </DescriptionWrapper>
-                )}
-                <EventInfo>
-                    <Date>{date}</Date>
-                    <Site>{site}</Site>
-                </EventInfo>
+                    )}
+                    <EventInfo>
+                        <Date>{date}</Date>
+                        <Site>{site}</Site>
+                    </EventInfo>
 
-            </InfoContainer>
+                </ProgramInfo>
 
-        </Container>
+            </Container>
+
+        </Wrapper>
     );
 }
 
+const Wrapper = styled.div`
+
+position: relative; 
+
+width:100%;
+
+`
 const Container = styled.div`
+position: relative;
+
+width: 100%;
+z-index: 10;
+
 display: flex;
 align-items: flex-start;
+
+background: transparent;
+z-index:1;
+
+`;
+
+const GreenBackground = styled.div`
+position: absolute;
+top: 0;
+left: 0;
+
+width:${({ $isOpen }) => ($isOpen ? "100%" : "364px")};
+height: 100%;
+
 transition: all 0.6s ease-in-out;
 &:hover {
         background: var(--surface-brand, rgba(46, 155, 87, 0.10));
-
-
     }
 background: ${({ $isOpen }) => ($isOpen ? "var(--surface-brand, rgba(46, 155, 87, 0.10))" : "transparent")};
-width:${({ $isOpen }) => ($isOpen ? "100%" : "364px")};
+border-bottom: 1px solid var(--line-primary, #818898);
+
+
+z-index:0;
 `;
-const ImageContainer = styled.img`
+
+
+const ProgramImg = styled.img`
 display: flex;
 width: 164px;
 height: 218.667px;
@@ -65,10 +98,14 @@ border-top: 1px solid var(--background-brand-dark, #216E3E);
 border-right: 1px solid var(--background-brand-dark, #216E3E);
 border-left: 1px solid var(--background-brand-dark, #216E3E);
 background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+z-index:1;
 `;
 
 
-const InfoContainer = styled.div`
+const ProgramInfo = styled.div`
+
+width:100%;
+
 display: flex;
 padding: 20px;
 flex-direction: column;
@@ -76,14 +113,16 @@ align-items: flex-start;
 gap: 20px;
 align-self: stretch;
 
-border-bottom: 1px solid var(--line-primary, #818898);
+// width:160px;
+
 box-sizing: border-box;
 flex: 1;
 min-width: 0;
+
+z-index:1;
 `;
 
 const Title = styled.div`
-width: 160px;
 color: var(--text-primary, #222429);
 
 font-family: MaruBuri;
@@ -91,6 +130,8 @@ font-size: var(--Font-size-text-lg, 18px);
 font-style: normal;
 font-weight: 400;
 line-height: 180%; 
+
+z-index:1;
 `;
 const EventInfo = styled.div`
 display: flex;
@@ -100,6 +141,8 @@ flex-direction: column;
 justify-content: center;
 align-items: flex-start;
 gap: 10px;
+
+z-index:1;
 `;
 const Date = styled.span`
 color: var(--text-primary, #222429);
@@ -121,10 +164,7 @@ font-style: normal;
 font-weight: 400;
 line-height: 180%; /* 21.6px */
 `;
-const DescriptionWrapper = styled.div`
-width: 100%;
-overflow:hidden;
-`;
+
 
 const Description = styled.div`
 align-self:stretch;
@@ -157,4 +197,6 @@ animation: slideUpFade 3.0s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
       transform: translateY(0);    /* 제자리로 부드럽게 안착 */
     }
   }
+
+  z-index:1;
 `;
