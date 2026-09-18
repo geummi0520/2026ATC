@@ -4,13 +4,15 @@ import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function ProgramItem({ title, imgUrl, date, site, description }) {
-    // 아이템의 열림/닫힘 상태관리 변수
-    const [isOpen, setIsOpen] = useState(false);
+export default function ProgramItem({ title, imgUrl, date, site, description, idx, isOpen, handleToggle }) {
 
-    const handleToggle = () => {
-        setIsOpen((prev) => !prev);
-    };
+    // 아이템의 열림/닫힘 상태관리 변수
+    // const [isOpen, setIsOpen] = useState(false);
+
+    // 컨테이너 클릭시 아이템의 토글 상태를 변경할 함수
+    // const handleToggle = () => {
+    //     setIsOpen((prev) => !prev);
+    // };
 
     return (
         <Wrapper>
@@ -18,19 +20,24 @@ export default function ProgramItem({ title, imgUrl, date, site, description }) 
             <Container onClick={handleToggle} $isOpen={isOpen}>
                 <GreenBackground $isOpen={isOpen} />
 
+                {/* 좌측 프로그램 이미지 */}
                 <ProgramImg
                     src={imgUrl}
                     alt="program image"
                     width={"164px"}
                 />
-
+                {/* 우측 프로그램 정보 */}
                 <ProgramInfo>
+                    {/* 제목 */}
                     <Title>{title}</Title>
+
+                    {/* 토글 열렸을때만 보이는 설명글 */}
                     {isOpen && (
                         <Description>
                             <span>{description}</span>
                         </Description>
                     )}
+                    {/* 날짜와 장소 */}
                     <EventInfo>
                         <Date>{date}</Date>
                         <Site>{site}</Site>
@@ -50,19 +57,6 @@ position: relative;
 
 width:100%;
 
-`
-const Container = styled.div`
-position: relative;
-
-width: 100%;
-z-index: 10;
-
-display: flex;
-align-items: flex-start;
-
-background: transparent;
-z-index:1;
-
 `;
 
 const GreenBackground = styled.div`
@@ -80,9 +74,29 @@ transition: all 0.6s ease-in-out;
 background: ${({ $isOpen }) => ($isOpen ? "var(--surface-brand, rgba(46, 155, 87, 0.10))" : "transparent")};
 border-bottom: 1px solid var(--line-primary, #818898);
 
-
+// 배경이기 때문에 뒤로 보내기.
 z-index:0;
 `;
+const Container = styled.div`
+position: relative;
+
+width: 100%;
+z-index: 10;
+
+display: flex;
+align-items: flex-start;
+
+background: transparent;
+// z-index:1;
+
+// GreenBackground가 뒤로 보내져서 호버가 안되기 때문에 Container를 기준으로 호버시 배경색 변경되게.
+&:hover ${GreenBackground} {
+        background: var(--surface-brand, rgba(46, 155, 87, 0.10));
+    }
+
+`;
+
+
 
 
 const ProgramImg = styled.img`
@@ -111,9 +125,8 @@ padding: 20px;
 flex-direction: column;
 align-items: flex-start;
 gap: 20px;
-align-self: stretch;
+align-self: stretch; // 아래로 늘리기
 
-// width:160px;
 
 box-sizing: border-box;
 flex: 1;
