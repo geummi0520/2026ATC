@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import { programs } from "@/data/program";
+import styled, { keyframes } from "styled-components";
 import { useState } from "react";
+import { media } from "@/styles/media";
+
 
 
 export default function ProgramModal({
@@ -8,7 +9,15 @@ export default function ProgramModal({
     openIdx,
     closeModal,
     n_programs,
+    nextProgram,
+    prevProgram
 }) {
+    const [touch, setTouch] = useState({
+        start: 0, // 터치 시작 위치
+        end: 0, // 터치 끝난 위치
+    })
+
+
 
 
     return (
@@ -16,7 +25,28 @@ export default function ProgramModal({
         <BlurContainer>
             <ModalFrame>
                 <ModalContainer>
-                    <InfoContainer>
+                    <InfoContainer
+                        key={openIdx}
+                        onTouchStart={(e) => {
+                            setTouch({
+                                ...touch,
+                                start: e.touches[0].pageX, // 첫번째 터치의 X값
+                            });
+                        }}
+                        onTouchEnd={(e) => {
+                            const end = e.changedTouches[0].pageX;
+                            if (touch.start >= end && openIdx < n_programs - 1) {
+                                nextProgram();
+                            }
+                            else if (touch.start < end && openIdx > 0) {
+                                prevProgram();
+                            }
+                            setTouch({
+                                ...touch,
+                                end,
+                            })
+                        }}
+                    >
                         <ModalImg
                             src={imgUrl}
                             alt="modal image"
@@ -62,15 +92,24 @@ export default function ProgramModal({
 
 
 const BlurContainer = styled.div`
-  position: fixed;
-    top:0px;
-    left:0px;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(20, 21, 24, 0.50);
-  z-index: 99;
+display:none;
+position: fixed;
+top:0px;
+left:0px;
+width: 100vw;
+height: 100vh;
+background: rgba(20, 21, 24, 0.50);
+z-index: 99;
 
 //   padding:50px;
+
+${media.mobile`
+    display: flex;
+    align-items:center;
+    justify-content:center;
+`}
+
+
 `;
 const ModalFrame = styled.div`
 display: flex;
@@ -78,11 +117,6 @@ display: flex;
 flex-direction: column;
 align-items: center;
 gap: 10px;
-
-// position: absolute;
-// right: 42px;
-// bottom: 71px;
-
 
 `
 const SlideIndicator = styled.div`
@@ -92,6 +126,7 @@ justify-content: center;
 align-items: flex-start;
 gap: 10px;
 flex: 1 0 0;
+padding:10px;
 `;
 const Dot = styled.div`
 width: 16px;
@@ -120,9 +155,19 @@ justify-content: space-between;
 align-items: center;
 flex-shrink: 0;
 gap:30px;
-// background: var(--background-primary, #F1F2F4);
-background:lightgray;
+background: var(--background-primary, #F1F2F4);
 `;
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0.6;
+    }
+
+    to {
+        opacity: 1;
+    }
+`;
+
 const InfoContainer = styled.div`
 display: flex;
 // width: 315px;
@@ -130,7 +175,10 @@ flex-direction: column;
 align-items: flex-start;
 gap: 10px;
 flex: 1 0 0;
+
+animation: ${fadeIn} 0.4s ease;
 `
+
 const ExitButton = styled.button`
 display: flex;
 padding: 6px 24px;
@@ -162,9 +210,8 @@ font-weight: 700;
 line-height: 180%; /* 25.2px */
 `;
 const ModalImg = styled.img`
-// 이미지가 너무 커서 밑에 슬라이드 인디케이터가 안보여서 
-// 높이 잠깐 -100px 해두었습니다 ㅠㅠ
-height: 328px;
+
+height: 428px; 
 width:auto;
 align-self: stretch;
     `;

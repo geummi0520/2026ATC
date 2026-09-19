@@ -14,6 +14,8 @@ export default function ProgramPage() {
   // 현재 토글이 열린 아이템의 인덱스를 저장
   const [openIdx, setOpenIdx] = useState(-1);
 
+
+
   // 클릭시 아이템의 토글 변경 함수
   const handleToggle = (idx) => {
     // 열린 토글 클릭 -> 토글 닫기
@@ -43,16 +45,20 @@ export default function ProgramPage() {
             handleToggle={() => handleToggle(idx)}
           />
         ))}
-
-
       </ProgramList>
-      {(openIdx >= 0) && <Modal
-        program={programs[openIdx]}
-        openIdx={openIdx}
-        closeModal={() => { setOpenIdx(-1) }}
-        n_programs={programs.length}
 
-      />}
+      {/* 모바일에서만 띄울 모달 */}
+      {(openIdx >= 0) &&
+        <Modal
+          program={programs[openIdx]}
+          openIdx={openIdx}
+          closeModal={() => { setOpenIdx(-1) }}
+          nextProgram={() => { setOpenIdx(openIdx + 1) }}
+          prevProgram={() => { setOpenIdx(openIdx - 1) }}
+          n_programs={programs.length}
+
+        />
+      }
 
     </Container>
   );
