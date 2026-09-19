@@ -2,8 +2,11 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { programs } from "@/data/program";
+import { media } from "@/styles/media";
+
 
 import ProgramItem from "@/components/program/program-item";
+import Modal from "@/components/program/modal";
 
 
 export default function ProgramPage() {
@@ -43,6 +46,14 @@ export default function ProgramPage() {
 
 
       </ProgramList>
+      {(openIdx >= 0) && <Modal
+        program={programs[openIdx]}
+        openIdx={openIdx}
+        closeModal={() => { setOpenIdx(-1) }}
+        n_programs={programs.length}
+
+      />}
+
     </Container>
   );
 }
@@ -68,6 +79,16 @@ const PageName = styled.div`
   font-weight: 700;
   line-height: normal;
   letter-spacing: -1.44px;
+
+${media.mobile`
+color: var(--text-primary, #222429);
+
+font-family: MaruBuri;
+font-size: var(--display-xs, 30px);
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+  `}
 `;
 const ProgramList = styled.div`
 display: flex;

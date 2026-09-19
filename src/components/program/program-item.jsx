@@ -133,6 +133,10 @@ width:100%;
 
 display: flex;
 padding: 20px;
+${media.mobile`
+    padding:10px;
+    gap:8px;
+`}
 flex-direction: column;
 align-items: flex-start;
 gap: 20px;
@@ -155,6 +159,12 @@ font-style: normal;
 font-weight: 400;
 line-height: 180%; 
 
+${media.mobile`
+
+font-size: var(--Font-size-text-md, 14px);
+font-weight: 700;
+`}
+
 z-index:1;
 `;
 const EventInfo = styled.div`
@@ -167,6 +177,8 @@ align-items: flex-start;
 gap: 10px;
 
 z-index:1;
+
+
 `;
 const Date = styled.span`
 color: var(--text-primary, #222429);
@@ -176,6 +188,10 @@ font-size: var(--Font-size-text-md, 14px);
 font-style: normal;
 font-weight: 400;
 line-height: 180%; 
+
+${media.mobile`
+font-size: var(--Font-size-text-sm, 12px);
+`}
 `;
 
 const Site = styled.span`
@@ -187,6 +203,7 @@ font-size: var(--Font-size-text-sm, 12px);
 font-style: normal;
 font-weight: 400;
 line-height: 180%; /* 21.6px */
+
 `;
 
 
