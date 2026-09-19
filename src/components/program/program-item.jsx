@@ -4,6 +4,8 @@ import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import { useState } from "react";
 
+import { media } from "@/styles/media";
+
 export default function ProgramItem({ title, imgUrl, date, site, description, idx, isOpen, handleToggle }) {
 
     // 아이템의 열림/닫힘 상태관리 변수
@@ -76,6 +78,11 @@ border-bottom: 1px solid var(--line-primary, #818898);
 
 // 배경이기 때문에 뒤로 보내기.
 z-index:0;
+
+${media.mobile`
+    width:100%;
+`}
+
 `;
 const Container = styled.div`
 position: relative;
@@ -113,6 +120,10 @@ border-right: 1px solid var(--background-brand-dark, #216E3E);
 border-left: 1px solid var(--background-brand-dark, #216E3E);
 background: url(<path-to-image>) lightgray 50% / cover no-repeat;
 z-index:1;
+
+${media.mobile`
+    display:none;
+`}
 `;
 
 
@@ -212,4 +223,8 @@ animation: slideUpFade 3.0s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
   }
 
   z-index:1;
+
+  ${media.mobile`
+    display:none;
+`}
 `;
