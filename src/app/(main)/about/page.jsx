@@ -1,5 +1,48 @@
 import styled from "styled-components";
 import { media } from "@/styles/media";
+import Link from 'next/link';
+
+import {
+  TeaserWrapper,
+  TeaserCreditContainer,
+  PaddingBox,
+  TeaserCredit,
+  CreditBox,
+  CreditLine,
+  CreditRole,
+  CreditName,
+  TeaserFilm,
+  ContentContainer,
+  LeftImg,
+  RightBox,
+  Topic,
+  Description,
+  Container,
+  Frame1,
+  Frame2,
+  Title,
+  SubTitle,
+  PosterMain,
+  Banner,
+  StaffWrapper,
+  StaffContainer,
+  StaffHeader,
+  StyledLink,
+  StaffCredit,
+  StyledTeamItem,
+  TeamName,
+  TeamOneList,
+  TeamOne,
+  StaffList2Row,
+  StaffList,
+  StampImg,
+  MapWrapper,
+  MapBox,
+  StationInfo,
+  InfoBox,
+  InfoTitle,
+  Info
+} from "./style";
 
 const overview_decription = `서강대학교 Art & Technology 학과에서 《울퉁불퉁하게 말아리》를 주제로 제14회 Art & Technology Conference (ATC) 2025를 개최합니다.
 
@@ -25,81 +68,15 @@ const Topic_desc = ` 레시피를 따르는 일은 제작자가 설계한 경험
 
  “레시피 바꾸지 말 것” 뒤에 무엇을 놓을지는 정해져 있지 않다. *은 작가와 관람객이 직접 채워나간다. 이곳에서는 언제든 당신의 새로운 레시피를 만들어도 좋다. 그 과정에서 또다른 감각과 취향을 발견할 지도 모르니까. 이 전시와 함께하는 모두가 아이처럼 세계를 넓혀가는 기억을 되찾을 수 있기를 바란다. 순수하고 즐겁고 재미있게!
  `;
+const station_info = `대흥역 1번 출구 · 540m · 도보 10분 (후문 인접)
+                서강대역 1번 출구 · 880m · 도보 18분
+                이대역 5번 출구 · 900m · 도보 14분
+                신촌역 6번 출구 · 960m · 도보 18분
+                `;
 
-function Content({ children, title, topic }) {
-  return (
-    <ContentContainer>
-      <LeftImg
-        src="/images/about/left-img.png"
-        alt="left-img"
-      />
-      <RightBox>
-        <Title>{title}</Title>
-        {topic && <Topic>{topic}</Topic>}
-        <Description>{children}</Description>
-      </RightBox>
-    </ContentContainer>
-  );
-}
-const ContentContainer = styled.div`
-display:flex;
-width:100%;
-gap:10px;
-
-
+const parking_info = `주차 어쩌구 저쩌구 상동 호수공원 어떻게 가요 
+오케이 감사드리고 달달달달
 `;
-const LeftImg = styled.img`
-flex: 1;
-
-@media (max-width: 1124px) {
-// 테블릿 + 모바일
-  display:none;
-}
-`;
-const RightBox = styled.div`
-flex:2;
-
-display:flex;
-align-items:flex-start;
-flex-direction:column;
-
-padding-top:80px;
-padding-bottom:80px;
-padding-right:40px;
-gap:40px;
-
-@media (min-width: 768px) and (max-width: 1124px) {
-  padding:80px 20px;
-}
-@media (max-width: 768px) {
-  gap:20px;
-  padding:0px;
-}
-
-`;
-const Topic = styled.h3`
-margin:0px;
-color: var(--text-primary, #E9EAED);
-  font-family: MaruBuri;
-  font-size: var(--display-lg, 18px);
-  font-style: normal;
-  font-weight: 700;
- line-height: 180%;
-  letter-spacing: 0;
-`
-const Description = styled.div`
-  width:100%;
-  color: var(--text-primary, #E9EAED);
-  font-family: MaruBuri;
-  font-size: var(--display-lg, 14px);
-  font-style: normal;
-  font-weight: 400;
- line-height: 180%;
-  letter-spacing: 0;
-
-  white-space: pre-line;
-`;
-
 export default function AboutPage() {
   return (
     <Container>
@@ -120,102 +97,170 @@ export default function AboutPage() {
       />
       <Content title={"주제문"} topic="레시피 바꾸지 말것*">{Topic_desc}</Content>
       <Content title={"축사"}>{overview_decription}</Content>
+      <TeaserWrapper>
+        <TeaserCreditContainer>
+          <PaddingBox />
+          <TeaserCredit>
+            <Title>Teaser Film</Title>
+            <CreditBox>
+              <CreditLine>
+                <CreditRole>감독</CreditRole>
+                <CreditName>김현진</CreditName>
+              </CreditLine>
+              <CreditLine>
+                <CreditRole>감독</CreditRole>
+                <CreditName>김현진</CreditName>
+                <CreditName>김현진</CreditName>
+                <CreditName>김현진</CreditName>
+              </CreditLine>
+              <CreditLine>
+                <CreditRole>감독</CreditRole>
+                <CreditName>김현진</CreditName>
+                <CreditName>김현진</CreditName>
+                <CreditName>김현진</CreditName>
+              </CreditLine>
+            </CreditBox>
+          </TeaserCredit>
+        </TeaserCreditContainer>
+        <TeaserFilm>
+          <img
+            src="/images/about/TeaserFilm_example.png"
+            alt="teaser-film"
+            width="100%"
+          />
+        </TeaserFilm>
+      </TeaserWrapper>
+      <StaffWrapper>
+        <PaddingBox></PaddingBox>
+        <StaffContainer>
+          <StaffHeader>
+            <Title>Staff Credit</Title>
+            <StyledLink
+              href="./archive/staff"
+            >
+              스태프 크레딧 바로가기
+              <img
+                src="/images/about/arrow-button.png"
+                alt="arrow-button"
+              // height="19px"
+              />
+            </StyledLink>
+          </StaffHeader>
+          <StaffCredit>
+            <TeamItem
+              teamName="Creative Director"
+              teamOneList={["곽민서",]}
+            />
+            <StaffList2Row>
+              <StaffList>
+                <TeamItem
+                  teamName="전시팀"
+                  teamOneList={["김시윤", "김민서", "김서인", "김수민", "신지훈", "진수한"]}
+                />
+                <TeamItem
+                  teamName="대외협력팀"
+                  teamOneList={["김광록", "김가일", "노수현", "류선우"]}
+                />
+                <TeamItem
+                  teamName="디자인팀"
+                  teamOneList={["이현서", "김다은", "박서연", "손민희", "이예은"]}
+                />
+                <TeamItem
+                  teamName="아카이빙팀"
+                  teamOneList={["신재원", "박지민", "오유빈", "오준명", "이세민"]}
+                />
+              </StaffList>
+              <StaffList>
+                <TeamItem
+                  teamName="웹팀"
+                  teamOneList={["문금미", "이연재", "임지은"]}
+                />
+
+                <TeamItem
+                  teamName="콘텐츠팀"
+                  teamOneList={["허준하", "김한별", "박민제", "이윤선"]}
+                />
+                <TeamItem
+                  teamName="감각제작팀"
+                  teamOneList={["이다은", "노진서", "박민형", "설희윤", "이유준", "진예준", "천성하",]}
+                />
+              </StaffList>
+            </StaffList2Row>
+          </StaffCredit>
+
+        </StaffContainer>
+      </StaffWrapper>
+      <StampImg
+        src="/images/about/stamp-img.png"
+        alt="stamp"
+        width="100%"
+      />
+      <MapWrapper>
+        <Title>오시는 길</Title>
+        <span>서강대학교 캠퍼스 지도</span>
+        <MapBox>
+          <img
+            src="/images/about/map.png"
+            alt="map-image"
+            width="100%"
+          />
+          <StationInfo>
+            <InfoBox>
+              <InfoTitle>
+                지하철역 정보
+              </InfoTitle>
+              <Info>
+                {station_info}
+              </Info>
+            </InfoBox>
+            <InfoBox>
+              <InfoTitle>
+                주차
+              </InfoTitle>
+              <Info>
+                {parking_info}
+              </Info>
+            </InfoBox>
+          </StationInfo>
+        </MapBox>
+      </MapWrapper>
     </Container>
   );
 }
 
-const Container = styled.div`
-width:100%;
-
-display:flex;
-flex-direction:column;
-align-items:center;
-
-// 태블릿
-@media (min-width: 768px) and (max-width: 1124px) {
-  gap:10px;
+function TeamItem({ teamName, teamOneList }) {
+  return (
+    <StyledTeamItem
+      $isCd={teamName == "Creative Director"}
+    >
+      <TeamName>
+        {teamName}
+      </TeamName>
+      <TeamOneList>
+        {
+          teamOneList.map((member, index) => (
+            <TeamOne key={index}>
+              {member}
+            </TeamOne>
+          ))
+        }
+      </TeamOneList>
+    </StyledTeamItem>
+  );
 }
-// 모바일
-@media (max-width: 768px) {
-  padding:20px 10px;
-  gap:60px;
+
+function Content({ children, title, topic }) {
+  return (
+    <ContentContainer>
+      <LeftImg
+        src="/images/about/left-img.png"
+        alt="left-img"
+      />
+      <RightBox>
+        <Title>{title}</Title>
+        {topic && <Topic>{topic}</Topic>}
+        <Description>{children}</Description>
+      </RightBox>
+    </ContentContainer>
+  );
 }
-
-`;
-
-const Frame1 = styled.div`
-width:100%;
-
-display:flex;
-flex-direction:column;
-align-items:center;
-
-padding: 60px 0px; 
-gap:60px;
-
-@media (max-width:768px) {
-  padding:20px 0px;
-  gap:40px;
-}
-`
-const Frame2 = styled.div`
-
-display:flex;
-flex-direction:column;
-align-items:center;
-
-gap:10px;
-
-@media (max-width:768px) {
-gap:8px;
-}
-`
-const Title = styled.h2`
-font-family: MaruBuri;
-  font-weight: 700;
-  font-style: normal;
-  font-size: var(--display-lg, 24px);
-  line-height: 100%;
-  letter-spacing: 0;
-  text-align: center;
-
-  color: var(--text-primary, #E9EAED);
-
-  margin:0px;
-
-  @media (max-width:768px){
-    font-size: var(--display-lg, 18px);
-    line-height: 180%;
-  }
-`;
-const SubTitle = styled.h3`
-  font-family: MaruBuri;
-  font-weight: 700;
-  font-style: normal;
-  font-size: var(--display-lg, 20px);
-  line-height: 100%;
-  letter-spacing: 0;
-  text-align: center;
-
-  color: var(--text-primary, #E9EAED);
-
-  margin:0px;
-  @media (max-width:768px){
-    font-size: var(--display-lg, 12px);
-    line-height: 180%;
-  }
-`
-const PosterMain = styled.img`
-width:400px;
-
-
-@media (max-width: 768px) {
-  width:100%;
-}
-`
-const Banner = styled.img`
-width:100%;
-@media (max-width:768px) {
-  display:none;
-}
-`
