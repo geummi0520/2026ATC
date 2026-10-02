@@ -6,86 +6,76 @@ import { useState } from "react";
 
 import { media } from "@/styles/media";
 
-export default function ProgramItem({ title, imgUrl, date, site, description, idx, isOpen, handleToggle }) {
-
-    // 아이템의 열림/닫힘 상태관리 변수
-    // const [isOpen, setIsOpen] = useState(false);
-
-    // 컨테이너 클릭시 아이템의 토글 상태를 변경할 함수
-    // const handleToggle = () => {
-    //     setIsOpen((prev) => !prev);
-    // };
+export default function ProgramItem({ title, imgUrl, dates, site, description, idx, isOpen, handleToggle }) {
 
     return (
-        <Wrapper>
 
-            <Container onClick={handleToggle} $isOpen={isOpen}>
-                <GreenBackground $isOpen={isOpen} />
+        <Container onClick={handleToggle} $isOpen={isOpen}>
 
-                {/* 좌측 프로그램 이미지 */}
-                <ProgramImg
-                    src={imgUrl}
-                    alt="program image"
-                    width={"164px"}
-                />
-                {/* 우측 프로그램 정보 */}
-                <ProgramInfo>
-                    {/* 제목 */}
-                    <Title>{title}</Title>
-
-                    {/* 토글 열렸을때만 보이는 설명글 */}
+            {/* 좌측 프로그램 이미지 */}
+            <ProgramImg
+                src={imgUrl}
+                alt="program image"
+                width={"164px"}
+                $desktop
+            />
+            {/* 우측 프로그램 정보 */}
+            <ProgramInfo>
+                {/* 제목 */}
+                <Title>{title}</Title>
+                {/* 테블릿에서 토글 열었을 때 보이는 이미지 */}
+                <ContentContainer>
                     {isOpen && (
-                        <Description>
-                            <span>{description}</span>
-                        </Description>
+                        <ProgramImg
+                            src={imgUrl}
+                            alt="tablet program image"
+                            width={"164px"}
+                            $tablet
+                        />
+
                     )}
-                    {/* 날짜와 장소 */}
-                    <EventInfo>
-                        <Date>{date}</Date>
-                        <Site>{site}</Site>
-                    </EventInfo>
+                    <InfoBox>
+                        {/* 토글 열렸을때만 보이는 설명글 */}
+                        {isOpen && (
+                            <Description>
+                                <span>{description}</span>
+                            </Description>
+                        )}
+                        {/* 날짜와 장소 */}
+                        <EventInfo>
+                            <InfoLine>
+                                <StyledSpan>{"위치"}</StyledSpan>
+                                <StyledSpan>{site}</StyledSpan>
+                            </InfoLine>
+                            <InfoLine>
+                                <StyledSpan>{"일시"}</StyledSpan>
+                                <DateContainer>
+                                    {dates.map((d, idx) => (
+                                        <StyledSpan
+                                            key={idx}
+                                        >
+                                            {d}
+                                        </StyledSpan>
+                                    ))}
+                                </DateContainer>
 
-                </ProgramInfo>
 
-            </Container>
+                            </InfoLine>
 
-        </Wrapper>
+                        </EventInfo>
+                    </InfoBox>
+
+                </ContentContainer>
+            </ProgramInfo>
+
+        </Container>
+
     );
 }
 
-const Wrapper = styled.div`
 
-position: relative; 
 
-width:100%;
-
-`;
-
-const GreenBackground = styled.div`
-position: absolute;
-top: 0;
-left: 0;
-
-width:${({ $isOpen }) => ($isOpen ? "100%" : "364px")};
-height: 100%;
-
-transition: all 0.6s ease-in-out;
-&:hover {
-        background: var(--surface-brand, rgba(46, 155, 87, 0.10));
-    }
-background: ${({ $isOpen }) => ($isOpen ? "var(--surface-brand, rgba(46, 155, 87, 0.10))" : "transparent")};
-border-bottom: 1px solid var(--line-primary, #818898);
-
-// 배경이기 때문에 뒤로 보내기.
-z-index:0;
-
-${media.mobile`
-    width:100%;
-`}
-
-`;
 const Container = styled.div`
-position: relative;
 
 width: 100%;
 z-index: 10;
@@ -94,35 +84,49 @@ display: flex;
 align-items: flex-start;
 
 background: transparent;
-// z-index:1;
 
-// GreenBackground가 뒤로 보내져서 호버가 안되기 때문에 Container를 기준으로 호버시 배경색 변경되게.
-&:hover ${GreenBackground} {
+
+// 호버 효과
+transition: all 0.6s ease-in-out;
+&:hover {
         background: var(--surface-brand, rgba(46, 155, 87, 0.10));
     }
+background: ${({ $isOpen }) => ($isOpen ? "var(--surface-brand, rgba(46, 155, 87, 0.10))" : "transparent")};
+border-bottom: 1px solid var(--line-primary, #818898);
 
+cursor: pointer;
 `;
 
 
 
 
 const ProgramImg = styled.img`
-display: flex;
-width: 164px;
-height: 218.667px;
-flex-direction: column;
-justify-content: flex-end;
-align-items: center;
+
+height: 307px;
+aspect-ratio: 3/4;
+width: auto;
+object-fit: cover;
 
 
-border-top: 1px solid var(--background-brand-dark, #216E3E);
-border-right: 1px solid var(--background-brand-dark, #216E3E);
-border-left: 1px solid var(--background-brand-dark, #216E3E);
 background: url(<path-to-image>) lightgray 50% / cover no-repeat;
 z-index:1;
 
-${media.mobile`
+@media (max-width:768px){
     display:none;
+    }
+${({ $desktop }) => $desktop && `
+    @media (max-width:1124px) and (min-width:768px) {
+        display: none;
+    }
+`}
+
+${({ $tablet }) => $tablet && `
+        display: none;
+    `}
+${({ $tablet }) => $tablet && `
+@media (max-width:1124px) and (min-width:768px) {
+    display: block;
+}
 `}
 `;
 
@@ -133,10 +137,10 @@ width:100%;
 
 display: flex;
 padding: 20px;
-${media.mobile`
+@media (max-width:768px){
     padding:10px;
     gap:8px;
-`}
+}
 flex-direction: column;
 align-items: flex-start;
 gap: 20px;
@@ -153,34 +157,82 @@ z-index:1;
 const Title = styled.div`
 color: var(--text-primary, #222429);
 
+/* text/text-large */
 font-family: MaruBuri;
 font-size: var(--Font-size-text-lg, 18px);
 font-style: normal;
-font-weight: 400;
-line-height: 180%; 
+font-weight: 700;
+line-height: 180%; /* 32.4px */
 
-${media.mobile`
+@media (max-width:768px){
 
 font-size: var(--Font-size-text-md, 14px);
 font-weight: 700;
-`}
+}
+
+color: var(--text-primary, #222429);
+
+// 태블릿 = 데탑
 
 z-index:1;
 `;
+
+const ContentContainer = styled.div`
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch; // 아래로 늘리기
+    box-sizing: border-box;
+
+@media (max-width:1124px) and (min-width:768px) {
+
+        flex-direction:row;
+        gap:16px;
+        }
+
+`
+
+const InfoBox = styled.div`
+display:flex;
+    flex-direction:column;
+    width:100%;
+    align-items: flex-start;
+    gap: 20px;
+    // align-self: stretch; // 아래로 늘리기
+    box-sizing: border-box;
+@media (max-width:1124px) and (min-width:768px) {
+
+    gap:16px;
+}
+
+`;
+
 const EventInfo = styled.div`
 display: flex;
-width: 160px;
-height: 60px;
+width: 100%;
 flex-direction: column;
 justify-content: center;
 align-items: flex-start;
-gap: 10px;
+// gap: 10px;
+@media (max-width:1124px) and (min-width:768px) {
+
+    gap:16px;
+    }
 
 z-index:1;
 
 
+
 `;
-const Date = styled.span`
+const InfoLine = styled.div`
+width:100%;
+display: flex;
+align-items: flex-start;
+gap: 12px;
+`
+const StyledSpan = styled.span`
 color: var(--text-primary, #222429);
 
 font-family: MaruBuri;
@@ -189,9 +241,15 @@ font-style: normal;
 font-weight: 400;
 line-height: 180%; 
 
-${media.mobile`
+@media (max-width:768px){
 font-size: var(--Font-size-text-sm, 12px);
-`}
+}
+
+`;
+const DateContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 `;
 
 const Site = styled.span`
@@ -231,17 +289,17 @@ animation: slideUpFade 3.0s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
   @keyframes slideUpFade {
     from {
       opacity: 0;
-      transform: translateY(24px); /* 아래에서 대기 */
+      transform: translateY(-24px); 
     }
     to {
       opacity: 1;
-      transform: translateY(0);    /* 제자리로 부드럽게 안착 */
+      transform: translateY(0);    
     }
   }
 
   z-index:1;
 
-  ${media.mobile`
+@media (max-width:768px){
     display:none;
-`}
+}
 `;

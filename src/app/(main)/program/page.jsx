@@ -18,7 +18,7 @@ export default function ProgramPage() {
 
   // 클릭시 아이템의 토글 변경 함수
   const handleToggle = (idx) => {
-    // 열린 토글 클릭 -> 토글 닫기
+    // 열려진 토글 클릭 -> 토글 닫기
     // 닫힌 토글 클릭 -> 기존 토글 닫고 클릭된 토글 열기
     if (idx === openIdx) {
       setOpenIdx(-1);
@@ -39,7 +39,7 @@ export default function ProgramPage() {
             title={program.title}
             imgUrl={program.imgUrl}
             description={program.description}
-            date={program.date}
+            dates={program.dates}
             site={program.site}
             isOpen={openIdx == idx}
             handleToggle={() => handleToggle(idx)}
@@ -66,7 +66,7 @@ export default function ProgramPage() {
 
 const Container = styled.div`
 display: flex;
-width: 1328px;
+width: 100%;
 padding: 40px;
 flex-direction: column;
 align-items: flex-start;
@@ -74,6 +74,9 @@ gap: 40px;
 
 box-sizing: border-box;
 max-width: 100%;
+@media (max-width:1124px) and (min-width:768px){
+gap:0px;
+  };
 
 `;
 const PageName = styled.div`
@@ -86,15 +89,34 @@ const PageName = styled.div`
   line-height: normal;
   letter-spacing: -1.44px;
 
-${media.mobile`
-color: var(--text-primary, #222429);
+@media (max-width:1124px) and (min-width:768px){
 
+
+padding: 40px 20px;
+    color: var(--text-primary, #222429);
+
+/* heading/heading-medium-bold */
 font-family: MaruBuri;
-font-size: var(--display-xs, 30px);
+font-size: var(--Font-size-heading-md, 24px);
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-  `}
+};
+
+
+@media (max-width:768px){
+
+padding: 40px 0;
+
+color: var(--text-primary, #222429);
+
+/* heading/heading-small-bold */
+font-family: MaruBuri;
+font-size: var(--Font-size-heading-sm, 20px);
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+  }
 `;
 const ProgramList = styled.div`
 display: flex;

@@ -103,11 +103,11 @@ z-index: 99;
 
 //   padding:50px;
 
-${media.mobile`
+@media (max-width:768px){
     display: flex;
     align-items:center;
     justify-content:center;
-`}
+}
 
 
 `;
