@@ -48,7 +48,11 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-size: 62.5%;
     background: ${({ theme }) => theme.background.primary};
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar { display: none; }
   body { color: ${({ theme }) => theme.text.primary}; background: ${({ theme }) => theme.background.primary}; font-family: "MaruBuri", serif; }
   button { color: inherit; font: inherit; }
   a { color: inherit; text-decoration: none; }
