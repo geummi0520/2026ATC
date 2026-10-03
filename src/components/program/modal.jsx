@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { media } from "@/styles/media";
+import { programs } from "@/data/program";
 
 
 
@@ -12,11 +13,34 @@ export default function ProgramModal({
     nextProgram,
     prevProgram
 }) {
+    const [styled, setStyle] = useState({
+        transform: `translateX(-${openIdx}00%)`
+    })
+    const right = () => {
+        const index = openIdx + 1;
+        // 다음 프로그램이 없으면 슬라이드 X
+        if (index >= programs.length) return;
+        setStyle({
+            transform: `translateX(-${index}00%)`
+        })
+        // 페이지에서 바뀐 openIdx 업데이트 
+        nextProgram();
+    }
+    const left = () => {
+        const index = openIdx - 1;
+        if (index < 0) return;
+        setStyle({
+            transform: `translateX(-${index}00%)`
+        })
+        prevProgram();
+
+    }
+    const ref = useRef(null);
+
     const [touch, setTouch] = useState({
         start: 0, // 터치 시작 위치
         end: 0, // 터치 끝난 위치
     })
-
 
 
 
@@ -25,41 +49,78 @@ export default function ProgramModal({
         <BlurContainer>
             <ModalFrame>
                 <ModalContainer>
-                    <InfoContainer
-                        key={openIdx}
-                        onTouchStart={(e) => {
-                            setTouch({
-                                ...touch,
-                                start: e.touches[0].pageX, // 첫번째 터치의 X값
-                            });
-                        }}
-                        onTouchEnd={(e) => {
-                            const end = e.changedTouches[0].pageX;
-                            if (touch.start >= end && openIdx < n_programs - 1) {
-                                nextProgram();
-                            }
-                            else if (touch.start < end && openIdx > 0) {
-                                prevProgram();
-                            }
-                            setTouch({
-                                ...touch,
-                                end,
-                            })
-                        }}
-                    >
-                        <ModalImg
-                            src={imgUrl}
-                            alt="modal image"
-                            width={"164px"}
-                        />
-                        <Date>{date}</Date>
-                        <Site>{site}</Site>
-                        <Title>{title}</Title>
-                        <Description>{description}</Description>
-                    </InfoContainer>
+                    <SlideViewport ref={ref}>
+                        <SlideContentContainer
+
+                            style={styled}
+                            onTouchStart={(e) => {
+                                setTouch({
+                                    ...touch,
+                                    start: e.touches[0].pageX, // 첫번째 터치의 X값
+                                });
+                            }}
+                            onTouchMove={(e) => {
+                                if (ref?.current) {
+                                    const current = ref.current.clientWidth * openIdx;
+                                    const result = -current + (e.targetTouches[0].pageX - touch.start);
+                                    setStyle({
+                                        transform: `translateX(${result}px)`,
+                                        transition: 'none',
+                                    })
+                                }
+                            }}
+                            onTouchEnd={(e) => {
+                                const end = e.changedTouches[0].pageX;
+                                if (touch.start >= end && openIdx < programs.length - 1) {
+                                    right();
+                                }
+                                else if (touch.start < end && openIdx > 0) {
+                                    left();
+                                }
+                                else {
+                                    setStyle({
+                                        transform: `translateX(-${openIdx}00%)`,
+                                        transition: `transform 0.3s ease`,
+                                    });
+                                }
+                                setTouch({
+                                    ...touch,
+                                    end,
+                                })
+                            }}
+                        >
+                            {programs.map((program, idx) => (
+                                <InfoContainer key={idx}>
+                                    <ModalImg
+                                        src={program.imgUrl}
+                                        alt="modal image"
+
+                                    />
+                                    <DateContainer>
+                                        <Date>시간:&nbsp;</Date>
+                                        <div>
+                                            {/* {program.dates.map((date, idx) => (
+                                                <Date
+                                                    key={idx}
+                                                >
+                                                    {date}
+                                                </Date>
+                                            ))} */}
+                                            <Date>{program.dates[0]}</Date>
+                                        </div>
+                                        {/* <Date>{"시간: " + program.dates}</Date> */}
+                                    </DateContainer>
+                                    <Site>{"장소: " + program.site}</Site>
+                                    <Title>{program.title}</Title>
+                                    <Description>{program.description}</Description>
+                                </InfoContainer>
+                            ))}
+
+                        </SlideContentContainer>
+                    </SlideViewport>
                     <ExitButton onClick={closeModal}>
                         <ExitIconWrapper>
-
+                            {/* X 버튼 아이콘 */}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="15"
@@ -101,22 +162,23 @@ height: 100vh;
 background: rgba(20, 21, 24, 0.50);
 z-index: 99;
 
-//   padding:50px;
-
 @media (max-width:768px){
     display: flex;
     align-items:center;
     justify-content:center;
+    
 }
 
 
 `;
 const ModalFrame = styled.div`
 display: flex;
-// height: 813px;
 flex-direction: column;
 align-items: center;
 gap: 10px;
+
+width:100%;
+heigth:100%;
 
 `
 const SlideIndicator = styled.div`
@@ -135,7 +197,6 @@ aspect-ratio: 1/1;
 border-radius: 20px;
 border: 1px solid var(--line-brand-invert, #E9EAED);
 
-
 background:${({ $isOpen }) => (($isOpen) ?
         "var(--Grey-grey-10, #F1F2F4)"
         :
@@ -145,38 +206,41 @@ background:${({ $isOpen }) => (($isOpen) ?
 `;
 
 const ModalContainer = styled.div`
-display: flex;
-width: 355px;
-// height: 758px;
+width:300px;
+
 padding: 20px;
-box-sizing:border-box;
+
+display: flex;
+
 flex-direction: column;
 justify-content: space-between;
 align-items: center;
 flex-shrink: 0;
-gap:30px;
+
+gap:10px;
+
 background: var(--background-primary, #F1F2F4);
 `;
 
-const fadeIn = keyframes`
-    from {
-        opacity: 0.6;
-    }
 
-    to {
-        opacity: 1;
-    }
+const SlideViewport = styled.div`
+width:100%;
+overflow:hidden;
 `;
+const SlideContentContainer = styled.div`
+display:flex;
+width:100%;
+transition:transform 0.3s ease;
 
+`;
 const InfoContainer = styled.div`
 display: flex;
-// width: 315px;
+flex: 0 0 100%;
+min-width:100%;
 flex-direction: column;
 align-items: flex-start;
 gap: 10px;
-flex: 1 0 0;
 
-animation: ${fadeIn} 0.4s ease;
 `
 
 const ExitButton = styled.button`
@@ -210,15 +274,17 @@ font-weight: 700;
 line-height: 180%; /* 25.2px */
 `;
 const ModalImg = styled.img`
-
-height: 428px; 
-width:auto;
-align-self: stretch;
-    `;
-
-const Date = styled.span`
+width:100%;
+aspect-ratio: 3/4;
+object-fit: cover;
+align-self:center;
+`;
+const DateContainer = styled.div`
+    display: flex;
+    align-items: flex-start;
+`;
+const Date = styled.div`
 color: var(--text-primary, #222429);
-
 
 color: var(--text-primary, #222429);
 
