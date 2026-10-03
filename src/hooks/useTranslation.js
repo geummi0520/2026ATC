@@ -4,12 +4,10 @@ import { TranslationContext } from "@/lib/TranslationProvider";
 /**
  * ATC 한/영 번역 hook
  *
- * 반드시 TranslationProvider 안의 Client Component에서 사용합니다.
- * 현재 언어는 localStorage에 저장되므로 새로고침 후에도 유지됩니다.
  *
- * 공통 UI 문구는 locales/ko.js, locales/en.js에 같은 key로 작성하고 t()를 사용합니다.
- *   const { t } = useTranslation();
- *   <span>{t("navigation.about")}</span>
+ * 공통 UI 문구는 locales/ko.js(한글 문구), locales/en.js(영어 문구)에 같은 key로 작성하고 t()를 사용합니다.
+ *   const { t } = useTranslation();  -> useTranslation import
+ *   <span>{t("navigation.about")}</span>  -> 문구 넣기
  *
  * 작품명·설명처럼 data에 { ko, en }으로 저장된 콘텐츠는 translate()를 사용합니다.
  *   const { translate } = useTranslation();

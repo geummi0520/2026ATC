@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
+import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import { media } from "@/styles/media";
 
@@ -89,7 +90,8 @@ export default function MainLayout({ children }) {
       </LeftRail>
       <Center>
         <Header />
-        <main>{children}</main>
+        <MainContent>{children}</MainContent>
+        <Footer />
       </Center>
       <RightRail ref={rightRailRef}>
         <RailSlot>
@@ -199,9 +201,15 @@ const RightRail = styled(Rail)`
 
 const Center = styled.div`
   min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   margin: 0 6%;
   ${media.mobile`
     margin: 0 2.4rem;
 
 `}
+`;
+
+const MainContent = styled.main`
+  flex: 1;
 `;
