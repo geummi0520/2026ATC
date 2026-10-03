@@ -50,7 +50,7 @@ const RailSlot = styled.div`
 const RailLabel = styled.span`
   position: absolute;
   color: var(--layout-active-text);
-  font-size: 2.4rem;
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
@@ -61,7 +61,7 @@ const RailLabel = styled.span`
   ${media.mobile`
     font-weight: 600;
     padding: 0;
-    font-size: 1.4rem;
+    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     opacity: 0.3;
 `}
 `;
@@ -85,7 +85,7 @@ const ScrollIndicator = styled.span`
   top: 0;
   left: 1.6rem;
   color: var(--layout-active-text);
-  font-size: 3.6rem;
+  font-size: ${({ theme }) => theme.typography.fontSize.displaySm};
   font-weight: 200;
   line-height: 0.8;
   transform: translate(-50%, var(--scroll-indicator-y, 0));
