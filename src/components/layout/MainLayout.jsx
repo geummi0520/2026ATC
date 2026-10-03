@@ -212,4 +212,9 @@ const Center = styled.div`
 
 const MainContent = styled.main`
   flex: 1;
+  padding-top: 12rem;
+
+  ${media.tablet`
+    padding-top: 8.4rem;
+  `}
 `;

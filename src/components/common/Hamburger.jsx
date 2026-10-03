@@ -34,9 +34,7 @@ export default function Hamburger() {
       <Button
         type="button"
         $open={open}
-        aria-label={
-          open ? t("navigation.menuClose") : t("navigation.menuOpen")
-        }
+        aria-label={open ? t("navigation.menuClose") : t("navigation.menuOpen")}
         aria-expanded={open}
         aria-controls="mobile-menu"
         onClick={() => setOpen((value) => !value)}

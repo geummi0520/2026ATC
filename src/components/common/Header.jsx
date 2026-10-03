@@ -48,7 +48,11 @@ export default function Header() {
 }
 
 const Container = styled.header`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 6%;
+  right: 6%;
+  z-index: 100;
   height: 12rem;
   display: flex;
   align-items: center;
@@ -64,6 +68,8 @@ const Container = styled.header`
   `}
 
   ${media.mobile`
+    left: 2.4rem;
+    right: 2.4rem;
     justify-content: space-between;
     padding: 4rem 0 2rem 0;
     border-bottom: 0;

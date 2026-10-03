@@ -75,6 +75,7 @@ const Container = styled.footer`
     padding: 2rem;
     font-size: 1rem;
     font-style: normal;
+    border-top: none;
   `}
 `;
 
