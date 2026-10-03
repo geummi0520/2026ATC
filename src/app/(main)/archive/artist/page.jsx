@@ -1,3 +1,5 @@
+import ArtistCredit from "@/components/archive/artist/artist";
+
 export default function ArtistsPage() {
-  return <h1>Artist Credits</h1>;
+  return <ArtistCredit />;
 }
