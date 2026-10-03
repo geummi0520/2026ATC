@@ -66,6 +66,7 @@ const theme = {
   },
   line: {
     brand: "#188653",
+    brandDark: "#0D4A2E",
     brandInvert: primitives.grey[50],
     primary: primitives.grey[200],
     secondary: primitives.grey[100],

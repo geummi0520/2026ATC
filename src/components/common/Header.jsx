@@ -1,69 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Hamburger from "@/components/common/Hamburger";
+import LanguageToggle from "@/components/common/LanguageToggle";
 import { ROUTES } from "@/constants/routes";
 import ko from "@/locales/ko";
 import { media } from "@/styles/media";
 
-const FRY_FRAMES = Array.from(
-  { length: 6 },
-  (_, index) => `/icons/fry_toggle/frame_0${index + 1}.png`,
-);
-
 export default function Header() {
   const { navigation } = ko;
   const pathname = usePathname();
-  const [language, setLanguage] = useState("ko");
-  const [frame, setFrame] = useState(1);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const animationRef = useRef(null);
-
-  useEffect(() => {
-    FRY_FRAMES.forEach((src) => {
-      const image = new window.Image();
-      image.src = src;
-    });
-
-    return () => {
-      if (animationRef.current) window.clearInterval(animationRef.current);
-    };
-  }, []);
+  const isAbout = pathname === ROUTES.ABOUT;
 
   const isCurrent = (href) => {
     if (href === ROUTES.HOME) return pathname === href;
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
-  const toggleLanguage = () => {
-    if (isAnimating) return;
-
-    const nextLanguage = language === "ko" ? "en" : "ko";
-    const sequence =
-      nextLanguage === "en" ? [1, 2, 3, 4, 5, 6] : [6, 5, 4, 3, 2, 1];
-    let frameIndex = 0;
-
-    setIsAnimating(true);
-    animationRef.current = window.setInterval(() => {
-      frameIndex += 1;
-      setFrame(sequence[frameIndex]);
-
-      if (frameIndex === sequence.length - 1) {
-        window.clearInterval(animationRef.current);
-        animationRef.current = null;
-        setLanguage(nextLanguage);
-        setIsAnimating(false);
-      }
-    }, 200);
-  };
-
   return (
     <Container>
-      <Navigation>
+      <Navigation $isAbout={isAbout}>
         <NavLink href={ROUTES.HOME} $active={isCurrent(ROUTES.HOME)}>
           {navigation.main}
         </NavLink>
@@ -83,26 +41,7 @@ export default function Header() {
           {navigation.archive}
         </NavLink>
       </Navigation>
-      <LanguageControl>
-        <LanguageCode $active={language === "ko"}>KR</LanguageCode>
-        <LanguageToggle
-          type="button"
-          onClick={toggleLanguage}
-          disabled={isAnimating}
-          aria-label={language === "ko" ? "영문으로 변경" : "국문으로 변경"}
-          aria-pressed={language === "en"}
-        >
-          <FryImage
-            src={FRY_FRAMES[frame - 1]}
-            alt=""
-            width={366}
-            height={268}
-            aria-hidden="true"
-            priority
-          />
-        </LanguageToggle>
-        <LanguageCode $active={language === "en"}>EN</LanguageCode>
-      </LanguageControl>
+      <LanguageToggle />
       <Hamburger />
     </Container>
   );
@@ -135,9 +74,15 @@ const Navigation = styled.nav`
   top: 4rem;
   left: 50%;
   display: flex;
-  gap: 3.2rem;
-  padding: 1.2rem 3.6rem;
-  border: 1px solid ${({ theme }) => theme.line.primary};
+  gap: 3.6rem;
+  padding: 0.6rem 3.6rem;
+  color: ${({ $isAbout, theme }) =>
+    $isAbout ? theme.text.brandInvert : theme.text.brandDark};
+  border: 1px solid
+    ${({ $isAbout, theme }) =>
+      $isAbout ? theme.line.brandDark : theme.line.primary};
+  background: ${({ $isAbout, theme }) =>
+    $isAbout ? theme.surface.brandDark : theme.primitives.grey[50]};
   transform: translateX(-50%);
 
   ${media.tablet`
@@ -146,45 +91,10 @@ const Navigation = styled.nav`
 `;
 
 const NavLink = styled(Link)`
-  color: ${({ $active }) => ($active ? "var(--layout-active-text)" : "inherit")};
+  color: inherit;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 1.8;
+  font-weight: 700;
+  text-align: center;
   white-space: nowrap;
-
-  &:hover {
-    color: var(--layout-active-text);
-  }
-`;
-
-const LanguageControl = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-
-  ${media.tablet`
-    display: none;
-  `}
-`;
-
-const LanguageCode = styled.span`
-  color: ${({ $active }) =>
-    $active ? "var(--layout-active-text)" : "inherit"};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
-  font-weight: ${({ $active }) => ($active ? 700 : 400)};
-`;
-
-const LanguageToggle = styled.button`
-  width: 5.6rem;
-  height: 4.1rem;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
-`;
-
-const FryImage = styled(Image)`
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
 `;
