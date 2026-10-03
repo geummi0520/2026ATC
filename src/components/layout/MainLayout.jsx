@@ -28,6 +28,7 @@ const Layout = styled.div`
 export default function MainLayout({ children }) {
   const pathname = usePathname();
   const isAbout = pathname === "/about";
+  const isWorks = pathname === "/works" || pathname.startsWith("/works/");
   const rightRailRef = useRef(null);
 
   useEffect(() => {
@@ -43,11 +44,22 @@ export default function MainLayout({ children }) {
 
       if (!rail || !indicatorSlot || !indicator) return;
 
-      const scrollableHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
+      const scrollTarget = isWorks
+        ? document.querySelector("[data-works-scroll]")
+        : document.documentElement;
+      const scrollableHeight = isWorks
+        ? (scrollTarget?.scrollHeight ?? 0) - (scrollTarget?.clientHeight ?? 0)
+        : document.documentElement.scrollHeight - window.innerHeight;
       const progress =
         scrollableHeight > 0
-          ? Math.min(Math.max(window.scrollY / scrollableHeight, 0), 1)
+          ? Math.min(
+              Math.max(
+                (isWorks ? scrollTarget?.scrollTop ?? 0 : window.scrollY) /
+                  scrollableHeight,
+                0
+              ),
+              1
+            )
           : 0;
       const travelDistance = Math.max(
         indicatorSlot.clientHeight - indicator.offsetHeight,
@@ -66,7 +78,10 @@ export default function MainLayout({ children }) {
     };
 
     requestUpdate();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
+    const scrollTarget = isWorks
+      ? document.querySelector("[data-works-scroll]")
+      : window;
+    scrollTarget?.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
 
     const resizeObserver = new ResizeObserver(requestUpdate);
@@ -74,24 +89,24 @@ export default function MainLayout({ children }) {
 
     return () => {
       if (frameId !== null) window.cancelAnimationFrame(frameId);
-      window.removeEventListener("scroll", requestUpdate);
+      scrollTarget?.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
       resizeObserver.disconnect();
     };
-  }, [pathname]);
+  }, [isWorks, pathname]);
 
   return (
-    <Layout $isAbout={isAbout}>
+    <Layout $isAbout={isAbout} $isWorks={isWorks}>
       <LeftRail>
         <RailSlot>
           <LeftRailLabel>2026 ATC</LeftRailLabel>
         </RailSlot>
         <RailSlot />
       </LeftRail>
-      <Center>
+      <Center $isWorks={isWorks}>
         <Header />
-        <MainContent>{children}</MainContent>
-        <Footer />
+        <MainContent $isWorks={isWorks}>{children}</MainContent>
+        {!isWorks && <Footer />}
       </Center>
       <RightRail ref={rightRailRef}>
         <RailSlot>
@@ -201,9 +216,11 @@ const RightRail = styled(Rail)`
 
 const Center = styled.div`
   min-height: 100dvh;
+  height: ${({ $isWorks }) => ($isWorks ? "100dvh" : "auto")};
   display: flex;
   flex-direction: column;
   margin: 0 6%;
+  overflow: ${({ $isWorks }) => ($isWorks ? "hidden" : "visible")};
   ${media.mobile`
     margin: 0 2.4rem;
 
@@ -213,6 +230,8 @@ const Center = styled.div`
 const MainContent = styled.main`
   flex: 1;
   padding-top: 12rem;
+  min-height: 0;
+  overflow: ${({ $isWorks }) => ($isWorks ? "hidden" : "visible")};
 
   ${media.tablet`
     padding-top: 8.4rem;
