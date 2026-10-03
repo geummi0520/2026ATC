@@ -1,71 +1,47 @@
-const breakpoints = { mobile: "720px", tablet: "1024px" };
+const breakpoints = {
+  mobile: 768,
+  tablet: 1124,
+};
 
-export const lightTheme = {
-  mode: "light",
+const theme = {
   background: {
     primary: "#F1F2F4",
-    secondary: "#9FD1B2",
-    brand: "#2E9B57",
-    brandDark: "#216E3E",
+    secondary: "#95C7B0",
+    brand: "#188653",
+    brandDark: "#115F3B",
   },
   icon: {
     primary: "#222429",
     secondary: "#3B3F48",
-    brand: "#2E9B57",
+    brand: "#188653",
     brandInvert: "#E9EAED",
   },
   text: {
     primary: "#222429",
     secondary: "#3B3F48",
     tertiary: "#474C57",
-    quaternary: "#6C7485",
-    brand: "#2E9B57",
-    brandLight: "#9FD1B2",
+    quaternary: "#818898",
+    brand: "#188653",
+    brandDark: "#115F3B",
+    brandLight: "#95C7B0",
     brandInvert: "#E9EAED",
+    brandInvertDisabled: "rgba(233, 234, 237, 0.5)",
   },
-  surface: { primary: "#5C5D61", secondary: "#5C5D61", brand: "#2E9B57" },
+  surface: {
+    primary: "rgba(92, 93, 97, 0.2)",
+    secondary: "rgba(92, 93, 97, 0.1)",
+    brand: "rgba(24, 134, 83, 0.1)",
+    brandInvert: "#E8F3EE",
+    brandDark: "rgba(10, 56, 35, 0.25)",
+  },
   line: {
-    brand: "#2E9B57",
+    brand: "#188653",
     brandInvert: "#E9EAED",
-    primary: "#818898",
+    primary: "#9EA4B1",
     secondary: "#C8CBD2",
   },
-  button: { primary: "#F1F2F4", brandInvert: "#2E9B57", disabled: "#9EA4B1" },
+  button: { primary: "#F1F2F4", brandInvert: "#188653", disabled: "#9EA4B1" },
   breakpoints,
 };
 
-// export const darkTheme = {
-//   mode: "dark",
-//   background: {
-//     primary: "#141518",
-//     secondary: "#2E9B57",
-//     brand: "#195530",
-//     brandDark: "#195530",
-//   },
-//   icon: {
-//     primary: "#E9EAED",
-//     secondary: "#9EA4B1",
-//     brand: "#2A8D4F",
-//     brandInvert: "#E9EAED",
-//   },
-//   text: {
-//     primary: "#E9EAED",
-//     secondary: "#9EA4B1",
-//     tertiary: "#6C7485",
-//     quaternary: "#474C57",
-//     brand: "#2A8D4F",
-//     brandLight: "#9FD1B2",
-//     brandInvert: "#E9EAED",
-//   },
-//   surface: { primary: "#414245", secondary: "#414245", brand: "#2A8D4F" },
-//   line: {
-//     brand: "#2A8D4F",
-//     brandInvert: "#E9EAED",
-//     primary: "#6C7485",
-//     secondary: "#474C57",
-//   },
-//   button: { primary: "#222429", brandInvert: "#FFFFFF", disabled: "#474C57" },
-//   breakpoints,
-// };
-
-export default lightTheme;
+export default theme;

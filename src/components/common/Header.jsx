@@ -20,36 +20,15 @@ export default function Header() {
   return (
     <Container>
       <Navigation>
-        <NavLink href={ROUTES.HOME} $active={isCurrent(ROUTES.HOME)}>
-          {navigation.main}
-        </NavLink>
-        <NavLink href={ROUTES.ABOUT} $active={isCurrent(ROUTES.ABOUT)}>
-          {navigation.about}
-        </NavLink>
-        <NavLink href={ROUTES.WORKS} $active={isCurrent(ROUTES.WORKS)}>
-          {navigation.works}
-        </NavLink>
-        <NavLink href={ROUTES.PROGRAM} $active={isCurrent(ROUTES.PROGRAM)}>
-          {navigation.program}
-        </NavLink>
-        <NavLink
-          href={ROUTES.ARCHIVE.ARTISTS}
-          $active={isCurrent(ROUTES.ARCHIVE.ARTISTS)}
-        >
+        <NavLink href={ROUTES.HOME}>{navigation.main}</NavLink>
+        <NavLink href={ROUTES.ABOUT}>{navigation.about}</NavLink>
+        <NavLink href={ROUTES.WORKS}>{navigation.works}</NavLink>
+        <NavLink href={ROUTES.PROGRAM}>{navigation.program}</NavLink>
+        <NavLink href={ROUTES.ARCHIVE.ARTISTS}>
           {navigation.artistCredit}
         </NavLink>
-        <NavLink
-          href={ROUTES.ARCHIVE.STAFF}
-          $active={isCurrent(ROUTES.ARCHIVE.STAFF)}
-        >
-          {navigation.staffCredit}
-        </NavLink>
-        <NavLink
-          href={ROUTES.ARCHIVE.ARTBOOK}
-          $active={isCurrent(ROUTES.ARCHIVE.ARTBOOK)}
-        >
-          {navigation.artbook}
-        </NavLink>
+        <NavLink href={ROUTES.ARCHIVE.STAFF}>{navigation.staffCredit}</NavLink>
+        <NavLink href={ROUTES.ARCHIVE.ARTBOOK}>{navigation.artbook}</NavLink>
       </Navigation>
       <Hamburger />
     </Container>
@@ -67,7 +46,13 @@ const Container = styled.header`
 
   ${media.tablet`
     justify-content: flex-start;
-    padding: 0;
+    padding: 2rem;
+    border-bottom: 0;
+  `}
+
+  ${media.mobile`
+    justify-content: flex-start;
+    padding: 0rem;
     border-bottom: 0;
   `}
 `;
@@ -82,6 +67,5 @@ const Navigation = styled.nav`
 `;
 
 const NavLink = styled(Link)`
-  color: ${({ $active }) =>
-    $active ? "var(--layout-active-text)" : "inherit"};
+  color: "inherit";
 `;
