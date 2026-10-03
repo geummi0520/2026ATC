@@ -34,7 +34,9 @@ export const congrat_text = `서강대학교 Art & Technology 학과에서 《�
 
 여러분을 ATC 2025에 정중히 초대합니다.
 
-서강대학교 아트&테크놀로지학과 학과장 최용순
+서강대학교 아트&테크놀로지학과 학과장
+
+최용순
 `;
 export const staffs = [
     {
@@ -112,3 +114,8 @@ export const staffs = [
         ],
     },
 ];
+export const station_info = `대흥역 1번 출구 · 540m · 도보 10분 (후문 인접)
+                서강대역 1번 출구 · 880m · 도보 18분
+                이대역 5번 출구 · 900m · 도보 14분
+                신촌역 6번 출구 · 960m · 도보 18분
+                `;
