@@ -1,8 +1,39 @@
+/**
+ * 공통 디자인 토큰
+ *
+ * Figma Variables를 디자인 토큰의 원본으로 사용합니다.
+ * Figma 변수의 이름이나 값이 변경되면 이 파일도 함께 갱신합니다.
+ * Figma의 kebab-case 이름은 코드에서 camelCase로 변환
+ *   Figma: --text-brand-dark -> Code: theme.text.brandDark
+ *   Figma: --Font-size-text-lg -> Code: theme.typography.fontSize.textMd
+ *
+ *
+ * 사용 예시 (styled-components):
+ *   color: ${({ theme }) => theme.text.primary};
+ *   font-size: ${({ theme }) => theme.text.brandDark};
+ *   border-color: ${({ theme }) => theme.line.primary};
+ *
+ * 색상은 용도가 정해진 semantic 토큰(background, text, line 등)을 우선 사용합니다.
+ * primitives는 디자인 원본의 색상 단계가 직접 필요한 경우에만 사용합니다.
+ *   권장: theme.text.primary
+ *   제한적 사용: theme.primitives.grey[900]
+ *
+ * semantic 토큰과 primitive 토큰의 실제 값이 같을 때만 primitive를 참조합니다.
+ * Figma alias 이름이 같더라도 실제 값이 다르면 임의로 치환하지 않습니다.
+ * 새로운 색상이나 글자 크기를 추가하기 전에 대응하는 Figma 변수를 확인합니다.
+ *
+ * 반응형 스타일은 breakpoints를 직접 조합하지 말고 styles/media.js의
+ * media.tablet, media.mobile helper를 사용합니다.
+ */
+
+// breakpoint가 시작되는 지점입니다. media helper에서는 각각 1px을 뺀 max-width로 사용합니다.
+// media.mobile: 767px 이하 / media.tablet: 1123px 이하 / 기본 스타일: desktop
 const breakpoints = {
   mobile: 768,
   tablet: 1124,
 };
 
+// Figma primitive 팔레트
 const primitives = {
   grey: {
     10: "#F1F2F4",
@@ -33,7 +64,10 @@ const primitives = {
 };
 
 const theme = {
+  // 원본 팔레트가 직접 필요한 경우 theme.primitives.grey[900]처럼 사용
   primitives,
+
+  // semantic color 토큰
   background: {
     primary: primitives.grey[10],
     secondary: "#95C7B0",
@@ -76,6 +110,9 @@ const theme = {
     brandInvert: "#188653",
     disabled: primitives.grey[200],
   },
+
+  // html font-size가 62.5%이므로, 1rem = 10px
+  // 화면의 용도에 맞는 Figma typography 변수를 확인해 동일한 토큰 사용
   typography: {
     fontSize: {
       displayLg: "4.8rem",
@@ -90,6 +127,8 @@ const theme = {
       textSm: "1.2rem",
     },
   },
+
+  // 직접 media query 만들지 않고, @/styles/media의 helper 사용
   breakpoints,
 };
 

@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ROUTES } from "@/constants/routes";
-import ko from "@/locales/ko";
+import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 export default function Hamburger() {
   const [open, setOpen] = useState(false);
-  const { navigation } = ko;
+  const { t } = useTranslation();
   const isAbout = usePathname() === ROUTES.ABOUT;
 
   useEffect(() => {
@@ -34,7 +34,9 @@ export default function Hamburger() {
       <Button
         type="button"
         $open={open}
-        aria-label={open ? navigation.menuClose : navigation.menuOpen}
+        aria-label={
+          open ? t("navigation.menuClose") : t("navigation.menuOpen")
+        }
         aria-expanded={open}
         aria-controls="mobile-menu"
         onClick={() => setOpen((value) => !value)}
@@ -55,45 +57,45 @@ export default function Hamburger() {
         <Menu>
           <Group>
             <MainLink href={ROUTES.HOME} onClick={close}>
-              {navigation.main}
+              {t("navigation.main")}
             </MainLink>
           </Group>
           <Group>
             <MainLink href={ROUTES.ABOUT} onClick={close}>
-              {navigation.about}
+              {t("navigation.about")}
             </MainLink>
           </Group>
           <Group>
             <MainLink href={ROUTES.WORKS} onClick={close}>
-              {navigation.works}
+              {t("navigation.works")}
             </MainLink>
             <SubContainer>
               <SubLink href={ROUTES.WORKS} onClick={close}>
-                {navigation.workList}
+                {t("navigation.workList")}
               </SubLink>
               <SubLink href={`${ROUTES.WORKS}?view=map`} onClick={close}>
-                {navigation.workMap}
+                {t("navigation.workMap")}
               </SubLink>
             </SubContainer>
           </Group>
           <Group>
             <MainLink href={ROUTES.PROGRAM} onClick={close}>
-              {navigation.program}
+              {t("navigation.program")}
             </MainLink>
           </Group>
           <Group>
             <MainLink href={ROUTES.ARCHIVE.STAFF} onClick={close}>
-              {navigation.archive}
+              {t("navigation.archive")}
             </MainLink>
             <SubContainer>
               <SubLink href={ROUTES.ARCHIVE.STAFF} onClick={close}>
-                {navigation.staffCredit}
+                {t("navigation.staffCredit")}
               </SubLink>
               <SubLink href={ROUTES.ARCHIVE.ARTISTS} onClick={close}>
-                {navigation.artistCredit}
+                {t("navigation.artistCredit")}
               </SubLink>
               <SubLink href={ROUTES.ARCHIVE.ARTBOOK} onClick={close}>
-                {navigation.artbook}
+                {t("navigation.artbook")}
               </SubLink>
             </SubContainer>
           </Group>

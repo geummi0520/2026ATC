@@ -20,106 +20,8 @@ const Layout = styled.div`
 
   min-height: 100dvh;
   color: var(--layout-text);
-  background: var(--layout-background);
-`;
-
-const Rail = styled.aside`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 6%;
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  color: var(--layout-text);
-  background: var(--layout-background);
-  overflow: hidden;
-  z-index: 1;
-
-  ${media.mobile`
-    width: 2.4rem;
-  `}
-`;
-
-const RailSlot = styled.div`
-  position: relative;
-  min-height: 0;
-  width: 100%;
-  overflow: hidden;
-`;
-
-const RailLabel = styled.span`
-  position: absolute;
-  color: var(--layout-active-text);
-  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  padding: 0.8rem 1rem;
-  ${media.tablet`
-    font-weight: 400;
-`}
-  ${media.mobile`
-    font-weight: 600;
-    padding: 0;
-    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-    opacity: 0.3;
-`}
-`;
-
-const LeftRailLabel = styled(RailLabel)`
-  left: 100%;
-  bottom: 0;
-  transform: rotate(-90deg);
-  transform-origin: bottom left;
-`;
-
-const RightRailLabel = styled(RailLabel)`
-  right: 100%;
-  top: 0;
-  transform: rotate(-90deg);
-  transform-origin: top right;
-`;
-
-const ScrollIndicator = styled.span`
-  position: absolute;
-  top: 0;
-  left: 1.6rem;
-  color: var(--layout-active-text);
-  font-size: ${({ theme }) => theme.typography.fontSize.displaySm};
-  font-weight: 200;
-  line-height: 0.8;
-  transform: translate(-50%, var(--scroll-indicator-y, 0));
-  will-change: transform;
-  margin-top: 1.2rem;
-  ${media.mobile`
-    font-weight: 200;
-    left: 0.7rem;
-`}
-`;
-
-const LeftRail = styled(Rail)`
-  left: 0;
-  border-right: 1px solid var(--layout-line);
-  ${media.mobile`
-    border-right: none;
-`}
-`;
-
-const RightRail = styled(Rail)`
-  right: 0;
-  border-left: 1px solid var(--layout-line);
-  ${media.mobile`
-    border-left: none;
-`}
-`;
-
-const Center = styled.div`
-  min-height: 100dvh;
-  margin: 0 6%;
-  ${media.mobile`
-    margin: 0 2.4rem;
-
-`}
+  background-color: var(--layout-background);
+  transition: color 300ms ease, background-color 300ms ease;
 `;
 
 export default function MainLayout({ children }) {
@@ -130,6 +32,7 @@ export default function MainLayout({ children }) {
   useEffect(() => {
     let frameId = null;
 
+    // 스크롤 인디케이터 -> 스크롤 위치 계산
     const updateIndicator = () => {
       frameId = null;
 
@@ -199,3 +102,106 @@ export default function MainLayout({ children }) {
     </Layout>
   );
 }
+
+const Rail = styled.aside`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 6%;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  color: var(--layout-text);
+  background-color: var(--layout-background);
+  overflow: hidden;
+  z-index: 1;
+  transition: color 300ms ease, background-color 300ms ease,
+    border-color 300ms ease;
+
+  ${media.mobile`
+    width: 2.4rem;
+  `}
+`;
+
+const RailSlot = styled.div`
+  position: relative;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+`;
+
+const RailLabel = styled.span`
+  position: absolute;
+  color: var(--layout-active-text);
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 0.8rem 1rem;
+  transition: color 300ms ease;
+  ${media.tablet`
+    font-weight: 400;
+`}
+  ${media.mobile`
+    font-weight: 600;
+    padding: 0;
+    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+    opacity: 0.3;
+`}
+`;
+
+const LeftRailLabel = styled(RailLabel)`
+  left: 100%;
+  bottom: 0;
+  transform: rotate(-90deg);
+  transform-origin: bottom left;
+`;
+
+const RightRailLabel = styled(RailLabel)`
+  right: 100%;
+  top: 0;
+  transform: rotate(-90deg);
+  transform-origin: top right;
+`;
+
+const ScrollIndicator = styled.span`
+  position: absolute;
+  top: 0;
+  left: 1.6rem;
+  color: var(--layout-active-text);
+  font-size: ${({ theme }) => theme.typography.fontSize.displaySm};
+  font-weight: 200;
+  line-height: 0.8;
+  transform: translate(-50%, var(--scroll-indicator-y, 0));
+  will-change: transform;
+  margin-top: 1.2rem;
+  transition: color 300ms ease;
+  ${media.mobile`
+    font-weight: 200;
+    left: 0.7rem;
+`}
+`;
+
+const LeftRail = styled(Rail)`
+  left: 0;
+  border-right: 1px solid var(--layout-line);
+  ${media.mobile`
+    border-right: none;
+`}
+`;
+
+const RightRail = styled(Rail)`
+  right: 0;
+  border-left: 1px solid var(--layout-line);
+  ${media.mobile`
+    border-left: none;
+`}
+`;
+
+const Center = styled.div`
+  min-height: 100dvh;
+  margin: 0 6%;
+  ${media.mobile`
+    margin: 0 2.4rem;
+
+`}
+`;

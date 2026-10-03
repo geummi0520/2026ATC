@@ -6,11 +6,11 @@ import styled from "styled-components";
 import Hamburger from "@/components/common/Hamburger";
 import LanguageToggle from "@/components/common/LanguageToggle";
 import { ROUTES } from "@/constants/routes";
-import ko from "@/locales/ko";
+import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 export default function Header() {
-  const { navigation } = ko;
+  const { t } = useTranslation();
   const pathname = usePathname();
   const isAbout = pathname === ROUTES.ABOUT;
 
@@ -23,26 +23,26 @@ export default function Header() {
     <Container>
       <Navigation $isAbout={isAbout}>
         <NavLink href={ROUTES.HOME} $active={isCurrent(ROUTES.HOME)}>
-          {navigation.main}
+          {t("navigation.main")}
         </NavLink>
         <NavLink href={ROUTES.ABOUT} $active={isCurrent(ROUTES.ABOUT)}>
-          {navigation.about}
+          {t("navigation.about")}
         </NavLink>
         <NavLink href={ROUTES.WORKS} $active={isCurrent(ROUTES.WORKS)}>
-          {navigation.works}
+          {t("navigation.works")}
         </NavLink>
         <NavLink href={ROUTES.PROGRAM} $active={isCurrent(ROUTES.PROGRAM)}>
-          {navigation.program}
+          {t("navigation.program")}
         </NavLink>
         <NavLink
           href={ROUTES.ARCHIVE.STAFF}
           $active={pathname.startsWith("/archive")}
         >
-          {navigation.archive}
+          {t("navigation.archive")}
         </NavLink>
       </Navigation>
-      <LanguageToggle />
       <Hamburger />
+      <LanguageToggle />
     </Container>
   );
 }
@@ -55,15 +55,16 @@ const Container = styled.header`
   justify-content: flex-end;
   padding: 0 4rem;
   color: var(--layout-text);
+  transition: color 300ms ease;
 
   ${media.tablet`
     height: 8.4rem;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 4rem 2rem 2rem 2rem;
   `}
 
   ${media.mobile`
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 4rem 0 2rem 0;
     border-bottom: 0;
   `}
@@ -84,6 +85,8 @@ const Navigation = styled.nav`
   background: ${({ $isAbout, theme }) =>
     $isAbout ? theme.surface.brandDark : theme.primitives.grey[50]};
   transform: translateX(-50%);
+  transition: color 160ms ease-in-out, background-color 160ms ease-in-out,
+    border-color 160ms ease-in-out;
 
   ${media.tablet`
     display: none;
@@ -93,7 +96,7 @@ const Navigation = styled.nav`
 const NavLink = styled(Link)`
   color: inherit;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  line-height: 1.8;
+  line-height: 2;
   font-weight: 700;
   text-align: center;
   white-space: nowrap;
