@@ -8,26 +8,29 @@ export default function WorkListItem({ work, index }) {
   const { translate } = useTranslation();
 
   return (
-    <CategoryWorkItem key={work.id}>
+    <CategoryWorkItem>
       <Link href={`/works/${work.id}`}>
-        <CategoryWorkHeader>
-          <CategoryWorkTitle>
-            {index + 1}. {translate(work.title)}
-          </CategoryWorkTitle>
-          <CategoryTags>
-            {translate(work.tags)
-              .map((tag) => `#${tag}`)
-              .join(" ")}
-          </CategoryTags>
-        </CategoryWorkHeader>
-        <CategorySummary>{translate(work.shortDescription)}</CategorySummary>
+        <CategoryItemCont>
+          <h3>{index + 1}.</h3>
+          <CategoryContentCont>
+            <CategoryWorkHeader>
+              <h3>{translate(work.title)}</h3>
+              <h4>
+                {translate(work.tags)
+                  .map((tag) => `#${tag}`)
+                  .join(" ")}
+              </h4>
+            </CategoryWorkHeader>
+            <span>{translate(work.shortDescription)}</span>
+          </CategoryContentCont>
+        </CategoryItemCont>
       </Link>
     </CategoryWorkItem>
   );
 }
 const CategoryWorkItem = styled.li`
-  border-bottom: 1px solid ${({ theme }) => theme.line.secondary};
-  background: "transparent";
+  border-bottom: 1px solid transparent;
+  background: transparent;
   transition: background-color 160ms ease, border-color 160ms ease;
 
   a {
@@ -36,35 +39,51 @@ const CategoryWorkItem = styled.li`
   }
 
   &:hover {
-    border-bottom: 1px solid ${({ theme }) => theme.line.brand};
+    border-bottom-color: ${({ theme }) => theme.line.brand};
     background: ${({ theme }) => theme.surface.brand};
+    h3,
+    h4,
+    span {
+      color: ${({ theme }) => theme.text.brandDark};
+    }
   }
+
+  h3 {
+    margin: 0;
+    color: ${({ theme }) => theme.text.secondary};
+    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+    line-height: 180%;
+    font-weight: 700;
+  }
+
+  span {
+    color: ${({ theme }) => theme.text.quaternary};
+    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+    font-weight: 400;
+  }
+
+  h4 {
+    margin: 0;
+    color: ${({ theme }) => theme.text.quaternary};
+    font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+    line-height: 180%;
+    font-weight: 400;
+  }
+`;
+
+const CategoryItemCont = styled.div`
+  display: flex;
+  gap: 1.3rem;
+`;
+
+const CategoryContentCont = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 `;
 
 const CategoryWorkHeader = styled.div`
   display: flex;
   align-items: baseline;
-  gap: 1rem;
-`;
-
-const CategoryWorkTitle = styled.strong`
-  flex: none;
-  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  line-height: 1.5;
-`;
-
-const CategoryTags = styled.span`
-  overflow: hidden;
-  color: ${({ theme }) => theme.text.quaternary};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
-  line-height: 1.5;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
-
-const CategorySummary = styled.p`
-  margin: 1rem 0 0 3.4rem;
-  color: ${({ theme }) => theme.text.tertiary};
-  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  line-height: 1.8;
+  gap: 0.8rem;
 `;

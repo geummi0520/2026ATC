@@ -64,7 +64,10 @@ export default function Page() {
           <S.Description>{translate(content.description)}</S.Description>
           {selectedCategory ? (
             <>
-              <DesktopCategoryView works={visibleWorks} />
+              <DesktopCategoryView
+                key={selectedCategory}
+                works={visibleWorks}
+              />
               <S.CategoryFallback>
                 <WorkGrid works={visibleWorks} />
               </S.CategoryFallback>

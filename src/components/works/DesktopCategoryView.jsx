@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
@@ -16,12 +15,7 @@ export default function DesktopCategoryView({ works }) {
       <CategoryCollage>
         {works.map((work) => (
           <CollageLink key={work.id} href={`/works/${work.id}`}>
-            <Image
-              src={work.mainImage}
-              alt={translate(work.title)}
-              fill
-              sizes="(min-width: 1124px) 15vw, 25vw"
-            />
+            <Image src={work.mainImage} alt={translate(work.title)} fill />
           </CollageLink>
         ))}
       </CategoryCollage>
@@ -36,10 +30,14 @@ export default function DesktopCategoryView({ works }) {
 }
 
 const CategoryDesktop = styled.div`
+  height: max(30rem, calc(100dvh - 26.5rem));
+  width: auto;
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(34rem, 1fr);
-  align-items: start;
-  margin: 4rem -4rem -8rem;
+  grid-template-columns: auto minmax(34rem, 1fr);
+  align-items: stretch;
+  margin: 0rem -4rem -8rem;
+  padding: 4rem 0;
+  overflow: hidden;
 
   ${media.worksTablet`
     display: none;
@@ -49,12 +47,18 @@ const CategoryDesktop = styled.div`
 const CategoryCollage = styled.div`
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-content: start;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  height: 100%;
+  aspect-ratio: 1 / 1;
 `;
 
 const CollageLink = styled(Link)`
   position: relative;
   display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
   aspect-ratio: 3 / 4;
   overflow: hidden;
   background: ${({ theme }) => theme.surface.secondary};
@@ -71,7 +75,15 @@ const CollageLink = styled(Link)`
 `;
 
 const CategoryWorkList = styled.ol`
+  height: 100%;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
   list-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
