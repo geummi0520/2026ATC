@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import styled from "styled-components";
+import BackButton from "@/components/works/BackButton";
 import { media } from "@/styles/media";
 
 export default function WorksRail({
@@ -14,11 +14,9 @@ export default function WorksRail({
   return (
     <Rail aria-label="작품 카테고리">
       {backHref ? (
-        <BackLink href={backHref}>← 이전으로</BackLink>
+        <BackButton href={backHref} />
       ) : onBack ? (
-        <BackButton type="button" onClick={onBack}>
-          ← 이전으로
-        </BackButton>
+        <BackButton onClick={onBack} />
       ) : null}
 
       {categories.length > 0 && (
@@ -55,6 +53,10 @@ const Rail = styled.nav`
   ${media.worksTablet`
     padding: 1.2rem 2rem;
   `}
+
+  ${media.mobile`
+    display: none;
+  `}
 `;
 
 const CategoryList = styled.div`
@@ -62,24 +64,10 @@ const CategoryList = styled.div`
   align-items: center;
   gap: 2rem;
   margin-left: auto;
-`;
 
-const BackButton = styled.button`
-  padding: 0;
-  border: 0;
-  border-bottom: 1px solid currentColor;
-  background: transparent;
-  color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
-  line-height: 120%;
-  cursor: pointer;
-`;
-
-const BackLink = styled(Link)`
-  border-bottom: 1px solid currentColor;
-  color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
-  line-height: 120%;
+  ${media.mobile`
+    display: none;
+  `}
 `;
 
 const CategoryButton = styled.button`

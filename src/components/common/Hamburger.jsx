@@ -147,7 +147,7 @@ const Sheet = styled.div`
   `}
 
   ${media.mobile`
-    inset: 0 3rem 0 0;
+    inset: 0 2.4rem 0 0;
     padding: 0 2.4rem;
     `}
 `;

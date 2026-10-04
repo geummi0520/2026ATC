@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
+import { media } from "@/styles/media";
 
 export default function WorkCard({ work, displayNumber }) {
   const { translate } = useTranslation();
@@ -55,6 +56,11 @@ const Thumbnail = styled.div`
   /* ${Card}:hover & img {
     transform: scale(1.025);
   } */
+
+  ${media.mobile`
+    min-width: 0;
+    min-height: 0;
+  `}
 `;
 
 const Title = styled.strong`
@@ -67,16 +73,24 @@ const Title = styled.strong`
   line-height: 180%;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  ${media.mobile`
+    font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  `}
 `;
 
 const Tags = styled.span`
   display: block;
   margin: 0.4rem 0 1.2rem 0;
   overflow: hidden;
-  color: ${({ theme }) => theme.text.teritary};
+  color: ${({ theme }) => theme.text.tertiary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 400;
   line-height: 180%;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  ${media.mobile`
+    font-size: 1rem;
+  `}
 `;

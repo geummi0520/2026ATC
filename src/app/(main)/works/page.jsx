@@ -2,7 +2,10 @@
 
 import { useMemo, useState, useSyncExternalStore } from "react";
 import Footer from "@/components/common/Footer";
+import BackButton from "@/components/works/BackButton";
 import DesktopCategoryView from "@/components/works/DesktopCategoryView";
+import FloorPlanButton from "@/components/works/FloorPlanButton";
+import MobileCategoryList from "@/components/works/MobileCategoryList";
 import WorkGrid from "@/components/works/WorkGrid";
 import WorksRail from "@/components/works/WorksRail";
 import * as S from "@/app/(main)/works/styles";
@@ -55,13 +58,27 @@ export default function Page() {
 
       <S.ScrollArea data-works-scroll>
         <S.Content>
+          {selectedCategory && (
+            <S.MobileActionRow>
+              <BackButton onClick={() => setSelectedCategory(null)} />
+              <FloorPlanButton
+                label={translate(worksPageContent.floorPlanLabel)}
+              />
+            </S.MobileActionRow>
+          )}
           <S.TitleRow>
             <S.Title>{translate(content.title)}</S.Title>
-            <S.FloorPlanButton type="button">
-              {translate(worksPageContent.floorPlanLabel)} ↗
-            </S.FloorPlanButton>
+            <FloorPlanButton
+              label={translate(worksPageContent.floorPlanLabel)}
+              hideOnMobile={Boolean(selectedCategory)}
+            />
           </S.TitleRow>
           <S.Description>{translate(content.description)}</S.Description>
+          <MobileCategoryList
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+          />
           {selectedCategory ? (
             <>
               <DesktopCategoryView
@@ -77,6 +94,12 @@ export default function Page() {
           )}
         </S.Content>
         <Footer />
+        {selectedCategory && (
+          <S.MobileCategoryFooter>
+            <span>{selectedCategory}</span>
+            <span aria-hidden="true">⌃</span>
+          </S.MobileCategoryFooter>
+        )}
       </S.ScrollArea>
     </S.Frame>
   );

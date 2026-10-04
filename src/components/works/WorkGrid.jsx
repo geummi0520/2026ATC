@@ -31,4 +31,9 @@ const Grid = styled.div`
   ${media.tablet`
     grid-template-columns: repeat(3, minmax(0, 1fr));
   `}
+
+  ${media.mobile`
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.4rem 1.2rem;
+  `}
 `;

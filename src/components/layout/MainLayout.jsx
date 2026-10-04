@@ -78,20 +78,46 @@ export default function MainLayout({ children }) {
     };
 
     requestUpdate();
-    const scrollTarget = isWorks
+    const observedScrollTarget = isWorks
       ? document.querySelector("[data-works-scroll]")
-      : window;
-    scrollTarget?.addEventListener("scroll", requestUpdate, { passive: true });
+      : document.documentElement;
+    document.addEventListener("scroll", requestUpdate, {
+      passive: true,
+      capture: true,
+    });
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("touchmove", requestUpdate, { passive: true });
+    window.addEventListener("scrollend", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
+    window.visualViewport?.addEventListener("resize", requestUpdate);
 
     const resizeObserver = new ResizeObserver(requestUpdate);
     resizeObserver.observe(document.body);
+    if (observedScrollTarget instanceof Element) {
+      resizeObserver.observe(observedScrollTarget);
+      Array.from(observedScrollTarget.children).forEach((child) =>
+        resizeObserver.observe(child)
+      );
+    }
+
+    const mutationObserver = new MutationObserver(requestUpdate);
+    if (observedScrollTarget instanceof Element) {
+      mutationObserver.observe(observedScrollTarget, {
+        childList: true,
+        subtree: true,
+      });
+    }
 
     return () => {
       if (frameId !== null) window.cancelAnimationFrame(frameId);
-      scrollTarget?.removeEventListener("scroll", requestUpdate);
+      document.removeEventListener("scroll", requestUpdate, true);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("touchmove", requestUpdate);
+      window.removeEventListener("scrollend", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
+      window.visualViewport?.removeEventListener("resize", requestUpdate);
       resizeObserver.disconnect();
+      mutationObserver.disconnect();
     };
   }, [isWorks, pathname]);
 
@@ -160,7 +186,7 @@ const RailLabel = styled.span`
 `}
   ${media.mobile`
     font-weight: 600;
-    padding: 0;
+    padding: 0.5rem 0;
     font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     opacity: 0.3;
 `}
@@ -194,7 +220,7 @@ const ScrollIndicator = styled.span`
   transition: color 300ms ease;
   ${media.mobile`
     font-weight: 200;
-    left: 0.7rem;
+    left: 1.1rem;
 `}
 `;
 

@@ -26,6 +26,21 @@ export const Content = styled.div`
   ${media.worksTablet`
     padding: 4rem 2rem;
   `}
+
+  ${media.mobile`
+    padding: 0;
+  `}
+`;
+
+export const MobileActionRow = styled.div`
+  display: none;
+
+  ${media.mobile`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.2rem 0 3.2rem 0;
+  `}
 `;
 
 export const TitleRow = styled.div`
@@ -33,23 +48,19 @@ export const TitleRow = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  ${media.mobile`
+    padding: 2rem 1rem;
+  `}
 `;
 
 export const Title = styled.h1`
   margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
   line-height: 1.4;
-`;
 
-export const FloorPlanButton = styled.button`
-  padding: 0;
-  border: 0;
-  border-bottom: 1px solid currentColor;
-  background: transparent;
-  color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
-  font-weight: 700;
-  cursor: pointer;
+  ${media.mobile`
+    font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
+  `}
 `;
 
 export const Description = styled.p`
@@ -58,6 +69,13 @@ export const Description = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 400;
   line-height: 180%;
+
+  ${media.mobile`
+  /* display: none; */
+  margin: 0 1rem 2rem 1rem;
+
+    font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  `}
 `;
 
 export const CategoryFallback = styled.div`
@@ -65,5 +83,20 @@ export const CategoryFallback = styled.div`
 
   ${media.worksTablet`
     display: block;
+  `}
+`;
+
+export const MobileCategoryFooter = styled.div`
+  display: none;
+
+  ${media.mobile`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.4rem 2rem;
+    color: ${({ theme }) => theme.text.brand};
+    background: ${({ theme }) => theme.surface.secondary};
+    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+    font-weight: 700;
   `}
 `;
