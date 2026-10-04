@@ -28,6 +28,7 @@ const Layout = styled.div`
 export default function MainLayout({ children }) {
   const pathname = usePathname();
   const isAbout = pathname === "/about";
+  const isWorks = pathname === "/works" || pathname.startsWith("/works/");
   const rightRailRef = useRef(null);
 
   useEffect(() => {
@@ -43,11 +44,22 @@ export default function MainLayout({ children }) {
 
       if (!rail || !indicatorSlot || !indicator) return;
 
-      const scrollableHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
+      const scrollTarget = isWorks
+        ? document.querySelector("[data-works-scroll]")
+        : document.documentElement;
+      const scrollableHeight = isWorks
+        ? (scrollTarget?.scrollHeight ?? 0) - (scrollTarget?.clientHeight ?? 0)
+        : document.documentElement.scrollHeight - window.innerHeight;
       const progress =
         scrollableHeight > 0
-          ? Math.min(Math.max(window.scrollY / scrollableHeight, 0), 1)
+          ? Math.min(
+              Math.max(
+                (isWorks ? scrollTarget?.scrollTop ?? 0 : window.scrollY) /
+                  scrollableHeight,
+                0
+              ),
+              1
+            )
           : 0;
       const travelDistance = Math.max(
         indicatorSlot.clientHeight - indicator.offsetHeight,
@@ -66,32 +78,61 @@ export default function MainLayout({ children }) {
     };
 
     requestUpdate();
+    const observedScrollTarget = isWorks
+      ? document.querySelector("[data-works-scroll]")
+      : document.documentElement;
+    document.addEventListener("scroll", requestUpdate, {
+      passive: true,
+      capture: true,
+    });
     window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("touchmove", requestUpdate, { passive: true });
+    window.addEventListener("scrollend", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
+    window.visualViewport?.addEventListener("resize", requestUpdate);
 
     const resizeObserver = new ResizeObserver(requestUpdate);
     resizeObserver.observe(document.body);
+    if (observedScrollTarget instanceof Element) {
+      resizeObserver.observe(observedScrollTarget);
+      Array.from(observedScrollTarget.children).forEach((child) =>
+        resizeObserver.observe(child)
+      );
+    }
+
+    const mutationObserver = new MutationObserver(requestUpdate);
+    if (observedScrollTarget instanceof Element) {
+      mutationObserver.observe(observedScrollTarget, {
+        childList: true,
+        subtree: true,
+      });
+    }
 
     return () => {
       if (frameId !== null) window.cancelAnimationFrame(frameId);
+      document.removeEventListener("scroll", requestUpdate, true);
       window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("touchmove", requestUpdate);
+      window.removeEventListener("scrollend", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
+      window.visualViewport?.removeEventListener("resize", requestUpdate);
       resizeObserver.disconnect();
+      mutationObserver.disconnect();
     };
-  }, [pathname]);
+  }, [isWorks, pathname]);
 
   return (
-    <Layout $isAbout={isAbout}>
+    <Layout $isAbout={isAbout} $isWorks={isWorks}>
       <LeftRail>
         <RailSlot>
           <LeftRailLabel>2026 ATC</LeftRailLabel>
         </RailSlot>
         <RailSlot />
       </LeftRail>
-      <Center>
+      <Center $isWorks={isWorks}>
         <Header />
-        <MainContent>{children}</MainContent>
-        <Footer />
+        <MainContent $isWorks={isWorks}>{children}</MainContent>
+        {!isWorks && <Footer />}
       </Center>
       <RightRail ref={rightRailRef}>
         <RailSlot>
@@ -145,7 +186,7 @@ const RailLabel = styled.span`
 `}
   ${media.mobile`
     font-weight: 600;
-    padding: 0;
+    padding: 0.5rem 0;
     font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     opacity: 0.3;
 `}
@@ -179,7 +220,7 @@ const ScrollIndicator = styled.span`
   transition: color 300ms ease;
   ${media.mobile`
     font-weight: 200;
-    left: 0.7rem;
+    left: 1.1rem;
 `}
 `;
 
@@ -201,9 +242,11 @@ const RightRail = styled(Rail)`
 
 const Center = styled.div`
   min-height: 100dvh;
+  height: ${({ $isWorks }) => ($isWorks ? "100dvh" : "auto")};
   display: flex;
   flex-direction: column;
   margin: 0 6%;
+  overflow: ${({ $isWorks }) => ($isWorks ? "hidden" : "visible")};
   ${media.mobile`
     margin: 0 2.4rem;
 
@@ -213,6 +256,8 @@ const Center = styled.div`
 const MainContent = styled.main`
   flex: 1;
   padding-top: 12rem;
+  min-height: 0;
+  overflow: ${({ $isWorks }) => ($isWorks ? "hidden" : "visible")};
 
   ${media.tablet`
     padding-top: 8.4rem;
