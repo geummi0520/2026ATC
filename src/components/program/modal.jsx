@@ -2,6 +2,8 @@ import styled, { keyframes } from "styled-components";
 import { useState, useRef } from "react";
 import { media } from "@/styles/media";
 import { programs } from "@/data/program";
+import Image from "next/image";
+
 
 
 
@@ -94,6 +96,8 @@ export default function ProgramModal({
                                     <ModalImg
                                         src={program.imgUrl}
                                         alt="modal image"
+                                        width={230}
+                                        height={307}
 
                                     />
                                     <DateContainer>
@@ -155,8 +159,8 @@ export default function ProgramModal({
 const BlurContainer = styled.div`
 display:none;
 position: fixed;
-top:0px;
-left:0px;
+top:0rem;
+left:0rem;
 width: 100vw;
 height: 100vh;
 background: rgba(20, 21, 24, 0.50);
@@ -175,7 +179,7 @@ const ModalFrame = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-gap: 10px;
+gap: 1rem;
 
 width:100%;
 heigth:100%;
@@ -183,23 +187,23 @@ heigth:100%;
 `
 const SlideIndicator = styled.div`
 display: flex;
-height: 20px;
+height: 2rem;
 justify-content: center;
 align-items: flex-start;
-gap: 10px;
+gap: 1rem;
 flex: 1 0 0;
-padding:10px;
+padding:1rem;
 `;
 
 const Dot = styled.div`
-width: 16px;
-height: 16px;
+width: 1.6rem;
+height: 1.6rem;
 aspect-ratio: 1/1;
-border-radius: 20px;
-border: 1px solid var(--line-brand-invert, #E9EAED);
+border-radius: 2rem;
+border: 0.1rem solid ${({ theme }) => theme.line.brandInvert};;
 
 background:${({ $isOpen }) => (($isOpen) ?
-        "var(--Grey-grey-10, #F1F2F4)"
+        "#F1F2F4"
         :
         "background: rgba(241, 242, 244, 0.40)"
     )};
@@ -207,9 +211,9 @@ background:${({ $isOpen }) => (($isOpen) ?
 `;
 
 const ModalContainer = styled.div`
-width:300px;
+width:30rem;
 
-padding: 20px;
+padding: 2rem;
 
 display: flex;
 
@@ -218,9 +222,9 @@ justify-content: space-between;
 align-items: center;
 flex-shrink: 0;
 
-gap:10px;
+gap:1rem;
 
-background: var(--background-primary, #F1F2F4);
+background: ${({ theme }) => theme.background.primary};
 `;
 
 
@@ -240,23 +244,23 @@ flex: 0 0 100%;
 min-width:100%;
 flex-direction: column;
 align-items: flex-start;
-gap: 10px;
+gap: 1rem;
 
 `
 
 const ExitButton = styled.button`
 display: flex;
-padding: 6px 24px;
+padding: 0.6rem 2.4rem;
 justify-content: center;
 align-items: center;
-gap: 10px;
+gap: 1rem;
 
-border: 1px solid var(--line-brand, #188653);
-background: var(--button-primary, #F1F2F4);
+border: 0.1rem solid var(--line-brand, #188653);${({ theme }) => theme.line.brand};
+background:${({ theme }) => theme.button.primary};
 `;
 const ExitIconWrapper = styled.div`
-width: 24px;
-height: 24px;
+width: 2.4rem;
+height: 2.4rem;
 aspect-ratio: 1/1;
 
 display:flex;
@@ -265,16 +269,15 @@ align-items:center;
 `;
 
 const ExitText = styled.span`
-color: var(--text-brand, #188653);
+color: ${({ theme }) => theme.text.brand};
 
 /* text/text-medium-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-md, 14px);
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 700;
 line-height: 180%; /* 25.2px */
 `;
-const ModalImg = styled.img`
+const ModalImg = styled(Image)`
 width:100%;
 aspect-ratio: 3/4;
 object-fit: cover;
@@ -285,26 +288,25 @@ const DateContainer = styled.div`
     align-items: flex-start;
 `;
 const Date = styled.div`
-color: var(--text-primary, #222429);
+color: ${({ theme }) => theme.text.primary};
 
-color: var(--text-primary, #222429);
+color: ${({ theme }) => theme.text.primary};
 
 /* text/text-small */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-sm, 12px);
+font-size: ${({ theme }) => theme.typography.fontSize.textSm};
 font-style: normal;
 font-weight: 400;
-line-height: 180%; /* 21.6px */
+line-height: 180%; 
 
 `;
 
 const Site = styled.span`
 align-self:stretch;
-color: var(--text-secondary, #3B3F48);
+color: ${({ theme }) => theme.text.secondary};
 
 /* text/text-small */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-sm, 12px);
+// font-family: MaruBuri;
+font-size: ${({ theme }) => theme.typography.fontSize.textSm};
 font-style: normal;
 font-weight: 400;
 line-height: 180%; /* 21.6px */
@@ -315,11 +317,11 @@ line-height: 180%; /* 21.6px */
 const Description = styled.div`
 align-self:stretch;
 
-color: var(--text-tertiary, #474C57);
+color: ${({ theme }) => theme.text.tertiary};
 
 /* text/text-small */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-sm, 12px);
+// font-family: MaruBuri;
+font-size: ${({ theme }) => theme.typography.fontSize.textSm};
 font-style: normal;
 font-weight: 400;
 line-height: 180%; /* 21.6px */
@@ -328,11 +330,11 @@ line-height: 180%; /* 21.6px */
 `;
 const Title = styled.div`
 align-self:stretch;
-color: var(--text-primary, #222429);
+color: ${({ theme }) => theme.text.primary};
 
 /* text/text-medium-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-md, 14px);
+// font-family: MaruBuri;
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 700;
 line-height: 180%; /* 25.2px */
