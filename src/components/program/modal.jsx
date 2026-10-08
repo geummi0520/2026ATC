@@ -162,12 +162,12 @@ height: 100vh;
 background: rgba(20, 21, 24, 0.50);
 z-index: 99;
 
-@media (max-width:768px){
+${media.mobile`
     display: flex;
     align-items:center;
     justify-content:center;
     
-}
+`};
 
 
 `;
@@ -190,6 +190,7 @@ gap: 10px;
 flex: 1 0 0;
 padding:10px;
 `;
+
 const Dot = styled.div`
 width: 16px;
 height: 16px;
