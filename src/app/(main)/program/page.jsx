@@ -8,12 +8,15 @@ import { media } from "@/styles/media";
 import ProgramItem from "@/components/program/program-item";
 import Modal from "@/components/program/modal";
 
+import useTranslation from "@/hooks/useTranslation";
+
 
 export default function ProgramPage() {
 
   // 현재 토글이 열린 아이템의 인덱스를 저장
   const [openIdx, setOpenIdx] = useState(-1);
 
+  const { translate } = useTranslation();
 
 
   // 클릭시 아이템의 토글 변경 함수
@@ -36,11 +39,11 @@ export default function ProgramPage() {
         {programs.map((program, idx) => (
           <ProgramItem
             key={idx}
-            title={program.title}
+            title={translate(program.title)}
             imgUrl={program.imgUrl}
-            description={program.description}
+            description={translate(program.description)}
             dates={program.dates}
-            site={program.site}
+            site={translate(program.site)}
             isOpen={openIdx == idx}
             handleToggle={() => handleToggle(idx)}
           />

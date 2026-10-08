@@ -24,6 +24,10 @@ const en = {
     telephone: "Tel +82-2-705-8031",
     fax: "Fax +82-2-3274-4826",
   },
+  program: {
+    location: "Location",
+    dateTime: "Date & Time",
+  },
 };
 
 export default en;
