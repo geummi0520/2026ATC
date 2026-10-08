@@ -67,38 +67,36 @@ export default function ProgramPage() {
 const Container = styled.div`
 display: flex;
 width: 100%;
-padding: 40px;
+padding: 4rem;
 flex-direction: column;
 align-items: flex-start;
-gap: 40px;
+gap: 4rem;
 
 box-sizing: border-box;
 max-width: 100%;
 ${media.tablet`
   
-gap:0px;
+gap:0rem;
 `};
 
 `;
 const PageName = styled.div`
   width:100%;
-  color: var(--text-primary, #222429);
-  font-family: MaruBuri;
-  font-size: var(--display-lg, 48px);
+  color: ${({ theme }) => theme.text.primary};
+  font-size: ${({ theme }) => theme.typography.fontSize.displayLg};
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  letter-spacing: -1.44px;
+  letter-spacing: -0.144rem;
 
 ${media.tablet`
 
 
-padding: 40px 20px;
-    color: var(--text-primary, #222429);
+padding: 4rem 2rem;
+color: ${({ theme }) => theme.text.primary};
 
 /* heading/heading-medium-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-heading-md, 24px);
+font-size: ${({ theme }) => theme.typography.fontSize.headingMd}
 font-style: normal;
 font-weight: 700;
 line-height: normal;
@@ -107,13 +105,12 @@ line-height: normal;
 
 ${media.mobile`
 
-padding: 40px 0;
+padding: 4rem 0;
 
-color: var(--text-primary, #222429);
+color: ${({ theme }) => theme.text.primary}
 
 /* heading/heading-small-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-heading-sm, 20px);
+font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
