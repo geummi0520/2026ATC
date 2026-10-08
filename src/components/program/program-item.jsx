@@ -109,6 +109,9 @@ cursor: pointer;
 
 ${media.mobile`
     padding: 0.625rem;
+    height:7.6875rem;
+    gap: 0.5rem;
+    // box-sizing:border-box;
     `}
 `;
 
@@ -157,9 +160,9 @@ z-index:1;
 //     }
 //   }
 
-@media (max-width:768px){
+${media.mobile`
     display:none;
-    }
+    `};
 ${({ $desktop }) => $desktop && `
     @media (max-width:1124px) and (min-width:768px) {
         display: none;
@@ -170,9 +173,9 @@ ${({ $tablet }) => $tablet && `
         display: none;
     `}
 ${({ $tablet }) => $tablet && `
-@media (max-width:1124px) and (min-width:768px) {
+${media.tablet`
     display: block;
-}
+`};
 `}
 ${({ $tablet, $isOpen }) => $tablet && `
     opacity: ${$isOpen ? 1 : 0};
@@ -248,11 +251,11 @@ const ContentContainer = styled.div`
     align-self: stretch; // 아래로 늘리기
     box-sizing: border-box;
 
-@media (max-width:1124px) and (min-width:768px) {
+${media.tablet`
 
         flex-direction:row;
         gap:16px;
-        }
+        `};
 
 `
 
@@ -264,10 +267,10 @@ display:flex;
     gap: 20px;
     // align-self: stretch; // 아래로 늘리기
     box-sizing: border-box;
-@media (max-width:1124px) and (min-width:768px) {
+${media.tablet`
 
     gap:16px;
-}
+`};
 
 `;
 
@@ -278,10 +281,10 @@ flex-direction: column;
 justify-content: center;
 align-items: flex-start;
 // gap: 10px;
-@media (max-width:1124px) and (min-width:768px) {
+${media.tablet`
 
     gap:16px;
-    }
+    `};
 
 z-index:1;
 
@@ -303,9 +306,9 @@ font-style: normal;
 font-weight: 400;
 line-height: 180%; 
 
-@media (max-width:768px){
+${media.moible`
 font-size: var(--Font-size-text-sm, 12px);
-}
+`};
 
 `;
 const DateContainer = styled.div`

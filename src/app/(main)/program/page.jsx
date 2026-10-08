@@ -74,9 +74,10 @@ gap: 40px;
 
 box-sizing: border-box;
 max-width: 100%;
-@media (max-width:1124px) and (min-width:768px){
+${media.tablet`
+  
 gap:0px;
-  };
+`};
 
 `;
 const PageName = styled.div`
@@ -89,7 +90,7 @@ const PageName = styled.div`
   line-height: normal;
   letter-spacing: -1.44px;
 
-@media (max-width:1124px) and (min-width:768px){
+${media.tablet`
 
 
 padding: 40px 20px;
@@ -101,10 +102,10 @@ font-size: var(--Font-size-heading-md, 24px);
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-};
+`};
 
 
-@media (max-width:768px){
+${media.mobile`
 
 padding: 40px 0;
 
@@ -116,8 +117,9 @@ font-size: var(--Font-size-heading-sm, 20px);
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-  }
+  `}
 `;
+
 const ProgramList = styled.div`
 display: flex;
 flex-direction: column;
