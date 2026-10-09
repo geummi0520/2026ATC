@@ -24,6 +24,10 @@ const ko = {
     telephone: "Tel +82-2-705-8031",
     fax: "Fax +82-2-3274-4826",
   },
+  program: {
+    location: "위치",
+    dateTime: "일시",
+  },
 };
 
 export default ko;

@@ -8,12 +8,15 @@ import { media } from "@/styles/media";
 import ProgramItem from "@/components/program/program-item";
 import Modal from "@/components/program/modal";
 
+import useTranslation from "@/hooks/useTranslation";
+
 
 export default function ProgramPage() {
 
   // 현재 토글이 열린 아이템의 인덱스를 저장
   const [openIdx, setOpenIdx] = useState(-1);
 
+  const { translate } = useTranslation();
 
 
   // 클릭시 아이템의 토글 변경 함수
@@ -36,11 +39,11 @@ export default function ProgramPage() {
         {programs.map((program, idx) => (
           <ProgramItem
             key={idx}
-            title={program.title}
+            title={translate(program.title)}
             imgUrl={program.imgUrl}
-            description={program.description}
+            description={translate(program.description)}
             dates={program.dates}
-            site={program.site}
+            site={translate(program.site)}
             isOpen={openIdx == idx}
             handleToggle={() => handleToggle(idx)}
           />
@@ -67,57 +70,56 @@ export default function ProgramPage() {
 const Container = styled.div`
 display: flex;
 width: 100%;
-padding: 40px;
+padding: 4rem;
 flex-direction: column;
 align-items: flex-start;
-gap: 40px;
+gap: 4rem;
 
 box-sizing: border-box;
 max-width: 100%;
-@media (max-width:1124px) and (min-width:768px){
-gap:0px;
-  };
+${media.tablet`
+  
+gap:0rem;
+`};
 
 `;
 const PageName = styled.div`
   width:100%;
-  color: var(--text-primary, #222429);
-  font-family: MaruBuri;
-  font-size: var(--display-lg, 48px);
+  color: ${({ theme }) => theme.text.primary};
+  font-size: ${({ theme }) => theme.typography.fontSize.displayLg};
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  letter-spacing: -1.44px;
+  letter-spacing: -0.144rem;
 
-@media (max-width:1124px) and (min-width:768px){
+${media.tablet`
 
 
-padding: 40px 20px;
-    color: var(--text-primary, #222429);
+padding: 4rem 2rem;
+color: ${({ theme }) => theme.text.primary};
 
 /* heading/heading-medium-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-heading-md, 24px);
+font-size: ${({ theme }) => theme.typography.fontSize.headingMd}
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-};
+`};
 
 
-@media (max-width:768px){
+${media.mobile`
 
-padding: 40px 0;
+padding: 4rem 0;
 
-color: var(--text-primary, #222429);
+color: ${({ theme }) => theme.text.primary}
 
 /* heading/heading-small-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-heading-sm, 20px);
+font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-  }
+  `}
 `;
+
 const ProgramList = styled.div`
 display: flex;
 flex-direction: column;
