@@ -24,6 +24,16 @@ const en = {
     telephone: "Tel +82-2-705-8031",
     fax: "Fax +82-2-3274-4826",
   },
+  about: {
+    overview: "Exhibition Overview",
+    topic: "Theme",
+    topicSentence: "Do Not Change the Recipe*",
+    congratulatory: "Congratulatory Message",
+    linkToStaffCredit: "View Staff Credits",
+    path: "Directions",
+    map: "Sogang University Campus Map",
+    stationInfo: "Subway Information"
+  },
 };
 
 export default en;

@@ -24,6 +24,16 @@ const ko = {
     telephone: "Tel +82-2-705-8031",
     fax: "Fax +82-2-3274-4826",
   },
+  about: {
+    overview: "전시개요",
+    topic: "주제문",
+    topicSentence: "레시피 바꾸지 말 것*",
+    congratulatory: "축사",
+    linkToStaffCredit: "스태프 크레딧 바로가기",
+    path: "오시는 길",
+    map: "서강대학교 캠퍼스 지도",
+    stationInfo: "지하철역 정보"
+  },
 };
 
 export default ko;
