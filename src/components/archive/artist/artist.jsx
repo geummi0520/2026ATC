@@ -11,9 +11,8 @@ export default function ArtistCredit() {
 
   const rows = artists.flatMap((artist) =>
     artist.works.map((work, index) => ({
-      id: `${artist.id}-${index}`,
+      id: `${artist.name}-${work.workId}`,
       name: index === 0 ? artist.name : "",
-      team: work.team,
       title: work.title,
       image: work.image,
       isPersonBoundary: index === artist.works.length - 1,
@@ -52,9 +51,7 @@ export default function ArtistCredit() {
             >
               <Name $showDivider={row.isPersonBoundary}>{row.name}</Name>
               <Gap $showDivider={row.isPersonBoundary} />
-              <Work $showDivider={row.isPersonBoundary}>
-                {row.team} - {row.title}
-              </Work>
+              <Work $showDivider={row.isPersonBoundary}>{row.title}</Work>
             </Row>
           ))}
         </List>
