@@ -1,3 +1,5 @@
+import Artbook from "@/components/archive/artbook/artbook";
+
 export default function ArtbookPage() {
-  return <h1>Artbook</h1>;
+  return <Artbook />;
 }
