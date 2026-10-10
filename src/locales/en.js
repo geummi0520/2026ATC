@@ -13,6 +13,11 @@ const en = {
     menuOpen: "Open menu",
     menuClose: "Close menu",
   },
+  artistCredit: {
+    heading: "Artist Credit",
+    subtitle:
+      "A placeholder note that says you'll be able to click through to each work's details.",
+  },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
     slogan: "<레시피 바꾸지 말 것 *>",

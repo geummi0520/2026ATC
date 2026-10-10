@@ -4,71 +4,84 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import { artists } from "@/data/artist";
+import { media } from "@/styles/media";
+import useTranslation from "@/hooks/useTranslation";
+
+const PREVIEW_WIDTH = 400; 
+const PREVIEW_HEIGHT = (PREVIEW_WIDTH * 4) / 3; // aspect-ratio: 3 / 4
+const HEADER_HEIGHT = 200; 
 
 export default function ArtistCredit() {
-  const [preview, setPreview] = useState(null);
+  const { t, translate } = useTranslation();
+  const [hovered, setHovered] = useState(null);
   const contentRef = useRef(null);
 
-  const rows = artists.flatMap((artist) =>
-    artist.works.map((work, index) => ({
-      id: `${artist.id}-${index}`,
-      name: index === 0 ? artist.name : "",
-      team: work.team,
-      title: work.title,
-      image: work.image,
-      isPersonBoundary: index === artist.works.length - 1,
-    })),
-  );
-
-  const handleMouseEnter = (image) => (event) => {
-    const rowRect = event.currentTarget.getBoundingClientRect();
+  const handleWorkEnter = (personIndex, workIndex, image) => () => {
     const contentRect = contentRef.current.getBoundingClientRect();
-    const isUpperTwoThirds = rowRect.top < (window.innerHeight * 3) / 5;
 
-    setPreview(
-      isUpperTwoThirds
-        ? { image, anchor: "top", offset: rowRect.top - contentRect.top }
-        : {
-            image,
-            anchor: "bottom",
-            offset: contentRect.bottom - rowRect.bottom,
-          },
-    );
+    const xMin = window.innerWidth / 2;
+    const xMax = Math.max(xMin, contentRect.right - PREVIEW_WIDTH);
+    const yMin = HEADER_HEIGHT;
+    const yMax = Math.max(yMin, window.innerHeight - PREVIEW_HEIGHT);
+
+    setHovered({
+      personIndex,
+      workIndex,
+      image,
+      left: xMin + Math.random() * (xMax - xMin),
+      top: yMin + Math.random() * (yMax - yMin),
+    });
   };
 
-  const handleMouseLeave = () => setPreview(null);
+  const handleWorkLeave = () => setHovered(null);
 
   return (
     <Container>
-      <Heading>Artist Credit</Heading>
-      <Subtitle>대충 클릭하면 작품 상세보기로 이동할 수 있다는 글</Subtitle>
+      <Heading>{t("artistCredit.heading")}</Heading>
+      <Subtitle>{t("artistCredit.subtitle")}</Subtitle>
       <Content ref={contentRef}>
         <List>
-          {rows.map((row) => (
-            <Row
-              key={row.id}
-              onMouseEnter={handleMouseEnter(row.image)}
-              onMouseLeave={handleMouseLeave}
+          {artists.map((artist, personIndex) => (
+            <PersonBlock
+              key={`${personIndex}-${artist.name.ko}`}
+              $rows={artist.works.length}
             >
-              <Name $showDivider={row.isPersonBoundary}>{row.name}</Name>
-              <Gap $showDivider={row.isPersonBoundary} />
-              <Work $showDivider={row.isPersonBoundary}>
-                {row.team} - {row.title}
-              </Work>
-            </Row>
+              <Name
+                $rows={artist.works.length}
+                $active={hovered?.personIndex === personIndex}
+              >
+                {translate(artist.name)}
+              </Name>
+              <Gap
+                $rows={artist.works.length}
+                $active={hovered?.personIndex === personIndex}
+              />
+              {artist.works.map((work, workIndex) => (
+                <Work
+                  key={work.workId}
+                  $isLast={workIndex === artist.works.length - 1}
+                  $active={
+                    hovered?.personIndex === personIndex &&
+                    hovered?.workIndex === workIndex
+                  }
+                  onMouseEnter={handleWorkEnter(
+                    personIndex,
+                    workIndex,
+                    work.image,
+                  )}
+                  onMouseLeave={handleWorkLeave}
+                >
+                  {translate(work.title)}
+                </Work>
+              ))}
+            </PersonBlock>
           ))}
         </List>
-        {preview && (
-          <Preview
-            style={
-              preview.anchor === "top"
-                ? { top: preview.offset }
-                : { bottom: preview.offset }
-            }
-          >
+        {hovered && (
+          <Preview style={{ top: hovered.top, left: hovered.left }}>
             <PreviewImageWrapper>
               <Image
-                src={preview.image}
+                src={hovered.image}
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 0px, 30vw"
@@ -89,10 +102,10 @@ const Container = styled.section`
   gap: 4rem;
   padding: 4rem;
 
-  @media (max-width: 767px) {
+  ${media.mobile`
     gap: 1rem;
     padding: 2rem 1rem;
-  }
+  `}
 `;
 
 const Heading = styled.h1`
@@ -101,13 +114,13 @@ const Heading = styled.h1`
   font-weight: 700;
   color: ${({ theme }) => theme.text.primary};
 
-  @media (max-width: 1123px) {
+  ${media.tablet`
     font-size: 2.4rem;
-  }
+  `}
 
-  @media (max-width: 767px) {
+  ${media.mobile`
     font-size: 2rem;
-  }
+  `}
 `;
 
 const Subtitle = styled.p`
@@ -128,59 +141,57 @@ const List = styled.ul`
   list-style: none;
 `;
 
-const Row = styled.li`
-  display: flex;
+const PersonBlock = styled.li`
+  display: grid;
+  grid-template-columns: 12rem 2.4rem 1fr;
+  grid-template-rows: repeat(${({ $rows }) => $rows}, auto);
   cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.text.brand};
-  }
 `;
 
 const Name = styled.span`
   display: flex;
   align-items: center;
-  flex: 0 0 12rem;
-  padding: 1rem 0;
+  grid-column: 1;
+  grid-row: span ${({ $rows }) => $rows ?? 1};
+  padding: 1rem;
   font-size: 1.4rem;
   font-weight: 700;
   line-height: 1.8;
-  color: ${({ theme }) => theme.text.primary};
-  border-bottom: 1px solid
-    ${({ theme, $showDivider }) =>
-      $showDivider ? theme.line.primary : "transparent"};
+  color: ${({ theme, $active }) => ($active ? theme.text.brand : theme.text.primary)};
+  background: ${({ theme, $active }) => ($active ? theme.surface.brand : "transparent")};
+  border-bottom: 1px solid ${({ theme }) => theme.line.primary};
 `;
 
 const Gap = styled.span`
-  flex: 0 0 2.4rem;
-  border-bottom: 1px solid
-    ${({ theme, $showDivider }) =>
-      $showDivider ? theme.line.primary : "transparent"};
+  grid-column: 2;
+  grid-row: span ${({ $rows }) => $rows ?? 1};
+  background: ${({ theme, $active }) => ($active ? theme.surface.brand : "transparent")};
+  border-bottom: 1px solid ${({ theme }) => theme.line.primary};
 `;
 
 const Work = styled.span`
   display: flex;
   align-items: center;
-  flex: 1;
-  padding: 1rem 0;
+  grid-column: 3;
+  padding: 1rem;
   font-size: 1.4rem;
   font-weight: 400;
   line-height: 1.8;
-  color: inherit;
+  color: ${({ theme, $active }) => ($active ? theme.text.brand : "inherit")};
+  background: ${({ theme, $active }) => ($active ? theme.surface.brand : "transparent")};
   border-bottom: 1px solid
-    ${({ theme, $showDivider }) =>
-      $showDivider ? theme.line.primary : theme.line.secondary};
+    ${({ theme, $isLast }) =>
+      $isLast ? theme.line.primary : theme.line.secondary};
 `;
 
 const Preview = styled.div`
-  position: absolute;
-  right: 0;
+  position: fixed;
   z-index: 1;
-  width: 30rem;
+  width: 40rem;
 
-  @media (max-width: 1123px) {
+  ${media.tablet`
     display: none;
-  }
+  `}
 `;
 
 const PreviewImageWrapper = styled.div`
