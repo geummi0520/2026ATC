@@ -13,6 +13,10 @@ const ko = {
     menuOpen: "메뉴 열기",
     menuClose: "메뉴 닫기",
   },
+  artistCredit: {
+    heading: "Artist Credit",
+    subtitle: "대충 클릭하면 작품 상세보기로 이동할 수 있다는 글",
+  },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
     slogan: "<레시피 바꾸지 말 것 *>",
