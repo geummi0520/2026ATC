@@ -51,7 +51,7 @@ export default function ProgramModal({
 
     return (
 
-        <BlurContainer>
+        <BlurBackground>
             <ModalFrame>
                 <ModalContainer>
                     <SlideViewport ref={ref}>
@@ -103,21 +103,23 @@ export default function ProgramModal({
                                         height={307}
 
                                     />
-                                    <DateContainer>
-                                        <Date>{t("program.dateTime")}:&nbsp;</Date>
-                                        <div>
-                                            {/* {program.dates.map((date, idx) => (
-                                                <Date
-                                                    key={idx}
-                                                >
-                                                    {date}
-                                                </Date>
-                                            ))} */}
-                                            <Date>{translate(program.dates[0])}</Date>
-                                        </div>
-                                        {/* <Date>{"시간: " + program.dates}</Date> */}
-                                    </DateContainer>
-                                    <Site>{t("program.location") + ": " + translate(program.site)}</Site>
+                                    <TimeLocation>
+                                        <DateContainer>
+                                            <StyledDiv>{t("program.dateTime")}:&nbsp;</StyledDiv>
+                                            <div>
+                                                {program.dates.map((date, idx) => (
+                                                    <StyledDiv
+                                                        key={idx}
+                                                    >
+                                                        {translate(date)}
+                                                    </StyledDiv>
+                                                ))}
+                                                {/* <StyledDiv>{translate(program.dates[0])}</StyledDiv> */}
+                                            </div>
+                                            {/* <Date>{"시간: " + program.dates}</Date> */}
+                                        </DateContainer>
+                                        <StyledDiv>{t("program.location") + ": " + translate(program.site)}</StyledDiv>
+                                    </TimeLocation>
                                     <Title>{translate(program.title)}</Title>
                                     <Description>{translate(program.description)}</Description>
                                 </InfoContainer>
@@ -153,23 +155,25 @@ export default function ProgramModal({
 
                 </SlideIndicator>
             </ModalFrame>
-        </BlurContainer>
+        </BlurBackground >
     );
 }
 
 
 
-const BlurContainer = styled.div`
+const BlurBackground = styled.div`
 display:none;
-position: fixed;
-top:0rem;
-left:0rem;
-width: 100vw;
-height: 100vh;
-background: rgba(20, 21, 24, 0.50);
-z-index: 99;
+
 
 ${media.mobile`
+    position: fixed;
+    top:0rem;
+    left:0rem;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 21, 24, 0.50);
+    z-index: 99;
+    
     display: flex;
     align-items:center;
     justify-content:center;
@@ -199,8 +203,8 @@ padding:1rem;
 `;
 
 const Dot = styled.div`
-width: 1.6rem;
-height: 1.6rem;
+width: 1rem;
+height: 1rem;
 aspect-ratio: 1/1;
 border-radius: 2rem;
 border: 0.1rem solid ${({ theme }) => theme.line.brandInvert};;
@@ -247,7 +251,7 @@ flex: 0 0 100%;
 min-width:100%;
 flex-direction: column;
 align-items: flex-start;
-gap: 1rem;
+gap: 0.62rem;
 
 `
 
@@ -290,10 +294,8 @@ const DateContainer = styled.div`
     display: flex;
     align-items: flex-start;
 `;
-const Date = styled.div`
-color: ${({ theme }) => theme.text.primary};
-
-color: ${({ theme }) => theme.text.primary};
+const StyledDiv = styled.div`
+color: ${({ theme }) => theme.text.secondary};
 
 /* text/text-small */
 font-size: ${({ theme }) => theme.typography.fontSize.textSm};
@@ -302,20 +304,11 @@ font-weight: 400;
 line-height: 180%; 
 
 `;
-
-const Site = styled.span`
-align-self:stretch;
-color: ${({ theme }) => theme.text.secondary};
-
-/* text/text-small */
-// font-family: MaruBuri;
-font-size: ${({ theme }) => theme.typography.fontSize.textSm};
-font-style: normal;
-font-weight: 400;
-line-height: 180%; /* 21.6px */
-
+const TimeLocation = styled.div`
+display:flex;
+flex-direction:column;
+gap:0.25rem;
 `;
-
 
 const Description = styled.div`
 align-self:stretch;
@@ -323,7 +316,6 @@ align-self:stretch;
 color: ${({ theme }) => theme.text.tertiary};
 
 /* text/text-small */
-// font-family: MaruBuri;
 font-size: ${({ theme }) => theme.typography.fontSize.textSm};
 font-style: normal;
 font-weight: 400;
@@ -336,7 +328,6 @@ align-self:stretch;
 color: ${({ theme }) => theme.text.primary};
 
 /* text/text-medium-bold */
-// font-family: MaruBuri;
 font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 700;
