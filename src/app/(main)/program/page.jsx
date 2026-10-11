@@ -1,6 +1,6 @@
 "use client";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { programs } from "@/data/program";
 import { media } from "@/styles/media";
 
@@ -16,8 +16,20 @@ export default function ProgramPage() {
   // 현재 토글이 열린 아이템의 인덱스를 저장
   const [openIdx, setOpenIdx] = useState(-1);
 
+  const isModalOpen = openIdx >= 0;
+
   const { translate } = useTranslation();
 
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isModalOpen]);
 
   // 클릭시 아이템의 토글 변경 함수
   const handleToggle = (idx) => {
@@ -28,6 +40,8 @@ export default function ProgramPage() {
     } else {
       setOpenIdx(idx);
     }
+
+
 
   };
   return (
@@ -86,7 +100,7 @@ gap:0rem;
 const PageName = styled.div`
   width:100%;
   color: ${({ theme }) => theme.text.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.displayLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingLg};
   font-style: normal;
   font-weight: 700;
   line-height: normal;
