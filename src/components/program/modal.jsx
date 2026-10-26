@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { media } from "@/styles/media";
 import { programs } from "@/data/program";
 import Image from "next/image";
+import useTranslation from "@/hooks/useTranslation";
 
 
 
@@ -15,6 +16,8 @@ export default function ProgramModal({
     nextProgram,
     prevProgram
 }) {
+    const { t, translate } = useTranslation();
+
     const [styled, setStyle] = useState({
         transform: `translateX(-${openIdx}00%)`
     })
@@ -101,7 +104,7 @@ export default function ProgramModal({
 
                                     />
                                     <DateContainer>
-                                        <Date>시간:&nbsp;</Date>
+                                        <Date>{t("program.dateTime")}:&nbsp;</Date>
                                         <div>
                                             {/* {program.dates.map((date, idx) => (
                                                 <Date
@@ -110,13 +113,13 @@ export default function ProgramModal({
                                                     {date}
                                                 </Date>
                                             ))} */}
-                                            <Date>{program.dates[0]}</Date>
+                                            <Date>{translate(program.dates[0])}</Date>
                                         </div>
                                         {/* <Date>{"시간: " + program.dates}</Date> */}
                                     </DateContainer>
-                                    <Site>{"장소: " + program.site}</Site>
-                                    <Title>{program.title}</Title>
-                                    <Description>{program.description}</Description>
+                                    <Site>{t("program.location") + ": " + translate(program.site)}</Site>
+                                    <Title>{translate(program.title)}</Title>
+                                    <Description>{translate(program.description)}</Description>
                                 </InfoContainer>
                             ))}
 

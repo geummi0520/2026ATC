@@ -5,9 +5,10 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { media } from "@/styles/media";
+import useTranslation from "@/hooks/useTranslation";
 
 export default function ProgramItem({ title, imgUrl, dates, site, description, idx, isOpen, handleToggle }) {
-
+    const { t, translate } = useTranslation();
     return (
 
         <Container onClick={handleToggle} $isOpen={isOpen}>
@@ -59,17 +60,17 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                         {/* 날짜와 장소 */}
                         <EventInfo>
                             <InfoLine>
-                                <StyledSpan>{"위치"}</StyledSpan>
+                                <StyledSpan>{t("program.location")}</StyledSpan>
                                 <StyledSpan>{site}</StyledSpan>
                             </InfoLine>
                             <InfoLine>
-                                <StyledSpan>{"일시"}</StyledSpan>
+                                <StyledSpan>{t("program.dateTime")}</StyledSpan>
                                 <DateContainer>
                                     {dates.map((d, idx) => (
                                         <StyledSpan
                                             key={idx}
                                         >
-                                            {d}
+                                            {translate(d)}
                                         </StyledSpan>
                                     ))}
                                 </DateContainer>

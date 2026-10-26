@@ -39,6 +39,10 @@ const en = {
     map: "Sogang University Campus Map",
     stationInfo: "Subway Information"
   },
+  program: {
+    location: "Location",
+    dateTime: "Date & Time",
+  },
 };
 
 export default en;
