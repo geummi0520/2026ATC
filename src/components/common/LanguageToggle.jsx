@@ -4,7 +4,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES, isBrandDarkPath } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
@@ -15,7 +15,7 @@ const FRY_FRAMES = Array.from(
 
 export default function LanguageToggle() {
   const { language, setLanguage } = useTranslation();
-  const isAbout = usePathname() === ROUTES.ABOUT;
+  const isBrandDark = isBrandDarkPath(usePathname());
   const [frame, setFrame] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const animationRef = useRef(null);
@@ -57,7 +57,7 @@ export default function LanguageToggle() {
       <LanguageCode
         type="button"
         $active={language === "ko"}
-        $isAbout={isAbout}
+        $isBrandDark={isBrandDark}
         disabled={isAnimating}
         aria-pressed={language === "ko"}
         onClick={() => changeLanguage("ko")}
@@ -83,7 +83,7 @@ export default function LanguageToggle() {
       <LanguageCode
         type="button"
         $active={language === "en"}
-        $isAbout={isAbout}
+        $isBrandDark={isBrandDark}
         disabled={isAnimating}
         aria-pressed={language === "en"}
         onClick={() => changeLanguage("en")}
@@ -109,11 +109,11 @@ const LanguageCode = styled.button`
   padding: 0;
   border: 0;
   background: transparent;
-  color: ${({ $active, $isAbout, theme }) => {
+  color: ${({ $active, $isBrandDark, theme }) => {
     if ($active) {
-      return $isAbout ? theme.text.brandInvert : theme.text.brandDark;
+      return $isBrandDark ? theme.text.brandInvert : theme.text.brandDark;
     }
-    return $isAbout ? theme.text.brandInvertDisabled : theme.text.quaternary;
+    return $isBrandDark ? theme.text.brandInvertDisabled : theme.text.quaternary;
   }};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: ${({ $active }) => ($active ? 700 : 400)};

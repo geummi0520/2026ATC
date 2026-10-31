@@ -13,6 +13,14 @@ const ko = {
     menuOpen: "메뉴 열기",
     menuClose: "메뉴 닫기",
   },
+  main: {
+    conference: "Art&Technology Conference",
+    commentBoxTitle: "이 요리를 설명한다면?",
+    reorder: "재주문하기!",
+    stamp: "STAMP",
+    detail: "자세히보기",
+    close: "닫기",
+  },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
     slogan: "<레시피 바꾸지 말 것 *>",

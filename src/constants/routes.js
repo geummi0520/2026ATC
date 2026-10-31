@@ -9,3 +9,7 @@ export const ROUTES = {
     ARTBOOK: "/archive/artbook",
   },
 };
+
+// 진한 초록 배경(brandDark) 테마를 쓰는 페이지들
+const BRAND_DARK_PATHS = [ROUTES.HOME, ROUTES.ABOUT];
+export const isBrandDarkPath = (pathname) => BRAND_DARK_PATHS.includes(pathname);

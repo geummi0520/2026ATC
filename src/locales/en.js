@@ -13,6 +13,14 @@ const en = {
     menuOpen: "Open menu",
     menuClose: "Close menu",
   },
+  main: {
+    conference: "Art&Technology Conference",
+    commentBoxTitle: "How would you describe this dish?",
+    reorder: "Order again!",
+    stamp: "STAMP",
+    detail: "See details",
+    close: "Close",
+  },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
     slogan: "<레시피 바꾸지 말 것 *>",

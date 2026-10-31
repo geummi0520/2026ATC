@@ -5,14 +5,14 @@ import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import Hamburger from "@/components/common/Hamburger";
 import LanguageToggle from "@/components/common/LanguageToggle";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES, isBrandDarkPath } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 export default function Header() {
   const { t } = useTranslation();
   const pathname = usePathname();
-  const isAbout = pathname === ROUTES.ABOUT;
+  const isBrandDark = isBrandDarkPath(pathname);
 
   const isCurrent = (href) => {
     if (href === ROUTES.HOME) return pathname === href;
@@ -21,7 +21,7 @@ export default function Header() {
 
   return (
     <Container>
-      <Navigation $isAbout={isAbout}>
+      <Navigation $isBrandDark={isBrandDark}>
         <NavLink href={ROUTES.HOME} $active={isCurrent(ROUTES.HOME)}>
           {t("navigation.main")}
         </NavLink>
@@ -83,13 +83,13 @@ const Navigation = styled.nav`
   display: flex;
   gap: 3.6rem;
   padding: 0.6rem 3.6rem;
-  color: ${({ $isAbout, theme }) =>
-    $isAbout ? theme.text.brandInvert : theme.text.brandDark};
+  color: ${({ $isBrandDark, theme }) =>
+    $isBrandDark ? theme.text.brandInvert : theme.text.brandDark};
   border: 1px solid
-    ${({ $isAbout, theme }) =>
-      $isAbout ? theme.line.brandDark : theme.line.primary};
-  background: ${({ $isAbout, theme }) =>
-    $isAbout ? theme.surface.brandDark : theme.primitives.grey[50]};
+    ${({ $isBrandDark, theme }) =>
+      $isBrandDark ? theme.line.brandDark : theme.line.primary};
+  background: ${({ $isBrandDark, theme }) =>
+    $isBrandDark ? theme.surface.brandDark : theme.primitives.grey[50]};
   transform: translateX(-50%);
   transition: color 160ms ease-in-out, background-color 160ms ease-in-out,
     border-color 160ms ease-in-out;

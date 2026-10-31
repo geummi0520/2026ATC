@@ -5,19 +5,20 @@ import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
+import { isBrandDarkPath } from "@/constants/routes";
 import { media } from "@/styles/media";
 
 const Layout = styled.div`
-  --layout-background: ${({ $isAbout, theme }) =>
-    $isAbout ? theme.background.brandDark : theme.background.primary};
-  --layout-text: ${({ $isAbout, theme }) =>
-    $isAbout ? theme.text.brandInvert : theme.text.primary};
-  --layout-active-text: ${({ $isAbout, theme }) =>
-    $isAbout ? theme.text.brandInvert : theme.text.brand};
-  --layout-line: ${({ $isAbout, theme }) =>
-    $isAbout ? theme.line.brandInvert : theme.line.primary};
-  --layout-icon: ${({ $isAbout, theme }) =>
-    $isAbout ? theme.icon.brandInvert : theme.icon.brand};
+  --layout-background: ${({ $isBrandDark, theme }) =>
+    $isBrandDark ? theme.background.brandDark : theme.background.primary};
+  --layout-text: ${({ $isBrandDark, theme }) =>
+    $isBrandDark ? theme.text.brandInvert : theme.text.primary};
+  --layout-active-text: ${({ $isBrandDark, theme }) =>
+    $isBrandDark ? theme.text.brandInvert : theme.text.brand};
+  --layout-line: ${({ $isBrandDark, theme }) =>
+    $isBrandDark ? theme.line.brandInvert : theme.line.primary};
+  --layout-icon: ${({ $isBrandDark, theme }) =>
+    $isBrandDark ? theme.icon.brandInvert : theme.icon.brand};
 
   min-height: 100dvh;
   color: var(--layout-text);
@@ -27,7 +28,7 @@ const Layout = styled.div`
 
 export default function MainLayout({ children }) {
   const pathname = usePathname();
-  const isAbout = pathname === "/about";
+  const isBrandDark = isBrandDarkPath(pathname);
   const isWorks = pathname === "/works" || pathname.startsWith("/works/");
   const rightRailRef = useRef(null);
 
@@ -122,7 +123,7 @@ export default function MainLayout({ children }) {
   }, [isWorks, pathname]);
 
   return (
-    <Layout $isAbout={isAbout} $isWorks={isWorks}>
+    <Layout $isBrandDark={isBrandDark} $isWorks={isWorks}>
       <LeftRail>
         <RailSlot>
           <LeftRailLabel>2026 ATC</LeftRailLabel>
