@@ -5,14 +5,14 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES, isBrandDarkPath } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 export default function Hamburger() {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
-  const isAbout = usePathname() === ROUTES.ABOUT;
+  const isBrandDark = isBrandDarkPath(usePathname());
 
   useEffect(() => {
     const onKeyDown = (event) => event.key === "Escape" && setOpen(false);
@@ -41,7 +41,7 @@ export default function Hamburger() {
       >
         <Icon
           src={
-            open || isAbout
+            open || isBrandDark
               ? "/icons/hamburger.svg"
               : "/icons/hamburger_green.svg"
           }

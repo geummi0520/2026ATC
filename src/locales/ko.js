@@ -13,6 +13,14 @@ const ko = {
     menuOpen: "메뉴 열기",
     menuClose: "메뉴 닫기",
   },
+  main: {
+    conference: "Art&Technology Conference",
+    commentBoxTitle: "이 요리를 설명한다면?",
+    reorder: "재주문하기!",
+    stamp: "STAMP",
+    detail: "자세히보기",
+    close: "닫기",
+  },
   artistCredit: {
     heading: "Artist Credit",
     subtitle: "대충 클릭하면 작품 상세보기로 이동할 수 있다는 글",
