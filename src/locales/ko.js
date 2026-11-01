@@ -38,6 +38,10 @@ const ko = {
     map: "서강대학교 캠퍼스 지도",
     stationInfo: "지하철역 정보"
   },
+  program: {
+    location: "위치",
+    dateTime: "일시",
+  },
 };
 
 export default ko;
