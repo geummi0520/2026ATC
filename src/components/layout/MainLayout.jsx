@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
@@ -31,7 +31,6 @@ export default function MainLayout({ children, isComingSoon = false }) {
   const isBrandDark = isBrandDarkPath(pathname);
   const isWorks = pathname === "/works" || pathname.startsWith("/works/");
   const rightRailRef = useRef(null);
-  const [isScrollable, setIsScrollable] = useState(false);
 
   useEffect(() => {
     let frameId = null;
@@ -52,7 +51,6 @@ export default function MainLayout({ children, isComingSoon = false }) {
       const scrollableHeight = isWorks
         ? (scrollTarget?.scrollHeight ?? 0) - (scrollTarget?.clientHeight ?? 0)
         : document.documentElement.scrollHeight - window.innerHeight;
-      setIsScrollable(scrollableHeight > 0);
       const progress =
         scrollableHeight > 0
           ? Math.min(
@@ -63,7 +61,7 @@ export default function MainLayout({ children, isComingSoon = false }) {
               ),
               1
             )
-          : 0;
+          : 1;
       const travelDistance = Math.max(
         indicatorSlot.clientHeight - indicator.offsetHeight,
         0
@@ -141,15 +139,10 @@ export default function MainLayout({ children, isComingSoon = false }) {
       </Center>
       <RightRail ref={rightRailRef}>
         <RailSlot>
-          {isScrollable && (
-            <ScrollIndicator aria-hidden="true">*</ScrollIndicator>
-          )}
+          <ScrollIndicator aria-hidden="true">*</ScrollIndicator>
         </RailSlot>
         <RailSlot>
-          <RightRailLabel>
-            레시피 바꾸지 말 것
-            {!isScrollable && <LabelMark aria-hidden="true">*</LabelMark>}
-          </RightRailLabel>
+          <RightRailLabel>레시피 바꾸지 말 것</RightRailLabel>
         </RailSlot>
       </RightRail>
     </Layout>
@@ -214,11 +207,6 @@ const RightRailLabel = styled(RailLabel)`
   top: 0;
   transform: rotate(-90deg);
   transform-origin: top right;
-`;
-
-const LabelMark = styled.span`
-  margin-left: 0.6rem;
-  font-weight: 200;
 `;
 
 const ScrollIndicator = styled.span`

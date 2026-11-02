@@ -50,7 +50,7 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.background.primary};
     scrollbar-width: none;
     -ms-overflow-style: none;
-    overflow: hidden;
+    overscroll-behavior: none;
   }
   html::-webkit-scrollbar,
   body::-webkit-scrollbar { display: none; }
