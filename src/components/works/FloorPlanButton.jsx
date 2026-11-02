@@ -5,11 +5,7 @@ import { media } from "@/styles/media";
 
 export default function FloorPlanButton({ label, onClick, hideOnMobile }) {
   return (
-    <Button
-      type="button"
-      onClick={onClick}
-      $hideOnMobile={hideOnMobile}
-    >
+    <Button type="button" onClick={onClick} $hideOnMobile={hideOnMobile}>
       {label} ↗
     </Button>
   );
@@ -21,7 +17,7 @@ const Button = styled.button`
   border-bottom: 1px solid currentColor;
   background: transparent;
   color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 700;
   cursor: pointer;
 

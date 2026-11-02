@@ -4,14 +4,27 @@ import styled from "styled-components";
 import Link from "next/link";
 import useTranslation from "@/hooks/useTranslation";
 
-export default function WorkListItem({ work, index }) {
+export default function WorkListItem({
+  work,
+  itemRef,
+  active,
+  onActivate,
+  onDeactivate,
+}) {
   const { translate } = useTranslation();
 
   return (
-    <CategoryWorkItem>
+    <CategoryWorkItem
+      ref={itemRef}
+      $active={active}
+      onMouseEnter={onActivate}
+      onMouseLeave={onDeactivate}
+      onFocus={onActivate}
+      onBlur={onDeactivate}
+    >
       <Link href={`/works/${work.id}`}>
         <CategoryItemCont>
-          <h3>{index + 1}.</h3>
+          <h3>{work.id}.</h3>
           <CategoryContentCont>
             <CategoryWorkHeader>
               <h3>{translate(work.title)}</h3>
@@ -30,13 +43,15 @@ export default function WorkListItem({ work, index }) {
   );
 }
 const CategoryWorkItem = styled.li`
-  border-bottom: 1px solid transparent;
-  background: transparent;
+  border-bottom: 1px solid
+    ${({ $active, theme }) => ($active ? theme.line.brand : "transparent")};
+  background: ${({ $active, theme }) =>
+    $active ? theme.surface.brand : "transparent"};
   transition: background-color 160ms ease, border-color 160ms ease;
 
   a {
     display: block;
-    padding: 1.8rem 2rem;
+    padding: 1.6rem 2.4rem;
   }
 
   &:hover {
@@ -51,21 +66,24 @@ const CategoryWorkItem = styled.li`
 
   h3 {
     margin: 0;
-    color: ${({ theme }) => theme.text.secondary};
+    color: ${({ $active, theme }) =>
+      $active ? theme.text.brandDark : theme.text.secondary};
     font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     line-height: 180%;
     font-weight: 700;
   }
 
   span {
-    color: ${({ theme }) => theme.text.quaternary};
+    color: ${({ $active, theme }) =>
+      $active ? theme.text.brandDark : theme.text.quaternary};
     font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     font-weight: 400;
   }
 
   h4 {
     margin: 0;
-    color: ${({ theme }) => theme.text.quaternary};
+    color: ${({ $active, theme }) =>
+      $active ? theme.text.brandDark : theme.text.quaternary};
     font-size: ${({ theme }) => theme.typography.fontSize.textSm};
     line-height: 180%;
     font-weight: 400;

@@ -116,9 +116,10 @@ const Navigation = styled.nav`
   position: absolute;
   top: 4rem;
   left: 50%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: flex-start;
-  gap: 3.6rem;
+  width: 50rem;
   padding: 0.6rem 3.6rem;
   color: ${({ $isBrandDark, theme }) =>
     $isBrandDark ? theme.text.brandInvert : theme.text.brandDark};
@@ -138,7 +139,8 @@ const Navigation = styled.nav`
 
 const NavItem = styled.div`
   display: flex;
-  min-width: 7rem;
+  min-width: 0;
+  width: 100%;
   flex-direction: column;
   align-items: center;
 

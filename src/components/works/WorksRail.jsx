@@ -84,12 +84,13 @@ const CategoryButton = styled.button`
     $active ? theme.text.brand : theme.text.quaternary};
   font-size: ${({ theme }) => theme.typography.fontSize.textSm};
   line-height: 120%;
-  font-weight: 400;
+  font-weight: ${({ $active, theme }) => ($active ? "700" : "400")};
   cursor: pointer;
   transition: color 160ms ease, border-color 160ms ease;
 
   &:hover,
   &:focus-visible {
     color: ${({ theme }) => theme.text.brand};
+    font-weight: 700;
   }
 `;

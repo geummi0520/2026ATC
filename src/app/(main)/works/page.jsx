@@ -75,31 +75,47 @@ export default function Page() {
               />
             </S.MobileActionRow>
           )}
-          <S.TitleRow>
-            <S.Title>{translate(content.title)}</S.Title>
-            <FloorPlanButton
-              label={translate(worksPageContent.floorPlanLabel)}
-              hideOnMobile={Boolean(selectedCategory)}
-            />
-          </S.TitleRow>
-          <S.Description>{translate(content.description)}</S.Description>
-          <MobileCategoryList
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
           {selectedCategory ? (
             <>
               <DesktopCategoryView
                 key={selectedCategory}
                 works={visibleWorks}
+                content={content}
+                floorPlanLabel={worksPageContent.floorPlanLabel}
               />
               <S.CategoryFallback>
+                <S.TitleRow>
+                  <S.Title>{translate(content.title)}</S.Title>
+                  <FloorPlanButton
+                    label={translate(worksPageContent.floorPlanLabel)}
+                    hideOnMobile
+                  />
+                </S.TitleRow>
+                <S.Description>{translate(content.description)}</S.Description>
+                <MobileCategoryList
+                  categories={categories}
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={setSelectedCategory}
+                />
                 <WorkGrid works={visibleWorks} />
               </S.CategoryFallback>
             </>
           ) : (
-            <WorkGrid works={visibleWorks} />
+            <>
+              <S.TitleRow>
+                <S.Title>{translate(content.title)}</S.Title>
+                <FloorPlanButton
+                  label={translate(worksPageContent.floorPlanLabel)}
+                />
+              </S.TitleRow>
+              <S.Description>{translate(content.description)}</S.Description>
+              <MobileCategoryList
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onSelectCategory={setSelectedCategory}
+              />
+              <WorkGrid works={visibleWorks} />
+            </>
           )}
         </S.Content>
         <Footer />
