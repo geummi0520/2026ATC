@@ -69,6 +69,7 @@ export const Description = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 400;
   line-height: 180%;
+  white-space: pre-line;
 
   ${media.mobile`
   /* display: none; */

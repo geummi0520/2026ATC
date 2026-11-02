@@ -26,7 +26,7 @@ const Layout = styled.div`
   transition: color 300ms ease, background-color 300ms ease;
 `;
 
-export default function MainLayout({ children }) {
+export default function MainLayout({ children, isComingSoon = false }) {
   const pathname = usePathname();
   const isBrandDark = isBrandDarkPath(pathname);
   const isWorks = pathname === "/works" || pathname.startsWith("/works/");
@@ -61,7 +61,7 @@ export default function MainLayout({ children }) {
               ),
               1
             )
-          : 0;
+          : 1;
       const travelDistance = Math.max(
         indicatorSlot.clientHeight - indicator.offsetHeight,
         0
@@ -130,10 +130,12 @@ export default function MainLayout({ children }) {
         </RailSlot>
         <RailSlot />
       </LeftRail>
-      <Center $isWorks={isWorks}>
-        <Header />
-        <MainContent $isWorks={isWorks}>{children}</MainContent>
-        {!isWorks && <Footer />}
+      <Center $isWorks={isWorks} $isComingSoon={isComingSoon}>
+        {!isComingSoon && <Header />}
+        <MainContent $isWorks={isWorks} $isComingSoon={isComingSoon}>
+          {children}
+        </MainContent>
+        {!isWorks && !isComingSoon && <Footer />}
       </Center>
       <RightRail ref={rightRailRef}>
         <RailSlot>
@@ -243,11 +245,13 @@ const RightRail = styled(Rail)`
 
 const Center = styled.div`
   min-height: 100dvh;
-  height: ${({ $isWorks }) => ($isWorks ? "100dvh" : "auto")};
+  height: ${({ $isWorks, $isComingSoon }) =>
+    $isWorks || $isComingSoon ? "100dvh" : "auto"};
   display: flex;
   flex-direction: column;
   margin: 0 6%;
-  overflow: ${({ $isWorks }) => ($isWorks ? "hidden" : "visible")};
+  overflow: ${({ $isWorks, $isComingSoon }) =>
+    $isWorks || $isComingSoon ? "hidden" : "visible"};
   ${media.mobile`
     margin: 0 2.4rem;
 
@@ -256,11 +260,12 @@ const Center = styled.div`
 
 const MainContent = styled.main`
   flex: 1;
-  padding-top: 12rem;
+  padding-top: ${({ $isComingSoon }) => ($isComingSoon ? "0" : "12rem")};
   min-height: 0;
-  overflow: ${({ $isWorks }) => ($isWorks ? "hidden" : "visible")};
+  overflow: ${({ $isWorks, $isComingSoon }) =>
+    $isWorks || $isComingSoon ? "hidden" : "visible"};
 
   ${media.tablet`
-    padding-top: 8.4rem;
+    padding-top: ${({ $isComingSoon }) => ($isComingSoon ? "0" : "8.4rem")};
   `}
 `;
