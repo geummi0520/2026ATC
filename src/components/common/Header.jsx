@@ -19,27 +19,63 @@ export default function Header() {
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
+  const releaseFocus = (event) => event.currentTarget.blur();
+
   return (
     <Container>
       <Navigation $isBrandDark={isBrandDark}>
-        <NavLink href={ROUTES.HOME} $active={isCurrent(ROUTES.HOME)}>
-          {t("navigation.main")}
-        </NavLink>
-        <NavLink href={ROUTES.ABOUT} $active={isCurrent(ROUTES.ABOUT)}>
-          {t("navigation.about")}
-        </NavLink>
-        <NavLink href={ROUTES.WORKS} $active={isCurrent(ROUTES.WORKS)}>
-          {t("navigation.works")}
-        </NavLink>
-        <NavLink href={ROUTES.PROGRAM} $active={isCurrent(ROUTES.PROGRAM)}>
-          {t("navigation.program")}
-        </NavLink>
-        <NavLink
-          href={ROUTES.ARCHIVE.STAFF}
-          $active={pathname.startsWith("/archive")}
-        >
-          {t("navigation.archive")}
-        </NavLink>
+        <NavItem>
+          <NavLink href={ROUTES.HOME} $active={isCurrent(ROUTES.HOME)}>
+            {t("navigation.main")}
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href={ROUTES.ABOUT} $active={isCurrent(ROUTES.ABOUT)}>
+            {t("navigation.about")}
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            href={ROUTES.WORKS}
+            $active={isCurrent(ROUTES.WORKS)}
+            onClick={releaseFocus}
+          >
+            {t("navigation.works")}
+          </NavLink>
+          <SubNavigation aria-label={t("navigation.works")}>
+            <SubLink href={ROUTES.WORKS} onClick={releaseFocus}>
+              {t("navigation.workList")}
+            </SubLink>
+            <SubLink href={`${ROUTES.WORKS}?view=map`} onClick={releaseFocus}>
+              {t("navigation.workMap")}
+            </SubLink>
+          </SubNavigation>
+        </NavItem>
+        <NavItem>
+          <NavLink href={ROUTES.PROGRAM} $active={isCurrent(ROUTES.PROGRAM)}>
+            {t("navigation.program")}
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            href={ROUTES.ARCHIVE.STAFF}
+            $active={pathname.startsWith("/archive")}
+            onClick={releaseFocus}
+          >
+            {t("navigation.archive")}
+          </NavLink>
+          <SubNavigation aria-label={t("navigation.archive")}>
+            <SubLink href={ROUTES.ARCHIVE.STAFF} onClick={releaseFocus}>
+              {t("navigation.staffCredit")}
+            </SubLink>
+            <SubLink href={ROUTES.ARCHIVE.ARTISTS} onClick={releaseFocus}>
+              {t("navigation.artistCredit")}
+            </SubLink>
+            <SubLink href={ROUTES.ARCHIVE.ARTBOOK} onClick={releaseFocus}>
+              {t("navigation.artbook")}
+            </SubLink>
+          </SubNavigation>
+        </NavItem>
       </Navigation>
       <Hamburger />
       <LanguageToggle />
@@ -80,8 +116,10 @@ const Navigation = styled.nav`
   position: absolute;
   top: 4rem;
   left: 50%;
-  display: flex;
-  gap: 3.6rem;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: flex-start;
+  width: 50rem;
   padding: 0.6rem 3.6rem;
   color: ${({ $isBrandDark, theme }) =>
     $isBrandDark ? theme.text.brandInvert : theme.text.brandDark};
@@ -89,7 +127,7 @@ const Navigation = styled.nav`
     ${({ $isBrandDark, theme }) =>
       $isBrandDark ? theme.line.brandDark : theme.line.primary};
   background: ${({ $isBrandDark, theme }) =>
-    $isBrandDark ? theme.surface.brandDark : theme.primitives.grey[50]};
+    $isBrandDark ? "#0F5535" : theme.primitives.grey[50]};
   transform: translateX(-50%);
   transition: color 160ms ease-in-out, background-color 160ms ease-in-out,
     border-color 160ms ease-in-out;
@@ -99,6 +137,22 @@ const Navigation = styled.nav`
   `}
 `;
 
+const NavItem = styled.div`
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+
+  &:hover > nav,
+  &:focus-within > nav {
+    max-height: 12rem;
+    margin-top: 0.8rem;
+    opacity: 1;
+    visibility: visible;
+  }
+`;
+
 const NavLink = styled(Link)`
   color: inherit;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
@@ -106,4 +160,31 @@ const NavLink = styled(Link)`
   font-weight: 700;
   text-align: center;
   white-space: nowrap;
+`;
+
+const SubNavigation = styled.nav`
+  display: flex;
+  max-height: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-top: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 200ms ease, margin-top 200ms ease, opacity 160ms ease,
+    visibility 160ms;
+`;
+
+const SubLink = styled(Link)`
+  color: inherit;
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  font-weight: 400;
+  line-height: 1.8;
+  white-space: nowrap;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
 `;

@@ -1,2 +1,1 @@
-npm test
-git diff HEAD -- .husky/pre-commit
+npm run lint

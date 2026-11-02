@@ -2,6 +2,7 @@
 
 import styled from "styled-components";
 import BackButton from "@/components/works/BackButton";
+import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 export default function WorksRail({
@@ -11,6 +12,8 @@ export default function WorksRail({
   onBack,
   backHref,
 }) {
+  const { translate } = useTranslation();
+
   return (
     <Rail aria-label="작품 카테고리">
       {backHref ? (
@@ -21,15 +24,15 @@ export default function WorksRail({
 
       {categories.length > 0 && (
         <CategoryList>
-          {categories.map((category) => (
+          {categories.map(({ id, label }) => (
             <CategoryButton
-              key={category}
+              key={id}
               type="button"
-              $active={selectedCategory === category}
-              aria-pressed={selectedCategory === category}
-              onClick={() => onSelectCategory?.(category)}
+              $active={selectedCategory === id}
+              aria-pressed={selectedCategory === id}
+              onClick={() => onSelectCategory?.(id)}
             >
-              {category}
+              {translate(label)}
             </CategoryButton>
           ))}
         </CategoryList>
@@ -81,12 +84,13 @@ const CategoryButton = styled.button`
     $active ? theme.text.brand : theme.text.quaternary};
   font-size: ${({ theme }) => theme.typography.fontSize.textSm};
   line-height: 120%;
-  font-weight: 400;
+  font-weight: ${({ $active, theme }) => ($active ? "700" : "400")};
   cursor: pointer;
   transition: color 160ms ease, border-color 160ms ease;
 
   &:hover,
   &:focus-visible {
     color: ${({ theme }) => theme.text.brand};
+    font-weight: 700;
   }
 `;

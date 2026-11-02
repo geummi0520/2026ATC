@@ -7,8 +7,8 @@ import { media } from "@/styles/media";
 export default function WorkGrid({ works }) {
   return (
     <Grid>
-      {works.map((work, index) => (
-        <WorkCard key={work.id} work={work} displayNumber={index + 1} />
+      {works.map((work) => (
+        <WorkCard key={work.id} work={work} />
       ))}
     </Grid>
   );

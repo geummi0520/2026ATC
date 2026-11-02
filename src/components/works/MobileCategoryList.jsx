@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "styled-components";
+import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 export default function MobileCategoryList({
@@ -8,19 +9,21 @@ export default function MobileCategoryList({
   selectedCategory,
   onSelectCategory,
 }) {
+  const { translate } = useTranslation();
+
   return (
     <Section>
       <Label>작품 카테고리</Label>
       <List>
-        {categories.map((category) => (
+        {categories.map(({ id, label }) => (
           <CategoryButton
-            key={category}
+            key={id}
             type="button"
-            $active={selectedCategory === category}
-            aria-pressed={selectedCategory === category}
-            onClick={() => onSelectCategory(category)}
+            $active={selectedCategory === id}
+            aria-pressed={selectedCategory === id}
+            onClick={() => onSelectCategory(id)}
           >
-            {category}
+            {translate(label)}
           </CategoryButton>
         ))}
       </List>

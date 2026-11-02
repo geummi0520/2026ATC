@@ -6,7 +6,7 @@ import styled from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
-export default function WorkCard({ work, displayNumber }) {
+export default function WorkCard({ work }) {
   const { translate } = useTranslation();
   const title = translate(work.title);
 
@@ -14,17 +14,18 @@ export default function WorkCard({ work, displayNumber }) {
     <Card href={`/works/${work.id}`}>
       <Thumbnail>
         <Image
-          src={work.mainImage}
+          src={work.images.thumbnail}
           alt={title}
           fill
           sizes="(min-width: 1124px) 15vw, 33vw"
         />
       </Thumbnail>
       <Title>
-        {displayNumber}. {title}
+        {work.id}. {title}
       </Title>
       <Tags>
-        {translate(work.tags)
+        {work.tags
+          .map(translate)
           .map((tag) => `#${tag}`)
           .join(" ")}
       </Tags>

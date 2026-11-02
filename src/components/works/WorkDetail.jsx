@@ -10,12 +10,14 @@ import { media } from "@/styles/media";
 export default function WorkDetail({ work }) {
   const { translate } = useTranslation();
   const title = translate(work.title);
-  const tags = translate(work.tags);
-  const description = translate(work.shortDescription);
+  const tags = work.tags.map(translate);
+  const tagline = translate(work.tagline);
+  const description = translate(work.description);
   const team = translate(work.team);
-  const detailImages = work.detailImages?.length
-    ? work.detailImages
-    : [work.mainImage];
+  const teamDescription = translate(work.teamDescription);
+  const detailImages = work.images.detail.length
+    ? work.images.detail
+    : [work.images.thumbnail];
 
   return (
     <Container>
@@ -25,7 +27,7 @@ export default function WorkDetail({ work }) {
         <Hero>
           <HeroImage>
             <Image
-              src={work.mainImage}
+              src={work.images.thumbnail}
               alt={title}
               fill
               sizes="(min-width: 1124px) 22vw, (min-width: 768px) 28vw, 70vw"
@@ -45,12 +47,8 @@ export default function WorkDetail({ work }) {
         <Introduction>
           <Copy>
             <SectionTitle>작품 소개</SectionTitle>
-            <Lead>{description}</Lead>
-            <Paragraph>
-              작품에 대한 상세 소개가 들어가는 영역입니다. 실제 상세 원고가
-              준비되면 works 데이터의 내용을 연결합니다.
-            </Paragraph>
-            <ExternalLink type="button">Youtube Link ↗</ExternalLink>
+            <Lead>{tagline}</Lead>
+            <Paragraph>{description}</Paragraph>
           </Copy>
           <MediaList>
             {detailImages.map((image, index) => (
@@ -70,13 +68,24 @@ export default function WorkDetail({ work }) {
           <TeamCopy>
             <SectionTitle>팀 소개</SectionTitle>
             <TeamName>{team}</TeamName>
-            <Paragraph>
-              팀 소개와 작업 과정에 대한 설명이 들어가는 영역입니다. 추후 팀
-              설명 데이터를 연결할 수 있습니다.
-            </Paragraph>
+            <Paragraph>{teamDescription}</Paragraph>
           </TeamCopy>
           <MemberList>
-            <li>{team} · Email · Link</li>
+            {work.members.map((member) => (
+              <li key={`${member.role}-${translate(member.name)}`}>
+                <span>{translate(member.name)}</span>
+                {member.contacts.map((contact) => (
+                  <ExternalLink
+                    key={`${contact.type}-${contact.url}`}
+                    href={contact.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {contact.type} ↗
+                  </ExternalLink>
+                ))}
+              </li>
+            ))}
           </MemberList>
         </TeamSection>
         <Footer />
@@ -213,7 +222,7 @@ const Paragraph = styled.p`
   line-height: 1.8;
 `;
 
-const ExternalLink = styled.button`
+const ExternalLink = styled.a`
   padding: 0;
   border: 0;
   border-bottom: 1px solid currentColor;
@@ -273,4 +282,10 @@ const MemberList = styled.ul`
   color: ${({ theme }) => theme.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 1.8;
+
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 1.6rem;
+  }
 `;
