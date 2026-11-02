@@ -15,7 +15,11 @@ export default function DesktopCategoryView({ works }) {
       <CategoryCollage>
         {works.map((work) => (
           <CollageLink key={work.id} href={`/works/${work.id}`}>
-            <Image src={work.mainImage} alt={translate(work.title)} fill />
+            <Image
+              src={work.images.thumbnail}
+              alt={translate(work.title)}
+              fill
+            />
           </CollageLink>
         ))}
       </CategoryCollage>

@@ -9,7 +9,8 @@ import MobileCategoryList from "@/components/works/MobileCategoryList";
 import WorkGrid from "@/components/works/WorkGrid";
 import WorksRail from "@/components/works/WorksRail";
 import * as S from "@/app/(main)/works/styles";
-import { works, worksPageContent } from "@/data/works";
+import { works } from "@/data/works";
+import { worksPageContent } from "@/data/worksPageContent";
 import useTranslation from "@/hooks/useTranslation";
 import { shuffleWorks } from "@/utils/shuffleWorks";
 
@@ -32,14 +33,22 @@ export default function Page() {
   );
 
   const categories = useMemo(
-    () => [...new Set(works.map((work) => work.category))],
+    () =>
+      Array.from(
+        new Map(
+          works.map((work) => [
+            work.category.ko,
+            { id: work.category.ko, label: work.category },
+          ])
+        ).values()
+      ),
     []
   );
   const content = selectedCategory
     ? worksPageContent.categories[selectedCategory]
     : worksPageContent.default;
   const visibleWorks = selectedCategory
-    ? shuffledWorks.filter((work) => work.category === selectedCategory)
+    ? shuffledWorks.filter((work) => work.category.ko === selectedCategory)
     : shuffledWorks;
   return (
     <S.Frame>
@@ -96,7 +105,11 @@ export default function Page() {
         <Footer />
         {selectedCategory && (
           <S.MobileCategoryFooter>
-            <span>{selectedCategory}</span>
+            <span>
+              {translate(
+                categories.find(({ id }) => id === selectedCategory)?.label
+              )}
+            </span>
             <span aria-hidden="true">⌃</span>
           </S.MobileCategoryFooter>
         )}

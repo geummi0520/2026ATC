@@ -16,12 +16,13 @@ export default function WorkListItem({ work, index }) {
             <CategoryWorkHeader>
               <h3>{translate(work.title)}</h3>
               <h4>
-                {translate(work.tags)
+                {work.tags
+                  .map(translate)
                   .map((tag) => `#${tag}`)
                   .join(" ")}
               </h4>
             </CategoryWorkHeader>
-            <span>{translate(work.shortDescription)}</span>
+            <span>{translate(work.tagline)}</span>
           </CategoryContentCont>
         </CategoryItemCont>
       </Link>
