@@ -28,7 +28,7 @@ const Layout = styled.div`
 
 export default function MainLayout({ children, isComingSoon = false }) {
   const pathname = usePathname();
-  const isBrandDark = isBrandDarkPath(pathname);
+  const isBrandDark = !isComingSoon && isBrandDarkPath(pathname);
   const isWorks = pathname === "/works" || pathname.startsWith("/works/");
   const rightRailRef = useRef(null);
 
