@@ -5,9 +5,10 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { media } from "@/styles/media";
+import useTranslation from "@/hooks/useTranslation";
 
 export default function ProgramItem({ title, imgUrl, dates, site, description, idx, isOpen, handleToggle }) {
-
+    const { t, translate } = useTranslation();
     return (
 
         <Container onClick={handleToggle} $isOpen={isOpen}>
@@ -16,7 +17,8 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
             <ProgramImg
                 src={imgUrl}
                 alt="program image"
-                width={"164px"}
+                width={164}
+                height={307}
                 $desktop
             />
             {/* 우측 프로그램 정보 */}
@@ -25,36 +27,50 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                 <Title>{title}</Title>
                 {/* 테블릿에서 토글 열었을 때 보이는 이미지 */}
                 <ContentContainer>
-                    {isOpen && (
-                        <ProgramImg
-                            src={imgUrl}
-                            alt="tablet program image"
-                            width={"164px"}
-                            $tablet
-                        />
-
-                    )}
+                    <TabletImgWrap $isOpen={isOpen}>
+                        {/* {isOpen && */}
+                        <DescriptionInner>
+                            <ProgramImg
+                                src={imgUrl}
+                                alt="tablet program image"
+                                width={164}
+                                height={307}
+                                $tablet
+                                $isOpen={isOpen}
+                            />
+                        </DescriptionInner>
+                        {/* } */}
+                    </TabletImgWrap>
                     <InfoBox>
                         {/* 토글 열렸을때만 보이는 설명글 */}
-                        {isOpen && (
+                        {/* {isOpen && (
                             <Description>
                                 <span>{description}</span>
                             </Description>
-                        )}
+                        )} */}
+                        <DescriptionWrap $isOpen={isOpen}>
+                            <DescriptionInner>
+                                <Description $isOpen={isOpen}>
+
+                                    <StyledSpan>{description}</StyledSpan>
+
+                                </Description>
+                            </DescriptionInner>
+                        </DescriptionWrap>
                         {/* 날짜와 장소 */}
                         <EventInfo>
                             <InfoLine>
-                                <StyledSpan>{"위치"}</StyledSpan>
+                                <StyledSpan>{t("program.location")}</StyledSpan>
                                 <StyledSpan>{site}</StyledSpan>
                             </InfoLine>
                             <InfoLine>
-                                <StyledSpan>{"일시"}</StyledSpan>
+                                <StyledSpan>{t("program.dateTime")}</StyledSpan>
                                 <DateContainer>
                                     {dates.map((d, idx) => (
                                         <StyledSpan
                                             key={idx}
                                         >
-                                            {d}
+                                            {translate(d)}
                                         </StyledSpan>
                                     ))}
                                 </DateContainer>
@@ -68,7 +84,7 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                 </ContentContainer>
             </ProgramInfo>
 
-        </Container>
+        </Container >
 
     );
 }
@@ -78,7 +94,7 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
 const Container = styled.div`
 
 width: 100%;
-z-index: 10;
+// z-index: 10;
 
 display: flex;
 align-items: flex-start;
@@ -87,94 +103,130 @@ background: transparent;
 
 
 // 호버 효과
-transition: all 0.6s ease-in-out;
+transition: all 0.3s ease-in-out;
 &:hover {
-        background: var(--surface-brand, rgba(46, 155, 87, 0.10));
+        background: ${({ theme }) => theme.surface.brand};
     }
-background: ${({ $isOpen }) => ($isOpen ? "var(--surface-brand, rgba(46, 155, 87, 0.10))" : "transparent")};
-border-bottom: 1px solid var(--line-primary, #818898);
+background: ${({ $isOpen, theme }) => ($isOpen ? theme.surface.brand : "transparent")};
+border-bottom: 0.1rem solid ${({ theme }) => theme.line.primary};
 
 cursor: pointer;
+
+${media.mobile`
+    padding: 0.625rem;
+    gap: 0.5rem;
+    `}
 `;
 
 
+const TabletImgWrap = styled.div`
+display:none;
+${media.tablet`
+    display:block;
+    flex-shrink:0;
+    overflow:hidden;
 
+    width:${({ $isOpen }) => ($isOpen ? "23.025rem" : "0")};
+    height: ${({ $isOpen }) => ($isOpen ? "30.7rem" : "0")};
+    margin-right: ${({ $isOpen }) => ($isOpen ? "0" : "-1.6rem")};
+    transition:
+            width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+            // height 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+            margin-right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    `}
+${media.mobile`
+    display:none;
+    `}
+`;
+const ProgramImg = styled(Image)`
 
-const ProgramImg = styled.img`
-
-height: 307px;
+height: 30.7rem;
 aspect-ratio: 3/4;
 width: auto;
 object-fit: cover;
 
 
-background: url(<path-to-image>) lightgray 50% / cover no-repeat;
-z-index:1;
+background: lightgray;
 
-@media (max-width:768px){
+
+${media.mobile`
     display:none;
-    }
+    `};
+
+
 ${({ $desktop }) => $desktop && `
-    @media (max-width:1124px) and (min-width:768px) {
+    @media (max-width:1124px) and (min-width:768px){
         display: none;
     }
 `}
 
 ${({ $tablet }) => $tablet && `
-        display: none;
-    `}
-${({ $tablet }) => $tablet && `
-@media (max-width:1124px) and (min-width:768px) {
-    display: block;
-}
+    display: none;
+    @media (max-width:1124px) and (min-width:768px){
+        display: block;
+    };
+    
+    opacity: ${({ $isOpen }) => $isOpen ? 1 : 0};
+    transition: 
+        opacity 0.3s ease-out, 
 `}
 `;
 
 
 const ProgramInfo = styled.div`
-
 width:100%;
 
 display: flex;
-padding: 20px;
-@media (max-width:768px){
-    padding:10px;
-    gap:8px;
-}
+padding: 2rem;
 flex-direction: column;
 align-items: flex-start;
-gap: 20px;
-align-self: stretch; // 아래로 늘리기
-
+gap: 2rem;
+align-self: stretch;
 
 box-sizing: border-box;
 flex: 1;
 min-width: 0;
 
-z-index:1;
+// z-index:1;
+
+
+
+
+${media.tablet`
+    padding:1rem;
+    gap:0.8rem;
+`}
+
+${media.mobile`
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  `}
 `;
 
 const Title = styled.div`
-color: var(--text-primary, #222429);
+color: ${({ theme }) => theme.text.primary};
 
 /* text/text-large */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-lg, 18px);
+font-size: ${({ theme }) => theme.typography.fontSize.textLg};
 font-style: normal;
 font-weight: 700;
-line-height: 180%; /* 32.4px */
+line-height: 180%; 
 
-@media (max-width:768px){
+${media.tablet`
 
-font-size: var(--Font-size-text-md, 14px);
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-weight: 700;
-}
+`};
+${media.mobile`
+    width:20rem;
+`}
 
-color: var(--text-primary, #222429);
+color: font-size: ${({ theme }) => theme.text.primary};
 
 // 태블릿 = 데탑
 
-z-index:1;
+// z-index:1;
 `;
 
 const ContentContainer = styled.div`
@@ -182,15 +234,15 @@ const ContentContainer = styled.div`
     flex-direction:column;
     width:100%;
     align-items: flex-start;
-    gap: 20px;
+    gap: 2rem;
     align-self: stretch; // 아래로 늘리기
     box-sizing: border-box;
 
-@media (max-width:1124px) and (min-width:768px) {
+${media.tablet`
 
         flex-direction:row;
-        gap:16px;
-        }
+        gap:1.6rem;
+        `};
 
 `
 
@@ -199,13 +251,13 @@ display:flex;
     flex-direction:column;
     width:100%;
     align-items: flex-start;
-    gap: 20px;
+    gap: 2rem;
     // align-self: stretch; // 아래로 늘리기
     box-sizing: border-box;
-@media (max-width:1124px) and (min-width:768px) {
+${media.tablet`
 
-    gap:16px;
-}
+    gap:1.6rem;
+`};
 
 `;
 
@@ -216,12 +268,12 @@ flex-direction: column;
 justify-content: center;
 align-items: flex-start;
 // gap: 10px;
-@media (max-width:1124px) and (min-width:768px) {
+${media.tablet`
 
-    gap:16px;
-    }
+    gap:1.6rem;
+    `};
 
-z-index:1;
+// z-index:1;
 
 
 
@@ -230,20 +282,20 @@ const InfoLine = styled.div`
 width:100%;
 display: flex;
 align-items: flex-start;
-gap: 12px;
+gap: 1.2rem;
 `
 const StyledSpan = styled.span`
-color: var(--text-primary, #222429);
+// color: ${({ theme }) => theme.text.primary};
 
 font-family: MaruBuri;
-font-size: var(--Font-size-text-md, 14px);
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
 line-height: 180%; 
 
-@media (max-width:768px){
-font-size: var(--Font-size-text-sm, 12px);
-}
+${media.mobile`
+font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+`};
 
 `;
 const DateContainer = styled.div`
@@ -252,18 +304,21 @@ const DateContainer = styled.div`
     align-items: flex-start;
 `;
 
-const Site = styled.span`
-color: var(--text-secondary, #3B3F48);
+const DescriptionWrap = styled.div`
+display:grid;
+grid-template-rows:${({ $isOpen }) => ($isOpen ? "1fr" : "0fr")};
+transition: grid-template-rows 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
-/* text/text-small */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-sm, 12px);
-font-style: normal;
-font-weight: 400;
-line-height: 180%; /* 21.6px */
-
+width:100%;
+${media.mobile`
+    display:none;
+`}
 `;
 
+const DescriptionInner = styled.div`
+    min-height:0;
+    overflow:hidden;
+`;
 
 const Description = styled.div`
 align-self:stretch;
@@ -274,32 +329,25 @@ word-break: break-word;
 overflow-wrap: break-word;
 white-space: pre-line; 
 
+opacity:${({ $isOpen }) => ($isOpen ? 1 : 0)};
+transform: translateY(${({ $isOpen }) => ($isOpen ? "0" : "-24px")});
+transition: opacity 0.5s cubic-bezier(0.32, 0, 0.67, 0), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 
-color: var(--text-brand-dark, #115F3B);
+color: ${({ theme }) => theme.text.brandDark};
 font-family: Hahmlet;
-font-size: var(--Font-size-text-md, 14px);
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
 line-height: 160%; 
-letter-spacing: -0.42px;
+letter-spacing: -0.042rem;
 
 
-animation: slideUpFade 3.0s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
 
-  @keyframes slideUpFade {
-    from {
-      opacity: 0;
-      transform: translateY(-24px); 
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);    
-    }
-  }
+// z-index:1;
 
-  z-index:1;
-
-@media (max-width:768px){
+${media.mobile`
     display:none;
-}
+    `}
+    
+
 `;

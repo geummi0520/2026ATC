@@ -50,10 +50,13 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.background.primary};
     scrollbar-width: none;
     -ms-overflow-style: none;
+    overscroll-behavior: none;
   }
   html::-webkit-scrollbar,
   body::-webkit-scrollbar { display: none; }
-  body { color: ${({ theme }) => theme.text.primary}; background: ${({ theme }) => theme.background.primary}; font-family: "MaruBuri", serif; }
+  body { color: ${({ theme }) => theme.text.primary}; background: ${({
+  theme,
+}) => theme.background.primary}; font-family: "MaruBuri", serif; }
   button { color: inherit; font: inherit; }
   a { color: inherit; text-decoration: none; }
 `;

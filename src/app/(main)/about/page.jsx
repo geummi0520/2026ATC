@@ -1,70 +1,66 @@
+"use client"
 import styled from "styled-components";
 import { media } from "@/styles/media";
 import Link from 'next/link';
-
+import Image from "next/image";
+import useTranslation from "@/hooks/useTranslation";
 import { overview_text, topic_text, congrat_text, staffs, station_info } from "@/data/about"
-
-import {
-
-  PosterMain,
-  Banner,
-
-
-  MapBox,
-
-} from "./style";
-
-
 
 
 
 export default function AboutPage() {
+  const { translate, t } = useTranslation();
   return (
     <Container>
 
       {/* 상단 주제문과 포스터 */}
       <Frame1>
         <TitleContainer>
-          <HeadTitle>&lt;레시피 바꾸지 말것*&gt;</HeadTitle>
+          <HeadTitle>&lt;{t("about.topicSentence")}&gt;</HeadTitle>
           <SubTitle>2026 Art & Technology Conference</SubTitle>
         </TitleContainer>
         <PosterMain
           src="/images/about/poster-main.png"
           alt="poster-main"
+          width={400}
+          height={567}
+
         />
       </Frame1>
 
       {/* 전시개요 */}
       <AboutContent
-        title={"전시개요"}
+        title={t("about.overview")}
         showLeftImage={true}
       >
-        {overview_text}
+        {translate(overview_text)}
       </AboutContent>
 
       <Banner
         src="/images/about/banner.png"
         alt="banner"
+        width={990}
+        height={413}
       />
 
       {/* 주제문 */}
       <AboutContent
-        title={"주제문"}
+        title={t("about.topic")}
         showLeftImage={true}
       >
-        <Topic>레시피 바꾸지 말 것*</Topic>
-        {topic_text}
+        <Topic>{t("about.topicSentence")}</Topic>
+        {translate(topic_text)}
       </AboutContent>
 
       {/* 축사 */}
       <AboutContent
-        title={"축사"}
+        title={t("about.congratulatory")}
         showLeftImage={true}
       >
-        {congrat_text}
+        {translate(congrat_text)}
       </AboutContent>
 
-      <EmptyBox $height={"70px"} />
+      <EmptyBox $height={"7rem"} />
       {/* 티저필름 */}
       <TeaserWrapper>
         <AboutContent
@@ -72,13 +68,14 @@ export default function AboutPage() {
           showLeftImage={false}
         />
         {/* 티저필름 비디오 */}
-        <img
+        <TeaserFilmImg
           src="/images/about/TeaserFilm_example.png"
           alt="teaser-film"
-          width="100%"
+          width={990}
+          height={655}
         />
       </TeaserWrapper>
-      <EmptyBox $height={"70px"} />
+      <EmptyBox $height={"7rem"} />
       {/* 스태프 크레딧 */}
       <AboutContent
         title={"Staff Credit"}
@@ -114,25 +111,27 @@ export default function AboutPage() {
       <StampImg
         src="/images/about/stamp-img.png"
         alt="stamp"
-        width="100%"
+        width={990}
+        height={316}
       />
 
       {/* 오시는 길 */}
       <MapWrapper>
-        <ContentTitle $compact={true}>오시는 길</ContentTitle>
-        <TeamName>서강대학교 캠퍼스 지도</TeamName>
+        <ContentTitle $compact={true}>{t("about.path")}</ContentTitle>
+        <TeamName>{t("about.map")}</TeamName>
         <MapBox>
-          <img
+          <MapImage
             src="/images/about/map.png"
             alt="map-image"
-            width="100%"
+            width={2728}
+            height={1766}
           />
           <InfoBox>
             <TeamName>
-              지하철역 정보
+              {t("about.stationInfo")}
             </TeamName>
             <StationInfoText>
-              {station_info}
+              {translate(station_info)}
             </StationInfoText>
           </InfoBox>
         </MapBox>
@@ -141,22 +140,20 @@ export default function AboutPage() {
   );
 }
 const HeadTitle = styled.span`
-color: var(--text-brand-invert, #E9EAED);
+color: ${({ theme }) => theme.text.brandInvert};
 
-/* heading/heading-medium-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-heading-md, 24px);
+font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
 
-@media (max-width:768px) {
+${media.mobile`
 color: #FFF;
 
 /* text/text-large-bold */
-font-size: var(--Font-size-text-lg, 18px);
+font-size: ${({ theme }) => theme.typography.fontSize.textLg};
 line-height: 180%; /* 32.4px */
-}
+`};
 `;
 const Container = styled.div`
 width:100%;
@@ -166,15 +163,15 @@ flex-direction:column;
 align-items:center;
 
 // 태블릿
-@media (min-width: 768px) and (max-width: 1124px) {
-  gap:10px;
-}
+${media.tablet`
+  gap:1rem;
+`};
 
 // 모바일
-@media (max-width: 768px) {
-  padding:20px 10px;
-  gap:60px;
-}
+${media.mobile`
+  padding:2rem 1rem;
+  gap:6rem;
+`};
 
 `;
 
@@ -185,13 +182,13 @@ display:flex;
 flex-direction:column;
 align-items:center;
 
-padding: 60px 0px; 
-gap:60px;
+padding: 6rem 0rem; 
+gap:6rem;
 
-@media (max-width:768px) {
-  padding:20px 0px;
-  gap:40px;
-}
+${media.mobile`
+  padding:2rem 0rem;
+  gap:4rem;
+`};
 `;
 const TitleContainer = styled.div`
 
@@ -199,111 +196,138 @@ display:flex;
 flex-direction:column;
 align-items:center;
 
-gap:10px;
+gap:1rem;
 
-@media (max-width:768px) {
-gap:8px;
-}
+${media.mobile`
+gap:0.8rem;
+`};
 `
+
+const PosterMain = styled(Image)`
+width:40rem;
+height:auto;
+
+
+${media.mobile`
+  width:100%;
+`}
+`;
+
+const Banner = styled(Image)`
+width:100%;
+${media.mobile`
+  display:none;
+`}
+`;
+const TeaserFilmImg = styled(Image)`
+width:100%;
+height:auto;
+`;
+
+const MapBox = styled.div`
+gap:2rem;
+`;
+const MapImage = styled(Image)`
+width:100%;
+height:auto;
+`;
+
 const SubTitle = styled.h3`
-color: var(--text-brand-invert, #E9EAED);
+color: ${({ theme }) => theme.text.brandInvert};
 text-align: center;
 
-/* heading/heading-small-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-heading-sm, 20px);
+
+font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
 
-margin:0px;
-@media (max-width:768px){
+margin:0rem;
+${media.mobile`
   color: #FFF;
 
-  /* text/text-small-bold */
-  font-size: var(--Font-size-text-sm, 12px);
+  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
   line-height: 180%; /* 21.6px */
-  }
+  `};
 `;
 const CreditContainer = styled.div`
 width:100%;
 display:flex;
-gap:40px;
+gap:4rem;
 `;
 const StaffList = styled.div`
 flex:1;
 
 display:flex;
 flex-direction:column;
-gap:40px;
+gap:4rem;
 `;
-const StampImg = styled.img`
-@media (max-width:768px) {
+const StampImg = styled(Image)`
+width:100%;
+height:auto;
+${media.mobile`
 display:none;
-}
+`};
 `;
 const InfoBox = styled.div`
 flex:1;
-padding:12px;
+padding:1.2rem;
 
 display:flex;
 flex-direction:column;
 
-gap:12px;
-background: var(--surface-brand-dark, rgba(10, 56, 35, 0.25));
+gap:1.2rem;
+background: ${({ theme }) => theme.surface.brandDark};
 `;
 const StationInfoText = styled.div`
-color: var(--text-brand-invert, #E9EAED);
+color: ${({ theme }) => theme.text.brandInvert};
 
-/* text/text-medium */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-md, 14px);
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
 line-height: 180%; /* 25.2px */
 
 white-space: pre-line;
-@media (max-width:1124px) {
-  color: var(--text-brand-invert, #E9EAED);
+${media.tablet`
+  color: ${({ theme }) => theme.text.brandInvert};
 
-  /* text/text-small */
-  font-family: MaruBuri;
-  font-size: var(--Font-size-text-sm, 12px);
+  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
   font-style: normal;
   font-weight: 400;
   line-height: 180%; /* 21.6px */
-}
+`}
 
 `;
 const MapWrapper = styled.div`
 width:100%;
-padding:40px;
+padding:4rem;
 display:flex;
 flex-direction:column;
-gap:20px;
+gap:2rem;
 
-@media (max-width:1124px) and (min-width:768px) {
-padding:40px 20px;
-}
-@media (max-width:768px) {
-padding:0px;
-}
+${media.tablet`
+padding:4rem 2rem;
+`};
+${media.mobile`
+  padding:0rem;
+`};
 
 `;
 
 
 
 function CreditItem({ teamName, members }) {
+  const { translate } = useTranslation();
   return (
     <StyledTeamItem
       $isCd={teamName == "Creative Director"}
     >
       <TeamName>
-        {teamName}
+        {translate(teamName)}
       </TeamName>
       <Members>
         {
-          members.map((member, index) => (
+          translate(members).map((member, index) => (
             <span key={index}>
               {member}
             </span>
@@ -316,33 +340,34 @@ function CreditItem({ teamName, members }) {
 const StyledTeamItem = styled.div`
 display:flex;
 flex-direction:column;
-gap:${({ $isCd }) => ($isCd ? "10px" : "8px")};
+gap:${({ $isCd }) => ($isCd ? "1rem" : "0.8rem")};
 `;
 const TeamName = styled.div`
-color: var(--text-brand-invert, #E9EAED);
+color: ${({ theme }) => theme.text.brandInvert};
 
-/* text/text-medium-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-md, 14px);
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 700;
 line-height: 180%; /* 25.2px */
 `;
 const Members = styled.div`
 display:flex;
-gap:12px;
+gap:1.2rem;
 flex-wrap: wrap;
 `;
 
 function AboutContent({ children, title, showLeftImage }) {
   const isStaff = (title == "Staff Credit");
   const isTeaser = (title == "Teaser Film");
+  const { t } = useTranslation();
   return (
     <ContentContainer>
       {showLeftImage ?
         <LeftImg
           src="/images/about/left-img.png"
           alt="left-img"
+          width={327}
+          height={807}
         />
         :
         <PaddingBox />
@@ -354,10 +379,12 @@ function AboutContent({ children, title, showLeftImage }) {
           {title}
           {isStaff &&
             <StyledLink href="./archive/staff">
-              스태프 크레딧 바로가기
-              <img
+              {t("about.linkToStaffCredit")}
+              <Image
                 src="/images/about/arrow-button.png"
                 alt=""
+                width={72}
+                height={72}
               />
             </StyledLink>
           }
@@ -374,66 +401,67 @@ width:100%;
 display:flex;
 justify-content: space-between;
 
-color: var(--text-brand-invert, #E9EAED);
+color: ${({ theme }) => theme.text.brandInvert};
 
-/* heading/heading-medium-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-heading-md, 24px);
+font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
 
-margin:0px;
+margin:0rem;
 text-align: center;
 
-@media (max-width:1124px) and (min-width:768px) {
-  font-size: ${({ $compact }) => $compact ? "var(--Font-size-heading-md, 20px)" : "var(--Font-size-heading-md, 24px)"};
-}
+${media.tablet`
+  font-size: ${({ $compact, theme }) => $compact ? "theme.typography.fontSize.headingMd" : "2.4rem"};
+`};
 
-@media (max-width:768px){
+${media.mobile`
   color: #FFF;
   /* text/text-large-bold */
-  font-size: var(--Font-size-text-lg, 18px);
+  font-size: theme.typography.fontSize.textLg};
   line-height: 180%; /* 32.4px */
-  }
+  `};
 `;
 
 const ContentContainer = styled.div`
 display:flex;
 width:100%;
-gap:10px;
+gap:1rem;
 `;
-const LeftImg = styled.img`
+const LeftImg = styled(Image)`
+width:100%;
+height:auto;
 flex: 1;
 
-@media (max-width: 1124px) {
+${media.tablet`
 // 테블릿 + 모바일
   display:none;
-}
+`}
 `;
 const PaddingBox = styled.div`
 flex:1;
-@media (max-width:1124px) {
+${media.tablet`
   display:none;
-}
+`};
 `;
 const EmptyBox = styled.div`
 display:none;
-@media (max-width:1124px) and (min-width:768px) {
+${media.tablet`
 display:block;
 width:100%;
 height:${({ $height }) => $height};
-}
+`};
 
 `;
 const TeaserWrapper = styled.div`
 display:block;
 width:100%;
-@media (max-width:768px) {
+
+${media.mobile`
 display:flex;
 flex-direction:column;
-gap:20px;
-}
+gap:2rem;
+`};
 
 `;
 const RightContainer = styled.div`
@@ -443,28 +471,28 @@ display:flex;
 align-items:flex-start;
 flex-direction:column;
 
-padding-top:${({ $compact }) => $compact ? "40px" : "80px"};
-padding-bottom:${({ $compact }) => $compact ? "40px" : "80px"};
-padding-right:40px;
-gap:40px;
+padding-top:${({ $compact }) => $compact ? "4rem" : "8rem"};
+padding-bottom:${({ $compact }) => $compact ? "4rem" : "8rem"};
+padding-right:4rem;
+gap:4rem;
 
 white-space: pre-line;
 
 
 // 데스크탑 텍스트 스타일
-color: var(--text-brand-invert, #E9EAED);
-font-family: MaruBuri;
-font-size: var(--Font-size-text-md, 14px);
+color: ${({ theme }) => theme.text.brandInvert};
+
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
-line-height: 180%; /* 25.2px */
+line-height: 180%; 
 
-@media (min-width: 768px) and (max-width: 1124px) {
-  padding:${({ $compact }) => $compact ? "40px 20px" : "80px 20px"};
-}
-@media (max-width:768px){
-padding:0px;
-}
+${media.tablet`
+  padding:${({ $compact }) => $compact ? "4rem 2rem" : "8rem 2rem"};
+`};
+${media.mobile`
+padding:0rem;
+`};
 
 
 `;
@@ -473,17 +501,17 @@ align-self:flex-end;
 
 display: flex;
 align-items: center;
-gap: 4px;
+gap: 0.4rem;
 img {
-    width: 1.6em;
-    height: 1.6em;
+    width: 1em;
+    height: 1em;
     object-fit: contain;
   }
 
-border-bottom: 1px solid var(--line-brand-invert, #E9EAED);
-color: var(--text-brand-invert, #E9EAED);
-font-family: MaruBuri;
-font-size: var(--Font-size-text-sm, 12px);
+border-bottom: 0.1rem solid ${({ theme }) => theme.line.brandInvert};
+// color: ${({ theme }) => theme.text.brandInvert}
+
+font-size: ${({ theme }) => theme.typography.fontSize.textSm};
 font-style: normal;
 font-weight: 700;
 line-height: 120%; /* 14.4px */
@@ -492,11 +520,9 @@ line-height: 120%; /* 14.4px */
 const Topic = styled.div`
 
 // 주제문 스타일링
-color: var(--text-brand-invert, #E9EAED);
+color: ${({ theme }) => theme.text.brandInvert};
 
-/* text/text-large-bold */
-font-family: MaruBuri;
-font-size: var(--Font-size-text-lg, 18px);
+font-size: ${({ theme }) => theme.typography.fontSize.textLg};
 font-style: normal;
 font-weight: 700;
 line-height: 180%; /* 32.4px */
