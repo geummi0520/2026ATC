@@ -13,6 +13,11 @@ export const works = [
       ko: "그냥 지나칠 수도 있었지만.",
       en: "Though we could have passed by.",
     },
+    location: {
+      floor: "4F",
+      ko: "4F X431",
+      en: "4F X431",
+    },
     tagline: {
       ko: "레스토랑과 마트의 색과 모양을 아이웨어로, 안경의 맛있는 변신",
       en: "The colors and shapes of restaurants and grocery stores, served as eyewear. A delicious makeover for your glasses!",
@@ -54,11 +59,9 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-1/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex3.png"],
     },
-    video: null,
+    video: "https://vimeo.com/1092433449?fl=pl&fe=sh",
     links: [],
   },
   {
@@ -74,6 +77,11 @@ export const works = [
     category: {
       ko: "그냥 지나칠 수도 있었지만.",
       en: "Though we could have passed by.",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X431",
+      en: "4F X431",
     },
     tagline: {
       ko: "잠들지 못한 생각들을 위한 자리",
@@ -115,9 +123,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-2/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
@@ -135,6 +141,11 @@ export const works = [
     category: {
       ko: "그냥 지나칠 수도 있었지만.",
       en: "Though we could have passed by.",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X431",
+      en: "4F X431",
     },
     tagline: {
       ko: "유리 너머 정해진 감상법을 넘어, 새롭게 만나는 한국 유물",
@@ -186,9 +197,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-3/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex1.png"],
     },
     video: null,
     links: [],
@@ -206,6 +215,11 @@ export const works = [
     category: {
       ko: "그냥 지나칠 수도 있었지만.",
       en: "Though we could have passed by.",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X431",
+      en: "4F X431",
     },
     tagline: {
       ko: "처음 걷는 도시에서 발견한 나의 취향과 느낌을 기록한 여행 아카이브",
@@ -247,9 +261,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-4/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex4.png"],
     },
     video: null,
     links: [],
@@ -267,6 +279,11 @@ export const works = [
     category: {
       ko: "그냥 지나칠 수도 있었지만.",
       en: "Though we could have passed by.",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X431",
+      en: "4F X431",
     },
     tagline: {
       ko: "정형외과 재활 동작을 재미있게 체험할 수 있는 아동 대상 AR 게임.",
@@ -350,9 +367,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-5/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex3.png"],
     },
     video: null,
     links: [],
@@ -370,6 +385,11 @@ export const works = [
     category: {
       ko: "그냥 지나칠 수도 있었지만.",
       en: "Though we could have passed by.",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X431",
+      en: "4F X431",
     },
     tagline: {
       ko: "제한된 예산으로 안전한 자취방과 정당한 계약을 탐색하는 시뮬레이션 게임",
@@ -458,9 +478,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-6/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
@@ -478,6 +496,11 @@ export const works = [
     category: {
       ko: "그냥 지나칠 수도 있었지만.",
       en: "Though we could have passed by.",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X433",
+      en: "4F X433",
     },
     tagline: {
       ko: "하루를 멜로디로 기록하는 습관 트래커 애플리케이션",
@@ -563,9 +586,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-7/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex1.png"],
     },
     video: null,
     links: [],
@@ -583,6 +604,11 @@ export const works = [
     category: {
       ko: "익숙한 것에 질문을?",
       en: "Questioning the familiar?",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X433",
+      en: "4F X433",
     },
     tagline: {
       ko: "한 통의 편지를 전하기 위해, 레시피의 정답 바깥으로 향하는 RPG.",
@@ -638,9 +664,76 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-8/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex4.png"],
+    },
+    video: null,
+    links: [],
+  },
+  {
+    id: 9,
+    title: {
+      ko: "만지시오!",
+      en: "Touch!",
+    },
+    team: {
+      ko: "말랑말랑",
+      en: "Mallang Mallang",
+    },
+    category: {
+      ko: "그냥 지나칠 수도 있었지만.",
+      en: "Though we could have passed by.",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X433",
+      en: "4F X433",
+    },
+    tagline: {
+      ko: "어린 시절처럼 다양한 작품을 손으로 만지며 탐색하는 촉각 전시",
+      en: "A tactile exhibition where you explore various artworks by touch, just like you did as a child.",
+    },
+    description: {
+      ko: "이 전시에서는 4가지의 서로 다른 작품을 체험하며 평소 잘 신경쓰지 않았던 촉각이라는 감각을 되새겨볼 수 있습니다. 그저 다른 감각들을 보조하는 감각으로 흔히 여겨지지만, 촉각은 그 자체로 세상의 다양한 물질과 미지를 탐색하는 수단입니다. 더 나아가 때로 표현의 도구나 추억의 매개체가 되기도 합니다. 어린 시절 손 하나로 세상을 알아가던 것처럼, 다양한 형태의 전시물을 만져보면서 만지는 즐거움과 촉각의 가능성을 느껴보세요.",
+      en: "This exhibition invites you to experience four different artworks and rediscover the sense of touch, often overlooked in our daily lives. Though commonly seen as a sense that supports others, touch is also a way to explore the world’s diverse materials and mysteries. It can even serve as a means of expression or a gateway to memories. Just as we explored the world with our hands as children, discover the joy of touching and the possibilities of touch.",
+    },
+    tags: [
+      {
+        ko: "인터랙티브 아트",
+        en: "Interactive Art",
+      },
+      {
+        ko: "체험형",
+        en: "Experiential",
+      },
+    ],
+    teamDescription: {
+      ko: "말랑말랑은 촉각이라는 감각에 대한 호기심과 어린 시절의 즐거운 탐색의 추억에서 시작된 팀입니다. 말랑이같은 촉각 장난감을 좋아하고, 그런 장난감을 가지고 노는 듯한 새롭고 재미있는 경험을 제공하고자 합니다.",
+      en: "Mallang Mallang is a team born out of curiosity about the sense of touch and fond memories of joyful exploration in childhood. We love tactile toys like squishies and aim to offer new and exciting experiences, just like playing with those toys.",
+    },
+    members: [
+      {
+        role: "leader",
+        name: {
+          ko: "이은서",
+          en: "Lee, Eunseo",
+        },
+        contacts: [
+          {
+            type: "instagram",
+            value: "instagram.com/2eunseo11225",
+            url: "https://instagram.com/2eunseo11225",
+          },
+          {
+            type: "email",
+            value: "2eunseo11225@naver.com",
+            url: "mailto:2eunseo11225@naver.com",
+          },
+        ],
+      },
+    ],
+    images: {
+      thumbnail: "https://picsum.photos/seed/atc-work-9/1080/1440",
+      detail: ["/images/works/ex3.png"],
     },
     video: null,
     links: [],
@@ -658,6 +751,11 @@ export const works = [
     category: {
       ko: "익숙한 것에 질문을?",
       en: "Questioning the familiar?",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X433",
+      en: "4F X433",
     },
     tagline: {
       ko: "[너와 나]는 통화를 통해 진행되는 웹 인터렉션 전시물입니다.",
@@ -699,9 +797,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-10/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
@@ -719,6 +815,11 @@ export const works = [
     category: {
       ko: "익숙한 것에 질문을?",
       en: "Questioning the familiar?",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F X435",
+      en: "4F X435",
     },
     tagline: {
       ko: "블라디보스토크, 난닝, 서울, 도쿄의 환경 및 문화를 다룬 4채널 비디오",
@@ -765,9 +866,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-11/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex1.png"],
     },
     video: null,
     links: [],
@@ -786,13 +885,18 @@ export const works = [
       ko: "익숙한 것에 질문을?",
       en: "Questioning the familiar?",
     },
+    location: {
+      floor: "4F",
+      ko: "4F 신영균 스튜디오",
+      en: "4F Shin Youngkyun Studio",
+    },
     tagline: {
-      ko: "성희롱 이후의 침묵과 외면을 마주하는 인터랙티브 전시",
+      ko: "성희롱 이후의 현실인 침묵과 외면을 마주하는 인터랙티브 게임형 전시",
       en: "An interactive exhibition exploring sexual harassment, silence, and the people who choose to look away.",
     },
     description: {
-      ko: "관람객은 주인공의 방을 탐색하며 설치물 곳곳에 숨겨진 비밀번호를 찾아 주인공의 이야기를 하나씩 발견한다. 비밀번호를 입력하면 일기장의 일부가 공개되고, 각 공간에서 마주하는 선택은 시스템에 기록되어 서로 다른 결말로 이어진다. 작품 속 시스템은 침착하고 친절한 목소리로 성희롱 사건을 축소하고 주인공에게 침묵을 유도한다. 친구와 학교, 주변 사람들이 주인공을 외면하는 모습을 통해 작품은 성희롱 이후에도 사건을 제대로 마주하지 않고 침묵과 외면을 선택하는 사회의 태도를 질문한다.",
-      en: "Visitors explore the protagonist's room, finding passcodes hidden in the installation to uncover fragments of her journal. Their choices are recorded by a system and shape the ending. Speaking in a calm, friendly voice, the system downplays the sexual harassment and encourages the protagonist to remain silent. Through the reactions of her friends, school, and community, the work questions a society that turns away from sexual harassment and chooses silence over accountability.",
+      ko: "관람객은 주인공의 방을 탐색하며 설치물 곳곳에 숨겨진 비밀번호를 찾아 주인공의 이야기를 하나씩 발견할 예정입니다. \n\n비밀번호를 입력하면 일기장의 일부가 공개되고, 각 공간에서 마주하는 선택은 시스템에 기록되어 서로 다른 결말로 이어집니다. 작품 속 시스템의 음성은 침착하고 친절한 목소리로 성희롱 사건을 축소하고 주인공에게 침묵을 유도합니다. \n\n친구와 학교, 주변 사람들이나 의지가 되어야할 존재인 어른들 조차도 주인공을 외면하는 모습을 통해 작품은 성희롱 이후에도 사건을 제대로 마주하지 않고 침묵과 외면을 선택하는 사회의 태도를 질문하는데, 당신은 이 상황에서 어떠한 선택을 내릴건가요?",
+      en: "Visitors explore the protagonist's room, finding passcodes hidden in the installations to uncover fragments of her journal. \n\nTheir choices are recorded by a system and shape the ending. Speaking in a calm, friendly voice, the system downplays the sexual harassment and encourages the protagonist to remain silent. \n\nThrough the reactions of her friends, school, and community, the work questions a society that turns away from sexual harassment and chooses silence over accountability.",
     },
     tags: [
       {
@@ -805,8 +909,8 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "안녕하세요, 저희는 다양한 배경을 가진 학생들로 구성된 팀 TAco입니다. 저희는 사회에서 쉽게 이야기되지 않거나 당연하게 여겨지는 주제들을 작품으로 탐구합니다. 관람객에게 정답을 제시하기보다는, 익숙한 현실을 다시 바라보고 우리가 받아들이는 사회적 기준이 정말 괜찮은지 스스로 질문할 수 있는 작은 계기를 만들고자 합니다.",
-      en: "Hello, we are Team TAco, a diverse group of students interested in exploring topics that are often left unspoken or taken for granted. Through our work, we hope to plant a thought that stays with visitors, encouraging them to question familiar realities and reconsider the norms we accept as part of everyday life.",
+      ko: "안녕하세요, 저희는 다양한 배경을 가진 학생들로 구성된 팀 TAco입니다. \n\n저희는 사회적으로 쉽게 이야기되지 않거나 당연하게 여겨져 온 주제들을 작품으로 탐구하고자 합니다. \n\n관람객에게 길을 제시하기보다는, 익숙한 현실을 다른 시각으로 바라보고 우리가 받아들여 온 사회적 기준이 정말 괜찮은지 스스로에게 질문할 수 있는 작은 계기를 만들고자 합니다.",
+      en: "Hello, we are Team TAco, a diverse group of students interested in exploring topics that are often left unspoken or taken for granted. \n\nThrough our work, we hope to plant a thought that stays with visitors, encouraging them to question familiar realities and reconsider the norms we accept as part of everyday life.",
     },
     members: [
       {
@@ -817,23 +921,9 @@ export const works = [
         },
         contacts: [
           {
-            type: "instagram",
-            value: "instagram.com/isa_mendoza_",
-            url: "https://instagram.com/isa_mendoza_",
-          },
-        ],
-      },
-      {
-        role: "member",
-        name: {
-          ko: "에밀리",
-          en: "Emily Wuestenhagen",
-        },
-        contacts: [
-          {
-            type: "instagram",
-            value: "instagram.com/emily_r0o",
-            url: "https://instagram.com/emily_r0o",
+            type: "email",
+            value: "isamg2328@gmail.com",
+            url: "mailto:isamg2328@gmail.com",
           },
         ],
       },
@@ -845,18 +935,30 @@ export const works = [
         },
         contacts: [
           {
-            type: "instagram",
-            value: "instagram.com/tournect_kr",
-            url: "https://instagram.com/tournect_kr",
+            type: "email",
+            value: "jeewoo7@kakao.com",
+            url: "mailto:jeewoo7@kakao.com",
+          },
+        ],
+      },
+      {
+        role: "member",
+        name: {
+          ko: "에밀리",
+          en: "Emily Wuestenhagen",
+        },
+        contacts: [
+          {
+            type: "email",
+            value: "emilywuestenhagen@gmail.com",
+            url: "mailto:emilywuestenhagen@gmail.com",
           },
         ],
       },
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-12/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex4.png"],
     },
     video: null,
     links: [],
@@ -874,6 +976,11 @@ export const works = [
     category: {
       ko: "익숙한 것에 질문을?",
       en: "Questioning the familiar?",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F 신영균 스튜디오",
+      en: "4F Shin Youngkyun Studio",
     },
     tagline: {
       ko: "외모 강박과 자존감 문제를 다루는 AR 기반 인터랙티브 보드 게임",
@@ -942,9 +1049,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-13/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex3.png"],
     },
     video: null,
     links: [],
@@ -962,6 +1067,11 @@ export const works = [
     category: {
       ko: "익숙한 것에 질문을?",
       en: "Questioning the familiar?",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F 신영균 스튜디오",
+      en: "4F Shin Youngkyun Studio",
     },
     tagline: {
       ko: "누군가의 기억을 재료 삼아 당신만의 맛을 만드세요",
@@ -1027,9 +1137,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-14/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
@@ -1047,6 +1155,11 @@ export const works = [
     category: {
       ko: "익숙한 것에 질문을?",
       en: "Questioning the familiar?",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F 신영균 스튜디오",
+      en: "4F Shin Youngkyun Studio",
     },
     tagline: {
       ko: "테두리 너머에서 나를 분사하는 법",
@@ -1130,9 +1243,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-15/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex1.png"],
     },
     video: null,
     links: [],
@@ -1150,6 +1261,11 @@ export const works = [
     category: {
       ko: "익숙한 것에 질문을?",
       en: "Questioning the familiar?",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 계단 공간",
+      en: "5F Staircase Space",
     },
     tagline: {
       ko: "‘위안부’ 문제를 마주한 우리를 보여주는 액자식 구성의 단편영화",
@@ -1220,9 +1336,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-16/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex4.png"],
     },
     video: null,
     links: [],
@@ -1240,6 +1354,11 @@ export const works = [
     category: {
       ko: "물음표 너머의,",
       en: "Beyond our inquiry,",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 사운드 스튜디오",
+      en: "5F Sound Studio",
     },
     tagline: {
       ko: "흘러간 것들이 일렁이게끔",
@@ -1323,9 +1442,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-17/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex3.png"],
     },
     video: null,
     links: [],
@@ -1343,6 +1460,11 @@ export const works = [
     category: {
       ko: "물음표 너머의,",
       en: "Beyond our inquiry,",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F XR 스튜디오",
+      en: "5F XR Studio",
     },
     tagline: {
       ko: "도시의 ‘조심’을 제자리에서 꺼내 새로운 관계를 바라보는 오디오비주얼설치",
@@ -1398,9 +1520,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-18/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
@@ -1418,6 +1538,11 @@ export const works = [
     category: {
       ko: "물음표 너머의,",
       en: "Beyond our inquiry,",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 세미나 룸",
+      en: "5F Seminar Room",
     },
     tagline: {
       ko: "세상에 단 하나뿐인 나(만의 목소리 사진)",
@@ -1464,9 +1589,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-19/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex1.png"],
     },
     video: null,
     links: [],
@@ -1484,6 +1607,11 @@ export const works = [
     category: {
       ko: "물음표 너머의,",
       en: "Beyond our inquiry,",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 세미나 룸",
+      en: "5F Seminar Room",
     },
     tagline: {
       ko: "당신은 촛불이 된다. 그리고 사라진 후에는, 무엇이 남을까?",
@@ -1525,9 +1653,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-20/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex4.png"],
     },
     video: null,
     links: [],
@@ -1545,6 +1671,11 @@ export const works = [
     category: {
       ko: "물음표 너머의,",
       en: "Beyond our inquiry,",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 이머시브 홀",
+      en: "5F Immersive Hall",
     },
     tagline: {
       ko: "자극에 지친 일상 속, 무심코 올려다 본 하늘이 일깨우는 감각의 공간",
@@ -1600,9 +1731,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-21/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex3.png"],
     },
     video: null,
     links: [],
@@ -1620,6 +1749,11 @@ export const works = [
     category: {
       ko: "물음표 너머의,",
       en: "Beyond our inquiry,",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 이머시브 홀",
+      en: "5F Immersive Hall",
     },
     tagline: {
       ko: "전통 회화와 음악을 매개로 세계 각지의 시공간을 연결하는 미디어아트",
@@ -1717,9 +1851,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-22/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
@@ -1737,6 +1869,11 @@ export const works = [
     category: {
       ko: "물음표 너머의,",
       en: "Beyond our inquiry,",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 아트 스튜디오",
+      en: "5F Art Studio",
     },
     tagline: {
       ko: "냉장고 틈 사이의 진짜를 뚫어지게 바라보자.",
@@ -1797,9 +1934,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-23/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex1.png"],
     },
     video: null,
     links: [],
@@ -1817,6 +1952,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 아트 스튜디오",
+      en: "5F Art Studio",
     },
     tagline: {
       ko: "주관적 감각에서 비롯되는 미래의 가능성에 대해 성찰하는 인터랙티브 아트",
@@ -1863,9 +2003,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-24/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex4.png"],
     },
     video: null,
     links: [],
@@ -1883,6 +2021,11 @@ export const works = [
     category: {
       ko: "물음표 너머의,",
       en: "Beyond our inquiry,",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 아트 스튜디오",
+      en: "5F Art Studio",
     },
     tagline: {
       ko: "미지의 존재 앞에서, 우리가 지키려는 인간다움은 무엇일까?",
@@ -1953,9 +2096,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-25/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex3.png"],
     },
     video: null,
     links: [],
@@ -1973,6 +2114,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 아트 스튜디오",
+      en: "5F Art Studio",
     },
     tagline: {
       ko: "한 캐릭터의 좌반신과 우반신을 나누어 조종하는 2인용 협동 게임!",
@@ -2032,9 +2178,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-26/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
@@ -2052,6 +2196,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 컴퓨터 랩",
+      en: "5F Computer Lab",
     },
     tagline: {
       ko: "사랑으로 인간을 꿈꾸게 된 노동용 로봇의 억압과 탈출을 그린 게임",
@@ -2121,9 +2270,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-27/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex1.png"],
     },
     video: null,
     links: [],
@@ -2141,6 +2288,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 컴퓨터 랩",
+      en: "5F Computer Lab",
     },
     tagline: {
       ko: "다양한 거점에서 의뢰인을 구출하는 5인 협동 공포 게임",
@@ -2187,9 +2339,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-28/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex4.png"],
     },
     video: null,
     links: [],
@@ -2207,6 +2357,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 컴퓨터 랩",
+      en: "5F Computer Lab",
     },
     tagline: {
       ko: "현실에서 참거나 피했던 상황을 퍼즐 플레이로 해결하는 PC기반 2D 게임",
@@ -2310,9 +2465,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-29/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex3.png"],
     },
     video: null,
     links: [],
@@ -2330,6 +2483,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 컴퓨터 랩",
+      en: "5F Computer Lab",
     },
     tagline: {
       ko: "물건을 타고 외계인을 피해 탈출하자!",
@@ -2388,9 +2546,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-30/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
@@ -2408,6 +2564,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 컴퓨터 랩",
+      en: "5F Computer Lab",
     },
     tagline: {
       ko: "괴물이 되어버린 친구의 저주를 풀며 마을의 진실을 찾아내는 추리게임",
@@ -2521,9 +2682,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-31/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex1.png"],
     },
     video: null,
     links: [],
@@ -2541,6 +2700,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 패브리케이션 랩",
+      en: "5F Fabrication Lab",
     },
     tagline: {
       ko: "소리들이 서로를 끌어당기며 자신들의 목표를 찾아가는 유기적인 오르간",
@@ -2596,9 +2760,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-32/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex4.png"],
     },
     video: null,
     links: [],
@@ -2616,6 +2778,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 패브리케이션 랩",
+      en: "5F Fabrication Lab",
     },
     tagline: {
       ko: "이름 없는 감각을 발견하고, 기록하고, 명명하는 참여형 아카이브 프로젝트",
@@ -2657,9 +2824,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-33/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex3.png"],
     },
     video: null,
     links: [],
@@ -2677,6 +2842,11 @@ export const works = [
     category: {
       ko: "그래서 난!",
       en: "So I say!",
+    },
+    location: {
+      floor: "5F",
+      ko: "5F 패브리케이션 랩",
+      en: "5F Fabrication Lab",
     },
     tagline: {
       ko: "전시 상황, 격납고의 보급대원이 되어 임무를 수행하는 3D 게임",
@@ -2718,9 +2888,7 @@ export const works = [
     ],
     images: {
       thumbnail: "https://picsum.photos/seed/atc-work-34/1080/1440",
-      detail: [
-        "https://res.cloudinary.com/dzwooybws/image/upload/v1764921708/%EC%82%B6%EC%9D%80%EC%84%A4%ED%99%94_%EB%82%B4%EB%B6%80%EC%9D%B4%EB%AF%B8%EC%A7%80_ug0knc_dwz0se.png",
-      ],
+      detail: ["/images/works/ex2.png"],
     },
     video: null,
     links: [],
