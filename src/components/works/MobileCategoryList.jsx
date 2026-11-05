@@ -8,11 +8,12 @@ export default function MobileCategoryList({
   categories,
   selectedCategory,
   onSelectCategory,
+  ref,
 }) {
   const { translate } = useTranslation();
 
   return (
-    <Section>
+    <Section ref={ref}>
       <Label>작품 카테고리</Label>
       <List>
         {categories.map(({ id, label }) => (
