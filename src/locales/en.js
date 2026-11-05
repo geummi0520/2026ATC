@@ -9,7 +9,7 @@ const en = {
     workMap: "Floor Plan",
     staffCredit: "Staff Credit",
     artistCredit: "Artist Credit",
-    artbook: "Artbook",
+    artbook: "Archiving Book",
     menuOpen: "Open menu",
     menuClose: "Close menu",
   },
@@ -45,7 +45,7 @@ const en = {
     linkToStaffCredit: "View Staff Credits",
     path: "Directions",
     map: "Sogang University Campus Map",
-    stationInfo: "Subway Information"
+    stationInfo: "Subway Information",
   },
   program: {
     location: "Location",

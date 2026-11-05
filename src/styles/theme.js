@@ -30,6 +30,7 @@
 // media.mobile: 767px 이하 / media.tablet: 1123px 이하 / 기본 스타일: desktop
 // Works 콘텐츠는 별도 시안 기준에 따라 1440px부터 desktop 레이아웃을 사용합니다.
 const breakpoints = {
+  compactMobile: 630,
   mobile: 768,
   tablet: 1124,
   worksCompact: 1280,

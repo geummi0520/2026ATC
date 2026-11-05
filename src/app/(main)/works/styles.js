@@ -87,17 +87,3 @@ export const CategoryFallback = styled.div`
   `}
 `;
 
-export const MobileCategoryFooter = styled.div`
-  display: none;
-
-  ${media.mobile`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2.4rem 2rem;
-    color: ${({ theme }) => theme.text.brand};
-    background: ${({ theme }) => theme.surface.secondary};
-    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-    font-weight: 700;
-  `}
-`;

@@ -1,6 +1,12 @@
 import { css } from "styled-components";
 
 export const media = {
+  compactMobile: (...args) => css`
+    @media (max-width: ${({ theme }) =>
+        `${theme.breakpoints.compactMobile - 1}px`}) {
+      ${css(...args)}
+    }
+  `,
   worksTablet: (...args) => css`
     @media (max-width: ${({ theme }) =>
         `${theme.breakpoints.worksDesktop - 1}px`}) {
