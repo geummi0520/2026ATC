@@ -6,6 +6,7 @@ import Footer from "@/components/common/Footer";
 import BackButton from "@/components/works/BackButton";
 import WorksRail from "@/components/works/WorksRail";
 import useTranslation from "@/hooks/useTranslation";
+import useWorksBackHref from "@/hooks/useWorksBackHref";
 import { media } from "@/styles/media";
 import { getVimeoEmbedUrl } from "@/utils/getVimeoEmbedUrl";
 
@@ -30,16 +31,17 @@ export default function WorkDetail({ work }) {
     ? work.images.detail
     : [work.images.thumbnail];
   const videoEmbedUrl = getVimeoEmbedUrl(work.video);
+  const backHref = useWorksBackHref(work.id);
 
   return (
     <Container>
       <DesktopRail>
-        <WorksRail backHref="/works" />
+        <WorksRail backHref={backHref} />
       </DesktopRail>
 
       <DetailScroll data-works-scroll>
         <CompactBackRow>
-          <BackButton href="/works" />
+          <BackButton href={backHref} />
         </CompactBackRow>
         <Hero>
           <HeroImage>

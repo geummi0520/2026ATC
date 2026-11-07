@@ -40,4 +40,8 @@ export const worksPageContent = {
     },
   },
   floorPlanLabel: { ko: "작품배치도", en: "Floor Plan" },
+  floorPlanMobileDescription: {
+    ko: "화면을 슬라이드하여 작품 섹션을 넘겨보세요. 지도를 클릭하여 전체 작품 배치도를 확인할 수 있습니다. 작품을 클릭하면 작품 상세보기로 이동합니다.",
+    en: "Swipe to browse each section. Tap the map to see the full floor plan, and tap a work to view its details.",
+  },
 };

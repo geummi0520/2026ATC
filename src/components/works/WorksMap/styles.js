@@ -29,6 +29,10 @@ export const Content = styled.div`
   ${media.worksTablet`
     padding: 4rem 2rem;
   `}
+
+  ${media.mobile`
+    padding: 2rem 0 4rem;
+  `}
 `;
 
 export const Title = styled.h1`
@@ -47,6 +51,10 @@ export const Body = styled.div`
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 4rem;
+
+  ${media.mobile`
+    display: none;
+  `}
 `;
 
 export const PlanColumn = styled.div`
@@ -141,10 +149,16 @@ export const ExpandedPlan = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 4rem;
+`;
 
-  > div {
-    max-width: 120rem;
-  }
+export const ExpandedFrame = styled.div`
+  width: 100%;
+  max-width: 120rem;
+
+  ${media.mobile`
+    padding: 2.4rem 1.6rem;
+    border: 1px solid ${({ theme }) => theme.line.brand};
+  `}
 `;
 
 export const CollapseButton = styled.button`
@@ -160,4 +174,39 @@ export const CollapseButton = styled.button`
   &:focus-visible {
     background: ${({ theme }) => theme.surface.brand};
   }
+
+  ${media.mobile`
+    display: none;
+  `}
+`;
+
+export const MobileCollapseButton = styled.button`
+  display: none;
+  padding: 0.8rem 3.2rem;
+  border: 1px solid ${({ theme }) => theme.line.brand};
+  border-radius: 999px;
+  background: transparent;
+  color: ${({ theme }) => theme.text.brand};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  font-weight: 700;
+  cursor: pointer;
+
+  ${media.mobile`
+    display: block;
+  `}
+`;
+
+export const MobileView = styled.div`
+  display: none;
+
+  ${media.mobile`
+    display: block;
+  `}
+`;
+
+export const Description = styled.p`
+  margin: 0 0 2.4rem;
+  color: ${({ theme }) => theme.text.quaternary};
+  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  line-height: 1.8;
 `;

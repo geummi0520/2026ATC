@@ -6,8 +6,8 @@ import styled from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
 
 // works data의 location.x, y는 floorplan.svg viewBox(600 x 664) 기준 좌표
-const PLAN_WIDTH = 600;
-const PLAN_HEIGHT = 664;
+export const PLAN_WIDTH = 600;
+export const PLAN_HEIGHT = 664;
 
 const toPosition = ({ x, y }) => ({
   left: `${(x / PLAN_WIDTH) * 100}%`,
@@ -40,9 +40,9 @@ export default function FloorPlan({
           href={`/works/${work.id}`}
           style={toPosition(work.location)}
           aria-label={`${work.id}. ${translate(work.title)}`}
-          onMouseEnter={() => onActivate(work)}
+          onMouseEnter={() => onActivate?.(work)}
           onMouseLeave={onDeactivate}
-          onFocus={() => onActivate(work)}
+          onFocus={() => onActivate?.(work)}
           onBlur={onDeactivate}
         />
       ))}
@@ -91,5 +91,9 @@ const Preview = styled.div`
 
   img {
     object-fit: cover;
+  }
+
+  @media (hover: none) {
+    display: none;
   }
 `;

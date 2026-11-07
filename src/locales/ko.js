@@ -48,6 +48,10 @@ const ko = {
   },
   works: {
     expandMap: "크게 보기",
+    fullMap: "전체 지도 보기",
+    prevSection: "이전 섹션",
+    nextSection: "다음 섹션",
+    backToMap: "돌아가기",
   },
   program: {
     location: "장소",
