@@ -50,6 +50,8 @@ const en = {
   program: {
     location: "Location",
     dateTime: "Date & Time",
+    back: "back",
+    backToList: "Back to List",
   },
 };
 

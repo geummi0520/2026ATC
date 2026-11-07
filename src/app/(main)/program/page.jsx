@@ -6,7 +6,6 @@ import { media } from "@/styles/media";
 
 
 import ProgramItem from "@/components/program/program-item";
-import Modal from "@/components/program/modal";
 
 import useTranslation from "@/hooks/useTranslation";
 
@@ -20,16 +19,16 @@ export default function ProgramPage() {
 
   const { translate } = useTranslation();
 
-  useEffect(() => {
-    if (!isModalOpen) return;
+  // useEffect(() => {
+  //   if (!isModalOpen) return;
 
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+  //   const prevOverflow = document.body.style.overflow;
+  //   document.body.style.overflow = "hidden";
 
-    return () => {
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [isModalOpen]);
+  //   return () => {
+  //     document.body.style.overflow = prevOverflow;
+  //   };
+  // }, [isModalOpen]);
 
   // 클릭시 아이템의 토글 변경 함수
   const handleToggle = (idx) => {
@@ -53,6 +52,7 @@ export default function ProgramPage() {
         {programs.map((program, idx) => (
           <ProgramItem
             key={idx}
+            id={program.id}
             title={translate(program.title)}
             imgUrl={program.imgUrl}
             description={translate(program.description)}
@@ -64,18 +64,7 @@ export default function ProgramPage() {
         ))}
       </ProgramList>
 
-      {/* 모바일에서만 띄울 모달 */}
-      {(openIdx >= 0) &&
-        <Modal
-          program={programs[openIdx]}
-          openIdx={openIdx}
-          closeModal={() => { setOpenIdx(-1) }}
-          nextProgram={() => { setOpenIdx(openIdx + 1) }}
-          prevProgram={() => { setOpenIdx(openIdx - 1) }}
-          n_programs={programs.length}
 
-        />
-      }
 
     </Container>
   );

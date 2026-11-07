@@ -2,16 +2,26 @@
 
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 import { media } from "@/styles/media";
 import useTranslation from "@/hooks/useTranslation";
 
-export default function ProgramItem({ title, imgUrl, dates, site, description, idx, isOpen, handleToggle }) {
+export default function ProgramItem({ title, imgUrl, dates, site, description, idx, id, isOpen, handleToggle }) {
     const { t, translate } = useTranslation();
+
+    const handleClick = (e) => {
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+        if (!isMobile) {
+            e.preventDefault();
+            handleToggle();
+        }
+    };
     return (
 
-        <Container onClick={handleToggle} $isOpen={isOpen}>
+        <Container href={`/program/${id}`} onClick={handleClick} $isOpen={isOpen}>
 
             {/* 좌측 프로그램 이미지 */}
             <ProgramImg
@@ -22,11 +32,11 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                 $desktop
             />
             {/* 우측 프로그램 정보 */}
-            <ProgramInfo>
+            < ProgramInfo >
                 {/* 제목 */}
-                <Title>{title}</Title>
+                < Title > {title}</Title >
                 {/* 테블릿에서 토글 열었을 때 보이는 이미지 */}
-                <ContentContainer>
+                < ContentContainer >
                     <TabletImgWrap $isOpen={isOpen}>
                         {/* {isOpen && */}
                         <DescriptionInner>
@@ -81,8 +91,8 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                         </EventInfo>
                     </InfoBox>
 
-                </ContentContainer>
-            </ProgramInfo>
+                </ContentContainer >
+            </ProgramInfo >
 
         </Container >
 
@@ -91,7 +101,7 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
 
 
 
-const Container = styled.div`
+const Container = styled(Link)`
 
 width: 100%;
 // z-index: 10;
@@ -334,7 +344,6 @@ transform: translateY(${({ $isOpen }) => ($isOpen ? "0" : "-24px")});
 transition: opacity 0.5s cubic-bezier(0.32, 0, 0.67, 0), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 
 color: ${({ theme }) => theme.text.brandDark};
-font-family: Hahmlet;
 font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
