@@ -46,6 +46,9 @@ const ko = {
     map: "서강대학교 캠퍼스 지도",
     stationInfo: "지하철역 정보",
   },
+  works: {
+    expandMap: "크게 보기",
+  },
   program: {
     location: "장소",
     dateTime: "일시",

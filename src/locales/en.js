@@ -47,6 +47,9 @@ const en = {
     map: "Sogang University Campus Map",
     stationInfo: "Subway Information",
   },
+  works: {
+    expandMap: "View larger",
+  },
   program: {
     location: "Location",
     dateTime: "Date & Time",
