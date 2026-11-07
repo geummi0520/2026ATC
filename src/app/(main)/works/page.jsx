@@ -24,7 +24,7 @@ import useTranslation from "@/hooks/useTranslation";
 import { shuffleWorks } from "@/utils/shuffleWorks";
 
 export default function Page({ searchParams }) {
-  const { view } = use(searchParams);
+  const { view, floor, section, expanded } = use(searchParams);
   const { translate } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categoryListNode, setCategoryListNode] = useState(null);
@@ -67,7 +67,8 @@ export default function Page({ searchParams }) {
     ? shuffledWorks.filter((work) => work.category.ko === selectedCategory)
     : shuffledWorks;
 
-  if (view === "map") return <WorksMap />;
+  if (view === "map")
+    return <WorksMap initialState={{ floor, section, expanded }} />;
 
   return (
     <S.Frame>

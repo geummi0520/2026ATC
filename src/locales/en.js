@@ -49,6 +49,10 @@ const en = {
   },
   works: {
     expandMap: "View larger",
+    fullMap: "View full map",
+    prevSection: "Previous section",
+    nextSection: "Next section",
+    backToMap: "Back",
   },
   program: {
     location: "Location",
