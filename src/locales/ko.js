@@ -47,8 +47,10 @@ const ko = {
     stationInfo: "지하철역 정보"
   },
   program: {
-    location: "위치",
+    location: "장소",
     dateTime: "일시",
+    back: "이전으로",
+    backToList: "목록 보기",
   },
 };
 
