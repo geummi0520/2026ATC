@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  use,
   useEffect,
   useMemo,
   useRef,
@@ -14,6 +15,7 @@ import FloorPlanButton from "@/components/works/FloorPlanButton";
 import MobileCategoryDropdown from "@/components/works/MobileCategoryDropdown";
 import MobileCategoryList from "@/components/works/MobileCategoryList";
 import WorkGrid from "@/components/works/WorkGrid";
+import WorksMap from "@/components/works/WorksMap";
 import WorksRail from "@/components/works/WorksRail";
 import * as S from "@/app/(main)/works/styles";
 import { works } from "@/data/works";
@@ -21,7 +23,8 @@ import { worksPageContent } from "@/data/worksPageContent";
 import useTranslation from "@/hooks/useTranslation";
 import { shuffleWorks } from "@/utils/shuffleWorks";
 
-export default function Page() {
+export default function Page({ searchParams }) {
+  const { view } = use(searchParams);
   const { translate } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categoryListNode, setCategoryListNode] = useState(null);
@@ -63,6 +66,9 @@ export default function Page() {
   const visibleWorks = selectedCategory
     ? shuffledWorks.filter((work) => work.category.ko === selectedCategory)
     : shuffledWorks;
+
+  if (view === "map") return <WorksMap />;
+
   return (
     <S.Frame>
       <WorksRail

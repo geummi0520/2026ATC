@@ -15,6 +15,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 322,
+      y: 441,
       ko: "4F X431",
       en: "4F X431",
     },
@@ -80,6 +82,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 344,
+      y: 430,
       ko: "4F X431",
       en: "4F X431",
     },
@@ -144,6 +148,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 327,
+      y: 410,
       ko: "4F X431",
       en: "4F X431",
     },
@@ -218,6 +224,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 305,
+      y: 421,
       ko: "4F X431",
       en: "4F X431",
     },
@@ -282,6 +290,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 302,
+      y: 390,
       ko: "4F X431",
       en: "4F X431",
     },
@@ -388,6 +398,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 324,
+      y: 378,
       ko: "4F X431",
       en: "4F X431",
     },
@@ -499,6 +511,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 347,
+      y: 366,
       ko: "4F X433",
       en: "4F X433",
     },
@@ -607,6 +621,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 366,
+      y: 385,
       ko: "4F X433",
       en: "4F X433",
     },
@@ -685,6 +701,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 400,
+      y: 355,
       ko: "4F X433",
       en: "4F X433",
     },
@@ -754,6 +772,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 430,
+      y: 377,
       ko: "4F X433",
       en: "4F X433",
     },
@@ -818,6 +838,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 474,
+      y: 358,
       ko: "4F X435",
       en: "4F X435",
     },
@@ -887,6 +909,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 530,
+      y: 375,
       ko: "4F 신영균 스튜디오",
       en: "4F Shin Youngkyun Studio",
     },
@@ -979,6 +1003,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 557,
+      y: 416,
       ko: "4F 신영균 스튜디오",
       en: "4F Shin Youngkyun Studio",
     },
@@ -1070,6 +1096,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 515,
+      y: 436,
       ko: "4F 신영균 스튜디오",
       en: "4F Shin Youngkyun Studio",
     },
@@ -1158,6 +1186,8 @@ export const works = [
     },
     location: {
       floor: "4F",
+      x: 488,
+      y: 395,
       ko: "4F 신영균 스튜디오",
       en: "4F Shin Youngkyun Studio",
     },
@@ -1264,6 +1294,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 539,
+      y: 73,
       ko: "5F 계단 공간",
       en: "5F Staircase Space",
     },
@@ -1357,6 +1389,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 472,
+      y: 43,
       ko: "5F 사운드 스튜디오",
       en: "5F Sound Studio",
     },
@@ -1463,6 +1497,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 440,
+      y: 61,
       ko: "5F XR 스튜디오",
       en: "5F XR Studio",
     },
@@ -1541,6 +1577,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 428,
+      y: 107,
       ko: "5F 세미나 룸",
       en: "5F Seminar Room",
     },
@@ -1610,6 +1648,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 407,
+      y: 78,
       ko: "5F 세미나 룸",
       en: "5F Seminar Room",
     },
@@ -1674,6 +1714,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 524,
+      y: 119,
       ko: "5F 이머시브 홀",
       en: "5F Immersive Hall",
     },
@@ -1752,6 +1794,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 566,
+      y: 165,
       ko: "5F 이머시브 홀",
       en: "5F Immersive Hall",
     },
@@ -1872,6 +1916,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 316,
+      y: 169,
       ko: "5F 아트 스튜디오",
       en: "5F Art Studio",
     },
@@ -1955,6 +2001,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 295,
+      y: 142,
       ko: "5F 아트 스튜디오",
       en: "5F Art Studio",
     },
@@ -2024,6 +2072,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 267,
+      y: 156,
       ko: "5F 아트 스튜디오",
       en: "5F Art Studio",
     },
@@ -2117,6 +2167,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 288,
+      y: 182,
       ko: "5F 아트 스튜디오",
       en: "5F Art Studio",
     },
@@ -2199,6 +2251,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 240,
+      y: 210,
       ko: "5F 컴퓨터 랩",
       en: "5F Computer Lab",
     },
@@ -2291,6 +2345,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 215,
+      y: 221,
       ko: "5F 컴퓨터 랩",
       en: "5F Computer Lab",
     },
@@ -2360,6 +2416,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 246,
+      y: 175,
       ko: "5F 컴퓨터 랩",
       en: "5F Computer Lab",
     },
@@ -2486,6 +2544,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 222,
+      y: 185,
       ko: "5F 컴퓨터 랩",
       en: "5F Computer Lab",
     },
@@ -2567,6 +2627,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 197,
+      y: 196,
       ko: "5F 컴퓨터 랩",
       en: "5F Computer Lab",
     },
@@ -2703,6 +2765,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 192,
+      y: 290,
       ko: "5F 패브리케이션 랩",
       en: "5F Fabrication Lab",
     },
@@ -2781,6 +2845,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 222,
+      y: 287,
       ko: "5F 패브리케이션 랩",
       en: "5F Fabrication Lab",
     },
@@ -2845,6 +2911,8 @@ export const works = [
     },
     location: {
       floor: "5F",
+      x: 177,
+      y: 310,
       ko: "5F 패브리케이션 랩",
       en: "5F Fabrication Lab",
     },
