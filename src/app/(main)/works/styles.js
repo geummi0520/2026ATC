@@ -29,6 +29,7 @@ export const Content = styled.div`
 
   ${media.mobile`
     padding: 0;
+    margin-bottom: 2rem;
   `}
 `;
 
@@ -58,6 +59,10 @@ export const Title = styled.h1`
   font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
   line-height: 1.4;
 
+  ${media.worksTablet`
+    font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
+    `}
+
   ${media.mobile`
     font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
   `}
@@ -65,7 +70,7 @@ export const Title = styled.h1`
 
 export const Description = styled.p`
   margin-top: 2rem;
-  color: ${({ theme }) => theme.text.secondary};
+  color: ${({ theme }) => theme.text.tertiary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 400;
   line-height: 180%;
@@ -74,8 +79,7 @@ export const Description = styled.p`
   ${media.mobile`
   /* display: none; */
   margin: 0 1rem 2rem 1rem;
-
-    font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
   `}
 `;
 
@@ -86,4 +90,3 @@ export const CategoryFallback = styled.div`
     display: block;
   `}
 `;
-

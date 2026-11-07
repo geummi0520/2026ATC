@@ -63,6 +63,8 @@ export default function WorksMap({ initialState = {} }) {
   const scrollRef = useRef(null);
   const listRef = useRef(null);
   const workItemRefs = useRef(new Map());
+  const floorTabsRef = useRef(null);
+  const pendingRevealIdRef = useRef(null);
 
   const mapHref = getMapHref({ floor, slideIndex, isExpanded });
 
@@ -80,6 +82,39 @@ export default function WorksMap({ initialState = {} }) {
     scrollRef.current?.scrollTo({ top: saved.scrollTop });
     listRef.current?.scrollTo({ top: saved.listScrollTop });
     clearWorksMapReturn();
+  }, []);
+
+  // 데스크탑: 리스트 밖에서 휠을 굴려도 리스트를 먼저 스크롤하고, 리스트 끝에 닿으면 페이지(footer)로 이어서 스크롤
+  // 위로 올릴 때는 페이지를 먼저 맨 위로 되돌린 뒤 리스트를 스크롤
+  // 1124px 미만은 리스트가 내부 스크롤되지 않으므로(scrollHeight === clientHeight) 기본 스크롤 유지
+  useEffect(() => {
+    const scroll = scrollRef.current;
+
+    const handleWheel = (event) => {
+      const list = listRef.current;
+
+      if (!list || event.ctrlKey || list.scrollHeight <= list.clientHeight) {
+        return;
+      }
+
+      const deltaY = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaY;
+      const listMaxScroll = list.scrollHeight - list.clientHeight;
+
+      if (deltaY > 0 && list.scrollTop < listMaxScroll - 1) {
+        event.preventDefault();
+        list.scrollTop += deltaY;
+      } else if (deltaY < 0 && scroll.scrollTop <= 0 && list.scrollTop > 0) {
+        event.preventDefault();
+        list.scrollTop += deltaY;
+      } else if (deltaY < 0 && list.contains(event.target)) {
+        // 리스트 위에서도 페이지가 먼저 올라가도록
+        event.preventDefault();
+        scroll.scrollTop += deltaY;
+      }
+    };
+
+    scroll.addEventListener("wheel", handleWheel, { passive: false });
+    return () => scroll.removeEventListener("wheel", handleWheel);
   }, []);
 
   const saveReturnState = (event) => {
@@ -111,24 +146,52 @@ export default function WorksMap({ initialState = {} }) {
     listRef.current?.scrollTo({ top: 0 });
   };
 
-  // 배치도 번호를 가리키면 리스트 영역 안에서 해당 작품이 보이도록 스크롤
-  const revealWorkItem = (work) => {
-    setActiveWorkId(work.id);
-
-    const workItem = workItemRefs.current.get(work.id);
+  // works 메인처럼 리스트 아이템이 보이는 영역 밖에 있을 때만 필요한 만큼 스크롤 (sticky 층 탭에 가리는 부분 제외)
+  // 1124px 미만은 배치도와 리스트가 같이 스크롤되어 배치도가 밀려나므로 스크롤하지 않음
+  const scrollWorkItemIntoView = (workId) => {
+    const workItem = workItemRefs.current.get(workId);
     const list = listRef.current;
 
-    if (!workItem || !list) return;
+    if (!workItem || !list || list.scrollHeight <= list.clientHeight) return;
 
     const itemRect = workItem.getBoundingClientRect();
     const listRect = list.getBoundingClientRect();
+    const visibleTop =
+      floorTabsRef.current?.getBoundingClientRect().bottom ?? listRect.top;
 
-    if (itemRect.top < listRect.top || itemRect.bottom > listRect.bottom) {
+    if (itemRect.top < visibleTop) {
       list.scrollBy({
-        top: itemRect.top - listRect.top - listRect.height / 3,
+        top: itemRect.top - visibleTop,
+        behavior: "smooth",
+      });
+    } else if (itemRect.bottom > listRect.bottom) {
+      list.scrollBy({
+        top: itemRect.bottom - listRect.bottom,
         behavior: "smooth",
       });
     }
+  };
+
+  // 다른 층 작품이면 층 탭을 바꾼 뒤, 리스트가 다시 그려진 다음에 스크롤
+  useEffect(() => {
+    if (pendingRevealIdRef.current === null) return;
+
+    scrollWorkItemIntoView(pendingRevealIdRef.current);
+    pendingRevealIdRef.current = null;
+  }, [floor]);
+
+  const revealWorkItem = (work) => {
+    setActiveWorkId(work.id);
+
+    if (isExpanded) return;
+
+    if (work.location.floor !== floor) {
+      pendingRevealIdRef.current = work.id;
+      selectFloor(work.location.floor);
+      return;
+    }
+
+    scrollWorkItemIntoView(work.id);
   };
 
   const floorPlan = (
@@ -193,7 +256,11 @@ export default function WorksMap({ initialState = {} }) {
                 </S.PlanColumn>
 
                 <S.ListPanel ref={listRef}>
-                  <S.FloorTabs role="group" aria-label={title}>
+                  <S.FloorTabs
+                    ref={floorTabsRef}
+                    role="group"
+                    aria-label={title}
+                  >
                     {FLOORS.map((item) => (
                       <S.FloorTab
                         key={item}
