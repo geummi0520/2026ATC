@@ -1,8 +1,3 @@
-// 메인 페이지 클로슈 안에서 랜덤으로 등장하는 요리들.
-// 이름의 🥚 자리에는 실제 계란 아이콘 이미지가 들어감(main.jsx의 renderWithEggs 참고).
-// scale: 이미지마다 피사체가 캔버스를 채우는 비율이 달라서 생긴 보정값(1 = 기본).
-// offsetY: 접시 위에 놓이는 높이 보정(%). 이미지마다 피사체 위치가 달라서 생긴 값.
-// 둘 다 실제 화면에서 보면서 눈대중으로 맞춘 값이라 필요하면 조정할 것.
 export const mainFood = [
   {
     file: "a",
@@ -18,7 +13,7 @@ export const mainFood = [
   },
   {
     file: "c",
-    name: { ko: "Cloudy Side Up", en: "Cloudy Side Up" },
+    name: { ko: "클라우디 사이드업", en: "Cloudy Side Up" },
     scale: 0.25,
     offsetY: 15,
   },
