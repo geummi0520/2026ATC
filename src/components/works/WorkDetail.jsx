@@ -148,7 +148,7 @@ const Container = styled.article`
 const DesktopRail = styled.div`
   flex: none;
 
-  ${media.tablet`
+  ${media.worksTablet`
     display: none;
   `}
 `;
@@ -156,9 +156,14 @@ const DesktopRail = styled.div`
 const CompactBackRow = styled.div`
   display: none;
 
-  ${media.tablet`
+  ${media.worksTablet`
     display: flex;
-    padding: 1.2rem 2rem 0;
+    padding: 2rem;
+  `}
+
+  ${media.mobile`
+    display: flex;
+    padding: 1.2rem 1rem 0;
   `}
 `;
 
@@ -180,25 +185,28 @@ const Hero = styled.section`
   min-height: 41rem;
   display: flex;
   align-items: center;
-  gap: 3.2rem;
-  padding: 4.8rem 4rem;
+  gap: 2rem;
+  padding: 4rem;
   border-bottom: 1px solid var(--layout-line);
 
-  ${media.tablet`
+  ${media.worksTablet`
     min-height: auto;
-    padding: 4rem 2rem;
+    padding: 2rem;
+    border-bottom: none;
   `}
 
   ${media.mobile`
     flex-direction: column;
     align-items: stretch;
+    border-bottom: none;
+    padding: 4rem 1rem;
   `}
 `;
 
 const HeroImage = styled.div`
   position: relative;
-  flex: 0 0 min(28rem, 28vw);
-  width: min(28rem, 28vw);
+  width: 20rem;
+  height: 28.9rem;
   aspect-ratio: 3 / 4;
   overflow: hidden;
   background: ${({ theme }) => theme.surface.secondary};
@@ -208,27 +216,32 @@ const HeroImage = styled.div`
   }
 
   ${media.mobile`
-    width: min(70vw, 32rem);
+    width: min(24rem, 64vw);
+    height: auto;
     align-self: center;
-    flex-basis: auto;
+    margin: 2rem 0 2rem 0
   `}
 `;
 
 const HeroInfo = styled.div`
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 `;
 
 const Meta = styled.div`
   display: flex;
   gap: 3rem;
+  font-weight: 400;
   color: ${({ theme }) => theme.text.quaternary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 `;
 
 const Title = styled.h1`
-  margin: 2rem 0 1.6rem;
+  margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
-  line-height: 1.35;
+  line-height: normal;
 
   ${media.mobile`
     font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
@@ -238,14 +251,18 @@ const Title = styled.h1`
 const Tags = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
-  font-weight: 700;
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  font-weight: 400;
 `;
 
 const Body = styled.div`
-  ${media.tablet`
+  ${media.worksTablet`
     display: flex;
     flex-direction: column;
+  `}
+
+  ${media.mobile`
+    margin-bottom: 2rem;
   `}
 `;
 
@@ -257,7 +274,7 @@ const Introduction = styled.section`
   min-height: 100cqh;
   border-bottom: 1px solid var(--layout-line);
 
-  ${media.tablet`
+  ${media.worksTablet`
     display: contents;
   `}
 `;
@@ -271,35 +288,44 @@ const Copy = styled.div`
   overflow-y: auto;
   overscroll-behavior: auto;
   scrollbar-width: none;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
 
   &::-webkit-scrollbar {
     display: none;
   }
 
-  ${media.tablet`
+  ${media.worksTablet`
     position: static;
     height: auto;
-    padding: 4rem 2rem;
+    padding: 2rem;
     overflow: visible;
     border-bottom: 1px solid var(--layout-line);
+  `}
+
+  ${media.mobile`
+    border-bottom: none;
+    padding: 0 1rem;
   `}
 `;
 
 const SectionTitle = styled.h2`
-  margin: 0 0 2.8rem;
+  margin: 0 0 2rem 0;
   color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  font-weight: 400;
 `;
 
 const Lead = styled.p`
-  margin: 0 0 2.4rem;
+  margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 700;
   line-height: 1.8;
 `;
 
 const Paragraph = styled.p`
-  margin: 0 0 2.4rem;
+  margin: 0;
   color: ${({ theme }) => theme.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 1.8;
@@ -317,9 +343,13 @@ const MediaList = styled.div`
     height: auto;
   }
 
-  ${media.tablet`
+  ${media.worksTablet`
     order: 2;
     border-bottom: 1px solid var(--layout-line);
+  `}
+
+  ${media.mobile`
+    border-bottom: none;
   `}
 `;
 
@@ -354,6 +384,8 @@ const TeamSection = styled.section`
     display: flex;
     flex-direction: column;
     gap: 0;
+    border-bottom: none;
+    padding: 6rem 1rem 2rem 1rem;
   `}
 `;
 
@@ -364,8 +396,9 @@ const TeamCopy = styled.div`
 `;
 
 const TeamName = styled.h3`
-  margin: 0 0 2rem;
-  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  margin: 0 0 1.4rem 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
+  font-weight: 400;
 `;
 
 const TeamParagraph = styled(Paragraph)`
@@ -381,7 +414,7 @@ const MemberList = styled.ul`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
-  gap: 2rem 4rem;
+  gap: 1.6rem 1.6rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -392,6 +425,7 @@ const MemberList = styled.ul`
     display: flex;
     align-items: center;
     gap: 3.2rem;
+    width: 50%;
   }
 
   ${media.mobile`
@@ -401,7 +435,7 @@ const MemberList = styled.ul`
 
 const Contacts = styled.div`
   display: flex;
-  gap: 0.8rem;
+  gap: 0.6rem;
 `;
 
 const ContactLink = styled.a`
