@@ -80,9 +80,10 @@ gap: 4rem;
 
 box-sizing: border-box;
 max-width: 100%;
+
 ${media.tablet`
-  
-gap:0rem;
+  padding:0rem;
+  gap:0rem;
 `};
 
 `;
@@ -111,7 +112,7 @@ line-height: normal;
 
 ${media.mobile`
 
-padding: 4rem 0;
+padding: 2rem 0;
 
 color: ${({ theme }) => theme.text.primary}
 

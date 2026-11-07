@@ -123,9 +123,9 @@ border-bottom: 0.1rem solid ${({ theme }) => theme.line.primary};
 cursor: pointer;
 
 ${media.mobile`
-    padding: 0.625rem;
     gap: 0.5rem;
     `}
+
 `;
 
 
@@ -203,7 +203,7 @@ min-width: 0;
 
 
 ${media.tablet`
-    padding:1rem;
+    padding:2rem;
     gap:0.8rem;
 `}
 
@@ -211,7 +211,12 @@ ${media.mobile`
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+    padding:1.2rem 0rem;
   `}
+@media (max-width:400px) {
+flex-direction: column;
+gap:0.8rem;
+}
 `;
 
 const Title = styled.div`
@@ -277,13 +282,14 @@ width: 100%;
 flex-direction: column;
 justify-content: center;
 align-items: flex-start;
-// gap: 10px;
 ${media.tablet`
 
     gap:1.6rem;
     `};
 
-// z-index:1;
+@media (max-width:400px) {
+ gap:1rem;
+}
 
 
 
