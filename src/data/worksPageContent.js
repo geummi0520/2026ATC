@@ -2,8 +2,8 @@ export const worksPageContent = {
   default: {
     title: { ko: "Works", en: "Works" },
     description: {
-      ko: "저마다의 취향이 모여 하나의 새로운 경험을 만들어냅니다.\n\n2026 ATC에서는 미디어 아트, 게임, 퍼포먼스 등 한 분야에 갇히지 않고 각자의 감각과 취향으로 담아낸 작품들을 소개합니다.\n\n하나의 흐름 속에서 다양한 작가들이 자신만의 레시피로 요리한 작품들을 느껴보세요!",
-      en: "Different tastes come together to create an entirely new experience.\n\n2026 ATC showcases works beyond any single field—from media art and games to performance—each infused with the artist’s unique sensibilities.\n\nExperience the works below in one continuous flow, each crafted with a recipe of its own.",
+      ko: "저마다의 취향이 모여 하나의 새로운 경험을 만들어냅니다.\n2026 ATC에서는 미디어 아트, 게임, 퍼포먼스 등 한 분야에 갇히지 않고 각자의 감각과 취향으로 담아낸 작품들을 소개합니다.\n하나의 흐름 속에서 다양한 작가들이 자신만의 레시피로 요리한 작품들을 느껴보세요!",
+      en: "Different tastes come together to create an entirely new experience.\n2026 ATC showcases works beyond any single field—from media art and games to performance—each infused with the artist’s unique sensibilities.\nExperience the works below in one continuous flow, each crafted with a recipe of its own.",
     },
   },
   categories: {
@@ -40,4 +40,8 @@ export const worksPageContent = {
     },
   },
   floorPlanLabel: { ko: "작품배치도", en: "Floor Plan" },
+  floorPlanMobileDescription: {
+    ko: "화면을 슬라이드하여 작품 섹션을 넘겨보세요. 지도를 클릭하여 전체 작품 배치도를 확인할 수 있습니다. 작품을 클릭하면 작품 상세보기로 이동합니다.",
+    en: "Swipe to browse each section. Tap the map to see the full floor plan, and tap a work to view its details.",
+  },
 };
