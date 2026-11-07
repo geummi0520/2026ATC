@@ -20,7 +20,7 @@ export default function AboutPage() {
           <SubTitle>2026 Art & Technology Conference</SubTitle>
         </TitleContainer>
         <PosterMain
-          src="/images/about/poster-main.png"
+          src="/images/about/poster.webp"
           alt="poster-main"
           width={400}
           height={567}
@@ -37,7 +37,7 @@ export default function AboutPage() {
       </AboutContent>
 
       <Banner
-        src="/images/about/banner.png"
+        src="/images/about/banner.webp"
         alt="banner"
         width={990}
         height={413}
@@ -88,7 +88,7 @@ export default function AboutPage() {
         />
         <CreditContainer>
           <StaffList>
-            {staffs.slice(1, 5).map((team, index) => (
+            {staffs.slice(1, 3).map((team, index) => (
               <CreditItem
                 key={index}
                 teamName={team.team}
@@ -97,7 +97,16 @@ export default function AboutPage() {
             ))}
           </StaffList>
           <StaffList>
-            {staffs.slice(5, 8).map((team, index) => (
+            {staffs.slice(3, 5).map((team, index) => (
+              <CreditItem
+                key={index}
+                teamName={team.team}
+                members={team.members}
+              />
+            ))}
+          </StaffList>
+          <StaffList>
+            {staffs.slice(5, 7).map((team, index) => (
               <CreditItem
                 key={index}
                 teamName={team.team}
@@ -121,7 +130,7 @@ export default function AboutPage() {
         <TeamName>{t("about.map")}</TeamName>
         <MapBox>
           <MapImage
-            src="/images/about/map.png"
+            src="/icons/about/coming-path.svg"
             alt="map-image"
             width={2728}
             height={1766}
@@ -225,6 +234,8 @@ height:auto;
 `;
 
 const MapBox = styled.div`
+display:flex;
+flex-direction:column;
 gap:2rem;
 `;
 const MapImage = styled(Image)`
@@ -253,13 +264,14 @@ ${media.mobile`
 const CreditContainer = styled.div`
 width:100%;
 display:flex;
+flex-direction:column;
 gap:4rem;
 `;
 const StaffList = styled.div`
 flex:1;
 
 display:flex;
-flex-direction:column;
+flex-direction:row;
 gap:4rem;
 `;
 const StampImg = styled(Image)`
@@ -338,6 +350,8 @@ function CreditItem({ teamName, members }) {
   );
 }
 const StyledTeamItem = styled.div`
+flex:1;
+
 display:flex;
 flex-direction:column;
 gap:${({ $isCd }) => ($isCd ? "1rem" : "0.8rem")};
@@ -362,16 +376,17 @@ function AboutContent({ children, title, showLeftImage }) {
   const { t } = useTranslation();
   return (
     <ContentContainer>
-      {showLeftImage ?
-        <LeftImg
-          src="/images/about/left-img.png"
-          alt="left-img"
-          width={327}
-          height={807}
-        />
-        :
-        <PaddingBox />
-      }
+      <PaddingBox>
+        {showLeftImage &&
+          <LeftImg
+            src="/icons/about/left-stamps.svg"
+            alt="left-img"
+            width={326}
+            height={807}
+          />
+        }
+      </PaddingBox>
+
       <RightContainer
         $compact={isStaff || isTeaser}
       >
@@ -429,9 +444,9 @@ width:100%;
 gap:1rem;
 `;
 const LeftImg = styled(Image)`
-width:100%;
+width:19.5rem;
 height:auto;
-flex: 1;
+align-self:center;
 
 ${media.tablet`
 // 테블릿 + 모바일
@@ -440,6 +455,10 @@ ${media.tablet`
 `;
 const PaddingBox = styled.div`
 flex:1;
+display:flex;
+justify-content:center;
+padding-top:4.795rem;
+padding-bottom:7.305rem;
 ${media.tablet`
   display:none;
 `};
