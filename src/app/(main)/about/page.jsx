@@ -75,9 +75,9 @@ export default function AboutPage() {
                 {t("about.linkToStaffCredit")}
                 <Image
                   src="/icons/about/arrow-up-right.svg"
-                  alt=""
-                  width={72}
-                  height={72}
+                  alt="arrow-up-right"
+                  width={18}
+                  height={18}
                 />
               </StyledLink>
             </StaffTitleBox>
@@ -116,6 +116,15 @@ export default function AboutPage() {
                 />
               ))}
             </StaffList>
+            <StaffList>
+              {staffs.slice(7, 8).map((team, index) => (
+                <CreditItem
+                  key={index}
+                  teamName={team.team}
+                  members={team.members}
+                />
+              ))}
+            </StaffList>
           </CreditContainer>
 
 
@@ -140,7 +149,7 @@ export default function AboutPage() {
       {/* 오시는 길 */}
       <MapWrapper>
         <ContentTitle $compact={true}>{t("about.path")}</ContentTitle>
-        <TeamName>{t("about.map")}</TeamName>
+        <TextMdSpan>{t("about.map")}</TextMdSpan>
         <MapBox>
           <MapImage
             src="/icons/about/coming-path.svg"
@@ -149,9 +158,9 @@ export default function AboutPage() {
             height={1766}
           />
           <InfoBox>
-            <TeamName>
+            <StationInfo>
               {t("about.stationInfo")}
-            </TeamName>
+            </StationInfo>
             <StationInfoText>
               {translate(station_info)}
             </StationInfoText>
@@ -161,6 +170,27 @@ export default function AboutPage() {
     </Container>
   );
 }
+const StationInfo = styled.span`
+color: ${({ theme }) => theme.text.brandInvert};
+
+font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+font-style: normal;
+font-weight: 700;
+line-height: 180%; /* 32.4px */
+
+${media.tablet`
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+
+  `}
+`;
+const TextMdSpan = styled.span`
+color: ${({ theme }) => theme.text.brandInvert};
+
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+font-style: normal;
+font-weight: 700;
+line-height: 180%; /* 25.2px */
+`
 const HeadTitle = styled.span`
 color: ${({ theme }) => theme.text.brandInvert};
 
@@ -241,14 +271,7 @@ ${media.mobile`
   display:none;
 `}
 `;
-const TeaserFilmImg = styled(Image)`
-width:100%;
-height:auto;
 
-aspect-ratio: 9/16;
-
-
-`;
 
 const MapBox = styled.div`
 display:flex;
@@ -286,6 +309,28 @@ gap:4rem;
 `;
 const TeaserContainer = styled.div`
 padding-right:4rem;
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+${media.mobile`
+  order:-1;  /* 모바일: 3(티저)을 2(스태프) 앞으로 */
+  padding:0rem;
+`};
+`;
+
+const TeaserFilmImg = styled(Image)`
+width:100%;
+height:auto;
+
+aspect-ratio: 9/16;
+
+${media.mobile`
+  aspect-ratio: 9/16;
+
+  `}
+
 `;
 const StaffList = styled.div`
 flex:1;
@@ -296,6 +341,9 @@ gap:4rem;
 ${media.tablet`
 flex-direction:column;
 `};
+${media.mobile`
+  flex-direction:row;
+  `}
 
 
 
@@ -303,19 +351,26 @@ flex-direction:column;
 const StampImg = styled(Image)`
 width:100%;
 height:auto;
+margin-bottom:8rem;
 ${media.mobile`
 display:none;
 `};
 `;
 const InfoBox = styled.div`
 flex:1;
-padding:1.2rem;
+padding:2rem;
 
 display:flex;
-flex-direction:column;
-
-gap:1.2rem;
+gap:2rem;
 background: ${({ theme }) => theme.surface.brandDark};
+
+${media.tablet`
+  flex-direction:column;
+  padding:1.2rem;
+  gap:1.2rem;
+  `}
+
+
 `;
 const StationInfoText = styled.div`
 color: ${({ theme }) => theme.text.brandInvert};
@@ -381,8 +436,10 @@ display:flex;
 flex-direction:column;
 
 align-self:flex-end;
-
 gap:0.8rem;
+${media.mobile`
+  align-self:flex-start;
+  `}
 `;
 
 const TeamName = styled.div`
@@ -394,6 +451,9 @@ font-weight: 700;
 line-height: 180%; /* 25.2px */
 
 text-align:right;
+${media.mobile`
+  text-align:left;
+  `}
 `;
 const Members = styled.div`
 display:flex;
@@ -402,6 +462,11 @@ flex-wrap: wrap;
 
 align-content:flex-end;
 justify-content:flex-end;
+
+${media.mobile`
+  align-content:flex-start;
+justify-content:flex-start;
+  `}
 `;
 const Staffspan = styled.span`
 color: ${({ theme }) => theme.text.brandInvert};
@@ -458,10 +523,7 @@ function AboutContent({ children, title, showLeftImage }) {
 const ContentTitle = styled.div`
 width:100%;
 display:flex;
-${media.tablet`
-flex-direction:column;
-gap:2rem;
-`};
+
 justify-content:${({ $isStaff }) => $isStaff ? "flex-end" : "flex-start"};
 
 color: ${({ theme }) => theme.text.brandInvert};
@@ -475,21 +537,41 @@ margin:0rem;
 text-align: center;
 
 ${media.tablet`
+  flex-direction:column;
+  gap:2rem;
+  text-align:left;
   font-size: ${({ $compact, theme }) => $compact ? "theme.typography.fontSize.headingMd" : "2.4rem"};
 `};
 
 ${media.mobile`
-  color: #FFF;
+  flex-direction:row;
+  justify-content:space-between;
+
+  color: ${({ theme }) => theme.text.brandInvert};
+
   /* text/text-large-bold */
-  font-size: theme.typography.fontSize.textLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
   line-height: 180%; /* 32.4px */
   `};
+@media (max-width:360px) {
+flex-direction:column;
+
+}
 `;
 
 const StaffTitleBox = styled.div`
 display:flex;
 justify-content:flex-end;
 flex:1;
+
+${media.mobile`
+  // justify-content:flex-start;
+  flex:none;
+  `}
+@media (max-width:360px) {
+justify-content:flex-start;
+
+}
 `;
 const StaffBox = styled.div`
 
@@ -500,6 +582,10 @@ gap:4rem;
 padding:4rem 0rem;
 
 align-items:start;
+${media.mobile`
+  grid-template-columns: minmax(0, 1fr);  
+  gap:2rem;
+`};
 `;
 const StaffContainer = styled.div`
 display:flex;
@@ -509,6 +595,9 @@ gap:6rem;
 padding:0 4rem;
 ${media.tablet`
   gap:4rem;
+  `}
+${media.mobile`
+  padding:0rem;
   `}
 `;
 
@@ -541,7 +630,9 @@ const EmptyBox = styled.div`
 display:bock;
 width:100%;
 height:${({ $height }) => $height};
-
+${media.mobile`
+  display:none;
+  `}
 
 `;
 const TeaserWrapper = styled.div`
@@ -601,13 +692,14 @@ img {
   }
 
 border-bottom: 0.1rem solid ${({ theme }) => theme.line.brandInvert};
-// color: ${({ theme }) => theme.text.brandInvert}
+color: ${({ theme }) => theme.text.brandInvert};
 
 font-size: ${({ theme }) => theme.typography.fontSize.textSm};
 font-style: normal;
 font-weight: 700;
 line-height: 120%; /* 14.4px */
-;`
+
+`;
 
 const Topic = styled.div`
 
