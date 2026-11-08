@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
 import { mainComments } from "@/data/mainComments";
 import { mainFood } from "@/data/mainFood";
@@ -41,6 +41,15 @@ const BACKGROUND_PATH =
   "M1035.35 631.166L868.341 564.266L1035.35 429.55L793.93 469.567L1022.2 176.918L755.429 320.167L741.815 98.1038L610.565 384.033L485.922 0.463623L549.832 469.567L257.18 161.135L344.6 330.88L162.965 306.641L344.6 505.841L0.35498 527.155L344.6 611.005L126.729 664.464L587.959 611.005L1035.35 631.166Z";
 
 
+
+// 데스크톱인데 화면 높이가 낮을 때(크롬 북마크바 등). 가운데 요소들이 버튼과 겹치지 않게
+// TopRight(요리 이름·코멘트)만 빼고 위로 올리고 클로슈를 살짝 줄임.
+const SHORT_DESKTOP_MAX_HEIGHT = 900;
+const shortDesktop = (...args) => css`
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}px) and (max-height: ${SHORT_DESKTOP_MAX_HEIGHT}px) {
+    ${css(...args)}
+  }
+`;
 
 const Wrapper = styled.section`
   position: relative;
@@ -118,7 +127,11 @@ const Wordmark = styled(Image)`
   width: 23rem;
   height: auto;
   margin-left: 5rem;
-  margin-top: 5rem;
+  margin-top: 4rem;
+
+  ${shortDesktop`
+    margin-top: 1rem;
+  `}
 
   ${media.tablet`
     width: 19rem;
@@ -143,7 +156,7 @@ const TopRight = styled.div`
   ${media.mobile`
     align-items: center;
     max-width: none;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
   `}
 `;
 
@@ -248,6 +261,15 @@ const ClampedText = styled.span`
   }
 `;
 
+// 팝업(태블릿·모바일)용: float 트릭은 모바일 브라우저(특히 iOS 사파리)에서 위치가 틀어질 수 있어서,
+// 몇 줄만 보여준 뒤 그 아래에 "더보기"를 두는 단순한 방식으로 씀
+const PopupClampedText = styled.span`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--clamp-lines);
+  overflow: hidden;
+`;
+
 const MoreButton = styled.button`
   padding: 0;
   margin-left: 0.4rem;
@@ -279,6 +301,10 @@ const Stage = styled.div`
   justify-content: center;
   pointer-events: none;
 
+  ${shortDesktop`
+    margin-top: -12rem;
+  `}
+
   ${media.tablet`
     margin-top: -8rem;
   `}
@@ -308,6 +334,10 @@ const ClocheStand = styled.div`
   height: auto;
   aspect-ratio: 4095 / 4469;
   transform: scale(1.1);
+
+  ${shortDesktop`
+    transform: scale(0.95);
+  `}
   /* 클로슈+요리를 세트로 왼쪽으로 옮김(음수일수록 더 왼쪽). scale과 따로 조절하려고 translate 속성을 씀 */
   translate: -6% 0;
 
@@ -413,6 +443,10 @@ const ButtonRow = styled.div`
   display: flex;
   justify-content: center;
 
+  ${shortDesktop`
+    margin-bottom: 6rem;
+  `}
+
   ${media.tablet`
     gap: 4.8rem;
     margin-top: 0;
@@ -433,8 +467,11 @@ const ReorderButton = styled.button`
   font-size: 1.4rem;
   cursor: pointer;
 
-  &:hover {
-    background: #0a3823;
+  /* 마우스가 있는 기기에서만 호버 효과(터치 기기에선 눌린 색이 남아 보이지 않게) */
+  @media (hover: hover) {
+    &:hover {
+      background: #0a3823;
+    }
   }
 
   &:disabled {
@@ -684,23 +721,47 @@ export default function Main() {
 
   // 접힌 상태면 "… 더보기"가 마지막 줄 끝에, 펼친 상태면 글 끝에 "접기"가 이어 붙음
   const isCollapsible = Boolean(currentComment?.clampLines);
+  const expandButton = (
+    <MoreButton type="button" onClick={() => setExpandedCommentKey(commentKey)}>
+      {MORE_LABEL}
+    </MoreButton>
+  );
+  const collapseButton = (
+    <MoreButton type="button" onClick={() => setExpandedCommentKey(null)}>
+      {LESS_LABEL}
+    </MoreButton>
+  );
+  const clampStyle = { "--clamp-lines": currentComment?.clampLines };
+
+  // 데스크톱 코멘트 박스: 마지막 줄 끝에 "… 더보기"가 이어 붙음
   const commentBody = !isCollapsible ? (
     comment
   ) : isCommentClamped ? (
     <ClampWrap>
-      <ClampedText style={{ "--clamp-lines": currentComment.clampLines }}>
-        <MoreButton type="button" onClick={() => setExpandedCommentKey(commentKey)}>
-          {MORE_LABEL}
-        </MoreButton>
+      <ClampedText style={clampStyle}>
+        {expandButton}
         {comment}
       </ClampedText>
     </ClampWrap>
   ) : (
     <>
       {comment}
-      <MoreButton type="button" onClick={() => setExpandedCommentKey(null)}>
-        {LESS_LABEL}
-      </MoreButton>
+      {collapseButton}
+    </>
+  );
+
+  // 팝업: 몇 줄 보여준 뒤 그 아래에 "더보기"
+  const popupCommentBody = !isCollapsible ? (
+    comment
+  ) : isCommentClamped ? (
+    <>
+      <PopupClampedText style={clampStyle}>{comment}</PopupClampedText>
+      {expandButton}
+    </>
+  ) : (
+    <>
+      {comment}
+      {collapseButton}
     </>
   );
 
@@ -827,7 +888,7 @@ export default function Main() {
               />
             </PopupFood>
             <PopupTitle>{commentQuestion}</PopupTitle>
-            <PopupBody>{commentBody}</PopupBody>
+            <PopupBody>{popupCommentBody}</PopupBody>
             <PopupCloseButton
               type="button"
               onClick={() => setIsDetailOpen(false)}
