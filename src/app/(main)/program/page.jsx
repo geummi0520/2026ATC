@@ -90,7 +90,7 @@ ${media.tablet`
 const PageName = styled.div`
   width:100%;
   color: ${({ theme }) => theme.text.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.headingLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -103,7 +103,7 @@ padding: 4rem 2rem;
 color: ${({ theme }) => theme.text.primary};
 
 /* heading/heading-medium-bold */
-font-size: ${({ theme }) => theme.typography.fontSize.headingMd}
+font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
@@ -114,14 +114,13 @@ ${media.mobile`
 
 padding: 2rem 0;
 
-color: ${({ theme }) => theme.text.primary}
+color: ${({ theme }) => theme.text.primary};
 
-/* heading/heading-small-bold */
 font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-  `}
+  `};
 `;
 
 const ProgramList = styled.div`
