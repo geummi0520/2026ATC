@@ -132,12 +132,21 @@ export default function AboutPage() {
 
         </StaffContainer>
         <TeaserContainer>
-          <TeaserFilmImg
+          <TeaserVideo
+            title="vimeo-player"
+            src="https://player.vimeo.com/video/1138407942?h=bf1665b5a5&title=0&byline=0&portrait=0&badge=0"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+
+          {/* <TeaserFilmImg
             src="/images/about/teaser_blank.png"
             alt="teaser-film"
             width={340}
             height={604}
-          />
+          /> */}
         </TeaserContainer>
       </StaffBox>
 
@@ -318,12 +327,20 @@ display:flex;
 justify-content:center;
 align-items:center;
 
+position:sticky;
+top:2rem;  
+
 ${media.mobile`
+  position:static;
   order:-1;  
   padding:0rem;
 `};
 `;
-
+const TeaserVideo = styled.iframe`
+width:100%;
+aspect-ratio:9/16;
+border:0;
+`;
 const TeaserFilmImg = styled(Image)`
 width:100%;
 height:auto;
