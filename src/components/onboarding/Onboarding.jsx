@@ -2,8 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styled, { keyframes } from "styled-components";
-import { finishOnboarding } from "@/lib/onboardingStatus";
+import { ROUTES } from "@/constants/routes";
+import {
+  ONBOARDING_SEEN_KEY,
+  finishOnboarding,
+  startOnboarding,
+} from "@/lib/onboardingStatus";
 import { media } from "@/styles/media";
 
 const onboardingSrc = (file) => `/images/onboarding/${file}`;
@@ -33,8 +39,6 @@ const OUTRO_MS = 800;
 const OUTRO_START_MS = INTRO_MS + SWAP_MS * SWAP_COUNT;
 const TOTAL_MS = OUTRO_START_MS + OUTRO_MS;
 
-// 새로고침/첫 접속 때만 재생하고, 사이트 안에서 메인으로 다시 돌아올 땐 건너뜀
-let hasPlayed = false;
 
 const shuffle = (list) => {
   const result = [...list];
@@ -151,18 +155,23 @@ const Utensil = styled(Image)`
   `}
 `;
 
+// /onboarding 주소에서만 나옴(레이아웃이 띄움). 사라지기 시작할 때 주소를 메인(/)으로 바꿔서
+// 사라지는 동안 뒤에 메인이 깔리고, 다 사라지면 메인 클로슈가 열림.
 export default function Onboarding() {
-  const [isVisible, setIsVisible] = useState(!hasPlayed);
+  const router = useRouter();
   const [phase, setPhase] = useState("swap");
   const [itemFile, setItemFile] = useState(null);
 
   useEffect(() => {
-    // 온보딩이 안 나오는 경우(사이트 안에서 메인으로 다시 옴)엔 메인이 바로 열리게 끝난 걸로 알림
-    if (!isVisible) {
-      finishOnboarding();
-      return undefined;
+    startOnboarding();
+    // 이 탭에선 봤다고 기록해서, 이후 새로고침하면 온보딩 없이 메인이 나오게 함
+    try {
+      window.sessionStorage.setItem(ONBOARDING_SEEN_KEY, "1");
+    } catch {
+      // 저장소를 못 쓰는 환경(일부 사생활 보호 모드 등)이면 그냥 넘어감
     }
-    hasPlayed = true;
+    // 사라질 때 바로 메인이 깔리도록 미리 받아 둠
+    router.prefetch(ROUTES.HOME);
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -174,12 +183,16 @@ export default function Onboarding() {
           setItemFile(file);
         }, INTRO_MS + SWAP_MS * index),
       );
-    timers.push(window.setTimeout(() => setPhase("outro"), OUTRO_START_MS));
+    timers.push(
+      window.setTimeout(() => {
+        setPhase("outro");
+        router.replace(ROUTES.HOME);
+      }, OUTRO_START_MS),
+    );
     // 다 사라진 뒤에 메인에 알려서, 닫힌 클로슈가 보이는 상태에서 열리기 시작하게 함.
     // (cleanup에서 알리면 개발 모드에서 effect가 두 번 실행될 때 너무 일찍 알려짐)
     timers.push(
       window.setTimeout(() => {
-        setIsVisible(false);
         finishOnboarding();
       }, TOTAL_MS),
     );
@@ -188,9 +201,7 @@ export default function Onboarding() {
       timers.forEach((timer) => window.clearTimeout(timer));
       document.body.style.overflow = previousOverflow;
     };
-  }, [isVisible]);
-
-  if (!isVisible) return null;
+  }, [router]);
 
   return (
     <Overlay data-phase={phase} aria-hidden="true">

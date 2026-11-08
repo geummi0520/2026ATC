@@ -605,11 +605,10 @@ export default function Main() {
     () => translate(currentComment),
     [currentComment, translate],
   );
-  // 제목은 기본 "이 요리를 설명한다면?"이고, 질문이 붙은 코멘트
-  // (예: "2026 ATC는 어떤 맛의 요리인가요?")일 때만 그 질문으로 바뀜
+  // 질문이 붙은 코멘트(예: "2026 ATC는 어떤 맛의 요리인가요?")만 제목이 나오고, 나머지는 본문만
   const commentQuestion = currentComment?.question
     ? translate(currentComment.question)
-    : t("main.commentBoxTitle");
+    : null;
 
   const pickNextIndex = (length, previous) => {
     if (length <= 1) return previous;
@@ -777,7 +776,7 @@ export default function Main() {
           <Headline>{(food.name.ko)}</Headline>
           <Subheadline>{(food.name.en)}</Subheadline>
           <CommentBox>
-            <CommentTitle>{commentQuestion}</CommentTitle>
+            {commentQuestion && <CommentTitle>{commentQuestion}</CommentTitle>}
             <CommentBody>{commentBody}</CommentBody>
           </CommentBox>
         </TopRight>
@@ -872,7 +871,7 @@ export default function Main() {
           <PopupBox
             role="dialog"
             aria-modal="true"
-            aria-label={commentQuestion}
+            aria-label={translate(food.name)}
             onClick={(event) => event.stopPropagation()}
           >
             <PopupFood>
@@ -887,7 +886,7 @@ export default function Main() {
                 }}
               />
             </PopupFood>
-            <PopupTitle>{commentQuestion}</PopupTitle>
+            {commentQuestion && <PopupTitle>{commentQuestion}</PopupTitle>}
             <PopupBody>{popupCommentBody}</PopupBody>
             <PopupCloseButton
               type="button"

@@ -15,10 +15,9 @@ const en = {
   },
   main: {
     conference: "Art&Technology Conference",
-    commentBoxTitle: "How would you describe this dish?",
-    reorder: "Order again!",
+    reorder: "Order Again!",
     stamp: "STAMP",
-    detail: "See details",
+    detail: "See Details",
     close: "Close",
   },
   artistCredit: {

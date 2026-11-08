@@ -83,11 +83,13 @@ export default function AboutPage() {
             </StaffTitleBox>
 
           </ContentTitle>
-          <CreditItem
-            teamName={staffs[0].team}
-            members={staffs[0].members}
-            cd={true}
-          />
+          <StaffList>
+            <CreditItem
+              teamName={staffs[0].team}
+              members={staffs[0].members}
+              $isCd={true}
+            />
+          </StaffList>
           <CreditContainer>
             <StaffList>
               {staffs.slice(1, 3).map((team, index) => (
@@ -221,7 +223,7 @@ ${media.tablet`
 
 // 모바일
 ${media.mobile`
-  padding:2rem 1rem;
+  // padding:2rem 1rem;
   gap:6rem;
 `};
 
@@ -308,6 +310,8 @@ flex-direction:column;
 gap:4rem;
 `;
 const TeaserContainer = styled.div`
+flex:2;
+width:100%;
 padding-right:4rem;
 display:flex;
 
@@ -315,7 +319,7 @@ justify-content:center;
 align-items:center;
 
 ${media.mobile`
-  order:-1;  /* 모바일: 3(티저)을 2(스태프) 앞으로 */
+  order:-1;  
   padding:0rem;
 `};
 `;
@@ -334,16 +338,24 @@ ${media.mobile`
 `;
 const StaffList = styled.div`
 flex:1;
-
+width:100%;
 display:flex;
 flex-direction:row;
+justify-content:flex-end;
 gap:4rem;
 ${media.tablet`
 flex-direction:column;
+align-items:flex-end;
+justify-content:flex-start;
 `};
 ${media.mobile`
   flex-direction:row;
   `}
+@media (max-width:480px) {
+flex-direction:column;
+align-items:flex-end;
+justify-content:flex-start;
+}
 
 
 
@@ -435,8 +447,12 @@ flex:1;
 display:flex;
 flex-direction:column;
 
-align-self:flex-end;
+align-self:flex-start;
 gap:0.8rem;
+${media.tablet`
+  align-self:flex-end;
+
+  `}
 ${media.mobile`
   align-self:flex-start;
   `}
@@ -582,12 +598,17 @@ gap:4rem;
 padding:4rem 0rem;
 
 align-items:start;
+${media.tablet`
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+`};
 ${media.mobile`
   grid-template-columns: minmax(0, 1fr);  
   gap:2rem;
 `};
 `;
 const StaffContainer = styled.div`
+
+
 display:flex;
 flex-direction:column;
 align-items:flex-start;
@@ -595,6 +616,7 @@ gap:6rem;
 padding:0 4rem;
 ${media.tablet`
   gap:4rem;
+  flex:1;
   `}
 ${media.mobile`
   padding:0rem;
@@ -708,6 +730,6 @@ color: ${({ theme }) => theme.text.brandInvert};
 
 font-size: ${({ theme }) => theme.typography.fontSize.textLg};
 font-style: normal;
-font-weight: 700;
+font-weight: 400;
 line-height: 180%; /* 32.4px */
 `;

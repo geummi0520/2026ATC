@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
+import Onboarding from "@/components/onboarding/Onboarding";
 import { ROUTES, isBrandDarkPath } from "@/constants/routes";
+import { isOnboardingPlaying, subscribeOnboarding } from "@/lib/onboardingStatus";
 import { media } from "@/styles/media";
 
 const Layout = styled.div`
@@ -32,6 +34,14 @@ export default function MainLayout({ children, isComingSoon = false }) {
   const isWorks = pathname === "/works" || pathname.startsWith("/works/");
   // 메인은 화면 한 장으로 끝나서 푸터를 두지 않음
   const isHome = pathname === ROUTES.HOME;
+  const isOnboardingPage = pathname === ROUTES.ONBOARDING;
+  // 온보딩은 /onboarding에서 시작하고, 끝날 때 주소가 메인으로 바뀐 뒤에도 다 사라질 때까지 계속 띄움
+  const isOnboardingPlayingNow = useSyncExternalStore(
+    subscribeOnboarding,
+    isOnboardingPlaying,
+    () => false,
+  );
+  const showOnboarding = isOnboardingPage || isOnboardingPlayingNow;
   const rightRailRef = useRef(null);
 
   useEffect(() => {
@@ -137,8 +147,9 @@ export default function MainLayout({ children, isComingSoon = false }) {
         <MainContent $isWorks={isWorks} $isComingSoon={isComingSoon}>
           {children}
         </MainContent>
-        {!isWorks && !isHome && !isComingSoon && <Footer />}
+        {!isWorks && !isHome && !isOnboardingPage && !isComingSoon && <Footer />}
       </Center>
+      {showOnboarding && !isComingSoon && <Onboarding />}
       <RightRail ref={rightRailRef}>
         <RailSlot>
           <ScrollIndicator aria-hidden="true">*</ScrollIndicator>
