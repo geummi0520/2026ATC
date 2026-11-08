@@ -6,6 +6,7 @@ import styled, { keyframes } from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
 import { mainComments } from "@/data/mainComments";
 import { mainFood } from "@/data/mainFood";
+import { isOnboardingPlaying, subscribeOnboarding } from "@/lib/onboardingStatus";
 import { media } from "@/styles/media";
 
 
@@ -142,7 +143,7 @@ const TopRight = styled.div`
   ${media.mobile`
     align-items: center;
     max-width: none;
-    margin-top: 4rem;
+    margin-top: 1rem;
   `}
 `;
 
@@ -316,8 +317,9 @@ const ClocheStand = styled.div`
     transform: none;
   `}
 
+  /* 모바일: 접시가 그림 박스 안에서 오른쪽에 치우쳐 있어서 왼쪽으로, 그리고 살짝 위로 옮김 */
   ${media.mobile`
-    translate: none;
+    translate: -3% -7%;
   `}
 `;
 
@@ -425,8 +427,8 @@ const ButtonRow = styled.div`
 
 const ReorderButton = styled.button`
   padding: 1.2rem 2.4rem;
-  border: 1px solid #0a3823;
-  background: #0f5535;
+  border: 1px solid ${({ theme }) => theme.primitives.green[900]};
+  background: #0F5535;
   color: ${({ theme }) => theme.text.brandInvert};
   font-size: 1.4rem;
   cursor: pointer;
@@ -473,6 +475,8 @@ const PopupBox = styled.div`
   gap: 1.2rem;
   width: 100%;
   max-width: 34rem;
+  /* 화면을 꽉 채우지 않게 높이를 제한하고, 넘치는 코멘트는 PopupBody 안에서 스크롤 */
+  max-height: min(70dvh, 60rem);
   padding: 2.4rem 1.6rem;
   border: 1px solid ${({ theme }) => theme.line.brand};
   background: ${({ theme }) => theme.primitives.grey[50]};
@@ -486,6 +490,7 @@ const POPUP_FOOD_ZOOM = 2.2;
 
 const PopupFood = styled.div`
   position: relative;
+  flex-shrink: 0;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -495,8 +500,18 @@ const PopupTitle = styled(CommentTitle)`
   color: ${({ theme }) => theme.text.brandDark};
 `;
 
+// 긴 코멘트는 이 안에서만 스크롤됨(요리 사진·제목·X는 그대로). 스크롤바는 숨김.
 const PopupBody = styled(CommentBody)`
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
   color: ${({ theme }) => theme.text.secondary};
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const PopupCloseButton = styled.button`
@@ -605,6 +620,23 @@ export default function Main() {
   }, []);
 
 
+  // 메인에 처음 들어오면 이미지가 다 준비되고 온보딩도 끝난 뒤에 뚜껑이 자동으로 열림.
+  // (그 전까진 닫힌 채로 기다려서, 온보딩이 사라질 때 닫힌 클로슈가 보임)
+  const tryAutoOpen = useCallback(() => {
+    if (
+      hasAutoOpenedRef.current ||
+      readyImagesRef.current.size < PRELOAD_IMAGE_COUNT ||
+      isOnboardingPlaying()
+    ) {
+      return;
+    }
+    hasAutoOpenedRef.current = true;
+    const firstFoodIndex = Math.floor(Math.random() * mainFood.length);
+    setFoodIndex(firstFoodIndex);
+    setCommentIndex(pickCommentIndex(firstFoodIndex));
+    playClocheAnimation();
+  }, [playClocheAnimation]);
+
   const handleImageLoad = useCallback((event) => {
     const image = event.currentTarget;
     image
@@ -613,20 +645,12 @@ export default function Main() {
       .then(() => {
         readyImagesRef.current.add(image.dataset.preloadKey);
         setReadyImageCount(readyImagesRef.current.size);
-
-        // 메인에 처음 들어오면 이미지가 다 준비되는 대로 뚜껑이 자동으로 열림
-        if (
-          readyImagesRef.current.size >= PRELOAD_IMAGE_COUNT &&
-          !hasAutoOpenedRef.current
-        ) {
-          hasAutoOpenedRef.current = true;
-          const firstFoodIndex = Math.floor(Math.random() * mainFood.length);
-          setFoodIndex(firstFoodIndex);
-          setCommentIndex(pickCommentIndex(firstFoodIndex));
-          playClocheAnimation();
-        }
+        tryAutoOpen();
       });
-  }, [playClocheAnimation]);
+  }, [tryAutoOpen]);
+
+  // 온보딩이 끝나는 순간에도 열 수 있는지 다시 확인
+  useEffect(() => subscribeOnboarding(tryAutoOpen), [tryAutoOpen]);
 
   // 애니메이션 도중 페이지를 떠나도 타이머가 남지 않게 정리
   useEffect(() => () => window.clearTimeout(animationRef.current), []);
