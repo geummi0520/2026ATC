@@ -4,11 +4,15 @@ import Image from "next/image";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
 import BackButton from "@/components/works/BackButton";
+import HiddenStamp from "@/components/stamp/HiddenStamp";
 import WorksRail from "@/components/works/WorksRail";
+import { STAMP_SLOTS } from "@/constants/stamps";
+import useStamp from "@/hooks/useStamp";
 import useTranslation from "@/hooks/useTranslation";
 import useWorksBackHref from "@/hooks/useWorksBackHref";
 import { media } from "@/styles/media";
 import { getVimeoEmbedUrl } from "@/utils/getVimeoEmbedUrl";
+import { pickBySeed } from "@/utils/stampPlan";
 
 const CONTACT_ICONS = {
   email: "/icons/works/email_icon.svg",
@@ -18,7 +22,7 @@ const CONTACT_ICONS = {
   website: "/icons/works/link_icon.svg",
 };
 
-export default function WorkDetail({ work }) {
+export default function WorkDetail({ work, workIds }) {
   const { translate } = useTranslation();
   const title = translate(work.title);
   const location = translate(work.location);
@@ -32,6 +36,9 @@ export default function WorkDetail({ work }) {
     : [work.images.thumbnail];
   const videoEmbedUrl = getVimeoEmbedUrl(work.video);
   const backHref = useWorksBackHref(work.id);
+  const { plan } = useStamp();
+  const isStampWork =
+    Boolean(plan) && pickBySeed(workIds, plan.worksSeed) === work.id;
 
   return (
     <Container>
@@ -40,6 +47,7 @@ export default function WorkDetail({ work }) {
       </DesktopRail>
 
       <DetailScroll data-works-scroll>
+        <HiddenStamp key={work.id} slot={STAMP_SLOTS.WORKS} active={isStampWork} />
         <CompactBackRow>
           <BackButton href={backHref} />
         </CompactBackRow>
@@ -169,6 +177,7 @@ const CompactBackRow = styled.div`
 
 // container-type: size -> 하위 요소에서 100cqh로 스크롤 영역(헤더, WorksRail 제외) 높이 참조
 const DetailScroll = styled.div`
+  position: relative;
   flex: 1;
   min-height: 0;
   container-type: size;
