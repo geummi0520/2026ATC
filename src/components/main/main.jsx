@@ -6,14 +6,21 @@ import styled, { css, keyframes } from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
 import { mainComments } from "@/data/mainComments";
 import { mainFood } from "@/data/mainFood";
-import { isOnboardingPlaying, subscribeOnboarding } from "@/lib/onboardingStatus";
+import {
+  isOnboardingPlaying,
+  subscribeOnboarding,
+} from "@/lib/onboardingStatus";
 import { media } from "@/styles/media";
 
+//스탬프
+import HiddenStamp from "@/components/stamp/HiddenStamp";
+import { MAIN_STAMP_CHANCE, MAIN_STAMP_SLOTS } from "@/constants/stamps";
+import useStamp from "@/hooks/useStamp";
 
 const CLOCHE_FRAME_COUNT = 7;
 const CLOCHE_FRAME_NUMBERS = Array.from(
   { length: CLOCHE_FRAME_COUNT },
-  (_, index) => index + 1,
+  (_, index) => index + 1
 );
 
 // 뚜껑(cloche)과 접시(plate)가 프레임별로 따로 있음. 파일은 0~6번이라 프레임 번호(1~7)에서 1을 뺌.
@@ -26,7 +33,6 @@ const FOOD_REVEAL_START_FRAME = 4;
 // 이 프레임부터는 뚜껑이 뒤로 젖혀져 있어서, 요리가 뚜껑 앞에 오도록 뚜껑을 요리 뒤로 보냄
 const LID_BEHIND_FOOD_FRAME = 5;
 
-
 const foodSrc = (file) => `/images/main/food/${file}.webp`;
 
 const FRAME_INTERVAL_MS = 110;
@@ -35,18 +41,16 @@ const CLOSED_PAUSE_MS = 800;
 
 const PRELOAD_IMAGE_COUNT = CLOCHE_FRAME_COUNT * 2 + mainFood.length;
 
-
-
 const BACKGROUND_PATH =
   "M1035.35 631.166L868.341 564.266L1035.35 429.55L793.93 469.567L1022.2 176.918L755.429 320.167L741.815 98.1038L610.565 384.033L485.922 0.463623L549.832 469.567L257.18 161.135L344.6 330.88L162.965 306.641L344.6 505.841L0.35498 527.155L344.6 611.005L126.729 664.464L587.959 611.005L1035.35 631.166Z";
-
-
 
 // 데스크톱인데 화면 높이가 낮을 때(크롬 북마크바 등). 가운데 요소들이 버튼과 겹치지 않게
 // TopRight(요리 이름·코멘트)만 빼고 위로 올리고 클로슈를 살짝 줄임.
 const SHORT_DESKTOP_MAX_HEIGHT = 900;
 const shortDesktop = (...args) => css`
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}px) and (max-height: ${SHORT_DESKTOP_MAX_HEIGHT}px) {
+  @media (min-width: ${({ theme }) =>
+      theme.breakpoints
+        .tablet}px) and (max-height: ${SHORT_DESKTOP_MAX_HEIGHT}px) {
     ${css(...args)}
   }
 `;
@@ -81,7 +85,6 @@ const Background = styled.svg`
   pointer-events: none;
   z-index: 0;
   color: ${({ theme }) => theme.primitives.green[50]};
-
 
   /* 태블릿에선 화면 폭에 따라 자연스럽게 줄어들다가, 모바일에선 42rem으로 고정 */
   ${media.tablet`
@@ -199,7 +202,6 @@ const Subheadline = styled.p`
   `}
 `;
 
-
 // 코멘트 길이에 따라 레이아웃이 밀리지 않도록 타이틀 아래에 띄워서(absolute) 고정.
 // 길어지면 아래쪽 배경 별 위를 그냥 덮음.
 const CommentBox = styled.div`
@@ -214,7 +216,7 @@ const CommentBox = styled.div`
   gap: 0.8rem;
   padding: 1.6rem;
   border: 1px solid ${({ theme }) => theme.primitives.green[900]};
-  background: #0F5535;
+  background: #0f5535;
 
   /* 태블릿·모바일에선 박스 대신 "자세히보기" 팝업으로 보여줌 */
   ${media.tablet`
@@ -316,7 +318,8 @@ const Stage = styled.div`
 
 const Utensils = styled(Image)`
   position: absolute;
-  left: ${({ $isFork }) => ($isFork ? "calc(50% - 34rem)" : "calc(50% - 51rem)")};
+  left: ${({ $isFork }) =>
+    $isFork ? "calc(50% - 34rem)" : "calc(50% - 51rem)"};
   bottom: ${({ $isFork }) => ($isFork ? "0" : "5rem")};
   height: 40rem;
   width: auto;
@@ -352,7 +355,6 @@ const ClocheStand = styled.div`
     translate: -3% -7%;
   `}
 `;
-
 
 const PlateImage = styled(Image)`
   z-index: 0;
@@ -390,14 +392,15 @@ const FOOD_POP_STEPS = {
   rebound: { at: "66%", value: [0.94, 1.06] },
   settle: { at: "82%", value: [1.03, 1] },
 };
-const toScaleValue = (value) => (Array.isArray(value) ? value.join(" ") : `${value}`);
+const toScaleValue = (value) =>
+  Array.isArray(value) ? value.join(" ") : `${value}`;
 // 요리별 값을 CSS 변수(--pop-start 등)로 넘김. 요리를 바꿔도 새 CSS가 생기지 않음.
 const foodPopVars = (pop = {}) =>
   Object.fromEntries(
     Object.entries(FOOD_POP_STEPS).map(([step, { value }]) => [
       `--pop-${step}`,
       toScaleValue(pop[step] ?? value),
-    ]),
+    ])
   );
 
 // FOOD_POP_STEPS로 단계별 scale 키프레임을 만듦(요리별 값은 CSS 변수로 들어옴).
@@ -406,7 +409,7 @@ const foodPop = keyframes`
   ${Object.entries(FOOD_POP_STEPS)
     .map(
       ([step, { at, value }]) =>
-        `${at} { scale: var(--pop-${step}, ${toScaleValue(value)}); }`,
+        `${at} { scale: var(--pop-${step}, ${toScaleValue(value)}); }`
     )
     .join("\n")}
   100% {
@@ -462,7 +465,7 @@ const ButtonRow = styled.div`
 const ReorderButton = styled.button`
   padding: 1.2rem 2.4rem;
   border: 1px solid ${({ theme }) => theme.primitives.green[900]};
-  background: #0F5535;
+  background: #0f5535;
   color: ${({ theme }) => theme.text.brandInvert};
   font-size: 1.4rem;
   cursor: pointer;
@@ -564,7 +567,13 @@ const PopupCloseButton = styled.button`
 `;
 
 const CloseIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 15 15"
+    fill="none"
+    aria-hidden="true"
+  >
     <path
       d="M0.5 14.5L14.5 0.5M14.5 14.5L0.5 0.5"
       stroke="currentColor"
@@ -575,7 +584,9 @@ const CloseIcon = () => (
 
 // 해당 요리의 코멘트 중 하나를 랜덤으로 고름
 const pickCommentIndex = (foodIndex) =>
-  Math.floor(Math.random() * (mainComments[mainFood[foodIndex].file]?.length ?? 1));
+  Math.floor(
+    Math.random() * (mainComments[mainFood[foodIndex].file]?.length ?? 1)
+  );
 
 export default function Main() {
   const { t, translate } = useTranslation();
@@ -603,7 +614,7 @@ export default function Main() {
     Boolean(currentComment?.clampLines) && expandedCommentKey !== commentKey;
   const comment = useMemo(
     () => translate(currentComment),
-    [currentComment, translate],
+    [currentComment, translate]
   );
   // 질문이 붙은 코멘트(예: "2026 ATC는 어떤 맛의 요리인가요?")만 제목이 나오고, 나머지는 본문만
   const commentQuestion = currentComment?.question
@@ -622,39 +633,42 @@ export default function Main() {
   // 클로슈 스톱모션. 기본은 덮인 상태(1)부터 열리며 요리를 보여주고,
   // closeFirst면 지금 열린 상태(7)에서 먼저 1까지 닫혔다가 다시 열림.
   // onClosed는 뚜껑이 완전히 덮인 순간 호출됨(이때 요리를 바꾸면 바뀌는 게 안 보임).
-  const playClocheAnimation = useCallback(({ closeFirst = false, onClosed } = {}) => {
-    window.clearTimeout(animationRef.current);
-    setIsAnimating(true);
+  const playClocheAnimation = useCallback(
+    ({ closeFirst = false, onClosed } = {}) => {
+      window.clearTimeout(animationRef.current);
+      setIsAnimating(true);
 
-    const openFrames = CLOCHE_FRAME_NUMBERS;
-    const frames = closeFirst
-      ? [...openFrames.slice(0, -1).reverse(), ...openFrames.slice(1)]
-      : openFrames;
-    let step = 0;
+      const openFrames = CLOCHE_FRAME_NUMBERS;
+      const frames = closeFirst
+        ? [...openFrames.slice(0, -1).reverse(), ...openFrames.slice(1)]
+        : openFrames;
+      let step = 0;
 
-    // 프레임마다 다음 프레임까지 기다릴 시간이 달라서(닫힌 뒤엔 더 오래 머묾)
-    // setInterval 대신 setTimeout을 이어 붙임
-    const showFrame = () => {
-      const frame = frames[step];
-      setClocheFrame(frame);
-      if (frame === 1) onClosed?.();
+      // 프레임마다 다음 프레임까지 기다릴 시간이 달라서(닫힌 뒤엔 더 오래 머묾)
+      // setInterval 대신 setTimeout을 이어 붙임
+      const showFrame = () => {
+        const frame = frames[step];
+        setClocheFrame(frame);
+        if (frame === 1) onClosed?.();
 
-      if (step >= frames.length - 1) {
-        animationRef.current = null;
-        setIsAnimating(false);
-        return;
-      }
+        if (step >= frames.length - 1) {
+          animationRef.current = null;
+          setIsAnimating(false);
+          return;
+        }
 
-      const delay = closeFirst && frame === 1 ? CLOSED_PAUSE_MS : FRAME_INTERVAL_MS;
-      animationRef.current = window.setTimeout(() => {
-        step += 1;
-        showFrame();
-      }, delay);
-    };
+        const delay =
+          closeFirst && frame === 1 ? CLOSED_PAUSE_MS : FRAME_INTERVAL_MS;
+        animationRef.current = window.setTimeout(() => {
+          step += 1;
+          showFrame();
+        }, delay);
+      };
 
-    showFrame();
-  }, []);
-
+      showFrame();
+    },
+    []
+  );
 
   // 메인에 처음 들어오면 이미지가 다 준비되고 온보딩도 끝난 뒤에 뚜껑이 자동으로 열림.
   // (그 전까진 닫힌 채로 기다려서, 온보딩이 사라질 때 닫힌 클로슈가 보임)
@@ -673,17 +687,20 @@ export default function Main() {
     playClocheAnimation();
   }, [playClocheAnimation]);
 
-  const handleImageLoad = useCallback((event) => {
-    const image = event.currentTarget;
-    image
-      .decode()
-      .catch(() => {})
-      .then(() => {
-        readyImagesRef.current.add(image.dataset.preloadKey);
-        setReadyImageCount(readyImagesRef.current.size);
-        tryAutoOpen();
-      });
-  }, [tryAutoOpen]);
+  const handleImageLoad = useCallback(
+    (event) => {
+      const image = event.currentTarget;
+      image
+        .decode()
+        .catch(() => {})
+        .then(() => {
+          readyImagesRef.current.add(image.dataset.preloadKey);
+          setReadyImageCount(readyImagesRef.current.size);
+          tryAutoOpen();
+        });
+    },
+    [tryAutoOpen]
+  );
 
   // 온보딩이 끝나는 순간에도 열 수 있는지 다시 확인
   useEffect(() => subscribeOnboarding(tryAutoOpen), [tryAutoOpen]);
@@ -694,7 +711,8 @@ export default function Main() {
   // 자세히보기 팝업은 Esc로도 닫힘
   useEffect(() => {
     if (!isDetailOpen) return undefined;
-    const onKeyDown = (event) => event.key === "Escape" && setIsDetailOpen(false);
+    const onKeyDown = (event) =>
+      event.key === "Escape" && setIsDetailOpen(false);
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isDetailOpen]);
@@ -737,8 +755,13 @@ export default function Main() {
     comment
   ) : isCommentClamped ? (
     <ClampWrap>
-      <ClampedText style={clampStyle}>
-        {expandButton}
+      <ClampedText style={{ "--clamp-lines": currentComment.clampLines }}>
+        <MoreButton
+          type="button"
+          onClick={() => setExpandedCommentKey(commentKey)}
+        >
+          {MORE_LABEL}
+        </MoreButton>
         {comment}
       </ClampedText>
     </ClampWrap>
@@ -768,13 +791,18 @@ export default function Main() {
     <Wrapper>
       <TopRow>
         <TopLeft>
-          <Wordmark src="/images/main/atc.svg" alt="2026 Art&Technology Conference" width={272} height={146} />
+          <Wordmark
+            src="/images/main/atc.svg"
+            alt="2026 Art&Technology Conference"
+            width={272}
+            height={146}
+          />
         </TopLeft>
 
         {/* 요리 이름·코멘트는 뚜껑이 거의 다 열렸을 때 나타나고, 재주문으로 닫히면 사라짐 */}
         <TopRight style={{ opacity: isTitleShown ? 1 : 0 }}>
-          <Headline>{(food.name.ko)}</Headline>
-          <Subheadline>{(food.name.en)}</Subheadline>
+          <Headline>{food.name.ko}</Headline>
+          <Subheadline>{food.name.en}</Subheadline>
           <CommentBox>
             {commentQuestion && <CommentTitle>{commentQuestion}</CommentTitle>}
             <CommentBody>{commentBody}</CommentBody>
@@ -786,8 +814,19 @@ export default function Main() {
         <Background viewBox="0 0 1041 666" aria-hidden="true">
           <path d={BACKGROUND_PATH} fill="currentColor" />
         </Background>
-        <Utensils src="/images/main/whisk.svg" alt="" width={330} height={526} />
-        <Utensils $isFork src="/images/main/folk.svg" alt="" width={120} height={478} />
+        <Utensils
+          src="/images/main/whisk.svg"
+          alt=""
+          width={330}
+          height={526}
+        />
+        <Utensils
+          $isFork
+          src="/images/main/folk.svg"
+          alt=""
+          width={120}
+          height={478}
+        />
 
         <ClocheStand>
           {CLOCHE_FRAME_NUMBERS.map((frameNumber) => (
@@ -852,8 +891,21 @@ export default function Main() {
         </ClocheStand>
       </Stage>
 
+      {/* 뚜껑이 다 열려 요리가 나온 뒤에만 스탬프 노출 */}
+      <HiddenStamp
+        key={mainStampRoll}
+        slot={mainStampSlot}
+        active={
+          mainStampRoll !== null && !isAnimating && Boolean(mainStampSlot)
+        }
+      />
+
       <ButtonRow>
-        <ReorderButton type="button" onClick={handleReorder} disabled={isAnimating || !isReady}>
+        <ReorderButton
+          type="button"
+          onClick={handleReorder}
+          disabled={isAnimating || !isReady}
+        >
           {t("main.reorder")}
         </ReorderButton>
         <DetailButton
