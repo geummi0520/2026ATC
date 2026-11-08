@@ -69,10 +69,7 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                         </DescriptionWrap>
                         {/* 날짜와 장소 */}
                         <EventInfo>
-                            <InfoLine>
-                                <StyledSpan>{t("program.location")}</StyledSpan>
-                                <StyledSpan>{site}</StyledSpan>
-                            </InfoLine>
+
                             <InfoLine>
                                 <StyledSpan>{t("program.dateTime")}</StyledSpan>
                                 <DateContainer>
@@ -86,6 +83,10 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                                 </DateContainer>
 
 
+                            </InfoLine>
+                            <InfoLine>
+                                <StyledSpan>{t("program.location")}</StyledSpan>
+                                <StyledSpan>{site}</StyledSpan>
                             </InfoLine>
 
                         </EventInfo>
@@ -213,7 +214,7 @@ ${media.mobile`
     gap: 0.5rem;
     padding:1.2rem 0rem;
   `}
-@media (max-width:400px) {
+@media (max-width:550px) {
 flex-direction: column;
 gap:0.8rem;
 }
@@ -230,10 +231,11 @@ line-height: 180%;
 
 ${media.tablet`
 
-font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+font-size: ${({ theme }) => theme.typography.fontSize.textLg};
 font-weight: 700;
 `};
 ${media.mobile`
+    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     width:20rem;
 `}
 
@@ -287,7 +289,7 @@ ${media.tablet`
     gap:1.6rem;
     `};
 
-@media (max-width:400px) {
+@media (max-width:550px) {
  gap:1rem;
 }
 

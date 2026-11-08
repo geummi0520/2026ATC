@@ -67,6 +67,14 @@ export default function ProgramDetail({ program }) {
             <Title>
                 {translate(currentProgram.title)}
             </Title>
+
+            <ProgramImg
+                src={currentProgram.imgUrl}
+                alt="program image"
+                width={164}
+                height={307}
+                $desktop
+            />
             <EventInfo>
                 <InfoLine>
                     <StyledSpan>{t("program.dateTime")}</StyledSpan>
@@ -89,13 +97,6 @@ export default function ProgramDetail({ program }) {
 
 
             </EventInfo>
-            <ProgramImg
-                src={currentProgram.imgUrl}
-                alt="program image"
-                width={164}
-                height={307}
-                $desktop
-            />
             <Description>
                 <StyledSpan>{translate(currentProgram.description)}</StyledSpan>
             </Description>
@@ -103,15 +104,15 @@ export default function ProgramDetail({ program }) {
             {showFloatingNav && (
                 <BottomNav>
                     <StyledLink href={`/program`}>
-                        <Image alt="arrow" src="/icons/program/arrow-right.svg" width={24} height={24} />
+                        <Image alt="arrow" src="/icons/program/list_icon.svg" width={24} height={24} />
                         {t("program.backToList")}
                     </StyledLink>
                     <NavButtons>
                         <NavButton onClick={PrevProgram}>
-                            <Image alt="arrow" src="/icons/program/polygon_left.svg" width={16} height={17} />
+                            <NavButtonImage alt="arrow" src="/icons/program/polygon_left.svg" width={16} height={17} />
                         </NavButton>
                         <NavButton onClick={NextProgram}>
-                            <Image alt="arrow" src="/icons/program/polygon_left.svg" width={16} height={17} />
+                            <NavButtonImage alt="arrow" src="/icons/program/polygon_right.svg" width={16} height={17} />
                         </NavButton>
                     </NavButtons>
                 </BottomNav>
@@ -187,7 +188,7 @@ const ProgramImg = styled(Image)`
 display: flex;
 width:100%;
 height:auto;
-padding: 1rem;
+// padding: 1rem;
 
 align-self: stretch;
 aspect-ratio: 3/4;
@@ -267,7 +268,7 @@ const NavButton = styled.button`
 
 
 display: inline-flex;
-padding: 0.4rem 1.2rem;
+padding: 0.8rem;
 justify-content: center;
 align-items: center;
 gap: 0.6rem;
@@ -275,4 +276,9 @@ gap: 0.6rem;
 border-radius: 3rem;
 border: 1px solid ${({ theme }) => theme.line.brand};
 background: ${({ theme }) => theme.button.primary};
+`;
+const NavButtonImage = styled(Image)`
+width:100%;
+padding: 0.2rem 0.4rem;
+
 `;

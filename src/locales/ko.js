@@ -41,6 +41,7 @@ const ko = {
     topic: "주제문",
     topicSentence: "레시피 바꾸지 말 것*",
     congratulatory: "축사",
+    staffCredit: "스태프 크레딧",
     linkToStaffCredit: "스태프 크레딧 바로가기",
     path: "오시는 길",
     map: "서강대학교 캠퍼스 지도",
