@@ -5,7 +5,7 @@ export const programs = [
             ko: "청춘, 선을 넘다",
             en: "Youth, Crossing the Line",
         },
-        imgUrl: "/images/program/example1.jpg",
+        imgUrl: "/images/program/thumbnail_1.png",
         description: {
             ko: `‘닻올림’과 ‘MoIM’, 즉흥 협연을 지속적으로 시도해 온 두 거점이 2025 ATC와 연합해 한층 확장된 즉흥 협연의 판을 만듭니다. 서로의 소리에 귀 기울이고 그에 반응하며, 소리와 행위로 연결되는 경험을 함께 만들어봅니다. 장르, 남녀노소 불문, 즉흥 협연에 관심 있는 모두에게 열려 있습니다.`,
             en: `Two hubs, ‘Datollim’ and ‘MoIM’, which have continuously explored improvised collaborations, join forces with the 2025 ATC to create an expanded space for improvisation. Listen and respond to each other, and experience a connection through sound and action. Open to anyone interested in improvised collaboration, regardless of genre or age.`,
@@ -32,7 +32,7 @@ export const programs = [
             ko: "방구석 미식회",
             en: "The At-Home Gourmet Club",
         },
-        imgUrl: "/images/program/example2.jpg",
+        imgUrl: "/images/program/thumbnail_2.png",
         description: {
             ko: `손쉬운 재료로 완성하는 최고급 요리. 요리 초보자도 집에서 쉽게 따라 할 수 있는 특별한 레시피를 소개하고, 숨겨진 미식의 즐거움을 배달하는 신개념 쿡방 예능입니다.`,
             en: `Premium dishes made with simple ingredients. This new kind of cooking entertainment introduces special recipes that even beginners can easily follow at home, delivering the hidden pleasures of gourmet food.`,
