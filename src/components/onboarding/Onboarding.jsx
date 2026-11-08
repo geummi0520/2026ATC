@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import styled, { keyframes } from "styled-components";
+import { finishOnboarding } from "@/lib/onboardingStatus";
 import { media } from "@/styles/media";
 
 const onboardingSrc = (file) => `/images/onboarding/${file}`;
@@ -156,7 +157,11 @@ export default function Onboarding() {
   const [itemFile, setItemFile] = useState(null);
 
   useEffect(() => {
-    if (!isVisible) return undefined;
+    // 온보딩이 안 나오는 경우(사이트 안에서 메인으로 다시 옴)엔 메인이 바로 열리게 끝난 걸로 알림
+    if (!isVisible) {
+      finishOnboarding();
+      return undefined;
+    }
     hasPlayed = true;
 
     const previousOverflow = document.body.style.overflow;
@@ -170,7 +175,14 @@ export default function Onboarding() {
         }, INTRO_MS + SWAP_MS * index),
       );
     timers.push(window.setTimeout(() => setPhase("outro"), OUTRO_START_MS));
-    timers.push(window.setTimeout(() => setIsVisible(false), TOTAL_MS));
+    // 다 사라진 뒤에 메인에 알려서, 닫힌 클로슈가 보이는 상태에서 열리기 시작하게 함.
+    // (cleanup에서 알리면 개발 모드에서 effect가 두 번 실행될 때 너무 일찍 알려짐)
+    timers.push(
+      window.setTimeout(() => {
+        setIsVisible(false);
+        finishOnboarding();
+      }, TOTAL_MS),
+    );
 
     return () => {
       timers.forEach((timer) => window.clearTimeout(timer));
