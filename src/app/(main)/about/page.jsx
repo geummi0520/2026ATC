@@ -60,65 +60,78 @@ export default function AboutPage() {
         {translate(congrat_text)}
       </AboutContent>
 
-      <EmptyBox $height={"7rem"} />
-      {/* 티저필름 */}
-      <TeaserWrapper>
-        <AboutContent
-          title={"Teaser Film"}
-          showLeftImage={false}
-        />
-        {/* 티저필름 비디오 */}
-        <TeaserFilmImg
-          src="/images/about/TeaserFilm_example.png"
-          alt="teaser-film"
-          width={990}
-          height={655}
-        />
-      </TeaserWrapper>
-      <EmptyBox $height={"7rem"} />
+      <EmptyBox $height={"11.2rem"} />
+
+
       {/* 스태프 크레딧 */}
-      <AboutContent
-        title={"Staff Credit"}
-        showLeftImage={false}
-      >
-        <CreditItem
-          teamName={staffs[0].team}
-          members={staffs[0].members}
-          cd={true}
-        />
-        <CreditContainer>
-          <StaffList>
-            {staffs.slice(1, 3).map((team, index) => (
-              <CreditItem
-                key={index}
-                teamName={team.team}
-                members={team.members}
-              />
-            ))}
-          </StaffList>
-          <StaffList>
-            {staffs.slice(3, 5).map((team, index) => (
-              <CreditItem
-                key={index}
-                teamName={team.team}
-                members={team.members}
-              />
-            ))}
-          </StaffList>
-          <StaffList>
-            {staffs.slice(5, 7).map((team, index) => (
-              <CreditItem
-                key={index}
-                teamName={team.team}
-                members={team.members}
-              />
-            ))}
-          </StaffList>
-        </CreditContainer>
-      </AboutContent>
+      <StaffBox>
+        <StaffContainer>
+          <ContentTitle $compact $isStaff>
+            <StaffTitleBox>
+              {t("about.staffCredit")}
+            </StaffTitleBox>
+            <StaffTitleBox>
+              <StyledLink href="./archive/staff">
+                {t("about.linkToStaffCredit")}
+                <Image
+                  src="/icons/about/arrow-up-right.svg"
+                  alt=""
+                  width={72}
+                  height={72}
+                />
+              </StyledLink>
+            </StaffTitleBox>
+
+          </ContentTitle>
+          <CreditItem
+            teamName={staffs[0].team}
+            members={staffs[0].members}
+            cd={true}
+          />
+          <CreditContainer>
+            <StaffList>
+              {staffs.slice(1, 3).map((team, index) => (
+                <CreditItem
+                  key={index}
+                  teamName={team.team}
+                  members={team.members}
+                />
+              ))}
+            </StaffList>
+            <StaffList>
+              {staffs.slice(3, 5).map((team, index) => (
+                <CreditItem
+                  key={index}
+                  teamName={team.team}
+                  members={team.members}
+                />
+              ))}
+            </StaffList>
+            <StaffList>
+              {staffs.slice(5, 7).map((team, index) => (
+                <CreditItem
+                  key={index}
+                  teamName={team.team}
+                  members={team.members}
+                />
+              ))}
+            </StaffList>
+          </CreditContainer>
+
+
+        </StaffContainer>
+        <TeaserContainer>
+          <TeaserFilmImg
+            src="/images/about/teaser_blank.png"
+            alt="teaser-film"
+            width={340}
+            height={604}
+          />
+        </TeaserContainer>
+      </StaffBox>
 
       <StampImg
-        src="/images/about/stamp-img.png"
+        src="/icons/about/stamps.svg"
         alt="stamp"
         width={990}
         height={316}
@@ -231,6 +244,10 @@ ${media.mobile`
 const TeaserFilmImg = styled(Image)`
 width:100%;
 height:auto;
+
+aspect-ratio: 9/16;
+
+
 `;
 
 const MapBox = styled.div`
@@ -267,12 +284,21 @@ display:flex;
 flex-direction:column;
 gap:4rem;
 `;
+const TeaserContainer = styled.div`
+padding-right:4rem;
+`;
 const StaffList = styled.div`
 flex:1;
 
 display:flex;
 flex-direction:row;
 gap:4rem;
+${media.tablet`
+flex-direction:column;
+`};
+
+
+
 `;
 const StampImg = styled(Image)`
 width:100%;
@@ -340,9 +366,9 @@ function CreditItem({ teamName, members }) {
       <Members>
         {
           translate(members).map((member, index) => (
-            <span key={index}>
+            <Staffspan key={index}>
               {member}
-            </span>
+            </Staffspan>
           ))
         }
       </Members>
@@ -351,11 +377,14 @@ function CreditItem({ teamName, members }) {
 }
 const StyledTeamItem = styled.div`
 flex:1;
-
 display:flex;
 flex-direction:column;
-gap:${({ $isCd }) => ($isCd ? "1rem" : "0.8rem")};
+
+align-self:flex-end;
+
+gap:0.8rem;
 `;
+
 const TeamName = styled.div`
 color: ${({ theme }) => theme.text.brandInvert};
 
@@ -363,11 +392,26 @@ font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 700;
 line-height: 180%; /* 25.2px */
+
+text-align:right;
 `;
 const Members = styled.div`
 display:flex;
 gap:1.2rem;
 flex-wrap: wrap;
+
+align-content:flex-end;
+justify-content:flex-end;
+`;
+const Staffspan = styled.span`
+color: ${({ theme }) => theme.text.brandInvert};
+
+/* text/text-medium */
+font-family: MaruBuri;
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+font-style: normal;
+font-weight: 400;
+line-height: 180%; /* 25.2px */
 `;
 
 function AboutContent({ children, title, showLeftImage }) {
@@ -414,7 +458,11 @@ function AboutContent({ children, title, showLeftImage }) {
 const ContentTitle = styled.div`
 width:100%;
 display:flex;
-justify-content: space-between;
+${media.tablet`
+flex-direction:column;
+gap:2rem;
+`};
+justify-content:${({ $isStaff }) => $isStaff ? "flex-end" : "flex-start"};
 
 color: ${({ theme }) => theme.text.brandInvert};
 
@@ -436,6 +484,32 @@ ${media.mobile`
   font-size: theme.typography.fontSize.textLg};
   line-height: 180%; /* 32.4px */
   `};
+`;
+
+const StaffTitleBox = styled.div`
+display:flex;
+justify-content:flex-end;
+flex:1;
+`;
+const StaffBox = styled.div`
+
+width:100%;
+display:grid;
+grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+gap:4rem;
+padding:4rem 0rem;
+
+align-items:start;
+`;
+const StaffContainer = styled.div`
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+gap:6rem;
+padding:0 4rem;
+${media.tablet`
+  gap:4rem;
+  `}
 `;
 
 const ContentContainer = styled.div`
@@ -464,12 +538,10 @@ ${media.tablet`
 `};
 `;
 const EmptyBox = styled.div`
-display:none;
-${media.tablet`
-display:block;
+display:bock;
 width:100%;
 height:${({ $height }) => $height};
-`};
+
 
 `;
 const TeaserWrapper = styled.div`
@@ -493,6 +565,7 @@ flex-direction:column;
 padding-top:${({ $compact }) => $compact ? "4rem" : "8rem"};
 padding-bottom:${({ $compact }) => $compact ? "4rem" : "8rem"};
 padding-right:4rem;
+padding-left:${({ $isStaff }) => $isStaff ? "4rem" : "0rem"};
 gap:4rem;
 
 white-space: pre-line;

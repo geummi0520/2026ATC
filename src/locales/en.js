@@ -42,6 +42,7 @@ const en = {
     topic: "Theme",
     topicSentence: "Do Not Change the Recipe*",
     congratulatory: "Congratulatory Message",
+    staffCredit: "Staff Credit",
     linkToStaffCredit: "View Staff Credits",
     path: "Directions",
     map: "Sogang University Campus Map",

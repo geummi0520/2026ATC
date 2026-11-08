@@ -32,7 +32,7 @@ export const topic_text = {
 
 2026 ATC는 자신의 감각, 경험, 취향에 집중한다. ATC의 작가는 모두 고유의 레시피를 토대로 창작한다. 공간과 사람을 맥락으로 하여 모인 이곳에서, 관람객은 창작물을 자유롭게 감각하고 해석한다. 창작도 감상도 이미 설계된 적당한 레시피를 따를 필요가 없다.
 
-  “레시피 바꾸지 말 것” 뒤에 무엇을 놓을지는 정해져 있지 않다. * 은 작가와 관람객이 직접 채워나간다. 이곳에서는 언제든 당신의 새로운 레시피를 만들어도 좋다. 그 과정에서 또다른 감각과 취향을 발견할 지도 모르니까. 이 전시와 함께하는 모두가 아이처럼 세계를 넓혀가는 기억을 되찾을 수 있기를 바란다. *순수하고 즐겁고 재미있게!*
+  “레시피 바꾸지 말 것” 뒤에 무엇을 놓을지는 정해져 있지 않다. * 은 작가와 관람객이 직접 채워나간다. 이곳에서는 언제든 당신의 새로운 레시피를 만들어도 좋다. 그 과정에서 또다른 감각과 취향을 발견할 지도 모르니까. 이 전시와 함께하는 모두가 아이처럼 세계를 넓혀가는 기억을 되찾을 수 있기를 바란다. 순수하고 즐겁고 재미있게!
   `,
     en: `Following a recipe means experiencing a taste and a sensation someone else has already designed.
 
@@ -80,7 +80,7 @@ Chair, Department of Art & Technology, Sogang University`,
 
 export const staffs = [
     {
-        team: { ko: "Creative Director", en: "Creative Director" },
+        team: { ko: "크리에이티브 디렉터", en: "Creative Director" },
         members: {
             ko: ["곽민서"],
             en: ["Kwak, Minseo"],
