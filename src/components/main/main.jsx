@@ -142,7 +142,7 @@ const TopRight = styled.div`
   ${media.mobile`
     align-items: center;
     max-width: none;
-    margin-top: 4rem;
+    margin-top: 1rem;
   `}
 `;
 
@@ -316,8 +316,9 @@ const ClocheStand = styled.div`
     transform: none;
   `}
 
+  /* 모바일: 접시가 그림 박스 안에서 오른쪽에 치우쳐 있어서 왼쪽으로, 그리고 살짝 위로 옮김 */
   ${media.mobile`
-    translate: none;
+    translate: -3% -7%;
   `}
 `;
 
@@ -425,8 +426,8 @@ const ButtonRow = styled.div`
 
 const ReorderButton = styled.button`
   padding: 1.2rem 2.4rem;
-  border: 1px solid #0a3823;
-  background: #0f5535;
+  border: 1px solid ${({ theme }) => theme.primitives.green[900]};
+  background: #0F5535;
   color: ${({ theme }) => theme.text.brandInvert};
   font-size: 1.4rem;
   cursor: pointer;
@@ -473,6 +474,8 @@ const PopupBox = styled.div`
   gap: 1.2rem;
   width: 100%;
   max-width: 34rem;
+  /* 화면을 꽉 채우지 않게 높이를 제한하고, 넘치는 코멘트는 PopupBody 안에서 스크롤 */
+  max-height: min(70dvh, 60rem);
   padding: 2.4rem 1.6rem;
   border: 1px solid ${({ theme }) => theme.line.brand};
   background: ${({ theme }) => theme.primitives.grey[50]};
@@ -486,6 +489,7 @@ const POPUP_FOOD_ZOOM = 2.2;
 
 const PopupFood = styled.div`
   position: relative;
+  flex-shrink: 0;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -495,8 +499,18 @@ const PopupTitle = styled(CommentTitle)`
   color: ${({ theme }) => theme.text.brandDark};
 `;
 
+// 긴 코멘트는 이 안에서만 스크롤됨(요리 사진·제목·X는 그대로). 스크롤바는 숨김.
 const PopupBody = styled(CommentBody)`
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
   color: ${({ theme }) => theme.text.secondary};
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const PopupCloseButton = styled.button`
