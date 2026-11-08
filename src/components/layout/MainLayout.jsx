@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
-import { isBrandDarkPath } from "@/constants/routes";
+import { ROUTES, isBrandDarkPath } from "@/constants/routes";
 import { media } from "@/styles/media";
 
 const Layout = styled.div`
@@ -30,6 +30,8 @@ export default function MainLayout({ children, isComingSoon = false }) {
   const pathname = usePathname();
   const isBrandDark = !isComingSoon && isBrandDarkPath(pathname);
   const isWorks = pathname === "/works" || pathname.startsWith("/works/");
+  // 메인은 화면 한 장으로 끝나서 푸터를 두지 않음
+  const isHome = pathname === ROUTES.HOME;
   const rightRailRef = useRef(null);
 
   useEffect(() => {
@@ -135,7 +137,7 @@ export default function MainLayout({ children, isComingSoon = false }) {
         <MainContent $isWorks={isWorks} $isComingSoon={isComingSoon}>
           {children}
         </MainContent>
-        {!isWorks && !isComingSoon && <Footer />}
+        {!isWorks && !isHome && !isComingSoon && <Footer />}
       </Center>
       <RightRail ref={rightRailRef}>
         <RailSlot>
