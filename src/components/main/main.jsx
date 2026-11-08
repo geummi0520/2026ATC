@@ -6,6 +6,7 @@ import styled, { keyframes } from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
 import { mainComments } from "@/data/mainComments";
 import { mainFood } from "@/data/mainFood";
+import { isOnboardingPlaying, subscribeOnboarding } from "@/lib/onboardingStatus";
 import { media } from "@/styles/media";
 
 
@@ -619,6 +620,23 @@ export default function Main() {
   }, []);
 
 
+  // 메인에 처음 들어오면 이미지가 다 준비되고 온보딩도 끝난 뒤에 뚜껑이 자동으로 열림.
+  // (그 전까진 닫힌 채로 기다려서, 온보딩이 사라질 때 닫힌 클로슈가 보임)
+  const tryAutoOpen = useCallback(() => {
+    if (
+      hasAutoOpenedRef.current ||
+      readyImagesRef.current.size < PRELOAD_IMAGE_COUNT ||
+      isOnboardingPlaying()
+    ) {
+      return;
+    }
+    hasAutoOpenedRef.current = true;
+    const firstFoodIndex = Math.floor(Math.random() * mainFood.length);
+    setFoodIndex(firstFoodIndex);
+    setCommentIndex(pickCommentIndex(firstFoodIndex));
+    playClocheAnimation();
+  }, [playClocheAnimation]);
+
   const handleImageLoad = useCallback((event) => {
     const image = event.currentTarget;
     image
@@ -627,20 +645,12 @@ export default function Main() {
       .then(() => {
         readyImagesRef.current.add(image.dataset.preloadKey);
         setReadyImageCount(readyImagesRef.current.size);
-
-        // 메인에 처음 들어오면 이미지가 다 준비되는 대로 뚜껑이 자동으로 열림
-        if (
-          readyImagesRef.current.size >= PRELOAD_IMAGE_COUNT &&
-          !hasAutoOpenedRef.current
-        ) {
-          hasAutoOpenedRef.current = true;
-          const firstFoodIndex = Math.floor(Math.random() * mainFood.length);
-          setFoodIndex(firstFoodIndex);
-          setCommentIndex(pickCommentIndex(firstFoodIndex));
-          playClocheAnimation();
-        }
+        tryAutoOpen();
       });
-  }, [playClocheAnimation]);
+  }, [tryAutoOpen]);
+
+  // 온보딩이 끝나는 순간에도 열 수 있는지 다시 확인
+  useEffect(() => subscribeOnboarding(tryAutoOpen), [tryAutoOpen]);
 
   // 애니메이션 도중 페이지를 떠나도 타이머가 남지 않게 정리
   useEffect(() => () => window.clearTimeout(animationRef.current), []);
