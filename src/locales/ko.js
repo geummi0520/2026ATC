@@ -15,7 +15,6 @@ const ko = {
   },
   main: {
     conference: "Art&Technology Conference",
-    commentBoxTitle: "이 요리를 설명한다면?",
     reorder: "재주문하기!",
     stamp: "STAMP",
     detail: "자세히보기",
