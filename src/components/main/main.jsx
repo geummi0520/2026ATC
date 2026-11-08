@@ -15,9 +15,15 @@ const CLOCHE_FRAME_NUMBERS = Array.from(
   (_, index) => index + 1,
 );
 
+// 뚜껑(cloche)과 접시(plate)가 프레임별로 따로 있음. 파일은 0~6번이라 프레임 번호(1~7)에서 1을 뺌.
+// 접시 → 요리 → 뚜껑 순서로 겹쳐서, 요리가 실제로 뚜껑 밑에 있다가 드러남.
+const clocheFrameSrc = (frame) => `/images/main/lid/${frame - 1}.webp`;
+const plateFrameSrc = (frame) => `/images/main/plate/${frame - 1}.webp`;
 
-const FOOD_REVEAL_START_FRAME = 5;
-const clocheFrameSrc = (frame) => `/images/main/cloche/${frame}.webp`;
+// 뚜껑이 충분히 들린 프레임부터 요리를 보여줌(그 전엔 키 큰 요리가 닫힌 뚜껑 위로 삐져나옴)
+const FOOD_REVEAL_START_FRAME = 4;
+// 이 프레임부터는 뚜껑이 뒤로 젖혀져 있어서, 요리가 뚜껑 앞에 오도록 뚜껑을 요리 뒤로 보냄
+const LID_BEHIND_FOOD_FRAME = 5;
 
 
 const foodSrc = (file) => `/images/main/food/${file}.webp`;
@@ -26,7 +32,7 @@ const FRAME_INTERVAL_MS = 110;
 // 재주문 때 뚜껑이 완전히 닫힌 뒤 다시 열리기 전까지 머무는 시간
 const CLOSED_PAUSE_MS = 800;
 
-const PRELOAD_IMAGE_COUNT = CLOCHE_FRAME_COUNT + mainFood.length;
+const PRELOAD_IMAGE_COUNT = CLOCHE_FRAME_COUNT * 2 + mainFood.length;
 
 
 
@@ -77,9 +83,10 @@ const Background = styled.svg`
   `}
 `;
 
+// 코멘트 박스가 가운데 그림(Stage) 위로 겹쳐 보이도록 Stage보다 위에 둠
 const TopRow = styled.div`
   position: relative;
-  z-index: 1;
+  z-index: 2;
   flex: 0 0 auto;
   display: flex;
   justify-content: space-between;
@@ -120,6 +127,7 @@ const Wordmark = styled(Image)`
 `;
 
 const TopRight = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -134,7 +142,7 @@ const TopRight = styled.div`
   ${media.mobile`
     align-items: center;
     max-width: none;
-    margin-top: 0;
+    margin-top: 4rem;
   `}
 `;
 
@@ -152,7 +160,7 @@ const Headline = styled.h1`
   `}
 
   ${media.mobile`
-    font-size: 1.8rem;
+    font-size: 2rem;
   `}
 `;
 
@@ -173,20 +181,26 @@ const Subheadline = styled.p`
   `}
 
   ${media.mobile`
-    font-size: 1.6rem;
+    font-size: 2rem;
   `}
 `;
 
 
+// 코멘트 길이에 따라 레이아웃이 밀리지 않도록 타이틀 아래에 띄워서(absolute) 고정.
+// 길어지면 아래쪽 배경 별 위를 그냥 덮음.
 const CommentBox = styled.div`
+  position: absolute;
+  top: calc(100% + 2.2rem);
+  right: 0;
+  width: max-content;
+  max-width: 48rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 1rem;
   gap: 0.8rem;
   padding: 1.6rem;
-  border: 1px solid ${({ theme }) => theme.line.brandInvert};
-  background: ${({ theme }) => theme.surface.brandDark};
+  border: 1px solid ${({ theme }) => theme.primitives.green[900]};
+  background: #0F5535;
 
   /* 태블릿·모바일에선 박스 대신 "자세히보기" 팝업으로 보여줌 */
   ${media.tablet`
@@ -204,7 +218,52 @@ const CommentBody = styled.p`
   margin: 0;
   font-size: 1.4rem;
   line-height: 1.6;
+  /* 코멘트 안의 줄바꿈을 그대로 보여줌 */
+  white-space: pre-line;
   color: ${({ theme }) => theme.text.brandInvert};
+`;
+
+// 긴 코멘트(clampLines)는 접힌 동안 그 줄 수까지만 보이고, 마지막 줄 끝에 "… 더보기"가 이어 붙음.
+// (float 트릭: ::before로 마지막 줄 높이만 남기고 밀어내서 버튼을 마지막 줄 오른쪽 끝에 붙임)
+const COMMENT_LINE_HEIGHT = "calc(1.4rem * 1.6)";
+const MORE_LABEL = "더보기";
+const LESS_LABEL = "접기";
+
+const ClampWrap = styled.span`
+  display: flex;
+`;
+
+const ClampedText = styled.span`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--clamp-lines);
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    float: right;
+    height: 100%;
+    margin-bottom: calc(${COMMENT_LINE_HEIGHT} * -1);
+  }
+`;
+
+const MoreButton = styled.button`
+  padding: 0;
+  margin-left: 0.4rem;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+
+  /* 접힌 상태: 마지막 줄 오른쪽 끝에 붙음 */
+  ${ClampedText} > & {
+    float: right;
+    clear: both;
+  }
 `;
 
 const Stage = styled.div`
@@ -212,7 +271,8 @@ const Stage = styled.div`
   z-index: 1;
   flex: 1;
   min-height: 0;
-  margin-top: -16rem;
+  /* 코멘트 박스가 레이아웃에서 빠진 만큼(짧은 코멘트 기준 약 10rem) 덜 당겨 올림 */
+  margin-top: -5.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -239,19 +299,20 @@ const Utensils = styled(Image)`
   `}
 `;
 
+// 프레임 캔버스(4095x4469) 비율 그대로의 박스. 크기는 width로 조절.
 const ClocheStand = styled.div`
   position: relative;
-  width: 200%;
+  flex-shrink: 0;
+  width: 36.5%;
   height: auto;
-  aspect-ratio: 1920 / 1080;
+  aspect-ratio: 4095 / 4469;
   transform: scale(1.1);
   /* 클로슈+요리를 세트로 왼쪽으로 옮김(음수일수록 더 왼쪽). scale과 따로 조절하려고 translate 속성을 씀 */
-  translate: -2.2% 0;
+  translate: -6% 0;
 
-  /* 태블릿~모바일 구간에선 화면 폭과 상관없이 크기를 고정(flex-shrink로 줄어들지 않게) */
+  /* 태블릿~모바일 구간에선 화면 폭과 상관없이 크기를 고정 */
   ${media.tablet`
-    flex-shrink: 0;
-    width: 100rem;
+    width: 36.5rem;
     transform: none;
   `}
 
@@ -261,27 +322,61 @@ const ClocheStand = styled.div`
 `;
 
 
-const ClocheImage = styled(Image)`
+const PlateImage = styled(Image)`
   z-index: 0;
   will-change: opacity;
 `;
 
-// 뚜껑이 비켜나면서 요리가 "뿅!" 하고 커졌다가 탱글하게 제자리를 잡는 팝 모션.
-// 위치·각도는 그대로 두고 크기만 튐. 요리별 위치/크기 transform은 건드리지 않도록
-// 개별 scale 속성으로 얹음.
+// z-index는 프레임에 따라 요리 앞/뒤로 바뀌어서 inline style로 줌(LID_BEHIND_FOOD_FRAME 참고)
+const ClocheImage = styled(Image)`
+  will-change: opacity;
+`;
+
+// 요리 위치·크기 값(mainFood의 scale/offsetY)은 예전 16:9 클로슈 프레임 기준으로 맞춘 값이라,
+// 그 좌표계를 그대로 재현한 박스를 접시 위치에 맞춰 깔고 그 안에 요리를 그림.
+// (예전 프레임의 접시 중심과 새 접시 이미지의 접시 중심이 겹치도록 계산한 값)
+const FoodLayer = styled.div`
+  position: absolute;
+  z-index: 1;
+  left: -87.45%;
+  top: -15.4%;
+  width: 273.8%;
+  aspect-ratio: 16 / 9;
+  pointer-events: none;
+`;
+
+// 뚜껑이 비켜나면서 요리가 "짜잔!" 하고 등장하는 팝 모션.
+// 작게 웅크렸다가(start) 위로 쭉 늘어나며 크게 튀고(peak), 납작하게 눌렸다가(squash)
+// 다시 늘어나고(rebound) 살짝 흔들린 뒤(settle) 제자리를 잡음.
+// 요리별 위치/크기 transform은 건드리지 않도록 개별 scale 속성(가로 세로)과 filter로 얹음.
+// 각 단계 크기는 요리마다 mainFood의 pop으로 덮어쓸 수 있음(안 쓴 단계는 아래 기본값).
+// 값은 숫자 하나(가로세로 같이) 또는 [가로, 세로].
+const FOOD_POP_STEPS = {
+  start: { at: "0%", value: 0.45 },
+  peak: { at: "30%", value: [1.2, 1.32] },
+  squash: { at: "50%", value: [1.18, 0.9] },
+  rebound: { at: "66%", value: [0.94, 1.06] },
+  settle: { at: "82%", value: [1.03, 1] },
+};
+const toScaleValue = (value) => (Array.isArray(value) ? value.join(" ") : `${value}`);
+// 요리별 값을 CSS 변수(--pop-start 등)로 넘김. 요리를 바꿔도 새 CSS가 생기지 않음.
+const foodPopVars = (pop = {}) =>
+  Object.fromEntries(
+    Object.entries(FOOD_POP_STEPS).map(([step, { value }]) => [
+      `--pop-${step}`,
+      toScaleValue(pop[step] ?? value),
+    ]),
+  );
+
+// FOOD_POP_STEPS로 단계별 scale 키프레임을 만듦(요리별 값은 CSS 변수로 들어옴).
+// 주석 처리돼 있던 번쩍이는 효과(filter)는 꺼 둔 상태라 뺐음.
 const foodPop = keyframes`
-  0% {
-    scale: 0.8;
-  }
-  45% {
-    scale: 1.1;
-  }
-  70% {
-    scale: 0.95;
-  }
-  85% {
-    scale: 1.03;
-  }
+  ${Object.entries(FOOD_POP_STEPS)
+    .map(
+      ([step, { at, value }]) =>
+        `${at} { scale: var(--pop-${step}, ${toScaleValue(value)}); }`,
+    )
+    .join("\n")}
   100% {
     scale: 1;
   }
@@ -296,7 +391,7 @@ const FoodImage = styled(Image)`
     scale(${({ $scale }) => $scale});
 
   &[data-popping="true"] {
-    animation: ${foodPop} 500ms cubic-bezier(0.34, 1.4, 0.64, 1);
+    animation: ${foodPop} 700ms ease-out;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -381,6 +476,8 @@ const PopupBox = styled.div`
   padding: 2.4rem 1.6rem;
   border: 1px solid ${({ theme }) => theme.line.brand};
   background: ${({ theme }) => theme.primitives.grey[50]};
+  /* 밝은 카드라 안의 "더보기" 같은 글자가 어두운 색을 물려받게 함 */
+  color: ${({ theme }) => theme.text.secondary};
   text-align: center;
 `;
 
@@ -424,13 +521,16 @@ const CloseIcon = () => (
   </svg>
 );
 
+// 해당 요리의 코멘트 중 하나를 랜덤으로 고름
+const pickCommentIndex = (foodIndex) =>
+  Math.floor(Math.random() * (mainComments[mainFood[foodIndex].file]?.length ?? 1));
+
 export default function Main() {
   const { t, translate } = useTranslation();
-  // 처음엔 뚜껑이 덮인 채로 시작해서, 이미지가 다 준비되면 자동으로 열림
+
   const [clocheFrame, setClocheFrame] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
-  // 서버/클라이언트 하이드레이션 불일치를 피하려고 렌더는 고정값(0번)으로 시작하고,
-  // 뚜껑이 처음 자동으로 열리기 직전에 랜덤으로 골라 바꿈.
+
   const [commentIndex, setCommentIndex] = useState(0);
   const [foodIndex, setFoodIndex] = useState(0);
   const animationRef = useRef(null);
@@ -440,12 +540,24 @@ export default function Main() {
   const [readyImageCount, setReadyImageCount] = useState(0);
   const isReady = readyImageCount >= PRELOAD_IMAGE_COUNT;
 
-  const comment = useMemo(
-    () => translate(mainComments[commentIndex]),
-    [commentIndex, translate],
-  );
-
   const food = mainFood[foodIndex];
+
+  // 코멘트는 지금 나온 요리의 코멘트 목록 안에서 고름(commentIndex = 그 목록 안의 순번)
+  const currentComment = mainComments[food.file]?.[commentIndex];
+  // 펼친 코멘트를 key로 기억해서, 다른 코멘트로 바뀌면 자동으로 다시 접힘
+  const commentKey = `${food.file}-${commentIndex}`;
+  const [expandedCommentKey, setExpandedCommentKey] = useState(null);
+  const isCommentClamped =
+    Boolean(currentComment?.clampLines) && expandedCommentKey !== commentKey;
+  const comment = useMemo(
+    () => translate(currentComment),
+    [currentComment, translate],
+  );
+  // 제목은 기본 "이 요리를 설명한다면?"이고, 질문이 붙은 코멘트
+  // (예: "2026 ATC는 어떤 맛의 요리인가요?")일 때만 그 질문으로 바뀜
+  const commentQuestion = currentComment?.question
+    ? translate(currentComment.question)
+    : t("main.commentBoxTitle");
 
   const pickNextIndex = (length, previous) => {
     if (length <= 1) return previous;
@@ -492,11 +604,7 @@ export default function Main() {
     showFrame();
   }, []);
 
-  // 처음 접속하면(캐시 없음) 이미지가 다 받아지기 전에 재주문을 눌러 버벅일 수 있음.
-  // 그래서 각 이미지를 다 받고 디코딩까지 끝낸 뒤에만 준비된 걸로 세고,
-  // 전부 준비되기 전엔 재주문 버튼을 막아 둠.
-  // (opacity 0인 이미지는 처음 보여줄 때에야 디코딩되므로 decode()로 미리 해 둠.
-  //  로드에 실패한 이미지도 세어서 버튼이 영영 막히지는 않게 함)
+
   const handleImageLoad = useCallback((event) => {
     const image = event.currentTarget;
     image
@@ -512,8 +620,9 @@ export default function Main() {
           !hasAutoOpenedRef.current
         ) {
           hasAutoOpenedRef.current = true;
-          setCommentIndex(Math.floor(Math.random() * mainComments.length));
-          setFoodIndex(Math.floor(Math.random() * mainFood.length));
+          const firstFoodIndex = Math.floor(Math.random() * mainFood.length);
+          setFoodIndex(firstFoodIndex);
+          setCommentIndex(pickCommentIndex(firstFoodIndex));
           playClocheAnimation();
         }
       });
@@ -537,20 +646,38 @@ export default function Main() {
     playClocheAnimation({
       closeFirst: true,
       onClosed: () => {
-        setCommentIndex((previous) => pickNextIndex(mainComments.length, previous));
-        setFoodIndex((previous) => pickNextIndex(mainFood.length, previous));
+        const nextFoodIndex = pickNextIndex(mainFood.length, foodIndex);
+        setFoodIndex(nextFoodIndex);
+        setCommentIndex(pickCommentIndex(nextFoodIndex));
       },
     });
   };
 
-  // 뚜껑이 비켜나는 프레임부터 요리가 빠르게 드러나고, 닫힐 때는 거꾸로 사라짐
-  const foodOpacity = Math.min(
-    1,
-    Math.max(
-      0,
-      (clocheFrame - (FOOD_REVEAL_START_FRAME - 1)) /
-        (CLOCHE_FRAME_COUNT - (FOOD_REVEAL_START_FRAME - 1)),
-    ),
+  // 뚜껑이 들리기 시작하면 요리를 보여주고(가려지는 건 뚜껑 이미지가 처리), 닫히면 숨김
+  const isFoodRevealed = clocheFrame >= FOOD_REVEAL_START_FRAME;
+  // 이름·코멘트는 다 열리기 한 프레임 전부터 나타나기 시작함
+  const isTitleShown = isReady && clocheFrame >= CLOCHE_FRAME_COUNT - 1;
+
+  // 접힌 상태면 "… 더보기"가 마지막 줄 끝에, 펼친 상태면 글 끝에 "접기"가 이어 붙음
+  const isCollapsible = Boolean(currentComment?.clampLines);
+  const commentBody = !isCollapsible ? (
+    comment
+  ) : isCommentClamped ? (
+    <ClampWrap>
+      <ClampedText style={{ "--clamp-lines": currentComment.clampLines }}>
+        <MoreButton type="button" onClick={() => setExpandedCommentKey(commentKey)}>
+          {MORE_LABEL}
+        </MoreButton>
+        {comment}
+      </ClampedText>
+    </ClampWrap>
+  ) : (
+    <>
+      {comment}
+      <MoreButton type="button" onClick={() => setExpandedCommentKey(null)}>
+        {LESS_LABEL}
+      </MoreButton>
+    </>
   );
 
   return (
@@ -560,13 +687,13 @@ export default function Main() {
           <Wordmark src="/images/main/atc.svg" alt="2026 Art&Technology Conference" width={272} height={146} />
         </TopLeft>
 
-        {/* 랜덤 요리가 정해지기 전(0번 고정값)의 이름·코멘트가 보이지 않게 숨겨 둠 */}
-        <TopRight style={{ opacity: isReady ? 1 : 0 }}>
+        {/* 요리 이름·코멘트는 뚜껑이 거의 다 열렸을 때 나타나고, 재주문으로 닫히면 사라짐 */}
+        <TopRight style={{ opacity: isTitleShown ? 1 : 0 }}>
           <Headline>{(food.name.ko)}</Headline>
           <Subheadline>{(food.name.en)}</Subheadline>
           <CommentBox>
-            <CommentTitle>{t("main.commentBoxTitle")}</CommentTitle>
-            <CommentBody>{comment}</CommentBody>
+            <CommentTitle>{commentQuestion}</CommentTitle>
+            <CommentBody>{commentBody}</CommentBody>
           </CommentBox>
         </TopRight>
       </TopRow>
@@ -580,41 +707,62 @@ export default function Main() {
 
         <ClocheStand>
           {CLOCHE_FRAME_NUMBERS.map((frameNumber) => (
-            <ClocheImage
+            <PlateImage
               key={frameNumber}
-              src={clocheFrameSrc(frameNumber)}
+              src={plateFrameSrc(frameNumber)}
               alt=""
               fill
-              sizes="(max-width: 767px) 80vw, 40vw"
+              sizes="(max-width: 767px) 60vw, 40vw"
               style={{
                 objectFit: "contain",
                 opacity: frameNumber === clocheFrame ? 1 : 0,
               }}
               priority
-              data-preload-key={`cloche-${frameNumber}`}
+              data-preload-key={`plate-${frameNumber}`}
               onLoad={handleImageLoad}
               onError={handleImageLoad}
             />
           ))}
-          {/* 요리는 클로슈보다 앞(위)에 그려서 열리는 동안에도 보이게 함 */}
-          {mainFood.map((item, index) => (
-            <FoodImage
-              key={item.file}
-              src={foodSrc(item.file)}
+          {/* 요리는 접시와 뚜껑 사이에 그려서, 뚜껑이 들리는 만큼 실제로 드러남 */}
+          <FoodLayer>
+            {mainFood.map((item, index) => (
+              <FoodImage
+                key={item.file}
+                src={foodSrc(item.file)}
+                alt=""
+                fill
+                sizes="(max-width: 767px) 50vw, 20vw"
+                style={{
+                  objectFit: "contain",
+                  opacity: index === foodIndex && isFoodRevealed ? 1 : 0,
+                  ...foodPopVars(item.pop),
+                }}
+                loading="eager"
+                data-preload-key={`food-${item.file}`}
+                data-popping={index === foodIndex && isFoodRevealed}
+                onLoad={handleImageLoad}
+                onError={handleImageLoad}
+                $scale={item.scale}
+                $offsetY={item.offsetY}
+              />
+            ))}
+          </FoodLayer>
+          {CLOCHE_FRAME_NUMBERS.map((frameNumber) => (
+            <ClocheImage
+              key={frameNumber}
+              src={clocheFrameSrc(frameNumber)}
               alt=""
               fill
-              sizes="(max-width: 767px) 50vw, 20vw"
+              sizes="(max-width: 767px) 60vw, 40vw"
               style={{
                 objectFit: "contain",
-                opacity: index === foodIndex ? foodOpacity : 0,
+                opacity: frameNumber === clocheFrame ? 1 : 0,
+                zIndex: clocheFrame >= LID_BEHIND_FOOD_FRAME ? 0 : 2,
               }}
-              loading="eager"
-              data-preload-key={`food-${item.file}`}
-              data-popping={index === foodIndex && clocheFrame >= FOOD_REVEAL_START_FRAME}
+              priority
+              data-preload-key={`cloche-${frameNumber}`}
               onLoad={handleImageLoad}
               onError={handleImageLoad}
-              $scale={item.scale}
-              $offsetY={item.offsetY}
             />
           ))}
         </ClocheStand>
@@ -639,7 +787,7 @@ export default function Main() {
           <PopupBox
             role="dialog"
             aria-modal="true"
-            aria-label={t("main.commentBoxTitle")}
+            aria-label={commentQuestion}
             onClick={(event) => event.stopPropagation()}
           >
             <PopupFood>
@@ -654,8 +802,8 @@ export default function Main() {
                 }}
               />
             </PopupFood>
-            <PopupTitle>{t("main.commentBoxTitle")}</PopupTitle>
-            <PopupBody>{comment}</PopupBody>
+            <PopupTitle>{commentQuestion}</PopupTitle>
+            <PopupBody>{commentBody}</PopupBody>
             <PopupCloseButton
               type="button"
               onClick={() => setIsDetailOpen(false)}
