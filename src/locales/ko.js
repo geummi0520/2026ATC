@@ -6,10 +6,10 @@ const ko = {
     program: "Program",
     archive: "Archive",
     workList: "작품리스트",
-    workMap: "작업배치도",
+    workMap: "작품배치도",
     staffCredit: "스태프 크레딧",
     artistCredit: "아티스트 크레딧",
-    artbook: "아트북",
+    artbook: "아카이빙 북",
     menuOpen: "메뉴 열기",
     menuClose: "메뉴 닫기",
   },
@@ -44,7 +44,14 @@ const ko = {
     linkToStaffCredit: "스태프 크레딧 바로가기",
     path: "오시는 길",
     map: "서강대학교 캠퍼스 지도",
-    stationInfo: "지하철역 정보"
+    stationInfo: "지하철역 정보",
+  },
+  works: {
+    expandMap: "크게 보기",
+    fullMap: "전체 지도 보기",
+    prevSection: "이전 섹션",
+    nextSection: "다음 섹션",
+    backToMap: "돌아가기",
   },
   program: {
     location: "장소",

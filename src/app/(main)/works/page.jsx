@@ -1,12 +1,21 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
+import {
+  use,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import Footer from "@/components/common/Footer";
 import BackButton from "@/components/works/BackButton";
 import DesktopCategoryView from "@/components/works/DesktopCategoryView";
 import FloorPlanButton from "@/components/works/FloorPlanButton";
+import MobileCategoryDropdown from "@/components/works/MobileCategoryDropdown";
 import MobileCategoryList from "@/components/works/MobileCategoryList";
 import WorkGrid from "@/components/works/WorkGrid";
+import WorksMap from "@/components/works/WorksMap";
 import WorksRail from "@/components/works/WorksRail";
 import * as S from "@/app/(main)/works/styles";
 import { works } from "@/data/works";
@@ -14,9 +23,16 @@ import { worksPageContent } from "@/data/worksPageContent";
 import useTranslation from "@/hooks/useTranslation";
 import { shuffleWorks } from "@/utils/shuffleWorks";
 
-export default function Page() {
+export default function Page({ searchParams }) {
+  const { view, floor, section, expanded } = use(searchParams);
   const { translate } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [categoryListNode, setCategoryListNode] = useState(null);
+  const scrollAreaRef = useRef(null);
+
+  useEffect(() => {
+    scrollAreaRef.current?.scrollTo({ top: 0 });
+  }, [selectedCategory]);
   const [worksStore] = useState(() => {
     const shuffledWorks = shuffleWorks(works);
 
@@ -50,6 +66,10 @@ export default function Page() {
   const visibleWorks = selectedCategory
     ? shuffledWorks.filter((work) => work.category.ko === selectedCategory)
     : shuffledWorks;
+
+  if (view === "map")
+    return <WorksMap initialState={{ floor, section, expanded }} />;
+
   return (
     <S.Frame>
       <WorksRail
@@ -65,7 +85,7 @@ export default function Page() {
         }
       />
 
-      <S.ScrollArea data-works-scroll>
+      <S.ScrollArea ref={scrollAreaRef} data-works-scroll>
         <S.Content>
           {selectedCategory && (
             <S.MobileActionRow>
@@ -93,6 +113,7 @@ export default function Page() {
                 </S.TitleRow>
                 <S.Description>{translate(content.description)}</S.Description>
                 <MobileCategoryList
+                  ref={setCategoryListNode}
                   categories={categories}
                   selectedCategory={selectedCategory}
                   onSelectCategory={setSelectedCategory}
@@ -110,6 +131,7 @@ export default function Page() {
               </S.TitleRow>
               <S.Description>{translate(content.description)}</S.Description>
               <MobileCategoryList
+                ref={setCategoryListNode}
                 categories={categories}
                 selectedCategory={selectedCategory}
                 onSelectCategory={setSelectedCategory}
@@ -119,16 +141,12 @@ export default function Page() {
           )}
         </S.Content>
         <Footer />
-        {selectedCategory && (
-          <S.MobileCategoryFooter>
-            <span>
-              {translate(
-                categories.find(({ id }) => id === selectedCategory)?.label
-              )}
-            </span>
-            <span aria-hidden="true">⌃</span>
-          </S.MobileCategoryFooter>
-        )}
+        <MobileCategoryDropdown
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+          anchor={categoryListNode}
+        />
       </S.ScrollArea>
     </S.Frame>
   );

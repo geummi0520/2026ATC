@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
 import { mainComments } from "@/data/mainComments";
 import { mainFood } from "@/data/mainFood";
@@ -28,8 +28,7 @@ const CLOSED_PAUSE_MS = 800;
 
 const PRELOAD_IMAGE_COUNT = CLOCHE_FRAME_COUNT + mainFood.length;
 
-// 클로슈 뒤 별 모양 배경 색. 색을 여기서 바로 바꿀 수 있게 SVG를 파일 대신 인라인으로 그림.
-// const BACKGROUND_COLOR = theme.primitives.grey[900];
+
 
 const BACKGROUND_PATH =
   "M1035.35 631.166L868.341 564.266L1035.35 429.55L793.93 469.567L1022.2 176.918L755.429 320.167L741.815 98.1038L610.565 384.033L485.922 0.463623L549.832 469.567L257.18 161.135L344.6 330.88L162.965 306.641L344.6 505.841L0.35498 527.155L344.6 611.005L126.729 664.464L587.959 611.005L1035.35 631.166Z";
@@ -61,15 +60,20 @@ const Background = styled.svg`
   top: 45%;
   left: 48%;
   transform: translate(-50%, -50%);
-  width: 90rem;
+  width: 76rem;
   height: auto;
   pointer-events: none;
   z-index: 0;
   color: ${({ theme }) => theme.primitives.green[50]};
 
 
+  /* 태블릿에선 화면 폭에 따라 자연스럽게 줄어들다가, 모바일에선 42rem으로 고정 */
+  ${media.tablet`
+    width: clamp(42rem, 55vw, 62rem);
+  `}
+
   ${media.mobile`
-    width: 50rem;
+    width: 42rem;
   `}
 `;
 
@@ -103,13 +107,13 @@ const TopLeft = styled.div`
 `;
 
 const Wordmark = styled(Image)`
-  width: 27rem;
+  width: 23rem;
   height: auto;
   margin-left: 5rem;
   margin-top: 5rem;
 
   ${media.tablet`
-    width: 22rem;
+    width: 19rem;
     margin-left: 0;
     margin-top: 3rem;
   `}
@@ -184,14 +188,9 @@ const CommentBox = styled.div`
   border: 1px solid ${({ theme }) => theme.line.brandInvert};
   background: ${({ theme }) => theme.surface.brandDark};
 
-  /* 태블릿에선 박스 대신 "자세히보기" 팝업으로 보여줌 */
+  /* 태블릿·모바일에선 박스 대신 "자세히보기" 팝업으로 보여줌 */
   ${media.tablet`
     display: none;
-  `}
-
-  ${media.mobile`
-    display: flex;
-    margin-top: 2.4rem;
   `}
 `;
 
@@ -230,9 +229,9 @@ const Stage = styled.div`
 
 const Utensils = styled(Image)`
   position: absolute;
-  left: ${({ $isFork }) => ($isFork ? "calc(50% - 40rem)" : "calc(50% - 60rem)")};
-  bottom: ${({ $isFork }) => ($isFork ? "0" : "6rem")};
-  height: 47rem;
+  left: ${({ $isFork }) => ($isFork ? "calc(50% - 34rem)" : "calc(50% - 51rem)")};
+  bottom: ${({ $isFork }) => ($isFork ? "0" : "5rem")};
+  height: 40rem;
   width: auto;
 
   ${media.tablet`
@@ -245,16 +244,19 @@ const ClocheStand = styled.div`
   width: 200%;
   height: auto;
   aspect-ratio: 1920 / 1080;
-  transform: scale(1.3);
+  transform: scale(1.1);
   /* 클로슈+요리를 세트로 왼쪽으로 옮김(음수일수록 더 왼쪽). scale과 따로 조절하려고 translate 속성을 씀 */
   translate: -2.2% 0;
 
+  /* 태블릿~모바일 구간에선 화면 폭과 상관없이 크기를 고정(flex-shrink로 줄어들지 않게) */
   ${media.tablet`
-    transform: scale(1.6);
+    flex-shrink: 0;
+    width: 100rem;
+    transform: none;
   `}
-  ${media.mobile`
-    transform: scale(3);
 
+  ${media.mobile`
+    translate: none;
   `}
 `;
 
@@ -264,11 +266,44 @@ const ClocheImage = styled(Image)`
   will-change: opacity;
 `;
 
+// 뚜껑이 비켜나면서 요리가 "뿅!" 하고 커졌다가 탱글하게 제자리를 잡는 팝 모션.
+// 위치·각도는 그대로 두고 크기만 튐. 요리별 위치/크기 transform은 건드리지 않도록
+// 개별 scale 속성으로 얹음.
+const foodPop = keyframes`
+  0% {
+    scale: 0.8;
+  }
+  45% {
+    scale: 1.1;
+  }
+  70% {
+    scale: 0.95;
+  }
+  85% {
+    scale: 1.03;
+  }
+  100% {
+    scale: 1;
+  }
+`;
+
+// 팝 모션은 data 속성으로 켜고 끔(styled prop이면 첫 재생 때 CSS 주입으로 버벅일 수 있음).
+// 뚜껑이 다시 닫히면 꺼졌다가, 다음에 열릴 때 처음부터 재생됨.
 const FoodImage = styled(Image)`
   z-index: 1;
   transition: opacity 150ms ease;
   transform: translate(2%, ${({ $offsetY }) => $offsetY}%)
     scale(${({ $scale }) => $scale});
+
+  &[data-popping="true"] {
+    animation: ${foodPop} 500ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[data-popping="true"] {
+      animation: none;
+    }
+  }
 `;
 
 // Stage가 pointer-events: none이라 위로 겹쳐 올려도 버튼은 그대로 눌림
@@ -288,20 +323,21 @@ const ButtonRow = styled.div`
   `}
 
   ${media.mobile`
+    gap: 0.8rem;
     margin-bottom: 0;
   `}
 `;
 
 const ReorderButton = styled.button`
   padding: 1.2rem 2.4rem;
-  border: 1px solid ${({ theme }) => theme.line.brandInvert};
-  background: transparent;
+  border: 1px solid #0a3823;
+  background: #0f5535;
   color: ${({ theme }) => theme.text.brandInvert};
   font-size: 1.4rem;
   cursor: pointer;
 
   &:hover {
-    background: ${({ theme }) => theme.surface.brandDark};
+    background: #0a3823;
   }
 
   &:disabled {
@@ -309,33 +345,61 @@ const ReorderButton = styled.button`
   }
 `;
 
-// 코멘트 박스가 숨겨지는 태블릿에서만 보임
+// 코멘트 박스가 숨겨지는 태블릿·모바일에서만 보임
 const DetailButton = styled(ReorderButton)`
   display: none;
 
   ${media.tablet`
     display: block;
   `}
+`;
 
-  ${media.mobile`
-    display: none;
+// 태블릿·모바일에서 "자세히보기"를 누르면 화면을 어둡게 덮고 가운데에 요리 사진과 설명을 띄움
+const PopupBackdrop = styled.div`
+  display: none;
+
+  ${media.tablet`
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.4rem;
+    background: rgba(20, 21, 24, 0.5);
   `}
 `;
 
-// 화면을 덮는 모달 대신, 클로슈 바로 아래(버튼 위)에 요리 소개 카드처럼 띄움
-const PopupBox = styled(CommentBox)`
-  position: absolute;
-  left: 50%;
-  bottom: 10rem;
-  z-index: 2;
+const PopupBox = styled.div`
+  position: relative;
   display: flex;
-  width: calc(100% - 6.0rem);
-  max-width: 32rem;
-  margin-top: 0;
-  padding: 2.4rem;
-  transform: translateX(-50%);
-  background: ${({ theme }) => theme.line.brandDark};
-  color: ${({ theme }) => theme.text.brandInvert};
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 34rem;
+  padding: 2.4rem 1.6rem;
+  border: 1px solid ${({ theme }) => theme.line.brand};
+  background: ${({ theme }) => theme.primitives.grey[50]};
+  text-align: center;
+`;
+
+// 요리 이미지는 캔버스 여백이 커서, 박스 안에서 요리별 scale에 비례해 확대해 보여줌
+const POPUP_FOOD_ZOOM = 2.2;
+
+const PopupFood = styled.div`
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+`;
+
+const PopupTitle = styled(CommentTitle)`
+  color: ${({ theme }) => theme.text.brandDark};
+`;
+
+const PopupBody = styled(CommentBody)`
+  color: ${({ theme }) => theme.text.secondary};
 `;
 
 const PopupCloseButton = styled.button`
@@ -346,9 +410,19 @@ const PopupCloseButton = styled.button`
   padding: 0.6rem;
   border: none;
   background: transparent;
-  color: ${({ theme }) => theme.icon.brandInvert};
+  color: ${({ theme }) => theme.icon.brand};
   cursor: pointer;
 `;
+
+const CloseIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+    <path
+      d="M0.5 14.5L14.5 0.5M14.5 14.5L0.5 0.5"
+      stroke="currentColor"
+      strokeLinecap="round"
+    />
+  </svg>
+);
 
 export default function Main() {
   const { t, translate } = useTranslation();
@@ -536,6 +610,7 @@ export default function Main() {
               }}
               loading="eager"
               data-preload-key={`food-${item.file}`}
+              data-popping={index === foodIndex && clocheFrame >= FOOD_REVEAL_START_FRAME}
               onLoad={handleImageLoad}
               onError={handleImageLoad}
               $scale={item.scale}
@@ -560,23 +635,36 @@ export default function Main() {
       </ButtonRow>
 
       {isDetailOpen && (
-        <PopupBox role="dialog" aria-label={t("main.commentBoxTitle")}>
-          <CommentTitle>{t("main.commentBoxTitle")}</CommentTitle>
-          <CommentBody>{comment}</CommentBody>
-          <PopupCloseButton
-            type="button"
-            onClick={() => setIsDetailOpen(false)}
-            aria-label={t("main.close")}
+        <PopupBackdrop onClick={() => setIsDetailOpen(false)}>
+          <PopupBox
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("main.commentBoxTitle")}
+            onClick={(event) => event.stopPropagation()}
           >
-            <svg width="12" height="12" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-              <path
-                d="M0.5 14.5L14.5 0.5M14.5 14.5L0.5 0.5"
-                stroke="currentColor"
-                strokeLinecap="round"
+            <PopupFood>
+              <Image
+                src={foodSrc(food.file)}
+                alt=""
+                fill
+                sizes="80vw"
+                style={{
+                  objectFit: "contain",
+                  transform: `scale(${food.scale * POPUP_FOOD_ZOOM})`,
+                }}
               />
-            </svg>
-          </PopupCloseButton>
-        </PopupBox>
+            </PopupFood>
+            <PopupTitle>{t("main.commentBoxTitle")}</PopupTitle>
+            <PopupBody>{comment}</PopupBody>
+            <PopupCloseButton
+              type="button"
+              onClick={() => setIsDetailOpen(false)}
+              aria-label={t("main.close")}
+            >
+              <CloseIcon />
+            </PopupCloseButton>
+          </PopupBox>
+        </PopupBackdrop>
       )}
     </Wrapper>
   );

@@ -1,0 +1,236 @@
+import styled from "styled-components";
+import { media } from "@/styles/media";
+
+export const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+`;
+
+// container-type: size -> ListPanel에서 100cqh로 스크롤 영역 높이 참조
+export const Scroll = styled.div`
+  flex: 1;
+  min-height: 0;
+  container-type: size;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+// footer 전까지의 본문이 스크롤 영역 높이를 꽉 채우도록 함
+export const Content = styled.div`
+  min-height: 100cqh;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem;
+
+  ${media.worksTablet`
+    padding: 4rem 2rem;
+  `}
+
+  ${media.mobile`
+    padding: 2rem 0 4rem;
+  `}
+`;
+
+export const Title = styled.h1`
+  margin: 4rem 0 3.2rem;
+  font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
+  line-height: 1.4;
+
+  ${media.mobile`
+    font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
+  `}
+`;
+
+// 데스크탑: 제목 아래 남은 높이를 꽉 채움
+// 1124px 미만: 리스트 영역이 최소 36rem을 확보하지 못하면 배치도 아래로 줄바꿈
+export const Body = styled.div`
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 4rem;
+
+  ${media.mobile`
+    display: none;
+  `}
+`;
+
+export const PlanColumn = styled.div`
+  flex: 2 1 40rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
+
+  /*
+   * 크게 보기 버튼까지 한 화면에 보이도록 배치도 높이를 스크롤 영역 높이(100cqh)에 맞춤 (600 / 664 비율)
+   * 28rem = 상하 padding(8rem) + 이전으로·제목(13.6rem) + gap·크게 보기 버튼(6.4rem)
+   * 높이가 낮아도 36rem보다 작아지지 않음 (이때는 본문이 화면보다 길어져 페이지가 스크롤됨)
+   */
+  > div:first-child {
+    width: min(100%, max(36rem, calc((100cqh - 28rem) * 600 / 664)));
+  }
+`;
+
+export const ExpandButton = styled.button`
+  padding: 0.8rem 1.6rem;
+  border: 1px solid ${({ theme }) => theme.line.brand};
+  background: ${({ theme }) => theme.button.brandInvert};
+  color: ${({ theme }) => theme.text.brandInvert};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background: transparent;
+    color: ${({ theme }) => theme.text.brand};
+  }
+`;
+
+// contain: size -> 리스트 내용이 Body 높이를 늘리지 않고, Body 높이에 맞춰 늘어난 뒤 내부 스크롤
+// 데스크탑에서는 바깥 휠도 리스트를 먼저 스크롤 (WorksMap의 handleWheel)
+export const ListPanel = styled.div`
+  flex: 1 1 36rem;
+  align-self: stretch;
+  min-width: min(36rem, 100%);
+  contain: size;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  ${media.tablet`
+    align-self: flex-start;
+    contain: none;
+    overflow-y: visible;
+  `}
+`;
+
+export const FloorTabs = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  padding-bottom: 1.6rem;
+  background: var(--layout-background);
+`;
+
+export const FloorTab = styled.button`
+  min-width: 6.4rem;
+  padding: 0.6rem 1.6rem;
+  border: 1px solid ${({ theme }) => theme.line.brand};
+  border-radius: 999px;
+  background: ${({ $active, theme }) =>
+    $active ? theme.button.brandInvert : "transparent"};
+  color: ${({ $active, theme }) =>
+    $active ? theme.text.brandInvert : theme.text.brand};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background: ${({ $active, theme }) =>
+      $active ? theme.button.brandInvert : theme.surface.brand};
+  }
+`;
+
+export const RoomTitle = styled.h2`
+  margin: 1.6rem 0 0.8rem;
+  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  font-weight: 400;
+  line-height: 1.4;
+`;
+
+export const WorkList = styled.ol`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+
+export const ExpandedPlan = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+`;
+
+/*
+ * 이전으로 버튼까지 한 화면에 보이도록 배치도 높이를 스크롤 영역 높이(100cqh)에 맞춤 (600 / 664 비율)
+ * 30.6rem = 상하 padding(8rem) + 이전으로·제목(13.6rem) + gap·이전으로 버튼(9rem)
+ */
+export const ExpandedFrame = styled.div`
+  width: min(100%, max(36rem, calc((100cqh - 30.6rem) * 600 / 664)));
+
+  ${media.mobile`
+    width: 100%;
+    padding: 2.4rem 1.6rem;
+    border: 1px solid ${({ theme }) => theme.line.brand};
+  `}
+`;
+
+export const CollapseButton = styled.button`
+  padding: 1.2rem 4rem;
+  border: 1px solid ${({ theme }) => theme.line.brand};
+  background: transparent;
+  color: ${({ theme }) => theme.text.brand};
+  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  cursor: pointer;
+  transition: background-color 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background: ${({ theme }) => theme.surface.brand};
+  }
+
+  ${media.mobile`
+    display: none;
+  `}
+`;
+
+export const MobileCollapseButton = styled.button`
+  display: none;
+  padding: 0.8rem 3.2rem;
+  border: 1px solid ${({ theme }) => theme.line.brand};
+  border-radius: 999px;
+  background: transparent;
+  color: ${({ theme }) => theme.text.brand};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  font-weight: 700;
+  cursor: pointer;
+
+  ${media.mobile`
+    display: block;
+  `}
+`;
+
+export const MobileView = styled.div`
+  display: none;
+
+  ${media.mobile`
+    display: block;
+  `}
+`;
+
+export const Description = styled.p`
+  margin: 0 0 2.4rem;
+  color: ${({ theme }) => theme.text.quaternary};
+  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  line-height: 1.8;
+`;

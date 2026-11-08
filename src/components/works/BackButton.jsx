@@ -14,14 +14,15 @@ export default function BackButton({ href, onClick, label = "이전으로" }) {
 }
 
 const backStyle = css`
+  align-self: flex-start;
   padding: 0;
   border: 0;
   border-bottom: 1px solid currentColor;
   background: transparent;
   color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 700;
-  line-height: 120%;
+  line-height: 150%;
   cursor: pointer;
 `;
 
