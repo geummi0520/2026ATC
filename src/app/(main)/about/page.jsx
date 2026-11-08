@@ -340,6 +340,9 @@ const TeaserVideo = styled.iframe`
 width:100%;
 aspect-ratio:9/16;
 border:0;
+${media.mobile`
+  max-width:34rem;
+  `}
 `;
 const TeaserFilmImg = styled(Image)`
 width:100%;
