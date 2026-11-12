@@ -97,14 +97,14 @@ export const staffs = [
         team: { ko: "전시팀", en: "Exhibition Team" },
         members: {
             ko: ["김시윤", "김민서", "김서인", "김수민", "신지훈", "진수한"],
-            en: ["Kim, Siyun", "Kim, Minseo", "Kim, Seoin", "Kim, Soomin", "Shin, Ji Hun", "Jin, Suhan"],
+            en: ["Kim, Siyun", "Kim, Minseo", "Kim, Seoin", "Kim, Soomin", "Shin, Jihun", "Jin, Suhan"],
         },
     },
     {
         team: { ko: "감각제작팀", en: "Sense Creation Team" },
         members: {
             ko: ["이다은", "노진서", "박민형", "설희윤", "이유준", "진예준", "천성하"],
-            en: ["Lee, Daeun", "Noh, Jinseo", "Park, Minhyeong", "Sul, Heeyun", "Jin, Yejun", "Yejun Jin", "Cheon, Sungha"],
+            en: ["Lee, Daeun", "Noh, Jinseo", "Park, Minhyeong", "Sul, Heeyun", "Lee, Yujun", "Jin, Yejun", "Cheon, Sungha"],
         },
     },
     {

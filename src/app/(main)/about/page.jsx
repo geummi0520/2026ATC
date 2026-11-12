@@ -722,6 +722,7 @@ padding:0rem;
 
 `;
 const StyledLink = styled(Link)`
+margin-bottom:1rem;
 align-self:flex-end;
 
 display: flex;
