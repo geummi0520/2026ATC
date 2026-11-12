@@ -36,9 +36,9 @@ const ko = {
     fax: "Fax +82-2-3274-4826",
   },
   about: {
-    overview: "전시개요",
+    overview: "전시 개요",
     topic: "주제문",
-    topicSentence: "레시피 바꾸지 말 것*",
+    topicSentence: "레시피 바꾸지 말 것 *",
     congratulatory: "축사",
     staffCredit: "스태프 크레딧",
     linkToStaffCredit: "스태프 크레딧 바로가기",
