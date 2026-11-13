@@ -39,7 +39,7 @@ const en = {
   about: {
     overview: "Exhibition Overview",
     topic: "Theme",
-    topicSentence: "Do Not Change the Recipe*",
+    topicSentence: "Do Not Change the Recipe *",
     congratulatory: "Congratulatory Message",
     staffCredit: "Staff Credit",
     linkToStaffCredit: "View Staff Credits",
