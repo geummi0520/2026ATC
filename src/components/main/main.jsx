@@ -602,6 +602,12 @@ export default function Main() {
   const hasAutoOpenedRef = useRef(false);
   const [readyImageCount, setReadyImageCount] = useState(0);
   const isReady = readyImageCount >= PRELOAD_IMAGE_COUNT;
+  // 요리가 나올 때마다 확률로 메인 도장을 띄움. 값은 도장을 새 위치로 다시 띄우기 위한 key
+  const [mainStampRoll, setMainStampRoll] = useState(null);
+  const { collected } = useStamp();
+  const mainStampSlot = MAIN_STAMP_SLOTS.find(
+    (slot) => !collected.includes(slot)
+  );
 
   const food = mainFood[foodIndex];
 
@@ -629,6 +635,10 @@ export default function Main() {
     }
     return next;
   };
+
+  const rollMainStamp = useCallback(() => {
+    setMainStampRoll(Math.random() < MAIN_STAMP_CHANCE ? Date.now() : null);
+  }, []);
 
   // 클로슈 스톱모션. 기본은 덮인 상태(1)부터 열리며 요리를 보여주고,
   // closeFirst면 지금 열린 상태(7)에서 먼저 1까지 닫혔다가 다시 열림.
@@ -684,8 +694,9 @@ export default function Main() {
     const firstFoodIndex = Math.floor(Math.random() * mainFood.length);
     setFoodIndex(firstFoodIndex);
     setCommentIndex(pickCommentIndex(firstFoodIndex));
+    rollMainStamp();
     playClocheAnimation();
-  }, [playClocheAnimation]);
+  }, [playClocheAnimation, rollMainStamp]);
 
   const handleImageLoad = useCallback(
     (event) => {
@@ -727,6 +738,7 @@ export default function Main() {
         const nextFoodIndex = pickNextIndex(mainFood.length, foodIndex);
         setFoodIndex(nextFoodIndex);
         setCommentIndex(pickCommentIndex(nextFoodIndex));
+        rollMainStamp();
       },
     });
   };

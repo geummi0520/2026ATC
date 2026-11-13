@@ -11,7 +11,6 @@ import useStamp from "@/hooks/useStamp";
 import useTranslation from "@/hooks/useTranslation";
 import useWorksBackHref from "@/hooks/useWorksBackHref";
 import { media } from "@/styles/media";
-import { getVimeoEmbedUrl } from "@/utils/getVimeoEmbedUrl";
 import { pickBySeed } from "@/utils/stampPlan";
 
 const CONTACT_ICONS = {
@@ -20,6 +19,12 @@ const CONTACT_ICONS = {
   instagram: "/icons/works/instagram_icon.svg",
   linkedin: "/icons/works/linkedin_icon.svg",
   website: "/icons/works/link_icon.svg",
+};
+
+const WORK_LINK_ICONS = {
+  github: "/icons/works/github_green.svg",
+  instagram: "/icons/works/instagram_green.svg",
+  youtube: "/icons/works/youtube_green.svg",
 };
 
 export default function WorkDetail({ work, workIds }) {
@@ -34,7 +39,9 @@ export default function WorkDetail({ work, workIds }) {
   const detailImages = work.images.detail.length
     ? work.images.detail
     : [work.images.thumbnail];
-  const videoEmbedUrl = getVimeoEmbedUrl(work.video);
+  const videoEmbedUrl = work.video?.embed
+    ? `${work.video.embed}?autoplay=1&muted=1`
+    : null;
   const backHref = useWorksBackHref(work.id);
   const { plan } = useStamp();
   const isStampWork =
@@ -77,6 +84,26 @@ export default function WorkDetail({ work, workIds }) {
               <SectionTitle>작품 소개</SectionTitle>
               <Lead>{tagline}</Lead>
               <Paragraph>{description}</Paragraph>
+              {work.links.length > 0 && (
+                <Contacts>
+                  {work.links.map((link) => (
+                    <ContactLink
+                      key={`${link.type}-${link.url}`}
+                      href={link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${title} ${link.type}`}
+                    >
+                      <Image
+                        src={WORK_LINK_ICONS[link.type] ?? CONTACT_ICONS.website}
+                        alt=""
+                        width={24}
+                        height={24}
+                      />
+                    </ContactLink>
+                  ))}
+                </Contacts>
+              )}
             </Copy>
             <MediaList>
               {videoEmbedUrl && (

@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  use,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { use, useEffect, useMemo, useRef, useState } from "react";
 import Footer from "@/components/common/Footer";
 import BackButton from "@/components/works/BackButton";
 import DesktopCategoryView from "@/components/works/DesktopCategoryView";
@@ -21,7 +14,6 @@ import * as S from "@/app/(main)/works/styles";
 import { works } from "@/data/works";
 import { worksPageContent } from "@/data/worksPageContent";
 import useTranslation from "@/hooks/useTranslation";
-import { shuffleWorks } from "@/utils/shuffleWorks";
 
 export default function Page({ searchParams }) {
   const { view, floor, section, expanded } = use(searchParams);
@@ -33,20 +25,6 @@ export default function Page({ searchParams }) {
   useEffect(() => {
     scrollAreaRef.current?.scrollTo({ top: 0 });
   }, [selectedCategory]);
-  const [worksStore] = useState(() => {
-    const shuffledWorks = shuffleWorks(works);
-
-    return {
-      subscribe: () => () => {},
-      getSnapshot: () => shuffledWorks,
-      getServerSnapshot: () => works,
-    };
-  });
-  const shuffledWorks = useSyncExternalStore(
-    worksStore.subscribe,
-    worksStore.getSnapshot,
-    worksStore.getServerSnapshot
-  );
 
   const categories = useMemo(
     () =>
@@ -64,8 +42,8 @@ export default function Page({ searchParams }) {
     ? worksPageContent.categories[selectedCategory]
     : worksPageContent.default;
   const visibleWorks = selectedCategory
-    ? shuffledWorks.filter((work) => work.category.ko === selectedCategory)
-    : shuffledWorks;
+    ? works.filter((work) => work.category.ko === selectedCategory)
+    : works;
 
   if (view === "map")
     return <WorksMap initialState={{ floor, section, expanded }} />;
