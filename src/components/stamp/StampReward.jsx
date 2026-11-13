@@ -28,24 +28,26 @@ export default function StampReward() {
     if (!isOpen || !plan) return undefined;
 
     let isCancelled = false;
-    createRewardImage({ plan, collected, message: rewardMessage })
+    createRewardImage({ plan, collected })
       .then((blob) => {
         if (isCancelled) return;
-        setRewardFile(new File([blob], REWARD_FILE_NAME, { type: "image/png" }));
+        setRewardFile(
+          new File([blob], REWARD_FILE_NAME, { type: "image/png" })
+        );
       })
       .catch(() => {});
 
     return () => {
       isCancelled = true;
     };
-  }, [isOpen, plan, collected, rewardMessage]);
+  }, [isOpen, plan, collected]);
 
   if (!isOpen) return null;
 
   const createImageFile = async () => {
     if (rewardFile) return rewardFile;
 
-    const blob = await createRewardImage({ plan, collected, message: rewardMessage });
+    const blob = await createRewardImage({ plan, collected });
     return new File([blob], REWARD_FILE_NAME, { type: "image/png" });
   };
 
@@ -99,9 +101,22 @@ export default function StampReward() {
 
   return (
     <Overlay role="dialog" aria-modal="true" aria-label={rewardMessage}>
-      <CloseButton type="button" onClick={closeStampModal} aria-label={t("stamp.close")}>
-        <svg width="20" height="20" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-          <path d="M0.5 14.5L14.5 0.5M14.5 14.5L0.5 0.5" stroke="currentColor" />
+      <CloseButton
+        type="button"
+        onClick={closeStampModal}
+        aria-label={t("stamp.close")}
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 15 15"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M0.5 14.5L14.5 0.5M14.5 14.5L0.5 0.5"
+            stroke="currentColor"
+          />
         </svg>
       </CloseButton>
 
@@ -134,8 +149,8 @@ export default function StampReward() {
           <ActionButton type="button" onClick={handleShare} disabled={isBusy}>
             {t("stamp.share")}
           </ActionButton>
+          <Status aria-live="polite">{status}</Status>
         </ButtonRow>
-        <Status aria-live="polite">{status}</Status>
       </Content>
     </Overlay>
   );
@@ -152,33 +167,32 @@ const pop = keyframes`
   100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
 `;
 
-// 양옆 레일과 상단 헤더는 그대로 보이도록 가운데 영역만 덮음
+// 레일·헤더까지 화면 전체를 반투명하게 덮고, 스크롤 없이 한 화면에 보여줌.
+// 양옆은 레일 폭(MainLayout Rail과 같은 값)만큼 비워 두고 요소를 두지 않음
 const Overlay = styled.div`
+  --rail-width: 6%;
+
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 6%;
-  right: 6%;
-  z-index: 99;
-  overflow-y: auto;
-  padding-top: 12rem;
-  background: ${({ theme }) => theme.primitives.grey[500]};
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100dvh;
+  padding: 0 var(--rail-width);
+  overflow: hidden;
+  background: rgba(43, 43, 43, 0.95);
   color: ${({ theme }) => theme.text.brandInvert};
 
-  ${media.tablet`
-    padding-top: 8.4rem;
-  `}
-
   ${media.mobile`
-    left: 2.4rem;
-    right: 2.4rem;
+    --rail-width: 2.4rem;
   `}
 `;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 13.6rem;
-  right: 2.4rem;
+  top: 2.4rem;
+  right: calc(var(--rail-width) + 2.4rem);
   z-index: 1;
   display: flex;
   padding: 0.8rem;
@@ -188,8 +202,8 @@ const CloseButton = styled.button`
   cursor: pointer;
 
   ${media.tablet`
-    top: 10rem;
-    right: 1.6rem;
+    top: 1.6rem;
+    right: calc(var(--rail-width) + 1.6rem);
   `}
 `;
 
@@ -198,7 +212,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 4rem;
-  padding: 4rem 2.4rem 8rem;
+  padding: 4rem 2.4rem;
 
   ${media.mobile`
     gap: 2.4rem;
@@ -259,6 +273,7 @@ const Message = styled.p`
 `;
 
 const ButtonRow = styled.div`
+  position: relative;
   display: flex;
   gap: 8rem;
 
@@ -291,8 +306,13 @@ const ActionButton = styled.button`
   `}
 `;
 
+// 레이아웃 높이를 차지하지 않도록 버튼 아래에 띄움(세로 중앙 정렬이 아래로 밀리지 않게)
 const Status = styled.p`
-  min-height: 1.8rem;
-  margin: -2rem 0 0;
+  position: absolute;
+  top: calc(100% + 1.2rem);
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
   font-size: ${({ theme }) => theme.typography.fontSize.textSm};
 `;
