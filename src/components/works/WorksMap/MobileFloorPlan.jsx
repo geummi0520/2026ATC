@@ -51,12 +51,6 @@ export default function MobileFloorPlan({
         }}
         onTouchEnd={handleTouchEnd}
       >
-        <ExpandArea
-          type="button"
-          onClick={onExpand}
-          aria-label={t("works.fullMap")}
-        />
-
         <PlanLayer
           style={{
             transform: `translate(${(-slide.view.x / PLAN_WIDTH) * 100}%, ${(-slide.view.y / PLAN_HEIGHT) * 100}%)`,
@@ -131,19 +125,10 @@ const Frame = styled.div`
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.line.brand};
   background: ${({ theme }) => theme.background.primary};
-  touch-action: pan-y;
+  /* 지도 위에서 손가락을 움직여도 페이지가 스크롤되지 않도록 (좌우 스와이프는 touch 이벤트로 직접 처리) */
+  touch-action: none;
 `;
 
-const ExpandArea = styled.button`
-  position: absolute;
-  inset: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: zoom-in;
-`;
-
-// 번호 링크만 클릭되고 나머지 영역 클릭은 아래 ExpandArea로 전달
 const PlanLayer = styled.div`
   position: relative;
   width: ${(PLAN_WIDTH / VIEW_WIDTH) * 100}%;

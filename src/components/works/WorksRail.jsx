@@ -43,7 +43,7 @@ export default function WorksRail({
 
 const Rail = styled.nav`
   flex: none;
-  min-height: 4.4rem;
+  height: 4.4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

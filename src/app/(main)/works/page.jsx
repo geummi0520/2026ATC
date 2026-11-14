@@ -90,12 +90,6 @@ export default function Page({ searchParams }) {
                   />
                 </S.TitleRow>
                 <S.Description>{translate(content.description)}</S.Description>
-                <MobileCategoryList
-                  ref={setCategoryListNode}
-                  categories={categories}
-                  selectedCategory={selectedCategory}
-                  onSelectCategory={setSelectedCategory}
-                />
                 <WorkGrid works={visibleWorks} />
               </S.CategoryFallback>
             </>

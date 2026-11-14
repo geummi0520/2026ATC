@@ -2,7 +2,7 @@ export const works = [
   {
     id: 1,
     title: {
-      ko: "야미아이",
+      ko: "YUMMY EYE",
       en: "YUMMY EYE",
     },
     team: {
@@ -309,7 +309,7 @@ export const works = [
   {
     id: 5,
     title: {
-      ko: "모바",
+      ko: "MOVA",
       en: "MOVA",
     },
     team: {
@@ -729,7 +729,7 @@ export const works = [
   {
     id: 9,
     title: {
-      ko: "만지시오!",
+      ko: "Touch!(만지시오!)",
       en: "Touch!",
     },
     team: {
@@ -1036,7 +1036,7 @@ export const works = [
   {
     id: 13,
     title: {
-      ko: "너의 마음 안에 있어",
+      ko: "Who am I?(너의 마음 안에 있어)",
       en: "Who am I?",
     },
     team: {
@@ -1700,7 +1700,7 @@ export const works = [
   {
     id: 20,
     title: {
-      ko: "향",
+      ko: "KAO:RE(향)",
       en: "KAO:RE",
     },
     team: {
@@ -2638,7 +2638,7 @@ export const works = [
   {
     id: 30,
     title: {
-      ko: "오브젝트런",
+      ko: "Object Run",
       en: "Object Run",
     },
     team: {
