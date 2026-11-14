@@ -24,7 +24,6 @@ export default function AboutPage() {
           alt="poster-main"
           width={400}
           height={567}
-
         />
       </Frame1>
 
@@ -651,7 +650,8 @@ gap:1rem;
 const LeftImg = styled(Image)`
 width:19.5rem;
 height:auto;
-align-self:center;
+// align-self:center;
+align-self:flex-start;
 
 ${media.tablet`
 // 테블릿 + 모바일
