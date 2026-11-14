@@ -712,6 +712,7 @@ font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
 line-height: 180%; 
+word-break: keep-all;
 
 ${media.tablet`
   padding:${({ $compact }) => $compact ? "4rem 2rem" : "8rem 2rem"};
