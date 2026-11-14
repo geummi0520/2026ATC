@@ -10,7 +10,7 @@ import { media } from "@/styles/media";
 import useTranslation from "@/hooks/useTranslation";
 
 const PREVIEW_WIDTH = 400; 
-const PREVIEW_HEIGHT = (PREVIEW_WIDTH * 4) / 3; // aspect-ratio: 3 / 4
+const PREVIEW_HEIGHT = (PREVIEW_WIDTH * 4) / 3; 
 const HEADER_HEIGHT = 200; 
 
 const HOMONYM_NAMES = ["이은서"];
@@ -126,15 +126,19 @@ const Container = styled.section`
   gap: 4rem;
   padding: 4rem;
 
+  ${media.tablet`
+    padding: 4rem 2rem;
+  `}
+
   ${media.mobile`
     gap: 1rem;
-    padding: 2rem 1rem;
+    padding: 2rem 0;
   `}
 `;
 
 const Heading = styled.h1`
   margin: 0;
-  font-size: 3rem;
+  font-size: 2.4rem;
   font-weight: 700;
   color: ${({ theme }) => theme.text.primary};
 
@@ -170,6 +174,11 @@ const PersonBlock = styled.li`
   grid-template-columns: 18rem 2.4rem 1fr;
   grid-template-rows: repeat(${({ $rows }) => $rows}, auto);
   cursor: pointer;
+
+  /* 모바일은 화면이 좁아서 이름 칸을 줄여 작품 칸을 넓힘 */
+  ${media.mobile`
+    grid-template-columns: 12rem 0.8rem 1fr;
+  `}
 `;
 
 const Name = styled.span`
