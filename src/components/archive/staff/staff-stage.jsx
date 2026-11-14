@@ -77,8 +77,16 @@ function defaultAlign({ side, align, left, right }) {
   return right != null ? "right" : "left";
 }
 
-/** label 데이터 → Label props */
-const labelProps = (label) => ({ $place: label, $align: defaultAlign(label) });
+/**
+ * label 데이터 → Label props
+ * mobileLabel: 모바일 전용 배치(같은 형식). side가 없으면 기본 모바일 배치(사진 옆 상단) 사용
+ */
+const labelProps = (label, mobileLabel) => ({
+  $place: label,
+  $align: defaultAlign(label),
+  $mPlace: mobileLabel?.side ? mobileLabel : null,
+  $mAlign: mobileLabel?.side ? defaultAlign(mobileLabel) : null,
+});
 
 export default function StaffStage({ team }) {
   const { translate } = useTranslation();
@@ -89,7 +97,7 @@ export default function StaffStage({ team }) {
         {team.members.map((m, i) => {
           const side = i % 2 === 0 ? "left" : "right";
           return (
-            <Member key={m.id} $side={side}>
+            <Member key={m.id} $side={side} $m={m.mobile?.photo}>
               {/* 사진 */}
               <Figure $pos={toPosition(m.photo)} $h={(m.photo.h * 100) / H}>
                 <Image
@@ -98,16 +106,16 @@ export default function StaffStage({ team }) {
                   width={m.imgSize[0]}
                   height={m.imgSize[1]}
                   sizes="(max-width: 768px) 55vw, 15vw"
-                  style={{ height: "100%", width: "auto", display: "block", transform: m.photo.flip ? "scaleX(-1)" : undefined }}
+                  style={{ transform: m.photo.flip ? "scaleX(-1)" : undefined }}
                 />
 
                 {/* 라벨: 사진 박스 기준 %로 배치 → 사진 크기가 바뀌어도 상대 위치 유지 */}
                 {m.roleLable && (
-                  <Label {...labelProps(m.roleLable)}>
+                  <Label {...labelProps(m.roleLable, m.mobile?.roleLable)}>
                     {m.role == "Creative Director" && <Role $cd={true}>{m.role}</Role>}
                   </Label>
                 )}
-                <Label {...labelProps(m.label)} $side={side}>
+                <Label {...labelProps(m.label, m.mobile?.label)} $side={side}>
                   {m.role == "Team Leader" && <Role>{m.role}</Role>}
                   <NameKo>{m.name.ko}</NameKo>
                   <NameEn>{m.name.en}</NameEn>
@@ -134,7 +142,6 @@ const PhotoArea = styled.div`
     aspect-ratio: auto;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
   `}
 `;
 
@@ -147,7 +154,10 @@ const posCss = ({ $pos }) =>
 /*
  * 멤버 래퍼
  * - 데스크탑: display: contents → 사진/라벨이 PhotoArea(프레임) 기준으로 각각 absolute 배치
- * - 모바일: 사진+라벨을 묶는 relative 박스
+ * - 모바일: 세로로 쌓이는 블록. mobile.photo 값은 모두 콘텐츠 폭 대비 %
+ *     x:  왼쪽 여백(%)
+ *     w:  사진 너비(%)
+ *     mt: 앞 사진 아래끝 ↔ 이 사진 위끝 거리(%). 음수면 위로 겹침
  */
 const Member = styled.div`
   display: contents;
@@ -155,8 +165,13 @@ const Member = styled.div`
   ${media.mobile`
     display: block;
     position: relative;
-    width: 55%;
-    margin-left: ${({ $side }) => ($side === "left" ? "4%" : "41%")};
+    width: ${({ $m }) => $m?.w ?? 55}%;
+    margin-left: ${({ $m, $side }) => $m?.x ?? ($side === "left" ? 4 : 41)}%;
+    margin-top: ${({ $m }) => ($m?.mt != null ? `${$m.mt}%` : "2rem")};
+
+    &:first-child {
+      margin-top: ${({ $m }) => $m?.mt ?? 0}%;
+    }
   `}
 `;
 
@@ -167,9 +182,21 @@ const Figure = styled.figure`
   ${posCss}
   height: ${({ $h }) => $h}%;
 
+  img {
+    display: block;
+    height: 100%;
+    width: auto;
+  }
+
   ${media.mobile`
     position: relative;
+    top: auto; right: auto; bottom: auto; left: auto;
     height: auto;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
   `}
 `;
 
@@ -184,11 +211,13 @@ const Label = styled.div`
   text-align: ${({ $align }) => $align};
 
   ${media.mobile`
-    top: 4%; bottom: auto; transform: none;
-    ${({ $side }) =>
-      $side === "left"
-        ? css`left: calc(100% + 0.75rem); right: auto; text-align: left;`
-        : css`right: calc(100% + 0.75rem); left: auto; text-align: right;`}
+    top: auto; right: auto; bottom: auto; left: auto; transform: none;
+    ${({ $mPlace, $mAlign, $side }) =>
+      $mPlace
+        ? css`${placeCss($mPlace)} text-align: ${$mAlign};`
+        : $side === "left"
+          ? css`top: 4%; left: calc(100% + 0.75rem); text-align: left;`
+          : css`top: 4%; right: calc(100% + 0.75rem); text-align: right;`}
   `}
 `;
 

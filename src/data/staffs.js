@@ -12,8 +12,9 @@ export const staffs = {
                 label: { side: 'right', gap: 3.1, top: 7.8 },
                 roleLable: { side: 'left', gap: 3.1, top: 8.9 },
                 mobile: {
-                    photo: { x: 4, w: 62 },
-                    label: { x: 52, y: -4, align: "left" },
+                    photo: { x: 0, w: 65, mt: 0 },
+                    label: { side: 'right', gap: 1, top: '35%' },
+                    roleLable: { side: 'right', gap: 1, top: '20%' },
                 },
             },
         ],
@@ -31,8 +32,8 @@ export const staffs = {
                 photo: { left: 271.56, bottom: 107, h: 151 },
                 label: { side: 'left', gap: -3.6, top: -2.4 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 73.4, mt: 0 },
+                    label: { side: 'right', gap: '-18%', top: '24.8%' },
                 },
             },
             {
@@ -43,8 +44,8 @@ export const staffs = {
                 photo: { right: 348.56, top: 100, h: 239 },
                 label: { side: 'left', gap: -0.5, top: 1.2 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 63, w: 37, mt: 2.1 },
+                    label: { side: 'left', gap: 0.9, top: '39.5%' },
                 },
             },
             {
@@ -55,8 +56,8 @@ export const staffs = {
                 photo: { left: 111.56, bottom: 100, h: 262, flip: true },
                 label: { side: 'right', gap: -1.9, top: -2.3 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 26.6, mt: -24.4 },
+                    label: { side: 'right', gap: 1, top: '40.7%' },
                 },
             },
             {
@@ -67,8 +68,8 @@ export const staffs = {
                 photo: { right: 222.56, bottom: 100, h: 252 },
                 label: { side: 'right', gap: 1.6, top: 6.8 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 79.8, w: 20.1, mt: -24.2 },
+                    label: { side: 'left', gap: 1, top: '40.3%' },
                 },
             },
         ],
@@ -86,8 +87,8 @@ export const staffs = {
                 photo: { left: 140.96, top: 123.199, h: 235 },
                 label: { side: 'top', gap: 0.4, left: 1.5 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 26.5, mt: 0 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -98,8 +99,8 @@ export const staffs = {
                 photo: { right: 12.842, top: 119, h: 250 },
                 label: { side: 'bottom', gap: -0.5, right: 2.9 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 72.2, w: 27.8, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -110,8 +111,8 @@ export const staffs = {
                 photo: { right: 298.387, top: 119, h: 250 },
                 label: { side: 'bottom', gap: -0.1, right: 3.0 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 21.2, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -122,8 +123,8 @@ export const staffs = {
                 photo: { left: 20.44, top: 123, h: 247 },
                 label: { side: 'bottom', gap: 1.4, left: 1.3 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 71.2, w: 28.8, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -134,8 +135,8 @@ export const staffs = {
                 photo: { left: 273.359, top: 125.6, h: 236 },
                 label: { side: 'bottom', gap: 1.4, left: 2.1 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 25.9, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -146,8 +147,8 @@ export const staffs = {
                 photo: { right: 145.245, top: 120, h: 255 },
                 label: { side: 'top', gap: 0.4, right: 1.7 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 78, w: 22, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
         ],
@@ -165,8 +166,8 @@ export const staffs = {
                 photo: { left: 370.56, top: 109, h: 255 },
                 label: { side: 'top', gap: 1.4, left: 3.7 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 30.7, mt: 0 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -177,8 +178,8 @@ export const staffs = {
                 photo: { right: -15.44, top: 126, h: 240 },
                 label: { side: 'bottom', gap: 1.4, right: 1.0 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 70.1, w: 29.9, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -191,8 +192,8 @@ export const staffs = {
                 },
                 label: { side: 'bottom', gap: 2.4, left: 2.3 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 26, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -203,8 +204,8 @@ export const staffs = {
                 photo: { right: 121.56, top: 137, h: 220 },
                 label: { side: 'top', gap: 2.3, left: 3.1 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 69.3, w: 30.7, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -215,8 +216,8 @@ export const staffs = {
                 photo: { left: 119.56, top: 111, h: 254 },
                 label: { side: 'top', gap: 0.7, right: 3.7 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 32, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -227,8 +228,8 @@ export const staffs = {
                 photo: { left: -13.44, top: 71, h: 298 },
                 label: { side: 'bottom', gap: 1.1, left: -0.2 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 72.5, w: 27.5, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -239,8 +240,8 @@ export const staffs = {
                 photo: { right: 242.56, top: 123, h: 241 },
                 label: { side: 'bottom', gap: 1.6, right: 1.8 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 40.6, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
         ],
@@ -258,8 +259,8 @@ export const staffs = {
                 photo: { left: 240.56, top: -12, h: 290 },
                 label: { side: 'left', gap: 1.8, top: 7.9 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 19.9, mt: 0 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -270,8 +271,8 @@ export const staffs = {
                 photo: { left: 81.56, bottom: 40, h: 229 },
                 label: { side: 'left', gap: '-7.4%', top: '58.1%' },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 37.3, w: 62.7, mt: 2 },
+                    label: { side: 'left', gap: 1, top: '25%' },
                 },
             },
             {
@@ -282,8 +283,8 @@ export const staffs = {
                 photo: { left: 383.56, bottom: 30, h: 326 },
                 label: { side: 'right', gap: 0.7, top: 4.5 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 31.2, mt: 2 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -294,8 +295,8 @@ export const staffs = {
                 photo: { right: 110.56, top: 28, h: 233 },
                 label: { side: 'left', gap: 4.1, top: 6.2 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 71.6, w: 28.4, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -306,8 +307,8 @@ export const staffs = {
                 photo: { right: 26.56, bottom: 30, h: 177 },
                 label: { side: 'left', gap: '-17.7%', top: '30.5%' },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 65, mt: 2 },
+                    label: { side: 'right', gap: 1, top: '25%' },
                 },
             },
         ],
@@ -325,8 +326,8 @@ export const staffs = {
                 photo: { left: 171.56, top: 265, h: 143 },
                 label: { side: 'top', gap: -0.8, left: -0.1 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 65, mt: 0 },
+                    label: { side: 'right', gap: 1, top: '25%' },
                 },
             },
             {
@@ -337,8 +338,8 @@ export const staffs = {
                 photo: { right: 344.439, top: 105, h: 213 },
                 label: { side: 'left', gap: 1.6, top: 2.7 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 59.2, w: 40.8, mt: 2 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -349,8 +350,8 @@ export const staffs = {
                 photo: { right: 216.56, top: 87, h: 236 },
                 label: { side: 'right', gap: 3.4, top: 4.4 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 20, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
         ],
@@ -368,8 +369,8 @@ export const staffs = {
                 photo: { left: 231.56, top: 103, h: 241 },
                 label: { side: 'bottom', gap: 1.7, left: 0 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 25.8, mt: 0 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -380,8 +381,8 @@ export const staffs = {
                 photo: { right: 259.559, top: 107, h: 257 },
                 label: { side: 'bottom', gap: 2.2, right: 1.2 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 76, w: 24, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -392,8 +393,8 @@ export const staffs = {
                 photo: { left: 396.56, top: 131, h: 235 },
                 label: { side: 'bottom', gap: 2.0, left: 1.7, align: 'center' },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 25.3, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -404,8 +405,8 @@ export const staffs = {
                 photo: { right: 78.559, top: 117, h: 249 },
                 label: { side: 'bottom', gap: 2.0, right: 2.7 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 62.2, w: 37.8, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -416,8 +417,8 @@ export const staffs = {
                 photo: { left: 66.56, top: 137, h: 225 },
                 label: { side: 'bottom', gap: 2.3, left: 2.8 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 27.6, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
         ],
@@ -435,8 +436,8 @@ export const staffs = {
                 photo: { left: 59.56, top: 97, h: 252 },
                 label: { side: 'bottom', gap: 0.6, left: 1.4 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 25, mt: 0 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -447,8 +448,8 @@ export const staffs = {
                 photo: { left: 239.56, top: 85, h: 270 },
                 label: { side: 'top', gap: 0.1, left: '50.5%' },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 59.1, w: 40.9, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
             {
@@ -459,8 +460,8 @@ export const staffs = {
                 photo: { right: 256.434, top: 85, h: 252 },
                 label: { side: 'bottom', gap: 2.5, left: 2.7 },
                 mobile: {
-                    photo: { x: 4, w: 55 },
-                    label: { x: 60, y: 4, align: "left" },
+                    photo: { x: 0, w: 32, mt: -22.3 },
+                    label: { side: 'right', gap: 1, top: '40%' },
                 },
             },
             {
@@ -471,8 +472,8 @@ export const staffs = {
                 photo: { right: 59, top: 85, h: 250 },
                 label: { side: 'top', gap: 0.8, left: 0.5 },
                 mobile: {
-                    photo: { x: 41, w: 55 },
-                    label: { x: -5, y: 4, align: "right" },
+                    photo: { x: 74.4, w: 25.6, mt: -22.3 },
+                    label: { side: 'left', gap: 1, top: '40%' },
                 },
             },
         ],

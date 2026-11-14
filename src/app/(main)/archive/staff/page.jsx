@@ -43,6 +43,11 @@ padding: 4rem;
 flex-direction: column;
 align-items: flex-end;
 gap: 1rem;
+
+${media.mobile`
+  padding-left: 0;
+  padding-right: 0;
+`}
 `;
 const StaffHeader = styled.div`
 display: flex;
