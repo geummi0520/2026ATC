@@ -38,8 +38,8 @@ export default function AboutPage() {
       <Banner
         src="/images/about/banner.webp"
         alt="banner"
-        width={990}
-        height={413}
+        width={3240}
+        height={1350}
       />
 
       {/* 주제문 */}
@@ -277,6 +277,7 @@ ${media.mobile`
 
 const Banner = styled(Image)`
 width:100%;
+height:auto;
 ${media.mobile`
   display:none;
 `}
@@ -711,6 +712,7 @@ font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
 line-height: 180%; 
+word-break: keep-all;
 
 ${media.tablet`
   padding:${({ $compact }) => $compact ? "4rem 2rem" : "8rem 2rem"};
