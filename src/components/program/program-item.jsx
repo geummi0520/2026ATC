@@ -27,8 +27,8 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
             <ProgramImg
                 src={imgUrl}
                 alt="program image"
-                width={164}
-                height={307}
+                width={1080}
+                height={1440}
                 $desktop
             />
             {/* 우측 프로그램 정보 */}
@@ -43,8 +43,8 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                             <ProgramImg
                                 src={imgUrl}
                                 alt="tablet program image"
-                                width={164}
-                                height={307}
+                                width={1080}
+                                height={1440}
                                 $tablet
                                 $isOpen={isOpen}
                             />
@@ -151,7 +151,7 @@ ${media.mobile`
 `;
 const ProgramImg = styled(Image)`
 
-height: 31.7rem;
+height: 36.7rem;
 aspect-ratio: 3/4;
 width: auto;
 object-fit: cover;
@@ -356,7 +356,6 @@ font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
 line-height: 160%; 
-letter-spacing: -0.042rem;
 
 
 
