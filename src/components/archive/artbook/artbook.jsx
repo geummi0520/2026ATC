@@ -292,7 +292,7 @@ const Title = styled.h1`
   flex-shrink: 0;
   margin: 0;
   line-height: 1.2;
-  font-size: ${({ theme }) => theme.typography.fontSize.headingLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMid};
   font-weight: 700;
   color: ${({ theme }) => theme.text.primary};
 
