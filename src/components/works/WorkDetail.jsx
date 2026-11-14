@@ -55,105 +55,53 @@ export default function WorkDetail({ work }) {
 
       <DetailScroll data-works-scroll>
         <ScrollContent>
-        <HiddenStamp key={work.id} slot={STAMP_SLOTS.WORKS} active={isStampWork} />
-        <CompactBackRow>
-          <BackButton href={backHref} />
-        </CompactBackRow>
-        <Hero>
-          <HeroImage>
-            <Image
-              src={work.images.thumbnail}
-              alt={title}
-              fill
-              sizes="(min-width: 1124px) 22vw, (min-width: 768px) 28vw, 70vw"
-              priority
-            />
-          </HeroImage>
-          <HeroInfo>
-            <Meta>
-              <span>Work No. #{String(work.id).padStart(2, "0")}</span>
-              <span>{location}</span>
-            </Meta>
-            <Title>{title}</Title>
-            <Tags>{tags.map((tag) => `#${tag}`).join(" ")}</Tags>
-          </HeroInfo>
-        </Hero>
+          <HiddenStamp
+            key={work.id}
+            slot={STAMP_SLOTS.WORKS}
+            active={isStampWork}
+          />
+          <CompactBackRow>
+            <BackButton href={backHref} />
+          </CompactBackRow>
+          <Hero>
+            <HeroImage>
+              <Image
+                src={work.images.thumbnail}
+                alt={title}
+                fill
+                sizes="(min-width: 1124px) 22vw, (min-width: 768px) 28vw, 70vw"
+                priority
+              />
+            </HeroImage>
+            <HeroInfo>
+              <Meta>
+                <span>Work No. #{String(work.id).padStart(2, "0")}</span>
+                <span>{location}</span>
+              </Meta>
+              <Title>{title}</Title>
+              <Tags>{tags.map((tag) => `#${tag}`).join(" ")}</Tags>
+            </HeroInfo>
+          </Hero>
 
-        <Body>
-          <Introduction>
-            <Copy>
-              <SectionTitle>작품 소개</SectionTitle>
-              <Lead>{tagline}</Lead>
-              <Paragraph>{description}</Paragraph>
-              {work.links.length > 0 && (
-                <Contacts>
-                  {work.links.map((link) => (
-                    <ContactLink
-                      key={`${link.type}-${link.url}`}
-                      href={link.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${title} ${link.type}`}
-                    >
-                      <Image
-                        src={WORK_LINK_ICONS[link.type] ?? CONTACT_ICONS.website}
-                        alt=""
-                        width={24}
-                        height={24}
-                      />
-                    </ContactLink>
-                  ))}
-                </Contacts>
-              )}
-            </Copy>
-            <MediaList>
-              {videoEmbedUrl && (
-                <Video>
-                  <iframe
-                    src={videoEmbedUrl}
-                    title={`${title} 영상`}
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                    allowFullScreen
-                    loading="lazy"
-                  />
-                </Video>
-              )}
-              {detailImages.map((image, index) => (
-                <Image
-                  key={`${image}-${index}`}
-                  src={image}
-                  alt={`${title} 상세 이미지 ${index + 1}`}
-                  width={1080}
-                  height={1440}
-                  sizes="(min-width: 1124px) 44vw, 88vw"
-                />
-              ))}
-            </MediaList>
-          </Introduction>
-
-          <TeamSection>
-            <TeamCopy>
-              <SectionTitle>팀 소개</SectionTitle>
-              <TeamName>{team}</TeamName>
-              <TeamParagraph>{teamDescription}</TeamParagraph>
-            </TeamCopy>
-            <MemberList>
-              {work.members.map((member) => (
-                <li key={`${member.role}-${translate(member.name)}`}>
-                  <span>{translate(member.name)}</span>
+          <Body>
+            <Introduction>
+              <Copy>
+                <SectionTitle>작품 소개</SectionTitle>
+                <Lead>{tagline}</Lead>
+                <Paragraph>{description}</Paragraph>
+                {work.links.length > 0 && (
                   <Contacts>
-                    {member.contacts.map((contact) => (
+                    {work.links.map((link) => (
                       <ContactLink
-                        key={`${contact.type}-${contact.url}`}
-                        href={contact.url}
+                        key={`${link.type}-${link.url}`}
+                        href={link.url}
                         target="_blank"
                         rel="noreferrer"
-                        aria-label={`${translate(member.name)} ${contact.type}`}
+                        aria-label={`${title} ${link.type}`}
                       >
                         <Image
                           src={
-                            CONTACT_ICONS[contact.type] ?? CONTACT_ICONS.website
+                            WORK_LINK_ICONS[link.type] ?? CONTACT_ICONS.website
                           }
                           alt=""
                           width={24}
@@ -162,12 +110,74 @@ export default function WorkDetail({ work }) {
                       </ContactLink>
                     ))}
                   </Contacts>
-                </li>
-              ))}
-            </MemberList>
-          </TeamSection>
-        </Body>
-        <Footer />
+                )}
+              </Copy>
+              <MediaList>
+                {videoEmbedUrl && (
+                  <Video>
+                    <iframe
+                      src={videoEmbedUrl}
+                      title={`${title} 영상`}
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  </Video>
+                )}
+                {detailImages.map((image, index) => (
+                  <Image
+                    key={`${image}-${index}`}
+                    src={image}
+                    unoptimized
+                    alt={`${title} 상세 이미지 ${index + 1}`}
+                    width={1080}
+                    height={1440}
+                    sizes="(min-width: 1124px) 44vw, 88vw"
+                  />
+                ))}
+              </MediaList>
+            </Introduction>
+
+            <TeamSection>
+              <TeamCopy>
+                <SectionTitle>팀 소개</SectionTitle>
+                <TeamName>{team}</TeamName>
+                <TeamParagraph>{teamDescription}</TeamParagraph>
+              </TeamCopy>
+              <MemberList>
+                {work.members.map((member) => (
+                  <li key={`${member.role}-${translate(member.name)}`}>
+                    <span>{translate(member.name)}</span>
+                    <Contacts>
+                      {member.contacts.map((contact) => (
+                        <ContactLink
+                          key={`${contact.type}-${contact.url}`}
+                          href={contact.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${translate(member.name)} ${
+                            contact.type
+                          }`}
+                        >
+                          <Image
+                            src={
+                              CONTACT_ICONS[contact.type] ??
+                              CONTACT_ICONS.website
+                            }
+                            alt=""
+                            width={24}
+                            height={24}
+                          />
+                        </ContactLink>
+                      ))}
+                    </Contacts>
+                  </li>
+                ))}
+              </MemberList>
+            </TeamSection>
+          </Body>
+          <Footer />
         </ScrollContent>
       </DetailScroll>
     </Container>
