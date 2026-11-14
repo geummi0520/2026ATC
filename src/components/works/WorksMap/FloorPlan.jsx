@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
+import { worksMapPositions } from "@/data/worksMapPositions";
 import useTranslation from "@/hooks/useTranslation";
 
-// works data의 location.x, y는 floorplan.svg viewBox(600 x 664) 기준 좌표
+// worksMapPositions의 x, y는 floorplan.svg viewBox(600 x 664) 기준 좌표
 export const PLAN_WIDTH = 600;
 export const PLAN_HEIGHT = 664;
 
@@ -13,6 +14,8 @@ const toPosition = ({ x, y }) => ({
   left: `${(x / PLAN_WIDTH) * 100}%`,
   top: `${(y / PLAN_HEIGHT) * 100}%`,
 });
+
+const getPosition = (workId) => worksMapPositions[workId];
 
 export default function FloorPlan({
   works,
@@ -22,7 +25,8 @@ export default function FloorPlan({
   alt,
 }) {
   const { translate } = useTranslation();
-  const activeWork = works.find((work) => work.id === activeWorkId);
+  const plottedWorks = works.filter((work) => getPosition(work.id));
+  const activeWork = plottedWorks.find((work) => work.id === activeWorkId);
 
   return (
     <Plan>
@@ -34,11 +38,11 @@ export default function FloorPlan({
         priority
       />
 
-      {works.map((work) => (
+      {plottedWorks.map((work) => (
         <Hotspot
           key={work.id}
           href={`/works/${work.id}`}
-          style={toPosition(work.location)}
+          style={toPosition(getPosition(work.id))}
           aria-label={`${work.id}. ${translate(work.title)}`}
           onMouseEnter={() => onActivate?.(work)}
           onMouseLeave={onDeactivate}
@@ -48,7 +52,7 @@ export default function FloorPlan({
       ))}
 
       {activeWork && (
-        <Preview style={toPosition(activeWork.location)}>
+        <Preview style={toPosition(getPosition(activeWork.id))}>
           <Image src={activeWork.images.thumbnail} alt="" fill sizes="12rem" />
         </Preview>
       )}

@@ -20,6 +20,19 @@ const en = {
     detail: "See Details",
     close: "Close",
   },
+  stamp: {
+    collect: "Pick up the hidden stamp",
+    card: "Stamp card",
+    cardMessage: "Collect every stamp and something good might happen..........",
+    close: "Close",
+    rewardMessage: "Wow! You got an ultra-rare SSR egg.",
+    rewardImage: "Ultra-rare egg dish",
+    save: "Save",
+    share: "Share",
+    shareTitle: "2026 ATC Stamp Card",
+    linkCopied: "Link copied.",
+    actionFailed: "Please try again.",
+  },
   artistCredit: {
     heading: "Artist Credit",
     subtitle:
@@ -39,7 +52,7 @@ const en = {
   about: {
     overview: "Exhibition Overview",
     topic: "Theme",
-    topicSentence: "Do Not Change the Recipe*",
+    topicSentence: "Do Not Change the Recipe *",
     congratulatory: "Congratulatory Message",
     staffCredit: "Staff Credit",
     linkToStaffCredit: "View Staff Credits",
