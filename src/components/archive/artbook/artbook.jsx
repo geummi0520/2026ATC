@@ -1,24 +1,43 @@
 "use client";
 
-import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import Image from "next/image";
 import styled from "styled-components";
-
-const ARTBOOK_PDF = "/images/artbook/artbookSample.pdf";
+import { ARTBOOK_PDF, artbookToc } from "@/data/artbook";
+import { media } from "@/styles/media";
 const PAGE_WIDTH = 540.304;
 const PAGE_HEIGHT = 766;
 const PAGE_RENDER_WIDTH = 600;
+
+
+const MOBILE_QUERY = "(max-width: 767px)";
+const subscribeMobile = (onChange) => {
+  const query = window.matchMedia(MOBILE_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+};
+const getIsMobile = () => window.matchMedia(MOBILE_QUERY).matches;
 
 export default function Artbook() {
   const [lib, setLib] = useState(null);
   const [numPages, setNumPages] = useState(0);
   const [isCoverOnly, setIsCoverOnly] = useState(true);
-  const bookRef = useRef(null);
 
-  // react-pdf drags in pdfjs-dist, which touches `window`/`document` at
-  // module-evaluation time and crashes Next's server-side prerender.
-  // Loading it through a runtime import() (instead of a static import
-  // at the top of the file) keeps it out of the server bundle entirely
-  // while still living in this one file.
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+
+  const [orientation, setOrientation] = useState("landscape");
+  const [isTocOpen, setIsTocOpen] = useState(false);
+  const bookRef = useRef(null);
+  const isMobile = useSyncExternalStore(subscribeMobile, getIsMobile, () => false);
+
+
   useEffect(() => {
     let cancelled = false;
 
@@ -62,20 +81,18 @@ export default function Artbook() {
     });
   }, [lib]);
 
-  const pageNumbers = useMemo(
-    () => Array.from({ length: numPages }, (_, index) => index + 1),
-    [numPages],
+
+  const bookPages = useMemo(
+    () =>
+      BookPage
+        ? Array.from({ length: numPages }, (_, index) => (
+            <BookPage key={index + 1} pageNumber={index + 1} />
+          ))
+        : [],
+    [BookPage, numPages],
   );
 
-  // The centering shift has to start the instant the flip itself starts,
-  // not once it finishes — otherwise the book snaps open first and only
-  // then slides, instead of opening and sliding together. So our own
-  // buttons flip the flag synchronously before asking react-pageflip to
-  // flip, and onFlip is a safety net once the page settles. Direction
-  // matters here: landing on index 1 happens both when opening the
-  // cover (0 -> 1) and when paging deeper into the book (3 -> 1 going
-  // back, or on the way to 1 -> 2 going forward), so only flipPrev from
-  // exactly index 1 should ever re-close the cover.
+  
   const handlePrev = () => {
     const current = bookRef.current?.pageFlip()?.getCurrentPageIndex();
     if (current === 1) setIsCoverOnly(true);
@@ -88,14 +105,44 @@ export default function Artbook() {
     bookRef.current.pageFlip().flipNext();
   };
 
+
+  const handleTocSelect = (pageNumber) => {
+    const pageFlip = bookRef.current?.pageFlip();
+    if (!pageFlip) return;
+    const targetIndex = Math.min(Math.max(pageNumber - 1, 0), numPages - 1);
+    setIsCoverOnly(targetIndex === 0);
+    pageFlip.flip(targetIndex);
+    setIsTocOpen(false);
+  };
+
+
+  const isFirstPage = currentPageIndex <= 0;
+  const isLastPage =
+    numPages > 0 &&
+    (currentPageIndex >= numPages - 1 ||
+      (orientation === "landscape" &&
+        currentPageIndex > 0 &&
+        currentPageIndex + 1 >= numPages - 1));
+
+  // 지금 펼쳐진 페이지가 속한 목차(시작 페이지가 현재 페이지 이하인 것 중 마지막)
+  const activeTocIndex = artbookToc.reduce(
+    (active, { page }, index) => (page - 1 <= currentPageIndex ? index : active),
+    0,
+  );
+
   if (!lib) {
-    return <Content />;
+    return (
+      <Content>
+        <Title>Art Book</Title>
+      </Content>
+    );
   }
 
   const { Document, HTMLFlipBook } = lib;
 
   return (
     <Content>
+      <Title>Art Book</Title>
       <Wrapper>
         <Document
           file={ARTBOOK_PDF}
@@ -104,9 +151,21 @@ export default function Artbook() {
           error={<Status>아트북을 불러오지 못했습니다.</Status>}
         >
           {numPages > 0 && (
-            <>
+            <BookRow>
+   
+              <NavButton
+                type="button"
+                onClick={handlePrev}
+                aria-label="이전 페이지"
+                disabled={isFirstPage}
+                style={{ visibility: isFirstPage ? "hidden" : "visible" }}
+              >
+                <Image src="/icons/program/polygon_left.svg" alt="" width={8} height={13} />
+              </NavButton>
               <BookStage $coverOnly={isCoverOnly}>
+         
                 <HTMLFlipBook
+                  key={isMobile ? "mobile" : "desktop"}
                   ref={bookRef}
                   width={PAGE_WIDTH}
                   height={PAGE_HEIGHT}
@@ -115,27 +174,67 @@ export default function Artbook() {
                   maxWidth={PAGE_WIDTH}
                   minHeight={340}
                   maxHeight={PAGE_HEIGHT}
-                  showCover
+                  showCover={!isMobile}
                   usePortrait
                   maxShadowOpacity={0.4}
                   flippingTime={500}
-                  onInit={(event) => setIsCoverOnly(event.data.page === 0)}
-                  onFlip={(event) => setIsCoverOnly(event.data === 0)}
+                  onInit={(event) => {
+                    setIsCoverOnly(event.data.page === 0);
+                    setCurrentPageIndex(event.data.page);
+                    setOrientation(event.data.mode);
+                  }}
+                  onChangeOrientation={(event) => setOrientation(event.data)}
+                  onFlip={(event) => {
+                    setIsCoverOnly(event.data === 0);
+                    setCurrentPageIndex(event.data);
+                  }}
                 >
-                  {pageNumbers.map((pageNumber) => (
-                    <BookPage key={pageNumber} pageNumber={pageNumber} />
-                  ))}
+                  {bookPages}
                 </HTMLFlipBook>
               </BookStage>
-              <Controls>
-                <NavButton type="button" onClick={handlePrev} aria-label="이전 페이지">
-                  ‹
-                </NavButton>
-                <NavButton type="button" onClick={handleNext} aria-label="다음 페이지">
-                  ›
-                </NavButton>
-              </Controls>
-            </>
+              <NavButton
+                type="button"
+                onClick={handleNext}
+                aria-label="다음 페이지"
+                disabled={isLastPage}
+                style={{ visibility: isLastPage ? "hidden" : "visible" }}
+              >
+                <Image src="/icons/program/polygon_right.svg" alt="" width={8} height={13} />
+              </NavButton>
+
+              <TocArea
+                onMouseEnter={() => setIsTocOpen(true)}
+                onMouseLeave={() => setIsTocOpen(false)}
+              >
+                <TocBars
+                  type="button"
+                  aria-label="목차 열기"
+                  aria-expanded={isTocOpen}
+                  onClick={() => setIsTocOpen((open) => !open)}
+                >
+                  {artbookToc.map(({ title }, index) => (
+                    <TocBar key={title} $active={index === activeTocIndex} />
+                  ))}
+                </TocBars>
+                <TocPanel data-open={isTocOpen} aria-hidden={!isTocOpen}>
+                  <TocHeading>목차</TocHeading>
+                  <TocList>
+                    {artbookToc.map(({ title, page }, index) => (
+                      <li key={title}>
+                        <TocItem
+                          type="button"
+                          tabIndex={isTocOpen ? 0 : -1}
+                          $active={index === activeTocIndex}
+                          onClick={() => handleTocSelect(page)}
+                        >
+                          {index + 1}. {title}
+                        </TocItem>
+                      </li>
+                    ))}
+                  </TocList>
+                </TocPanel>
+              </TocArea>
+            </BookRow>
           )}
         </Document>
       </Wrapper>
@@ -143,52 +242,101 @@ export default function Artbook() {
   );
 }
 
-const Content = styled.section`
-  display: flex;
-  justify-content: center;
-  padding: 4rem;
 
-  @media (max-width: 767px) {
+const Content = styled.section`
+  --book-max-height: calc(100dvh - 12rem - 4rem * 2 - 3rem * 1.2 - 4.8rem);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4.8rem;
+  height: calc(100dvh - 12rem);
+  padding: 4rem;
+  overflow: hidden;
+
+  ${media.tablet`
+    --book-max-height: calc(100dvh - 8.4rem - 4rem * 2 - 3rem * 1.2 - 4.8rem);
+    height: calc(100dvh - 8.4rem);
+  `}
+
+  ${media.mobile`
+    --book-max-height: calc(100dvh - 8.4rem - 2rem * 2 - 2rem * 1.2 - 2.4rem);
+    gap: 2.4rem;
     padding: 2rem 1rem;
-  }
+  `}
 `;
 
+const Title = styled.h1`
+  flex-shrink: 0;
+  margin: 0;
+  line-height: 1.2;
+  font-size: ${({ theme }) => theme.typography.fontSize.headingLg};
+  font-weight: 700;
+  color: ${({ theme }) => theme.text.primary};
+
+  ${media.mobile`
+    font-size: 2rem;
+  `}
+`;
+
+
+const BookRow = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  width: 100%;
+
+  padding: 0 6.4rem;
+
+  ${media.mobile`
+    gap: 0.8rem;
+    padding: 0;
+  `}
+`;
+
+
 const Wrapper = styled.div`
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 2.4rem;
   width: 100%;
 
   .react-pdf__Document {
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.4rem;
+    justify-content: center;
     width: 100%;
   }
+
+
+  ${media.mobile`
+    .react-pdf__Document {
+      padding-bottom: 6rem;
+    }
+  `}
 `;
 
-/*
- * react-pageflip always reserves the full two-page spread width and
- * seats a lone cover page in the right-hand slot, flush against the
- * spine. That reads as "stuck to the right" rather than centered.
- * We never touch anything react-pageflip manages internally (that
- * breaks its own flip/size calculations) — instead we shift this
- * plain wrapper, which fully contains the untouched flipbook, by a
- * quarter of its own width so the lone cover sits centered. Once a
- * second page joins it, the spread is already centered on its own, so
- * removing the shift reads as the cover sliding right into place.
- *
- * The -25% math assumes react-pageflip is actually reserving a full
- * two-page spread, which only happens once there's room for one
- * (desktop/tablet). Below that it forces every page — cover included —
- * into single-page "portrait" mode with different internal sizing,
- * where this same shift pushes the page half off-screen. So it's
- * scoped to our tablet-and-up breakpoint; mobile gets no shift at all.
- */
+
+
 const BookStage = styled.div`
-  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: calc(
+    min(${PAGE_WIDTH * 2}px, var(--book-max-height) * ${(PAGE_WIDTH * 2) / PAGE_HEIGHT}) * 0.88
+  );
+
+  ${media.mobile`
+    max-width: calc(
+      min(${PAGE_WIDTH}px, var(--book-max-height) * ${PAGE_WIDTH / PAGE_HEIGHT}) * 0.88
+    );
+  `}
   transition: transform 0.5s ease;
 
   @media (min-width: 768px) {
@@ -221,24 +369,116 @@ const PageSurface = styled.div`
   }
 `;
 
-const Controls = styled.div`
-  display: flex;
-  gap: 1.6rem;
-`;
-
 const NavButton = styled.button`
-  width: 4rem;
-  height: 4rem;
-  border: 1px solid ${({ theme }) => theme.line.primary};
-  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 1px solid ${({ theme }) => theme.line.brand};
   background: transparent;
-  font-size: 2rem;
-  line-height: 1;
-  color: ${({ theme }) => theme.text.primary};
   cursor: pointer;
 
-  &:hover {
-    color: ${({ theme }) => theme.text.brand};
-    border-color: ${({ theme }) => theme.line.brand};
+  @media (hover: hover) {
+    &:hover {
+      background: ${({ theme }) => theme.surface.brand};
+    }
+  }
+`;
+
+const TocArea = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 2;
+
+  ${media.mobile`
+    display: none;
+  `}
+`;
+
+const TocBars = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
+  padding: 1.2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+`;
+
+const TocBar = styled.span`
+  display: block;
+  width: 1.6rem;
+  height: 0.4rem;
+  background: ${({ $active, theme }) =>
+    $active ? theme.line.brand : theme.background.secondary};
+`;
+
+
+const TocPanel = styled.nav`
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  min-width: 13.6rem;
+  padding: 3.2rem 2rem;
+  border: 1px solid ${({ theme }) => theme.line.brand};
+  background: ${({ theme }) => theme.background.primary};
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(4rem, -50%);
+  transition:
+    opacity 250ms ease,
+    transform 350ms cubic-bezier(0.2, 0.8, 0.3, 1),
+    visibility 0s linear 350ms;
+
+  &[data-open="true"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, -50%);
+    transition:
+      opacity 250ms ease,
+      transform 350ms cubic-bezier(0.2, 0.8, 0.3, 1),
+      visibility 0s;
+  }
+`;
+
+const TocHeading = styled.p`
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.text.brand};
+`;
+
+const TocList = styled.ol`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0;
+  padding: 0 0 0 0.4rem;
+  list-style: none;
+`;
+
+const TocItem = styled.button`
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 1.4rem;
+  font-weight: ${({ $active }) => ($active ? 700 : 400)};
+  color: ${({ theme }) => theme.text.brand};
+  white-space: nowrap;
+  cursor: pointer;
+
+  @media (hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
