@@ -69,8 +69,8 @@ export default function ProgramDetail({ program }) {
             <ProgramImg
                 src={currentProgram.imgUrl}
                 alt="program image"
-                width={164}
-                height={307}
+                width={1080}
+                height={1440}
                 $desktop
             />
             <Title>
