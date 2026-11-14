@@ -19,6 +19,10 @@ const ko = {
     stamp: "STAMP",
     detail: "자세히보기",
     close: "닫기",
+    scheduleOpeningDate: "11.26(목)",
+    scheduleOpeningTime: "15:30 – 21:00",
+    scheduleRegularDate: "11.27(금) - 11.29(일)",
+    scheduleRegularTime: "10:00 – 21:00",
   },
   artistCredit: {
     heading: "Artist Credit",

@@ -19,6 +19,10 @@ const en = {
     stamp: "STAMP",
     detail: "See Details",
     close: "Close",
+    scheduleOpeningDate: "11.26(Thu)",
+    scheduleOpeningTime: "15:30 – 21:00",
+    scheduleRegularDate: "11.27(Fri) - 11.29(Sun)",
+    scheduleRegularTime: "10:00 – 21:00",
   },
   artistCredit: {
     heading: "Artist Credit",
