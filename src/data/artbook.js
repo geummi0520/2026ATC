@@ -1,6 +1,7 @@
 // 아트북 PDF와 목차.
 // page: 그 목차가 시작하는 PDF 페이지 번호(1부터). 클릭하면 이 페이지로 넘어감.
-// 지금은 샘플 PDF(10쪽)에 맞춘 임시 목차라, 실제 아트북이 나오면 제목·페이지를 바꾸면 됨.
+// 지금 PDF는 커밍순 표지 한 장이라 목차는 화면에서 꺼 둔 상태(artbook.jsx의 TocArea 주석).
+// 아래는 예전 샘플 PDF(10쪽)에 맞춘 임시 목차라, 실제 아트북이 나오면 제목·페이지를 바꾸면 됨.
 export const ARTBOOK_PDF = "/images/artbook/artbookSample.pdf";
 
 export const artbookToc = [

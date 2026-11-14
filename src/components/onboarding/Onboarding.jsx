@@ -26,18 +26,29 @@ const ITEM_FILES = [
   "포스터.webp",
 ];
 
+// 나머지는 랜덤 순서로 와리가리하고, 마지막엔 항상 이 소품으로 끝남
+const LAST_ITEM_FILE = "포스터.webp";
+
 // 소품마다 캔버스 안에서 그려진 크기가 달라서 따로 키우는 보정값(없으면 1)
 const ITEM_SCALE = {
   "메뉴판.webp": 1.25,
 };
 
-// 타임라인: 접시 등장 → 소품 와리가리 → 살짝 확대되며 스르륵 사라져 메인 공개
+// 타임라인: 접시 등장 → 소품 와리가리 → 클로슈 뚜껑이 위에서 내려와 덮임
+//          → 한 박자 뒤 바로 메인(닫힌 클로슈)으로 넘어가고, 메인 뚜껑이 열림
 const INTRO_MS = 400;
 const SWAP_MS = 260;
 const SWAP_COUNT = ITEM_FILES.length;
-const OUTRO_MS = 800;
-const OUTRO_START_MS = INTRO_MS + SWAP_MS * SWAP_COUNT;
-const TOTAL_MS = OUTRO_START_MS + OUTRO_MS;
+const LID_MS = 550;
+// 뚜껑이 덮인 채로 한 박자 머무는 시간
+const LID_HOLD_MS = 350;
+const LID_START_MS = INTRO_MS + SWAP_MS * SWAP_COUNT;
+const OUTRO_START_MS = LID_START_MS + LID_MS + LID_HOLD_MS;
+// 메인이 안 뜨는 등 문제가 생겨도 이 시간이 지나면 온보딩을 끝냄
+const FAILSAFE_MS = OUTRO_START_MS + 3000;
+
+// 위에서 내려다본 클로슈 뚜껑. 원본(클로슈뚜껑.png)은 배경이 검은색이라 둥근 바깥을 투명하게 만든 사본을 씀
+const LID_FILE = "클로슈뚜껑_투명.webp";
 
 
 const shuffle = (list) => {
@@ -50,20 +61,27 @@ const shuffle = (list) => {
 };
 
 // 화면 쪽으로 살짝 다가오듯 커지면서 흐려져, 아래 메인이 자연스럽게 드러남
-const fadeAway = keyframes`
-  from {
+// 뚜껑이 카메라 쪽(위)에서 크게 보이다가 접시로 내려앉으며 작아지고, 닿는 순간 살짝 눌렸다 자리잡음
+const lidDrop = keyframes`
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.7);
+    filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+  }
+  25% {
     opacity: 1;
-    transform: scale(1);
   }
-  to {
-    opacity: 0;
-    transform: scale(1.06);
+  70% {
+    transform: translate(-50%, -50%) scale(0.96);
+    filter: drop-shadow(0 1.2rem 2rem rgba(0, 0, 0, 0.35));
   }
-`;
-
-const fadeOut = keyframes`
-  to {
-    opacity: 0;
+  85% {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: drop-shadow(0 0.8rem 1.6rem rgba(0, 0, 0, 0.3));
   }
 `;
 
@@ -104,15 +122,7 @@ const Overlay = styled.div`
   background: ${({ theme }) => theme.background.primary};
 
   &[data-phase="outro"] {
-    /* 사라지는 동안 뒤의 메인이 눌려도 되게 */
     pointer-events: none;
-    animation: ${fadeAway} ${OUTRO_MS}ms ease-in-out forwards;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    &[data-phase="outro"] {
-      animation: ${fadeOut} ${OUTRO_MS}ms ease forwards;
-    }
   }
 `;
 
@@ -135,6 +145,30 @@ const PlateBox = styled.div`
 const ItemsLayer = styled.div`
   position: absolute;
   inset: 10%;
+`;
+
+// 접시(박스 폭의 75.5%, 가운데) 테두리 안쪽에 들어가면서 마지막 포스터가 다 가려지는 크기
+const Lid = styled.div`
+  position: absolute;
+  left: 50.5%;
+  top: 49.7%;
+  width: 70%;
+  aspect-ratio: 1;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  /* 내려오기 시작하면 사라질 때까지 계속 보임(애니메이션이 다시 재생되지 않게 같은 속성 유지) */
+  &[data-show="true"] {
+    animation: ${lidDrop} ${LID_MS}ms cubic-bezier(0.55, 0, 0.6, 1) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[data-show="true"] {
+      opacity: 1;
+      animation: none;
+    }
+  }
 `;
 
 const Utensil = styled(Image)`
@@ -176,28 +210,46 @@ export default function Onboarding() {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const timers = shuffle(ITEM_FILES)
+    const itemOrder = [
+      ...shuffle(ITEM_FILES.filter((file) => file !== LAST_ITEM_FILE)),
+      LAST_ITEM_FILE,
+    ];
+    const timers = itemOrder
       .slice(0, SWAP_COUNT)
       .map((file, index) =>
         window.setTimeout(() => {
           setItemFile(file);
         }, INTRO_MS + SWAP_MS * index),
       );
-    timers.push(
-      window.setTimeout(() => {
-        setPhase("outro");
-        router.replace(ROUTES.HOME);
-      }, OUTRO_START_MS),
-    );
-    // 다 사라진 뒤에 메인에 알려서, 닫힌 클로슈가 보이는 상태에서 열리기 시작하게 함.
+    timers.push(window.setTimeout(() => setPhase("lid"), LID_START_MS));
+    let isCancelled = false;
+    let frameId = null;
+
+    // 뚜껑이 덮이고 나면 주소를 메인으로 바꾸고, 메인 클로슈가 화면에 나타나는 순간
+    // 온보딩을 바로 걷어냄(빈 화면이 보이지 않게 메인이 뜰 때까지만 덮어 둠).
+    // 메인에 끝났다고 알리면 닫혀 있던 메인 클로슈가 열림.
     // (cleanup에서 알리면 개발 모드에서 effect가 두 번 실행될 때 너무 일찍 알려짐)
-    timers.push(
-      window.setTimeout(() => {
-        finishOnboarding();
-      }, TOTAL_MS),
-    );
+    const switchToMain = () => {
+      setPhase("outro");
+      router.replace(ROUTES.HOME);
+
+      const waitForMain = () => {
+        if (isCancelled) return;
+        if (document.querySelector("[data-main-cloche]")) {
+          finishOnboarding();
+          return;
+        }
+        frameId = window.requestAnimationFrame(waitForMain);
+      };
+      waitForMain();
+    };
+
+    timers.push(window.setTimeout(switchToMain, OUTRO_START_MS));
+    timers.push(window.setTimeout(() => !isCancelled && finishOnboarding(), FAILSAFE_MS));
 
     return () => {
+      isCancelled = true;
+      window.cancelAnimationFrame(frameId);
       timers.forEach((timer) => window.clearTimeout(timer));
       document.body.style.overflow = previousOverflow;
     };
@@ -254,6 +306,16 @@ export default function Onboarding() {
             />
           ))}
         </ItemsLayer>
+        <Lid data-show={phase !== "swap"}>
+          <Image
+            src={onboardingSrc(LID_FILE)}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 767px) 85vw, 55vw"
+            style={{ objectFit: "contain" }}
+          />
+        </Lid>
       </PlateBox>
     </Overlay>
   );
