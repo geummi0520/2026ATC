@@ -64,9 +64,7 @@ export default function ProgramDetail({ program }) {
                 />
                 {t("program.back")}
             </BackLink>
-            <Title>
-                {translate(currentProgram.title)}
-            </Title>
+
 
             <ProgramImg
                 src={currentProgram.imgUrl}
@@ -75,6 +73,9 @@ export default function ProgramDetail({ program }) {
                 height={307}
                 $desktop
             />
+            <Title>
+                {translate(currentProgram.title)}
+            </Title>
             <EventInfo>
                 <InfoLine>
                     <StyledSpan>{t("program.dateTime")}</StyledSpan>

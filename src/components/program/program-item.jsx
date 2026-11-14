@@ -151,7 +151,7 @@ ${media.mobile`
 `;
 const ProgramImg = styled(Image)`
 
-height: 30.7rem;
+height: 31.7rem;
 aspect-ratio: 3/4;
 width: auto;
 object-fit: cover;
