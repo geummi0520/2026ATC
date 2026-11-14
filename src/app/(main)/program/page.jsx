@@ -83,7 +83,6 @@ const PageName = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  letter-spacing: -0.144rem;
 
 ${media.tablet`
 
