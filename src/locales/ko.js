@@ -76,6 +76,9 @@ const ko = {
     back: "이전으로",
     backToList: "목록 보기",
   },
+  staff: {
+    title: "스태프 크레딧"
+  }
 };
 
 export default ko;
