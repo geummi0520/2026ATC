@@ -36,7 +36,7 @@ const en = {
   artistCredit: {
     heading: "Artist Credit",
     subtitle:
-      "A placeholder note that says you'll be able to click through to each work's details.",
+      "Click on a project title to view its details.",
   },
   footer: {
     conferenceName: "2026 Art & Technology Conference",

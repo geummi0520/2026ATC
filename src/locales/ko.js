@@ -35,7 +35,7 @@ const ko = {
   },
   artistCredit: {
     heading: "Artist Credit",
-    subtitle: "대충 클릭하면 작품 상세보기로 이동할 수 있다는 글",
+    subtitle: "작품명 클릭 시 작품 상세 페이지로 이동합니다.",
   },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
