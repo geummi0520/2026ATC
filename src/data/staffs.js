@@ -160,7 +160,7 @@ export const staffs = {
                 role: 'Team Leader',
                 img: '/images/staff/sense/감각제작팀_이다은.webp',
                 imgSize: [600, 1200],
-                photo: { x: 12, y: 55, w: 11 },
+                photo: { left: 370.56, top: 89, h: 255 },
                 label: { x: 6, y: 26, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -172,7 +172,7 @@ export const staffs = {
                 name: { ko: "노진서", en: "Noh, Jinseo" },
                 img: '/images/staff/sense/감각제작팀_노진서.webp',
                 imgSize: [600, 1200],
-                photo: { x: 25, y: 55, w: 11 },
+                photo: { right: -15.44, top: 106, h: 240 },
                 label: { x: 19, y: 84, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -184,7 +184,9 @@ export const staffs = {
                 name: { ko: "박민형", en: "Park, Minhyeong" },
                 img: '/images/staff/sense/감각제작팀_박민형.webp',
                 imgSize: [600, 1200],
-                photo: { x: 38, y: 55, w: 11 },
+                photo: {
+                    left: 258.56, top: 91, h: 246
+                },
                 label: { x: 32, y: 26, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -196,7 +198,7 @@ export const staffs = {
                 name: { ko: "설희윤", en: "Sul, Heeyun" },
                 img: '/images/staff/sense/감각제작팀_설희윤.webp',
                 imgSize: [600, 1200],
-                photo: { x: 51, y: 55, w: 11 },
+                photo: { right: 121.56, top: 117, h: 220 },
                 label: { x: 45, y: 84, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -208,7 +210,7 @@ export const staffs = {
                 name: { ko: "이유준", en: "Lee, Yujun" },
                 img: '/images/staff/sense/감각제작팀_이유준.webp',
                 imgSize: [600, 1200],
-                photo: { x: 64, y: 55, w: 11 },
+                photo: { left: 119.56, top: 91, h: 254 },
                 label: { x: 58, y: 26, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -220,7 +222,7 @@ export const staffs = {
                 name: { ko: "진예준", en: "Jin, Yejun" },
                 img: '/images/staff/sense/감각제작팀_진예준.webp',
                 imgSize: [600, 1200],
-                photo: { x: 77, y: 55, w: 11 },
+                photo: { left: -13.44, top: 51, h: 298 },
                 label: { x: 71, y: 84, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -232,7 +234,7 @@ export const staffs = {
                 name: { ko: "천성하", en: "Cheon, Sungha" },
                 img: '/images/staff/sense/감각제작팀_천성하.webp',
                 imgSize: [600, 1200],
-                photo: { x: 90, y: 55, w: 11 },
+                photo: { right: 242.56, top: 103, h: 241 },
                 label: { x: 84, y: 26, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -251,7 +253,7 @@ export const staffs = {
                 role: 'Team Leader',
                 img: '/images/staff/design/디자인팀_이현서.webp',
                 imgSize: [600, 1200],
-                photo: { x: 15, y: 55, w: 14 },
+                photo: { left: 240.56, top: -12, h: 290 },
                 label: { x: 8, y: 24, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -263,7 +265,7 @@ export const staffs = {
                 name: { ko: "김다은", en: "Kim, Daeun" },
                 img: '/images/staff/design/디자인팀_김다은.webp',
                 imgSize: [600, 1200],
-                photo: { x: 32.5, y: 55, w: 14 },
+                photo: { left: 81.56, bottom: 40, h: 229 },
                 label: { x: 25, y: 86, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -275,7 +277,7 @@ export const staffs = {
                 name: { ko: "박서연", en: "Park, Seoyeon" },
                 img: '/images/staff/design/디자인팀_박서연.webp',
                 imgSize: [600, 1200],
-                photo: { x: 50, y: 55, w: 14 },
+                photo: { left: 383.56, bottom: 30, h: 326 },
                 label: { x: 43, y: 24, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -287,7 +289,7 @@ export const staffs = {
                 name: { ko: "손민희", en: "Son, Minhui" },
                 img: '/images/staff/design/디자인팀_손민희.webp',
                 imgSize: [600, 1200],
-                photo: { x: 67.5, y: 55, w: 14 },
+                photo: { right: 110.56, top: 28, h: 233 },
                 label: { x: 60, y: 86, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -299,7 +301,7 @@ export const staffs = {
                 name: { ko: "이예은", en: "Lee, Yeeun" },
                 img: '/images/staff/design/디자인팀_이예은.webp',
                 imgSize: [600, 1200],
-                photo: { x: 85, y: 55, w: 14 },
+                photo: { right: 26.56, bottom: 30, h: 177 },
                 label: { x: 78, y: 24, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -318,7 +320,7 @@ export const staffs = {
                 role: 'Team Leader',
                 img: '/images/staff/web/웹팀_문금미.webp',
                 imgSize: [600, 1200],
-                photo: { x: 25, y: 52, w: 18 },
+                photo: { left: 171.56, top: 265, h: 143 },
                 label: { x: 16, y: 14, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -330,7 +332,7 @@ export const staffs = {
                 name: { ko: "이연재", en: "Lee, Yeonjae" },
                 img: '/images/staff/web/웹팀_이연재.webp',
                 imgSize: [600, 1200],
-                photo: { x: 50, y: 52, w: 18 },
+                photo: { right: 344.439, top: 105, h: 213 },
                 label: { x: 41, y: 92, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -342,7 +344,7 @@ export const staffs = {
                 name: { ko: "임지은", en: "Im, Jieun" },
                 img: '/images/staff/web/웹팀_임지은.webp',
                 imgSize: [600, 1200],
-                photo: { x: 75, y: 52, w: 18 },
+                photo: { right: 216.56, top: 87, h: 236 },
                 label: { x: 66, y: 14, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -361,7 +363,7 @@ export const staffs = {
                 role: 'Team Leader',
                 img: '/images/staff/archiving/아카이빙팀_신재원.webp',
                 imgSize: [600, 1200],
-                photo: { x: 15, y: 55, w: 14 },
+                photo: { left: 231.56, top: 103, h: 241 },
                 label: { x: 8, y: 24, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -373,7 +375,7 @@ export const staffs = {
                 name: { ko: "박지민", en: "Park, Jimin" },
                 img: '/images/staff/archiving/아카이빙팀_박지민.webp',
                 imgSize: [600, 1200],
-                photo: { x: 32.5, y: 55, w: 14 },
+                photo: { right: 259.559, top: 107, h: 257 },
                 label: { x: 25, y: 86, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -385,7 +387,7 @@ export const staffs = {
                 name: { ko: "오유빈", en: "Oh, Yubin" },
                 img: '/images/staff/archiving/아카이빙팀_오유빈.webp',
                 imgSize: [600, 1200],
-                photo: { x: 50, y: 55, w: 14 },
+                photo: { left: 396.56, top: 131, h: 235 },
                 label: { x: 43, y: 24, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -397,7 +399,7 @@ export const staffs = {
                 name: { ko: "오준명", en: "Oh, Junmyung" },
                 img: '/images/staff/archiving/아카이빙팀_오준명.webp',
                 imgSize: [600, 1200],
-                photo: { x: 67.5, y: 55, w: 14 },
+                photo: { right: 78.559, top: 117, h: 249 },
                 label: { x: 60, y: 86, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -409,7 +411,7 @@ export const staffs = {
                 name: { ko: "이세민", en: "Lee, Semin" },
                 img: '/images/staff/archiving/아카이빙팀_이세민.webp',
                 imgSize: [600, 1200],
-                photo: { x: 85, y: 55, w: 14 },
+                photo: { left: 66.56, top: 137, h: 225 },
                 label: { x: 78, y: 24, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -428,7 +430,7 @@ export const staffs = {
                 role: 'Team Leader',
                 img: '/images/staff/corporate/대외협력팀_김광록.webp',
                 imgSize: [600, 1200],
-                photo: { x: 20, y: 55, w: 16 },
+                photo: { left: 69.56, top: 67, h: 242 },
                 label: { x: 12, y: 20, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -440,7 +442,7 @@ export const staffs = {
                 name: { ko: "김가일", en: "Kim, Gail" },
                 img: '/images/staff/corporate/대외협력팀_김가일.webp',
                 imgSize: [600, 1200],
-                photo: { x: 40, y: 55, w: 16 },
+                photo: { left: 239.56, top: 35, h: 302 },
                 label: { x: 32, y: 88, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
@@ -452,7 +454,7 @@ export const staffs = {
                 name: { ko: "노수현", en: "Roh, Suhyeon" },
                 img: '/images/staff/corporate/대외협력팀_노수현.webp',
                 imgSize: [600, 1200],
-                photo: { x: 60, y: 55, w: 16 },
+                photo: { right: 256.434, top: 55, h: 262 },
                 label: { x: 52, y: 20, align: 'left' },
                 mobile: {
                     photo: { x: 4, w: 55 },
@@ -464,7 +466,7 @@ export const staffs = {
                 name: { ko: "류선우", en: "Ryu, Sunwoo" },
                 img: '/images/staff/corporate/대외협력팀_류선우.webp',
                 imgSize: [600, 1200],
-                photo: { x: 80, y: 55, w: 16 },
+                photo: { right: 59, bottom: 203.52, h: 248 },
                 label: { x: 72, y: 88, align: 'left' },
                 mobile: {
                     photo: { x: 41, w: 55 },
