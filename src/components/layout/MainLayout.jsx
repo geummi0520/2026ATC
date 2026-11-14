@@ -5,9 +5,21 @@ import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
+
 import Onboarding from "@/components/onboarding/Onboarding";
 import { ROUTES, isBrandDarkPath } from "@/constants/routes";
-import { isOnboardingPlaying, subscribeOnboarding } from "@/lib/onboardingStatus";
+import {
+  isOnboardingPlaying,
+  subscribeOnboarding,
+} from "@/lib/onboardingStatus";
+
+import HiddenStamp from "@/components/stamp/HiddenStamp";
+import StampButton from "@/components/stamp/StampButton";
+import StampCardModal from "@/components/stamp/StampCardModal";
+import StampReward from "@/components/stamp/StampReward";
+import { STAMP_SLOTS } from "@/constants/stamps";
+import useStamp from "@/hooks/useStamp";
+
 import { media } from "@/styles/media";
 
 const Layout = styled.div`
@@ -39,10 +51,18 @@ export default function MainLayout({ children, isComingSoon = false }) {
   const isOnboardingPlayingNow = useSyncExternalStore(
     subscribeOnboarding,
     isOnboardingPlaying,
-    () => false,
+    () => false
   );
   const showOnboarding = isOnboardingPage || isOnboardingPlayingNow;
   const rightRailRef = useRef(null);
+  const { plan } = useStamp();
+  // MAIN·WORKS 도장은 각 페이지 컴포넌트에서 따로 띄움
+  const pageStampSlot =
+    {
+      [ROUTES.ABOUT]: STAMP_SLOTS.ABOUT,
+      [ROUTES.PROGRAM]: STAMP_SLOTS.PROGRAM,
+    }[pathname] ??
+    (pathname === plan?.archivePath ? STAMP_SLOTS.ARCHIVE : null);
 
   useEffect(() => {
     let frameId = null;
@@ -138,6 +158,7 @@ export default function MainLayout({ children, isComingSoon = false }) {
     <Layout $isBrandDark={isBrandDark} $isWorks={isWorks}>
       <LeftRail>
         <RailSlot>
+          {!isComingSoon && <StampButton />}
           <LeftRailLabel>2026 ATC</LeftRailLabel>
         </RailSlot>
         <RailSlot />
@@ -146,8 +167,13 @@ export default function MainLayout({ children, isComingSoon = false }) {
         {!isComingSoon && <Header />}
         <MainContent $isWorks={isWorks} $isComingSoon={isComingSoon}>
           {children}
+          {!isComingSoon && pageStampSlot && (
+            <HiddenStamp key={pathname} slot={pageStampSlot} />
+          )}
         </MainContent>
-        {!isWorks && !isHome && !isOnboardingPage && !isComingSoon && <Footer />}
+        {!isWorks && !isHome && !isOnboardingPage && !isComingSoon && (
+          <Footer />
+        )}
       </Center>
       {showOnboarding && !isComingSoon && <Onboarding />}
       <RightRail ref={rightRailRef}>
@@ -158,6 +184,12 @@ export default function MainLayout({ children, isComingSoon = false }) {
           <RightRailLabel>레시피 바꾸지 말 것</RightRailLabel>
         </RailSlot>
       </RightRail>
+      {!isComingSoon && (
+        <>
+          <StampCardModal />
+          <StampReward />
+        </>
+      )}
     </Layout>
   );
 }
@@ -272,6 +304,7 @@ const Center = styled.div`
 `;
 
 const MainContent = styled.main`
+  position: relative;
   flex: 1;
   padding-top: ${({ $isComingSoon }) => ($isComingSoon ? "0" : "12rem")};
   min-height: 0;

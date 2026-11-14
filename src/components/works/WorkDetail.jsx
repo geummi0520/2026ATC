@@ -4,11 +4,14 @@ import Image from "next/image";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
 import BackButton from "@/components/works/BackButton";
+import HiddenStamp from "@/components/stamp/HiddenStamp";
 import WorksRail from "@/components/works/WorksRail";
+import { STAMP_SLOTS } from "@/constants/stamps";
+import useStamp from "@/hooks/useStamp";
 import useTranslation from "@/hooks/useTranslation";
 import useWorksBackHref from "@/hooks/useWorksBackHref";
 import { media } from "@/styles/media";
-import { getVimeoEmbedUrl } from "@/utils/getVimeoEmbedUrl";
+import { rollWorksStamp } from "@/utils/stampPlan";
 
 const CONTACT_ICONS = {
   email: "/icons/works/email_icon.svg",
@@ -16,6 +19,12 @@ const CONTACT_ICONS = {
   instagram: "/icons/works/instagram_icon.svg",
   linkedin: "/icons/works/linkedin_icon.svg",
   website: "/icons/works/link_icon.svg",
+};
+
+const WORK_LINK_ICONS = {
+  github: "/icons/works/github_green.svg",
+  instagram: "/icons/works/instagram_green.svg",
+  youtube: "/icons/works/youtube_green.svg",
 };
 
 export default function WorkDetail({ work }) {
@@ -30,8 +39,13 @@ export default function WorkDetail({ work }) {
   const detailImages = work.images.detail.length
     ? work.images.detail
     : [work.images.thumbnail];
-  const videoEmbedUrl = getVimeoEmbedUrl(work.video);
+  const videoEmbedUrl = work.video?.embed
+    ? `${work.video.embed}?autoplay=1&muted=1`
+    : null;
   const backHref = useWorksBackHref(work.id);
+  const { plan } = useStamp();
+  // 상세에 들어올 때마다 확률로 도장을 띄움(연속으로 안 나오면 일정 횟수 뒤 확정)
+  const isStampWork = Boolean(plan) && rollWorksStamp(work.id);
 
   return (
     <Container>
@@ -40,6 +54,8 @@ export default function WorkDetail({ work }) {
       </DesktopRail>
 
       <DetailScroll data-works-scroll>
+        <ScrollContent>
+        <HiddenStamp key={work.id} slot={STAMP_SLOTS.WORKS} active={isStampWork} />
         <CompactBackRow>
           <BackButton href={backHref} />
         </CompactBackRow>
@@ -69,6 +85,26 @@ export default function WorkDetail({ work }) {
               <SectionTitle>작품 소개</SectionTitle>
               <Lead>{tagline}</Lead>
               <Paragraph>{description}</Paragraph>
+              {work.links.length > 0 && (
+                <Contacts>
+                  {work.links.map((link) => (
+                    <ContactLink
+                      key={`${link.type}-${link.url}`}
+                      href={link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${title} ${link.type}`}
+                    >
+                      <Image
+                        src={WORK_LINK_ICONS[link.type] ?? CONTACT_ICONS.website}
+                        alt=""
+                        width={24}
+                        height={24}
+                      />
+                    </ContactLink>
+                  ))}
+                </Contacts>
+              )}
             </Copy>
             <MediaList>
               {videoEmbedUrl && (
@@ -132,6 +168,7 @@ export default function WorkDetail({ work }) {
           </TeamSection>
         </Body>
         <Footer />
+        </ScrollContent>
       </DetailScroll>
     </Container>
   );
@@ -169,6 +206,7 @@ const CompactBackRow = styled.div`
 
 // container-type: size -> 하위 요소에서 100cqh로 스크롤 영역(헤더, WorksRail 제외) 높이 참조
 const DetailScroll = styled.div`
+  position: relative;
   flex: 1;
   min-height: 0;
   container-type: size;
@@ -179,6 +217,11 @@ const DetailScroll = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+// 도장 위치(%)를 처음 보이는 한 화면이 아니라 스크롤되는 전체 콘텐츠 높이 기준으로 잡기 위한 래퍼
+const ScrollContent = styled.div`
+  position: relative;
 `;
 
 const Hero = styled.section`

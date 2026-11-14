@@ -24,7 +24,6 @@ export default function AboutPage() {
           alt="poster-main"
           width={400}
           height={567}
-
         />
       </Frame1>
 
@@ -83,11 +82,13 @@ export default function AboutPage() {
             </StaffTitleBox>
 
           </ContentTitle>
-          <CreditItem
-            teamName={staffs[0].team}
-            members={staffs[0].members}
-            cd={true}
-          />
+          <StaffList>
+            <CreditItem
+              teamName={staffs[0].team}
+              members={staffs[0].members}
+              $isCd={true}
+            />
+          </StaffList>
           <CreditContainer>
             <StaffList>
               {staffs.slice(1, 3).map((team, index) => (
@@ -130,12 +131,21 @@ export default function AboutPage() {
 
         </StaffContainer>
         <TeaserContainer>
-          <TeaserFilmImg
+          <TeaserVideo
+            title="vimeo-player"
+            src="https://player.vimeo.com/video/1138407942?h=bf1665b5a5&title=0&byline=0&portrait=0&badge=0"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+
+          {/* <TeaserFilmImg
             src="/images/about/teaser_blank.png"
             alt="teaser-film"
             width={340}
             height={604}
-          />
+          /> */}
         </TeaserContainer>
       </StaffBox>
 
@@ -221,7 +231,7 @@ ${media.tablet`
 
 // 모바일
 ${media.mobile`
-  padding:2rem 1rem;
+  // padding:2rem 1rem;
   gap:6rem;
 `};
 
@@ -308,18 +318,31 @@ flex-direction:column;
 gap:4rem;
 `;
 const TeaserContainer = styled.div`
+flex:2;
+width:100%;
 padding-right:4rem;
 display:flex;
 
 justify-content:center;
 align-items:center;
 
+position:sticky;
+top:2rem;  
+
 ${media.mobile`
-  order:-1;  /* 모바일: 3(티저)을 2(스태프) 앞으로 */
+  position:static;
+  order:-1;  
   padding:0rem;
 `};
 `;
-
+const TeaserVideo = styled.iframe`
+width:100%;
+aspect-ratio:9/16;
+border:0;
+${media.mobile`
+  max-width:34rem;
+  `}
+`;
 const TeaserFilmImg = styled(Image)`
 width:100%;
 height:auto;
@@ -334,16 +357,24 @@ ${media.mobile`
 `;
 const StaffList = styled.div`
 flex:1;
-
+width:100%;
 display:flex;
 flex-direction:row;
+justify-content:flex-end;
 gap:4rem;
 ${media.tablet`
 flex-direction:column;
+align-items:flex-end;
+justify-content:flex-start;
 `};
 ${media.mobile`
   flex-direction:row;
   `}
+@media (max-width:480px) {
+flex-direction:column;
+align-items:flex-end;
+justify-content:flex-start;
+}
 
 
 
@@ -435,8 +466,12 @@ flex:1;
 display:flex;
 flex-direction:column;
 
-align-self:flex-end;
+align-self:flex-start;
 gap:0.8rem;
+${media.tablet`
+  align-self:flex-end;
+
+  `}
 ${media.mobile`
   align-self:flex-start;
   `}
@@ -582,12 +617,17 @@ gap:4rem;
 padding:4rem 0rem;
 
 align-items:start;
+${media.tablet`
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+`};
 ${media.mobile`
   grid-template-columns: minmax(0, 1fr);  
   gap:2rem;
 `};
 `;
 const StaffContainer = styled.div`
+
+
 display:flex;
 flex-direction:column;
 align-items:flex-start;
@@ -595,6 +635,7 @@ gap:6rem;
 padding:0 4rem;
 ${media.tablet`
   gap:4rem;
+  flex:1;
   `}
 ${media.mobile`
   padding:0rem;
@@ -609,7 +650,8 @@ gap:1rem;
 const LeftImg = styled(Image)`
 width:19.5rem;
 height:auto;
-align-self:center;
+// align-self:center;
+align-self:flex-start;
 
 ${media.tablet`
 // 테블릿 + 모바일
@@ -680,6 +722,7 @@ padding:0rem;
 
 `;
 const StyledLink = styled(Link)`
+margin-bottom:1rem;
 align-self:flex-end;
 
 display: flex;
@@ -708,6 +751,6 @@ color: ${({ theme }) => theme.text.brandInvert};
 
 font-size: ${({ theme }) => theme.typography.fontSize.textLg};
 font-style: normal;
-font-weight: 700;
+font-weight: 400;
 line-height: 180%; /* 32.4px */
 `;

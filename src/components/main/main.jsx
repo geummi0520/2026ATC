@@ -19,6 +19,17 @@ import ClocheStage, {
 import CommentText, { CommentBody, CommentTitle } from "@/components/main/CommentText";
 import DetailPopup from "@/components/main/DetailPopup";
 
+//스탬프
+import HiddenStamp from "@/components/stamp/HiddenStamp";
+import {
+  MAIN_STAMP_CHANCE,
+  MAIN_STAMP_COOLDOWN,
+  MAIN_STAMP_PITY,
+  MAIN_STAMP_SLOTS,
+} from "@/constants/stamps";
+import useStamp from "@/hooks/useStamp";
+import { rollWithPity } from "@/utils/stampPlan";
+
 
 const EXHIBITION_SCHEDULE = [
   { date: "main.scheduleOpeningDate", time: "main.scheduleOpeningTime" },
@@ -94,6 +105,14 @@ export default function Main() {
   const hasAutoOpenedRef = useRef(false);
   const [readyImageCount, setReadyImageCount] = useState(0);
   const isReady = readyImageCount >= PRELOAD_IMAGE_COUNT;
+  // 요리가 나올 때마다 확률로 메인 도장을 띄움.
+  // 띄울 칸(slot)은 뽑는 순간 정해 둠 -> 하나를 주워도 같은 요리에서 다음 칸이 바로 나오지 않음.
+  // key는 도장을 새 위치로 다시 띄우기 위한 값
+  const [mainStamp, setMainStamp] = useState(null);
+  const { collected } = useStamp();
+  const collectedRef = useRef(collected);
+  const stampMissesRef = useRef(0);
+  const stampCooldownRef = useRef(0);
 
   const food = mainFood[foodIndex];
 
@@ -116,6 +135,35 @@ export default function Main() {
   };
 
 
+  const rollMainStamp = useCallback(() => {
+    const slot = MAIN_STAMP_SLOTS.find(
+      (item) => !collectedRef.current.includes(item)
+    );
+
+    // 다 모았거나, 방금 주워서 쉬는 중이면 이번 요리는 건너뜀
+    if (!slot || stampCooldownRef.current > 0) {
+      stampCooldownRef.current = Math.max(stampCooldownRef.current - 1, 0);
+      setMainStamp(null);
+      return;
+    }
+
+    const { show, misses } = rollWithPity(
+      MAIN_STAMP_CHANCE,
+      MAIN_STAMP_PITY,
+      stampMissesRef.current
+    );
+    stampMissesRef.current = misses;
+    setMainStamp(show ? { key: Date.now(), slot } : null);
+  }, []);
+
+  // 띄운 도장을 주우면 다음 요리 몇 개는 도장 없이 지나가게 함
+  useEffect(() => {
+    collectedRef.current = collected;
+    if (mainStamp && collected.includes(mainStamp.slot)) {
+      stampCooldownRef.current = MAIN_STAMP_COOLDOWN;
+    }
+  }, [collected, mainStamp]);
+
   const tryAutoOpen = useCallback(() => {
     if (
       hasAutoOpenedRef.current ||
@@ -128,8 +176,9 @@ export default function Main() {
     const firstFoodIndex = Math.floor(Math.random() * mainFood.length);
     setFoodIndex(firstFoodIndex);
     setCommentIndex(pickCommentIndex(firstFoodIndex));
+    rollMainStamp();
     playClocheAnimation();
-  }, [playClocheAnimation]);
+  }, [playClocheAnimation, rollMainStamp]);
 
   const handleImageLoad = useCallback(
     (event) => {
@@ -159,6 +208,7 @@ export default function Main() {
         const nextFoodIndex = pickNextIndex(mainFood.length, foodIndex);
         setFoodIndex(nextFoodIndex);
         setCommentIndex(pickCommentIndex(nextFoodIndex));
+        rollMainStamp();
       },
     });
   };
@@ -197,6 +247,13 @@ export default function Main() {
         clocheFrame={clocheFrame}
         foodIndex={foodIndex}
         onImageLoad={handleImageLoad}
+      />
+
+      {/* 뚜껑이 다 열려 요리가 나온 뒤에만 스탬프 노출 */}
+      <HiddenStamp
+        key={mainStamp?.key}
+        slot={mainStamp?.slot}
+        active={Boolean(mainStamp) && !isAnimating}
       />
 
       <ButtonRow>
