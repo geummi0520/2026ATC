@@ -18,6 +18,15 @@ export const MAIN_STAMP_SLOTS = [STAMP_SLOTS.MAIN_1, STAMP_SLOTS.MAIN_2];
 
 // 요리가 나올 때마다 메인 도장이 등장할 확률
 export const MAIN_STAMP_CHANCE = 0.4;
+// 메인 도장을 주운 뒤 도장 없이 지나가는 요리 수
+export const MAIN_STAMP_COOLDOWN = 2;
+// 이 횟수만큼 연속으로 안 나오면 다음 요리에서는 반드시 등장
+export const MAIN_STAMP_PITY = 4;
+
+// 작품 상세에 들어갈 때마다 works 도장이 등장할 확률
+export const WORKS_STAMP_CHANCE = 0.2;
+// 이 횟수만큼 연속으로 안 나오면 다음 상세에서는 반드시 등장
+export const WORKS_STAMP_PITY = 5;
 
 export const ARCHIVE_STAMP_PATHS = [
   ROUTES.ARCHIVE.STAFF,

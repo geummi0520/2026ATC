@@ -8,5 +8,5 @@ export default async function WorkDetailPage({ params }) {
 
   if (!work) notFound();
 
-  return <WorkDetail work={work} workIds={works.map((item) => item.id)} />;
+  return <WorkDetail work={work} />;
 }

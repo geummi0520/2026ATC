@@ -11,7 +11,7 @@ import useStamp from "@/hooks/useStamp";
 import useTranslation from "@/hooks/useTranslation";
 import useWorksBackHref from "@/hooks/useWorksBackHref";
 import { media } from "@/styles/media";
-import { pickBySeed } from "@/utils/stampPlan";
+import { rollWorksStamp } from "@/utils/stampPlan";
 
 const CONTACT_ICONS = {
   email: "/icons/works/email_icon.svg",
@@ -27,7 +27,7 @@ const WORK_LINK_ICONS = {
   youtube: "/icons/works/youtube_green.svg",
 };
 
-export default function WorkDetail({ work, workIds }) {
+export default function WorkDetail({ work }) {
   const { translate } = useTranslation();
   const title = translate(work.title);
   const location = translate(work.location);
@@ -44,8 +44,8 @@ export default function WorkDetail({ work, workIds }) {
     : null;
   const backHref = useWorksBackHref(work.id);
   const { plan } = useStamp();
-  const isStampWork =
-    Boolean(plan) && pickBySeed(workIds, plan.worksSeed) === work.id;
+  // 상세에 들어올 때마다 확률로 도장을 띄움(연속으로 안 나오면 일정 횟수 뒤 확정)
+  const isStampWork = Boolean(plan) && rollWorksStamp(work.id);
 
   return (
     <Container>
@@ -54,6 +54,7 @@ export default function WorkDetail({ work, workIds }) {
       </DesktopRail>
 
       <DetailScroll data-works-scroll>
+        <ScrollContent>
         <HiddenStamp key={work.id} slot={STAMP_SLOTS.WORKS} active={isStampWork} />
         <CompactBackRow>
           <BackButton href={backHref} />
@@ -167,6 +168,7 @@ export default function WorkDetail({ work, workIds }) {
           </TeamSection>
         </Body>
         <Footer />
+        </ScrollContent>
       </DetailScroll>
     </Container>
   );
@@ -215,6 +217,11 @@ const DetailScroll = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+// 도장 위치(%)를 처음 보이는 한 화면이 아니라 스크롤되는 전체 콘텐츠 높이 기준으로 잡기 위한 래퍼
+const ScrollContent = styled.div`
+  position: relative;
 `;
 
 const Hero = styled.section`

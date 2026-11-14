@@ -14,8 +14,14 @@ import { media } from "@/styles/media";
 
 //스탬프
 import HiddenStamp from "@/components/stamp/HiddenStamp";
-import { MAIN_STAMP_CHANCE, MAIN_STAMP_SLOTS } from "@/constants/stamps";
+import {
+  MAIN_STAMP_CHANCE,
+  MAIN_STAMP_COOLDOWN,
+  MAIN_STAMP_PITY,
+  MAIN_STAMP_SLOTS,
+} from "@/constants/stamps";
 import useStamp from "@/hooks/useStamp";
+import { rollWithPity } from "@/utils/stampPlan";
 
 const CLOCHE_FRAME_COUNT = 7;
 const CLOCHE_FRAME_NUMBERS = Array.from(
@@ -602,12 +608,14 @@ export default function Main() {
   const hasAutoOpenedRef = useRef(false);
   const [readyImageCount, setReadyImageCount] = useState(0);
   const isReady = readyImageCount >= PRELOAD_IMAGE_COUNT;
-  // 요리가 나올 때마다 확률로 메인 도장을 띄움. 값은 도장을 새 위치로 다시 띄우기 위한 key
-  const [mainStampRoll, setMainStampRoll] = useState(null);
+  // 요리가 나올 때마다 확률로 메인 도장을 띄움.
+  // 띄울 칸(slot)은 뽑는 순간 정해 둠 -> 하나를 주워도 같은 요리에서 다음 칸이 바로 나오지 않음.
+  // key는 도장을 새 위치로 다시 띄우기 위한 값
+  const [mainStamp, setMainStamp] = useState(null);
   const { collected } = useStamp();
-  const mainStampSlot = MAIN_STAMP_SLOTS.find(
-    (slot) => !collected.includes(slot)
-  );
+  const collectedRef = useRef(collected);
+  const stampMissesRef = useRef(0);
+  const stampCooldownRef = useRef(0);
 
   const food = mainFood[foodIndex];
 
@@ -637,8 +645,33 @@ export default function Main() {
   };
 
   const rollMainStamp = useCallback(() => {
-    setMainStampRoll(Math.random() < MAIN_STAMP_CHANCE ? Date.now() : null);
+    const slot = MAIN_STAMP_SLOTS.find(
+      (item) => !collectedRef.current.includes(item)
+    );
+
+    // 다 모았거나, 방금 주워서 쉬는 중이면 이번 요리는 건너뜀
+    if (!slot || stampCooldownRef.current > 0) {
+      stampCooldownRef.current = Math.max(stampCooldownRef.current - 1, 0);
+      setMainStamp(null);
+      return;
+    }
+
+    const { show, misses } = rollWithPity(
+      MAIN_STAMP_CHANCE,
+      MAIN_STAMP_PITY,
+      stampMissesRef.current
+    );
+    stampMissesRef.current = misses;
+    setMainStamp(show ? { key: Date.now(), slot } : null);
   }, []);
+
+  // 띄운 도장을 주우면 다음 요리 몇 개는 도장 없이 지나가게 함
+  useEffect(() => {
+    collectedRef.current = collected;
+    if (mainStamp && collected.includes(mainStamp.slot)) {
+      stampCooldownRef.current = MAIN_STAMP_COOLDOWN;
+    }
+  }, [collected, mainStamp]);
 
   // 클로슈 스톱모션. 기본은 덮인 상태(1)부터 열리며 요리를 보여주고,
   // closeFirst면 지금 열린 상태(7)에서 먼저 1까지 닫혔다가 다시 열림.
@@ -905,11 +938,9 @@ export default function Main() {
 
       {/* 뚜껑이 다 열려 요리가 나온 뒤에만 스탬프 노출 */}
       <HiddenStamp
-        key={mainStampRoll}
-        slot={mainStampSlot}
-        active={
-          mainStampRoll !== null && !isAnimating && Boolean(mainStampSlot)
-        }
+        key={mainStamp?.key}
+        slot={mainStamp?.slot}
+        active={Boolean(mainStamp) && !isAnimating}
       />
 
       <ButtonRow>
