@@ -58,7 +58,7 @@ export default function StampCardModal() {
         type="button"
         onClick={closeStampModal}
       >
-        <svg width="20" height="20" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true">
           <path d="M0.5 14.5L14.5 0.5M14.5 14.5L0.5 0.5" stroke="currentColor" />
         </svg>
         {t("stamp.close")}
@@ -75,52 +75,54 @@ const Overlay = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4rem;
+  gap: 3.2rem;
   padding: 4rem 2.4rem;
   overflow-y: auto;
-  background: rgba(0, 0, 0, 0.92);
+  background: rgba(43, 43, 43, 0.95);
   color: ${({ theme }) => theme.text.brandInvert};
 
   ${media.mobile`
-    gap: 3.2rem;
+    gap: 2.4rem;
   `}
 `;
 
 const CardFrame = styled.div`
   flex: none;
-  /* 회전한 카드가 화면 높이를 넘지 않도록 높이 기준으로도 너비를 제한 */
-  width: min(86vw, 120rem, calc((100dvh - 24rem) * 1.5));
+  /* 화면 폭에 비례해 줄어듦(1460px 이상에서는 76rem 고정).
+     회전한 카드가 화면 높이를 넘지 않도록 높이 기준으로도 너비를 제한 */
+  width: min(52vw, 76rem, calc((100dvh - 28rem) * 1.5));
   /* 회전으로 위아래가 튀어나오는 만큼 여백 확보 */
-  margin: min(6vw, 6rem) 0;
+  margin: min(4vw, 4rem) 0;
   transform: rotate(-6deg);
   box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.4);
 
+  /* 모바일은 양옆 레일(2.4rem)만 비우고 꽉 채움. -6° 회전하면 보이는 폭이 약 1.06배가 되어 그만큼 나눔 */
   ${media.mobile`
-    width: min(92vw, calc((100dvh - 24rem) * 1.5));
+    width: min(
+      calc((100vw - 4.8rem) / 1.06),
+      calc((100dvh - 24rem) * 1.5)
+    );
   `}
 `;
 
 const Message = styled.p`
   margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   text-align: center;
 
-  ${media.mobile`
-    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  `}
 `;
 
 const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  min-width: 18rem;
-  padding: 1.6rem 2.4rem;
+  gap: 1.2rem;
+  min-width: 14rem;
+  padding: 1rem 2rem;
   border: 1px solid ${({ theme }) => theme.line.brandInvert};
   background: transparent;
   color: inherit;
-  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   cursor: pointer;
 
   &:hover,
@@ -129,8 +131,14 @@ const CloseButton = styled.button`
   }
 
   ${media.mobile`
-    min-width: 14rem;
-    padding: 1.2rem 2rem;
-    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+    gap: 0.8rem;
+    min-width: 11rem;
+    padding: 0.8rem 1.6rem;
+    font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+
+    svg {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
   `}
 `;
