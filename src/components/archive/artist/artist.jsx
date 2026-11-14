@@ -2,14 +2,37 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
-import { artists } from "@/data/artist";
+import { ROUTES } from "@/constants/routes";
+import { works } from "@/data/works";
 import { media } from "@/styles/media";
 import useTranslation from "@/hooks/useTranslation";
 
 const PREVIEW_WIDTH = 400; 
 const PREVIEW_HEIGHT = (PREVIEW_WIDTH * 4) / 3; // aspect-ratio: 3 / 4
 const HEADER_HEIGHT = 200; 
+
+const HOMONYM_NAMES = ["이은서"];
+
+
+const artists = (() => {
+  const byName = new Map();
+  works.forEach((work) => {
+    work.members?.forEach((member) => {
+      const isHomonym = HOMONYM_NAMES.includes(member.name.ko);
+      const key = isHomonym ? `${member.name.ko}-${work.id}` : member.name.ko;
+      if (!byName.has(key)) byName.set(key, { name: member.name, works: [] });
+      byName.get(key).works.push({
+        workId: work.id,
+        team: work.team,
+        title: work.title,
+        image: work.images?.thumbnail,
+      });
+    });
+  });
+  return [...byName.values()].sort((a, b) => a.name.ko.localeCompare(b.name.ko, "ko"));
+})();
 
 export default function ArtistCredit() {
   const { t, translate } = useTranslation();
@@ -59,6 +82,7 @@ export default function ArtistCredit() {
               {artist.works.map((work, workIndex) => (
                 <Work
                   key={work.workId}
+                  href={`${ROUTES.WORKS}/${work.workId}`}
                   $isLast={workIndex === artist.works.length - 1}
                   $active={
                     hovered?.personIndex === personIndex &&
@@ -71,13 +95,13 @@ export default function ArtistCredit() {
                   )}
                   onMouseLeave={handleWorkLeave}
                 >
-                  {translate(work.title)}
+                  {translate(work.team)} - {translate(work.title)}
                 </Work>
               ))}
             </PersonBlock>
           ))}
         </List>
-        {hovered && (
+        {hovered?.image && (
           <Preview style={{ top: hovered.top, left: hovered.left }}>
             <PreviewImageWrapper>
               <Image
@@ -143,7 +167,7 @@ const List = styled.ul`
 
 const PersonBlock = styled.li`
   display: grid;
-  grid-template-columns: 12rem 2.4rem 1fr;
+  grid-template-columns: 18rem 2.4rem 1fr;
   grid-template-rows: repeat(${({ $rows }) => $rows}, auto);
   cursor: pointer;
 `;
@@ -169,7 +193,8 @@ const Gap = styled.span`
   border-bottom: 1px solid ${({ theme }) => theme.line.primary};
 `;
 
-const Work = styled.span`
+
+const Work = styled(Link)`
   display: flex;
   align-items: center;
   grid-column: 3;
@@ -177,6 +202,7 @@ const Work = styled.span`
   font-size: 1.4rem;
   font-weight: 400;
   line-height: 1.8;
+  text-decoration: none;
   color: ${({ theme, $active }) => ($active ? theme.text.brand : "inherit")};
   background: ${({ theme, $active }) => ($active ? theme.surface.brand : "transparent")};
   border-bottom: 1px solid

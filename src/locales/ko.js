@@ -19,6 +19,10 @@ const ko = {
     stamp: "STAMP",
     detail: "자세히보기",
     close: "닫기",
+    scheduleOpeningDate: "11.26(목)",
+    scheduleOpeningTime: "15:30 – 21:00",
+    scheduleRegularDate: "11.27(금) - 11.29(일)",
+    scheduleRegularTime: "10:00 – 21:00",
   },
   stamp: {
     collect: "숨겨진 도장 줍기",
@@ -35,7 +39,7 @@ const ko = {
   },
   artistCredit: {
     heading: "Artist Credit",
-    subtitle: "대충 클릭하면 작품 상세보기로 이동할 수 있다는 글",
+    subtitle: "작품명 클릭 시 작품 상세 페이지로 이동합니다.",
   },
   footer: {
     conferenceName: "2026 Art & Technology Conference",

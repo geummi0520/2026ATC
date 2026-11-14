@@ -19,6 +19,10 @@ const en = {
     stamp: "STAMP",
     detail: "See Details",
     close: "Close",
+    scheduleOpeningDate: "11.26(Thu)",
+    scheduleOpeningTime: "15:30 – 21:00",
+    scheduleRegularDate: "11.27(Fri) - 11.29(Sun)",
+    scheduleRegularTime: "10:00 – 21:00",
   },
   stamp: {
     collect: "Pick up the hidden stamp",
@@ -36,7 +40,7 @@ const en = {
   artistCredit: {
     heading: "Artist Credit",
     subtitle:
-      "A placeholder note that says you'll be able to click through to each work's details.",
+      "Click on a project title to view its details.",
   },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
