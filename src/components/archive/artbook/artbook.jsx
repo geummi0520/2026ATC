@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import styled from "styled-components";
 import { ARTBOOK_PDF, artbookToc } from "@/data/artbook";
+import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 const PAGE_WIDTH = 540.304;
 const PAGE_HEIGHT = 766;
@@ -26,6 +27,7 @@ const subscribeMobile = (onChange) => {
 const getIsMobile = () => window.matchMedia(MOBILE_QUERY).matches;
 
 export default function Artbook() {
+  const { t } = useTranslation();
   const [lib, setLib] = useState(null);
   const [numPages, setNumPages] = useState(0);
   const [isCoverOnly, setIsCoverOnly] = useState(true);
@@ -46,7 +48,8 @@ export default function Artbook() {
         if (cancelled) return;
 
         reactPdf.pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-          "pdfjs-dist/build/pdf.worker.min.mjs",
+          // 구버전 브라우저(사파리 등)에서도 돌도록 폴리필이 들어간 legacy 워커를 씀
+          "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
           import.meta.url,
         ).toString();
 
@@ -133,16 +136,16 @@ export default function Artbook() {
   if (!lib) {
     return (
       <Content>
-        <Title>Art Book</Title>
+        <Title>{t("navigation.artbook")}</Title>
       </Content>
     );
   }
 
-  const { Document, HTMLFlipBook } = lib;
+  const { Document, HTMLFlipBook, Page } = lib;
 
   return (
     <Content>
-      <Title>Art Book</Title>
+      <Title>{t("navigation.artbook")}</Title>
       <Wrapper>
         <Document
           file={ARTBOOK_PDF}
@@ -162,36 +165,53 @@ export default function Artbook() {
               >
                 <Image src="/icons/program/polygon_left.svg" alt="" width={8} height={13} />
               </NavButton>
-              <BookStage $coverOnly={isCoverOnly}>
-         
-                <HTMLFlipBook
-                  key={isMobile ? "mobile" : "desktop"}
-                  ref={bookRef}
-                  width={PAGE_WIDTH}
-                  height={PAGE_HEIGHT}
-                  size="stretch"
-                  minWidth={240}
-                  maxWidth={PAGE_WIDTH}
-                  minHeight={340}
-                  maxHeight={PAGE_HEIGHT}
-                  showCover={!isMobile}
-                  usePortrait
-                  maxShadowOpacity={0.4}
-                  flippingTime={500}
-                  onInit={(event) => {
-                    setIsCoverOnly(event.data.page === 0);
-                    setCurrentPageIndex(event.data.page);
-                    setOrientation(event.data.mode);
-                  }}
-                  onChangeOrientation={(event) => setOrientation(event.data)}
-                  onFlip={(event) => {
-                    setIsCoverOnly(event.data === 0);
-                    setCurrentPageIndex(event.data);
-                  }}
-                >
-                  {bookPages}
-                </HTMLFlipBook>
-              </BookStage>
+              {numPages === 1 ? (
+                // 한 장짜리(지금 커밍순 표지)는 넘김 책 없이 표지만 가운데에 그림.
+                // (react-pageflip은 표지 한 장만 있으면 가운데 정렬 보정이 맞지 않아 한쪽으로 치우침)
+                <SingleCover>
+                  <PageSurface>
+                    <Page
+                      pageNumber={1}
+                      width={PAGE_RENDER_WIDTH}
+                      renderTextLayer={false}
+                      renderAnnotationLayer={false}
+                      loading=""
+                    />
+                  </PageSurface>
+                </SingleCover>
+              ) : (
+                // 두 쪽 펼침에서 표지 혼자일 때만 가운데로 옮김(한 쪽씩 보이는 portrait에선 옮기지 않음)
+                <BookStage $coverOnly={isCoverOnly && orientation === "landscape"}>
+                  <HTMLFlipBook
+                    key={isMobile ? "mobile" : "desktop"}
+                    ref={bookRef}
+                    width={PAGE_WIDTH}
+                    height={PAGE_HEIGHT}
+                    size="stretch"
+                    minWidth={240}
+                    maxWidth={PAGE_WIDTH}
+                    minHeight={340}
+                    maxHeight={PAGE_HEIGHT}
+                    showCover={!isMobile}
+                    usePortrait
+                    maxShadowOpacity={0.4}
+                    // 넘기는 시간(ms). 모바일은 한 쪽짜리라 같은 시간이면 너무 급해 보여서 더 천천히
+                    flippingTime={isMobile ? 900 : 700}
+                    onInit={(event) => {
+                      setIsCoverOnly(event.data.page === 0);
+                      setCurrentPageIndex(event.data.page);
+                      setOrientation(event.data.mode);
+                    }}
+                    onChangeOrientation={(event) => setOrientation(event.data)}
+                    onFlip={(event) => {
+                      setIsCoverOnly(event.data === 0);
+                      setCurrentPageIndex(event.data);
+                    }}
+                  >
+                    {bookPages}
+                  </HTMLFlipBook>
+                </BookStage>
+              )}
               <NavButton
                 type="button"
                 onClick={handleNext}
@@ -202,6 +222,7 @@ export default function Artbook() {
                 <Image src="/icons/program/polygon_right.svg" alt="" width={8} height={13} />
               </NavButton>
 
+              {/* 목차(호버하면 날아오는 패널)는 지금 커밍순 한 장짜리라 잠시 꺼 둠. 실제 아트북이 나오면 주석 해제.
               <TocArea
                 onMouseEnter={() => setIsTocOpen(true)}
                 onMouseLeave={() => setIsTocOpen(false)}
@@ -234,6 +255,7 @@ export default function Artbook() {
                   </TocList>
                 </TocPanel>
               </TocArea>
+              */}
             </BookRow>
           )}
         </Document>
@@ -270,7 +292,7 @@ const Title = styled.h1`
   flex-shrink: 0;
   margin: 0;
   line-height: 1.2;
-  font-size: ${({ theme }) => theme.typography.fontSize.headingLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMid};
   font-weight: 700;
   color: ${({ theme }) => theme.text.primary};
 
@@ -329,8 +351,9 @@ const BookStage = styled.div`
   flex: 1 1 auto;
   min-width: 0;
   max-width: calc(
-    min(${PAGE_WIDTH * 2}px, var(--book-max-height) * ${(PAGE_WIDTH * 2) / PAGE_HEIGHT}) * 0.88
+    min(${PAGE_WIDTH * 2}px, var(--book-max-height) * ${(PAGE_WIDTH * 2) / PAGE_HEIGHT}) * 0.95
   );
+  margin-bottom: 5rem;
 
   ${media.mobile`
     max-width: calc(
@@ -343,6 +366,23 @@ const BookStage = styled.div`
     transform: ${({ $coverOnly }) =>
       $coverOnly ? "translateX(-25%)" : "translateX(0)"};
   }
+`;
+
+// 한 장짜리 표지 박스: 책과 같은 높이 기준으로 한 쪽 크기만큼, 가운데에 둠
+const SingleCover = styled.div`
+  flex: 0 1 auto;
+  width: calc(
+    min(${PAGE_WIDTH}px, var(--book-max-height) * ${PAGE_WIDTH / PAGE_HEIGHT}) * 0.95
+  );
+  aspect-ratio: ${PAGE_WIDTH} / ${PAGE_HEIGHT};
+  margin-bottom: 5rem;
+  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.15);
+
+  ${media.mobile`
+    width: calc(
+      min(${PAGE_WIDTH}px, var(--book-max-height) * ${PAGE_WIDTH / PAGE_HEIGHT}) * 0.88
+    );
+  `}
 `;
 
 const Status = styled.p`
@@ -379,6 +419,8 @@ const NavButton = styled.button`
   padding: 0;
   border: 1px solid ${({ theme }) => theme.line.brand};
   background: transparent;
+  margin-bottom: 5rem;
+
   cursor: pointer;
 
   @media (hover: hover) {

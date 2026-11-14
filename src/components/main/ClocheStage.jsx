@@ -67,7 +67,8 @@ export default function ClocheStage({ clocheFrame, foodIndex, onImageLoad }) {
       <Utensils src="/images/main/whisk.svg" alt="" width={330} height={526} />
       <Utensils $isFork src="/images/main/folk.svg" alt="" width={120} height={478} />
 
-      <ClocheStand>
+      {/* data-main-cloche: 온보딩이 메인이 화면에 떴는지 확인하는 표시 */}
+      <ClocheStand data-main-cloche>
         {CLOCHE_FRAME_NUMBERS.map((frameNumber) => (
           <PlateImage
             key={frameNumber}
