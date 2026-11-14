@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import styled from "styled-components";
 import { ARTBOOK_PDF, artbookToc } from "@/data/artbook";
+import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 const PAGE_WIDTH = 540.304;
 const PAGE_HEIGHT = 766;
@@ -26,6 +27,7 @@ const subscribeMobile = (onChange) => {
 const getIsMobile = () => window.matchMedia(MOBILE_QUERY).matches;
 
 export default function Artbook() {
+  const { t } = useTranslation();
   const [lib, setLib] = useState(null);
   const [numPages, setNumPages] = useState(0);
   const [isCoverOnly, setIsCoverOnly] = useState(true);
@@ -46,7 +48,8 @@ export default function Artbook() {
         if (cancelled) return;
 
         reactPdf.pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-          "pdfjs-dist/build/pdf.worker.min.mjs",
+          // 구버전 브라우저(사파리 등)에서도 돌도록 폴리필이 들어간 legacy 워커를 씀
+          "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
           import.meta.url,
         ).toString();
 
@@ -133,7 +136,7 @@ export default function Artbook() {
   if (!lib) {
     return (
       <Content>
-        <Title>Art Book</Title>
+        <Title>{t("navigation.artbook")}</Title>
       </Content>
     );
   }
@@ -142,7 +145,7 @@ export default function Artbook() {
 
   return (
     <Content>
-      <Title>Art Book</Title>
+      <Title>{t("navigation.artbook")}</Title>
       <Wrapper>
         <Document
           file={ARTBOOK_PDF}
@@ -177,7 +180,8 @@ export default function Artbook() {
                   showCover={!isMobile}
                   usePortrait
                   maxShadowOpacity={0.4}
-                  flippingTime={500}
+                  // 넘기는 시간(ms). 모바일은 한 쪽짜리라 같은 시간이면 너무 급해 보여서 더 천천히
+                  flippingTime={isMobile ? 900 : 700}
                   onInit={(event) => {
                     setIsCoverOnly(event.data.page === 0);
                     setCurrentPageIndex(event.data.page);
@@ -329,8 +333,9 @@ const BookStage = styled.div`
   flex: 1 1 auto;
   min-width: 0;
   max-width: calc(
-    min(${PAGE_WIDTH * 2}px, var(--book-max-height) * ${(PAGE_WIDTH * 2) / PAGE_HEIGHT}) * 0.88
+    min(${PAGE_WIDTH * 2}px, var(--book-max-height) * ${(PAGE_WIDTH * 2) / PAGE_HEIGHT}) * 0.95
   );
+  margin-bottom: 5rem;
 
   ${media.mobile`
     max-width: calc(
@@ -379,6 +384,8 @@ const NavButton = styled.button`
   padding: 0;
   border: 1px solid ${({ theme }) => theme.line.brand};
   background: transparent;
+  margin-bottom: 5rem;
+
   cursor: pointer;
 
   @media (hover: hover) {
