@@ -47,35 +47,52 @@ What comes after "Do Not Change the Recipe" is left undecided. The *(asterisk) i
 };
 
 export const congrat_text = {
-    ko: `서강대학교 Art & Technology 학과에서 《울퉁불퉁하게 말아리》를 주제로 제14회 Art & Technology Conference(ATC) 2025를 개최합니다.
+    ko: `서강대학교 아트&테크놀로지학과에서 《레시피 바꾸지 말 것 *》를 주제로 제15회 2026 Art & Technology Conference (ATC) 을 개최합니다.
 
-2012년부터 매해 학생들이 직접 기획·제작·운영해 온 ATC는 차세대 크리에이터들이 초학제적 융합과 경계 없는 실험을 통해 서로 자극받고 즐기는 놀이이자 축제, 그리고 창의성과 협력의 의미를 되새기는 교육의 장입니다.
+2012년부터 매년 학생들이 직접 기획하고, 작품을 제작하며, 전시와 행사 운영에 이르기까지 모든 과정을 만들어 온 ATC는 차세대 크리에이터들이 예술과 기술의 경계를 넘나들며 새로운 가능성을 탐색하는 창작의 장이자 축제입니다. 동시에 서로 다른 생각과 감각을 나누고, 함께 시도하고 실패하며 배우는 아텍의 중요한 교육의 장이기도 합니다.
 
-올해 ATC 2025는 30명의 스태프와 76명의 아티스트가 6개월 넘게 준비한 결과물로, 11월 20일(목)부터 23일(일)까지 4일간 서강대학교 하비에르관(X관) 1·4·5층 전역에서 전시, 프로그램, 라운드 테이블, 콜라보 부스, 인터랙션 작품, 즉흥 협연, 아카이브 섹션 등 다채로운 형식으로 펼쳐집니다.
+올해 2026 ATC는 35명의 스태프와 76명의 아티스트가 함께 준비한 결과물로, 11월 26일(목)부터 29일(일)까지 4일간 서강대학교 하비에르관(X관) 4~5층에서 펼쳐집니다.
 
-우리가 건네는 말들은 서로의 영역을 자유로이 넘나들며 어긋나고, 충돌하고, 되돌아와 낯선 말 - (메)아리를 만들어냅니다.마치 울퉁불퉁한 지형에 부딪혀 생겨나는 예측 불가능한 파동처럼, 각자의 고유한 굴곡을 마주하며 불완전함 속에서 새로운 의미는 더 멀리, 더 크게 증식합니다.
+우리는 오랫동안 누군가가 만들어 놓은 레시피를 따라 익숙하고 보장된 경험을 소비해 왔습니다. 정해진 순서와 적절한 양을 지키면 실패하지 않을 것이라는 믿음 속에서, 그렇게 반복된 경험을 어느새 자신의 취향이라고 생각해 왔는지도 모릅니다. 하지만 과연 그것은 온전히 나의 감각이고 취향일까요?
 
-이번 ATC 2025 《울퉁불퉁하게 말아리》를 통해 정형화되지 않은 시도들, 서로 다른 리듬 속에서 피어나는 새로운 언어와 사고의 실험들, 미래 크리에이터들의 도발적이고 진솔한 이야기들을 만나보시기 바랍니다.
+《레시피 바꾸지 말 것 *》는 익숙하게 따라온 방식에 질문을 던지고, 자신만의 감각과 경험을 통해 새로운 레시피를 발견하려는 시도입니다. 때로는 예상과 다른 결과를 만나고, 때로는 실패하더라도 그 모든 과정에서 비로소 나만의 언어와 새로운 가능성을 발견할 수 있을 것입니다.
 
-여러분을 ATC 2025에 정중히 초대합니다.
+2026 ATC에서 작가들은 각자의 고유한 경험과 취향을 바탕으로 자신만의 레시피를 펼쳐 놓습니다. 관람객 역시 정해진 해석이나 감상법을 따르는 대신, 자신의 감각으로 작품을 만나고 자유롭게 의미를 만들어 갑니다.
 
-서강대학교 아트 & 테크놀로지학과 학과장
+《레시피 바꾸지 말 것》 뒤에 놓인 별표(*)는 아직 채워지지 않은 가능성이자 작가와 관람객 모두에게 열려 있는 자리입니다. 이곳에서는 누구나 기존의 레시피를 바꾸고, 새로운 재료를 더하며, 자신만의 방식으로 세계를 경험할 수 있습니다.
+
+ATC가 매년 이어져 온 이유도 여기에 있다고 생각합니다. ATC의 전통은 같은 형식과 결과물을 반복하는 데 있는 것이 아니라, 매년 새로운 학생들이 자신들의 질문과 감각으로 행사를 새롭게 만들어 가는 데 있습니다. 전통을 이어간다는 것은 과거의 모습을 그대로 지키는 것이 아니라, 매년 새로운 시도와 실험을 통해 그 의미를 다시 만들어 가는 일이기 때문입니다.
+
+이번 ATC 2026 《레시피 바꾸지 말 것 *》에서 정해진 답을 벗어난 자유로운 실험과 예측할 수 없는 감각의 만남을 경험해 보시기 바랍니다. 익숙한 레시피를 잠시 내려놓고, 아이처럼 순수한 호기심으로 세상을 바라보며 자신만의 새로운 레시피를 만들어 보는 즐거움을 함께 나누었으면 합니다.
+
+여러분을 제15회 2026 ATC에 정중히 초대합니다.
+
+서강대학교 아트&테크놀로지학과 학과장
 
 최용순`,
-    en: `Sogang University's Art & Technology Department presents the 14th Art & Technology Conference (ATC) 2025 under the theme “Uneven Echoes.”
+    en: `The Department of Art & Technology at Sogang University is pleased to host the 15th Art & Technology Conference (2026 ATC) under the theme “Do Not Change the Recipe *”.
 
-Since 2012, ATC has been planned, produced, and organized by students every year.It is a playground and festival where the next generation of creators inspire one another through interdisciplinary collaboration and boundary - breaking experimentation.It is also an educational space for reflecting on the meaning of creativity and collaboration.
+Since 2012, ATC has been planned and organized entirely by students each year, from developing concepts and creating works to organizing exhibitions and managing the program. ATC is both a creative space and a festival where the next generation of creators explores new possibilities by moving between art and technology. At the same time, it is an essential part of Art & Technology education, where students share different ideas and sensibilities, experiment together, and learn through both trials and failures.
 
-    ATC 2025 is the result of more than six months of preparation by 30 staff members and 76 artists.From Thursday, November 20, to Sunday, November 23, the four - day event will unfold across the 1st, 4th, and 5th floors of Xavier Hall(Building X) at Sogang University.The program includes exhibitions, events, roundtables, collaborative booths, interactive works, impromptu performances, and an archive section.
+2026 ATC is the result of the collective efforts of 35 staff members and 76 artists. It will take place over four days, from Thursday, November 26 to Sunday, November 29, on the fourth and fifth floors of Xavier Hall (Building X) at Sogang University.
 
-The words we exchange move freely across one another's territories. They drift apart, collide, and return to us as unfamiliar echoes. Like unpredictable waves formed by striking uneven terrain, these encounters reveal our individual contours and allow new meanings to grow farther and wider through imperfection.
+For a long time, we have followed recipes created by others, consuming familiar experiences with predictable outcomes. We have trusted that following the prescribed steps and using the right amounts would keep us from failing. Through these repeated experiences, perhaps we have come to believe that they reflect our own tastes. But are these truly our own sensibilities and tastes?
 
-Through ATC 2025, “Uneven Echoes,” we invite you to encounter unconventional experiments, new languages and ideas emerging from different rhythms, and the bold, sincere stories of the next generation of creators.
+“Do Not Change the Recipe *” questions the familiar ways we have always followed and invites us to discover new recipes through our own senses and experiences. Sometimes the results may be unexpected, and sometimes we may fail. Yet it is through these very experiences that we can begin to discover a language of our own and explore new possibilities.
 
-We cordially invite you to ATC 2025.
+At 2026 ATC, artists share their own recipes, shaped by their unique experiences and tastes. Visitors, too, are invited to encounter the works through their own senses and freely create meaning, rather than follow predetermined interpretations or ways of experiencing art.
 
-Yongsoon Choi
-Chair, Department of Art & Technology, Sogang University`,
+The asterisk (*) following “Do Not Change the Recipe” represents possibilities yet to be explored, an open space for both artists and visitors. Here, anyone can change an existing recipe, add new ingredients, and experience the world in a way that is entirely their own.
+
+I believe this is also why ATC has continued year after year. The tradition of ATC lies not in repeating the same format or results, but in how each new generation of students reshapes it through their own questions and sensibilities. Carrying on a tradition does not simply mean preserving the past as it was. Rather, it means renewing its meaning each year through new attempts and experiments.
+
+At 2026 ATC, “Do Not Change the Recipe *”, I invite you to experience the freedom of experimenting beyond predetermined answers and the unexpected encounters between different senses. I hope we can set aside our familiar recipes for a moment, look at the world with the pure curiosity of a child, and share the joy of creating new recipes of our own.
+
+I cordially invite you all to 2026 ATC, the 15th Art & Technology Conference.
+
+Sogang Univ. Art & Technology Head of Department
+
+Choi, Yongsoon`,
 };
 
 export const staffs = [
