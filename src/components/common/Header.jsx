@@ -139,9 +139,9 @@ const Container = styled.header`
     background-color: var(--layout-background);
     transition: color 300ms ease, background-color 300ms ease;
 
-    /* 햄버거 메뉴가 열려 있을 때는 레일(z-index 101)보다 위로 올리되,
+    /* 햄버거 시트가 보이는 동안(닫힘 애니메이션 포함)은 레일(z-index 101)보다 위로 올리되,
        오른쪽 레일의 스크롤 인디케이터는 가리지 않도록 오른쪽 끝을 레일 앞까지만 */
-    &:has([aria-expanded="true"]) {
+    &:has([data-sheet-active="true"]) {
       z-index: 102;
       right: 6%;
       padding-right: 2rem;
@@ -152,7 +152,7 @@ const Container = styled.header`
     padding: 4rem 2.4rem 2rem;
     border-bottom: 0;
 
-    &:has([aria-expanded="true"]) {
+    &:has([data-sheet-active="true"]) {
       right: 2.4rem;
       padding-right: 0;
     }
