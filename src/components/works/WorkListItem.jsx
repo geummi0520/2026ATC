@@ -79,6 +79,7 @@ const CategoryWorkItem = styled.li`
     font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     font-weight: 400;
     line-height: 180%;
+    white-space: pre-line;
   }
 
   h4 {

@@ -951,6 +951,10 @@ export const works = [
       ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
+    schedule: {
+      ko: "11/26(목) 15:30 - 21:00",
+      en: "11/26(Thu) 15:30 - 21:00",
+    },
     tagline: {
       ko: "성희롱 이후의 현실인 침묵과 외면을 마주하는 인터랙티브 게임형 전시",
       en: "An interactive exhibition exploring sexual harassment, silence, and the people who choose to look away.",
@@ -1036,6 +1040,98 @@ export const works = [
   {
     id: 13,
     title: {
+      ko: "미장플라스",
+      en: "Mise en Place: Preparing a Feeling",
+    },
+    team: {
+      ko: "루멘",
+      en: "Lumen",
+    },
+    category: {
+      ko: "익숙한 것에 질문을?",
+      en: "Questioning the familiar?",
+    },
+    location: {
+      floor: "4F",
+      ko: "4F Shin Youngkyun Studio",
+      en: "4F Shin Youngkyun Studio",
+    },
+    schedule: {
+      ko: "11/27(금) 10:00 - 21:00",
+      en: "11/27(Fri) 10:00 - 21:00",
+    },
+    tagline: {
+      ko: "누군가의 기억을 재료 삼아 당신만의 맛을 만드세요",
+      en: "Someone's memory is the recipe. Smell it, hear it, touch it, then taste what it becomes in you.",
+    },
+    description: {
+      ko: "주방에는 ‘미장플라스’라는 말이 있습니다. 요리를 시작하기 전 재료를 가지런히 준비해 두는 일입니다. 이 작업은 그 준비를 감정에 적용합니다. 관람객은 정체를 알 수 없는 레시피 카드 한 장을 고르고 세 개의 스테이션 중 하나로 걸어갑니다. 그곳에는 빛과 소리, 온도, 질감, 향이 재료처럼 놓여 있습니다. 모두 경험한 뒤에야 이 레시피가 누구의 어떤 기억이었는지 알게 됩니다. 같은 재료로 당신은 어떤 맛을 만들었나요?",
+      en: "In a kitchen, mise en place means setting out your ingredients before you cook. This installation does it for feelings. Visitors choose a mystery Recipe Card and walk to one of three stations, where light, sound, temperature, texture and scent wait like ingredients on a counter. Only after tasting do they learn whose memory the recipe belonged to. Same ingredients, different dish: what did you make?",
+    },
+    tags: [
+      {
+        ko: "설치",
+        en: "Installation",
+      },
+      {
+        ko: "전시",
+        en: "Exhibition",
+      },
+    ],
+    teamDescription: {
+      ko: "루멘(Lumen)은 아트&테크놀로지(아텍) 전공 유학생 악비(4학년)와 소피아(3학년)로 이루어진 팀입니다. 말로 옮기기 어려운 기억의 온도와 냄새, 소리를 공간으로 불러내는 작업을 합니다. 이번 전시에서는 기억을 레시피로 바꾸어 관람객이 직접 감정을 맛보고 서로 다른 맛을 발견하게 합니다.",
+      en: "Lumen is a team of two international students majoring in Art & Technology: Akbayan (fourth year) and Sofiia (third year). We are interested in how memory lives in the senses: the temperature, smell and sound of moments that are hard to put into words. For this exhibition we turned memories into recipes, so visitors can taste a feeling and discover that everyone's dish is different.",
+    },
+    members: [
+      {
+        role: "leader",
+        name: {
+          ko: "토케노바 악바얀",
+          en: "Akbayan Tokenova",
+        },
+        contacts: [
+          {
+            type: "instagram",
+            value: "instagram.com/2.aslx",
+            url: "https://instagram.com/2.aslx",
+          },
+          {
+            type: "email",
+            value: "akbayan2201@gmail.com",
+            url: "mailto:akbayan2201@gmail.com",
+          },
+        ],
+      },
+      {
+        role: "member",
+        name: {
+          ko: "투이치에바 소피아",
+          en: "Sofiia Tuichieva",
+        },
+        contacts: [
+          {
+            type: "instagram",
+            value: "instagram.com/mimimeowm1",
+            url: "https://instagram.com/mimimeowm1",
+          },
+          {
+            type: "email",
+            value: "cloudsonyameow@gmail.com",
+            url: "mailto:cloudsonyameow@gmail.com",
+          },
+        ],
+      },
+    ],
+    images: {
+      thumbnail: "https://img.2026atc.com/works/14/thumbnail.706e48e7.webp",
+      detail: ["https://img.2026atc.com/works/14/detail-01.c6654d10.webp"],
+    },
+    video: null,
+    links: [],
+  },
+  {
+    id: 14,
+    title: {
       ko: "Who am I?(너의 마음 안에 있어)",
       en: "Who am I?",
     },
@@ -1051,6 +1147,10 @@ export const works = [
       floor: "4F",
       ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
+    },
+    schedule: {
+      ko: "11/28(토) 10:00 - 21:00",
+      en: "11/28(Sat) 10:00 - 21:00",
     },
     tagline: {
       ko: "외모 강박과 자존감 문제를 다루는 AR 기반 인터랙티브 보드 게임",
@@ -1134,94 +1234,7 @@ export const works = [
       },
     ],
   },
-  {
-    id: 14,
-    title: {
-      ko: "미장플라스",
-      en: "Mise en Place: Preparing a Feeling",
-    },
-    team: {
-      ko: "루멘",
-      en: "Lumen",
-    },
-    category: {
-      ko: "익숙한 것에 질문을?",
-      en: "Questioning the familiar?",
-    },
-    location: {
-      floor: "4F",
-      ko: "4F Shin Youngkyun Studio",
-      en: "4F Shin Youngkyun Studio",
-    },
-    tagline: {
-      ko: "누군가의 기억을 재료 삼아 당신만의 맛을 만드세요",
-      en: "Someone's memory is the recipe. Smell it, hear it, touch it, then taste what it becomes in you.",
-    },
-    description: {
-      ko: "주방에는 ‘미장플라스’라는 말이 있습니다. 요리를 시작하기 전 재료를 가지런히 준비해 두는 일입니다. 이 작업은 그 준비를 감정에 적용합니다. 관람객은 정체를 알 수 없는 레시피 카드 한 장을 고르고 세 개의 스테이션 중 하나로 걸어갑니다. 그곳에는 빛과 소리, 온도, 질감, 향이 재료처럼 놓여 있습니다. 모두 경험한 뒤에야 이 레시피가 누구의 어떤 기억이었는지 알게 됩니다. 같은 재료로 당신은 어떤 맛을 만들었나요?",
-      en: "In a kitchen, mise en place means setting out your ingredients before you cook. This installation does it for feelings. Visitors choose a mystery Recipe Card and walk to one of three stations, where light, sound, temperature, texture and scent wait like ingredients on a counter. Only after tasting do they learn whose memory the recipe belonged to. Same ingredients, different dish: what did you make?",
-    },
-    tags: [
-      {
-        ko: "설치",
-        en: "Installation",
-      },
-      {
-        ko: "전시",
-        en: "Exhibition",
-      },
-    ],
-    teamDescription: {
-      ko: "루멘(Lumen)은 아트&테크놀로지(아텍) 전공 유학생 악비(4학년)와 소피아(3학년)로 이루어진 팀입니다. 말로 옮기기 어려운 기억의 온도와 냄새, 소리를 공간으로 불러내는 작업을 합니다. 이번 전시에서는 기억을 레시피로 바꾸어 관람객이 직접 감정을 맛보고 서로 다른 맛을 발견하게 합니다.",
-      en: "Lumen is a team of two international students majoring in Art & Technology: Akbayan (fourth year) and Sofiia (third year). We are interested in how memory lives in the senses: the temperature, smell and sound of moments that are hard to put into words. For this exhibition we turned memories into recipes, so visitors can taste a feeling and discover that everyone's dish is different.",
-    },
-    members: [
-      {
-        role: "leader",
-        name: {
-          ko: "토케노바 악바얀",
-          en: "Akbayan Tokenova",
-        },
-        contacts: [
-          {
-            type: "instagram",
-            value: "instagram.com/2.aslx",
-            url: "https://instagram.com/2.aslx",
-          },
-          {
-            type: "email",
-            value: "akbayan2201@gmail.com",
-            url: "mailto:akbayan2201@gmail.com",
-          },
-        ],
-      },
-      {
-        role: "member",
-        name: {
-          ko: "투이치에바 소피아",
-          en: "Sofiia Tuichieva",
-        },
-        contacts: [
-          {
-            type: "instagram",
-            value: "instagram.com/mimimeowm1",
-            url: "https://instagram.com/mimimeowm1",
-          },
-          {
-            type: "email",
-            value: "cloudsonyameow@gmail.com",
-            url: "mailto:cloudsonyameow@gmail.com",
-          },
-        ],
-      },
-    ],
-    images: {
-      thumbnail: "https://img.2026atc.com/works/14/thumbnail.706e48e7.webp",
-      detail: ["https://img.2026atc.com/works/14/detail-01.c6654d10.webp"],
-    },
-    video: null,
-    links: [],
-  },
+
   {
     id: 15,
     title: {
@@ -1240,6 +1253,10 @@ export const works = [
       floor: "4F",
       ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
+    },
+    schedule: {
+      ko: "11/29(일) 10:00 - 21:00",
+      en: "11/29(Sun) 10:00 - 21:00",
     },
     tagline: {
       ko: "테두리 너머에서 나를 분사하는 법",
@@ -1784,6 +1801,10 @@ export const works = [
       ko: "5F Immersive Hall",
       en: "5F Immersive Hall",
     },
+    schedule: {
+      ko: "11/26(목) 15:30 - 11/27(금) 14:00",
+      en: "11/26(Thu) 15:30 - 11/27(Fri) 14:00",
+    },
     tagline: {
       ko: "자극에 지친 일상 속, 무심코 올려다 본 하늘이 일깨우는 감각의 공간",
       en: "Amid constant stimulation, the sky brings us back to our senses.",
@@ -1861,6 +1882,10 @@ export const works = [
       floor: "5F",
       ko: "5F Immersive Hall",
       en: "5F Immersive Hall",
+    },
+    schedule: {
+      ko: "11/27(금) 17:30 - 11/28(토) 15:00",
+      en: "11/27(Fri) 17:30 - 11/28(Sat) 15:00",
     },
     tagline: {
       ko: "전통 회화와 음악을 매개로 세계 각지의 시공간을 연결하는 미디어아트",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Footer from "@/components/common/Footer";
 import BackButton from "@/components/common/BackButton";
 import WorkListItem from "@/components/works/WorkListItem";
@@ -232,7 +233,7 @@ export default function WorksMap({ initialState = {} }) {
   const header = (
     <S.Header>
       {isExpanded ? (
-        <S.BackRow>
+        <S.BackRow $hideOnMobile>
           <BackButton onClick={() => toggleExpanded(false)} />
         </S.BackRow>
       ) : (
@@ -257,14 +258,14 @@ export default function WorksMap({ initialState = {} }) {
                   type="button"
                   onClick={() => toggleExpanded(false)}
                 >
-                  ← {t("common.back")}
+                  <Image
+                    src="/icons/arrow_left.svg"
+                    alt=""
+                    width={18}
+                    height={18}
+                  />
+                  {t("common.back")}
                 </S.CollapseButton>
-                <S.MobileCollapseButton
-                  type="button"
-                  onClick={() => toggleExpanded(false)}
-                >
-                  {t("works.backToMap")}
-                </S.MobileCollapseButton>
               </S.ExpandedPlan>
             </>
           ) : (
