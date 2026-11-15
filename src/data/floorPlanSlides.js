@@ -19,7 +19,7 @@ export const floorPlanSlides = [
   },
   {
     floor: "4F",
-    rooms: ["SYK Studio"],
+    rooms: ["Shin Youngkyun Studio"],
     workIds: [11, 12, 13, 14, 15],
     view: { x: 385, y: 258 },
     prev: "left",

@@ -2,7 +2,7 @@ export const works = [
   {
     id: 1,
     title: {
-      ko: "야미아이",
+      ko: "YUMMY EYE",
       en: "YUMMY EYE",
     },
     team: {
@@ -68,16 +68,19 @@ export const works = [
     links: [
       {
         type: "website",
+        label: "Website",
         value: "yummy-eye-intro.vercel.app",
         url: "https://yummy-eye-intro.vercel.app",
       },
       {
-        type: "website",
+        type: "taste test",
+        label: "Taste Test",
         value: "yummy-taste-test.vercel.app",
         url: "https://yummy-taste-test.vercel.app",
       },
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/art_ppuraki",
         url: "https://instagram.com/art_ppuraki",
       },
@@ -233,6 +236,7 @@ export const works = [
     links: [
       {
         type: "github",
+        label: "GitHub",
         value: "github.com/lee-chh/do-not-touch",
         url: "https://github.com/lee-chh/do-not-touch",
       },
@@ -309,7 +313,7 @@ export const works = [
   {
     id: 5,
     title: {
-      ko: "모바",
+      ko: "MOVA",
       en: "MOVA",
     },
     team: {
@@ -599,11 +603,6 @@ export const works = [
             value: "instagram.com/leeyeonzh",
             url: "https://instagram.com/leeyeonzh",
           },
-          {
-            type: "github",
-            value: "github.com/yeonzhry",
-            url: "https://github.com/yeonzhry",
-          },
         ],
       },
       {
@@ -639,6 +638,7 @@ export const works = [
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/habity.app",
         url: "https://instagram.com/habity.app",
       },
@@ -729,7 +729,7 @@ export const works = [
   {
     id: 9,
     title: {
-      ko: "만지시오!",
+      ko: "Touch!(만지시오!)",
       en: "Touch!",
     },
     team: {
@@ -948,7 +948,7 @@ export const works = [
     },
     location: {
       floor: "4F",
-      ko: "4F 신영균 스튜디오",
+      ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
     tagline: {
@@ -1036,7 +1036,7 @@ export const works = [
   {
     id: 13,
     title: {
-      ko: "너의 마음 안에 있어",
+      ko: "Who am I?(너의 마음 안에 있어)",
       en: "Who am I?",
     },
     team: {
@@ -1049,7 +1049,7 @@ export const works = [
     },
     location: {
       floor: "4F",
-      ko: "4F 신영균 스튜디오",
+      ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
     tagline: {
@@ -1128,6 +1128,7 @@ export const works = [
     links: [
       {
         type: "github",
+        label: "GitHub",
         value: "github.com/JadeBlue333/WhoAmI",
         url: "https://github.com/JadeBlue333/WhoAmI",
       },
@@ -1149,7 +1150,7 @@ export const works = [
     },
     location: {
       floor: "4F",
-      ko: "4F 신영균 스튜디오",
+      ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
     tagline: {
@@ -1237,7 +1238,7 @@ export const works = [
     },
     location: {
       floor: "4F",
-      ko: "4F 신영균 스튜디오",
+      ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
     tagline: {
@@ -1343,7 +1344,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 계단 공간",
+      ko: "5F Staircase Space",
       en: "5F Staircase Space",
     },
     tagline: {
@@ -1424,6 +1425,7 @@ export const works = [
     links: [
       {
         type: "youtube",
+        label: "Youtube",
         value: "youtu.be/D2sW4oIvaLM",
         url: "https://youtu.be/D2sW4oIvaLM",
       },
@@ -1445,7 +1447,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 사운드 스튜디오",
+      ko: "5F Sound Studio",
       en: "5F Sound Studio",
     },
     tagline: {
@@ -1536,6 +1538,7 @@ export const works = [
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/im.codi",
         url: "https://instagram.com/im.codi",
       },
@@ -1557,7 +1560,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F XR 스튜디오",
+      ko: "5F XR Studio",
       en: "5F XR Studio",
     },
     tagline: {
@@ -1635,7 +1638,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 세미나 룸",
+      ko: "5F Seminar Room",
       en: "5F Seminar Room",
     },
     tagline: {
@@ -1692,6 +1695,7 @@ export const works = [
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/forieelee",
         url: "https://instagram.com/forieelee",
       },
@@ -1700,7 +1704,7 @@ export const works = [
   {
     id: 20,
     title: {
-      ko: "향",
+      ko: "KAO:RE(향)",
       en: "KAO:RE",
     },
     team: {
@@ -1713,7 +1717,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 세미나 룸",
+      ko: "5F Seminar Room",
       en: "5F Seminar Room",
     },
     tagline: {
@@ -1777,7 +1781,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 이머시브 홀",
+      ko: "5F Immersive Hall",
       en: "5F Immersive Hall",
     },
     tagline: {
@@ -1855,7 +1859,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 이머시브 홀",
+      ko: "5F Immersive Hall",
       en: "5F Immersive Hall",
     },
     tagline: {
@@ -1982,7 +1986,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 아트 스튜디오",
+      ko: "5F Art Studio",
       en: "5F Art Studio",
     },
     tagline: {
@@ -2065,7 +2069,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 아트 스튜디오",
+      ko: "5F Art Studio",
       en: "5F Art Studio",
     },
     tagline: {
@@ -2122,6 +2126,7 @@ export const works = [
     links: [
       {
         type: "website",
+        label: "Website",
         value: "laqqone.org",
         url: "https://laqqone.org",
       },
@@ -2143,7 +2148,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 아트 스튜디오",
+      ko: "5F Art Studio",
       en: "5F Art Studio",
     },
     tagline: {
@@ -2225,6 +2230,7 @@ export const works = [
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/imn_0tar0b0t",
         url: "https://instagram.com/imn_0tar0b0t",
       },
@@ -2246,7 +2252,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 아트 스튜디오",
+      ko: "5F Art Studio",
       en: "5F Art Studio",
     },
     tagline: {
@@ -2313,6 +2319,7 @@ export const works = [
     links: [
       {
         type: "website",
+        label: "Steam",
         value: "store.steampowered.com/app/4988160/BrainSplit",
         url: "https://store.steampowered.com/app/4988160/BrainSplit",
       },
@@ -2334,7 +2341,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2418,6 +2425,7 @@ export const works = [
     links: [
       {
         type: "website",
+        label: "Notion",
         value: "app.notion.com/p/UNSPEC-D-DAY-3c18f43a40f680789bd2f52f30f4259f",
         url: "https://app.notion.com/p/UNSPEC-D-DAY-3c18f43a40f680789bd2f52f30f4259f",
       },
@@ -2439,7 +2447,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2496,11 +2504,13 @@ export const works = [
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/lagrang_studio",
         url: "https://instagram.com/lagrang_studio",
       },
       {
         type: "website",
+        label: "Website",
         value: "lagrangstudio.com",
         url: "https://lagrangstudio.com",
       },
@@ -2522,7 +2532,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2638,7 +2648,7 @@ export const works = [
   {
     id: 30,
     title: {
-      ko: "오브젝트런",
+      ko: "Object Run",
       en: "Object Run",
     },
     team: {
@@ -2651,7 +2661,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2720,6 +2730,7 @@ export const works = [
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/grdr_awi2025",
         url: "https://instagram.com/grdr_awi2025",
       },
@@ -2741,7 +2752,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2880,7 +2891,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 패브리케이션 랩",
+      ko: "5F Fabrication Lab",
       en: "5F Fabrication Lab",
     },
     tagline: {
@@ -2958,7 +2969,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 패브리케이션 랩",
+      ko: "5F Fabrication Lab",
       en: "5F Fabrication Lab",
     },
     tagline: {
@@ -3010,6 +3021,7 @@ export const works = [
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/misang.archive",
         url: "https://instagram.com/misang.archive",
       },
@@ -3031,7 +3043,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 패브리케이션 랩",
+      ko: "5F Fabrication Lab",
       en: "5F Fabrication Lab",
     },
     tagline: {
@@ -3080,6 +3092,7 @@ export const works = [
     links: [
       {
         type: "youtube",
+        label: "Youtube",
         value: "www.youtube.com/@Blenqve",
         url: "https://www.youtube.com/@Blenqve",
       },

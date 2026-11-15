@@ -78,13 +78,14 @@ const CategoryWorkItem = styled.li`
       $active ? theme.text.brandDark : theme.text.quaternary};
     font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     font-weight: 400;
+    line-height: 180%;
   }
 
   h4 {
     margin: 0;
     color: ${({ $active, theme }) =>
       $active ? theme.text.brandDark : theme.text.quaternary};
-    font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     line-height: 180%;
     font-weight: 400;
   }

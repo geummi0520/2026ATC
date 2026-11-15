@@ -1,4 +1,7 @@
 const ko = {
+  common: {
+    back: "이전으로",
+  },
   navigation: {
     main: "Main",
     about: "About",
@@ -73,7 +76,6 @@ const ko = {
   program: {
     location: "장소",
     dateTime: "일시",
-    back: "이전으로",
     backToList: "목록 보기",
   },
   staff: {

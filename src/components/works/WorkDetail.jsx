@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
-import BackButton from "@/components/works/BackButton";
+import BackButton from "@/components/common/BackButton";
 import HiddenStamp from "@/components/stamp/HiddenStamp";
 import WorksRail from "@/components/works/WorksRail";
 import { STAMP_SLOTS } from "@/constants/stamps";
@@ -19,12 +19,6 @@ const CONTACT_ICONS = {
   instagram: "/icons/works/instagram_icon.svg",
   linkedin: "/icons/works/linkedin_icon.svg",
   website: "/icons/works/link_icon.svg",
-};
-
-const WORK_LINK_ICONS = {
-  github: "/icons/works/github_green.svg",
-  instagram: "/icons/works/instagram_green.svg",
-  youtube: "/icons/works/youtube_green.svg",
 };
 
 export default function WorkDetail({ work }) {
@@ -90,26 +84,24 @@ export default function WorkDetail({ work }) {
                 <Lead>{tagline}</Lead>
                 <Paragraph>{description}</Paragraph>
                 {work.links.length > 0 && (
-                  <Contacts>
+                  <WorkLinks>
                     {work.links.map((link) => (
-                      <ContactLink
-                        key={`${link.type}-${link.url}`}
+                      <WorkLink
+                        key={link.url}
                         href={link.url}
                         target="_blank"
                         rel="noreferrer"
-                        aria-label={`${title} ${link.type}`}
                       >
+                        {link.label}
                         <Image
-                          src={
-                            WORK_LINK_ICONS[link.type] ?? CONTACT_ICONS.website
-                          }
+                          src="/icons/arrow_up_right.svg"
                           alt=""
-                          width={24}
-                          height={24}
+                          width={18}
+                          height={18}
                         />
-                      </ContactLink>
+                      </WorkLink>
                     ))}
-                  </Contacts>
+                  </WorkLinks>
                 )}
               </Copy>
               <MediaList>
@@ -425,7 +417,6 @@ const TeamSection = styled.section`
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4rem;
   padding: 4.8rem 4rem;
-  border-bottom: 1px solid var(--layout-line);
 
   ${media.tablet`
     order: 1;
@@ -464,6 +455,7 @@ const TeamParagraph = styled(Paragraph)`
 `;
 
 const MemberList = styled.ul`
+  white-space: nowrap;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
@@ -484,6 +476,23 @@ const MemberList = styled.ul`
   ${media.mobile`
     grid-template-columns: 1fr;
   `}
+`;
+
+const WorkLinks = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.6rem;
+`;
+
+const WorkLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-bottom: 1px solid currentColor;
+  color: ${({ theme }) => theme.text.brand};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  font-weight: 700;
+  line-height: 150%;
 `;
 
 const Contacts = styled.div`
