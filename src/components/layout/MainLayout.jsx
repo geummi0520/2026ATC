@@ -155,7 +155,11 @@ export default function MainLayout({ children, isComingSoon = false }) {
   }, [isWorks, pathname]);
 
   return (
-    <Layout $isBrandDark={isBrandDark} $isWorks={isWorks}>
+    <Layout
+      $isBrandDark={isBrandDark}
+      $isWorks={isWorks}
+      data-brand-dark={isBrandDark}
+    >
       <LeftRail>
         <RailSlot>
           {!isComingSoon && <StampButton />}
@@ -207,6 +211,11 @@ const Rail = styled.aside`
   z-index: 1;
   transition: color 300ms ease, background-color 300ms ease,
     border-color 300ms ease;
+
+  /* 전체 너비 헤더(z-index 100)가 레일 선·스크롤 인디케이터를 가리지 않도록 */
+  ${media.tablet`
+    z-index: 101;
+  `}
 
   ${media.mobile`
     width: 2.4rem;
