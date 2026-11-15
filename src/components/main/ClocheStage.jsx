@@ -178,19 +178,38 @@ const Background = styled.svg`
   `}
 `;
 
+// 식기 크기는 고정(40rem)이고, 놓는 기준만 클로슈에 맞춤.
+// - 가로: 클로슈 왼쪽 끝(화면 클수록 클로슈도 커져서 같이 움직임)에서 gap만큼 떨어진 곳에 식기 오른쪽 끝을 붙임
+// - 세로: 클로슈 중심 높이(그림 영역 50%) 기준으로 offset만큼 아래
+// 클로슈 왼쪽 끝 = 그림 영역 폭의 50% − 클로슈 폭(36.5%) × (보이는 배율/2 + 왼쪽 이동 6%)
+const UTENSIL_SPOTS = {
+  fork: { gap: "0.6rem", offset: "8.6rem" },
+  whisk: { gap: "2.5rem", offset: "3.6rem" },
+};
+const clocheLeftEdge = (scale) => `${50 - 36.5 * (scale / 2 + 0.06)}%`;
+const utensilRight = (scale, gap) => `calc(100% - ${clocheLeftEdge(scale)} + ${gap})`;
+
 const Utensils = styled(Image)`
   position: absolute;
-  left: ${({ $isFork }) => ($isFork ? "calc(50% - 37rem)" : "calc(50% - 54rem)")};
-  bottom: ${({ $isFork }) => ($isFork ? "0" : "5rem")};
   height: 40rem;
   width: auto;
+  right: ${({ $isFork }) =>
+    utensilRight(1.1, UTENSIL_SPOTS[$isFork ? "fork" : "whisk"].gap)};
+  top: ${({ $isFork }) =>
+    `calc(50% - 20rem + ${UTENSIL_SPOTS[$isFork ? "fork" : "whisk"].offset})`};
+
+ 
+  ${shortDesktop`
+    right: ${({ $isFork }) =>
+      utensilRight(0.95, UTENSIL_SPOTS[$isFork ? "fork" : "whisk"].gap)};
+  `}
 
   ${media.tablet`
     display: none;
   `}
 `;
 
-// 프레임 캔버스(4095x4469) 비율 그대로의 박스. 크기는 width로 조절.
+
 const ClocheStand = styled.div`
   position: relative;
   flex-shrink: 0;

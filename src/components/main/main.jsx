@@ -352,6 +352,11 @@ const Wordmark = styled(Image)`
     margin-top: 1rem;
   `}
 
+  /* 큰 데스크톱(아이맥 등)에선 더 크게 */
+  @media (min-width: 1800px) {
+    width: 30rem;
+  }
+
   ${media.tablet`
     width: 19rem;
     margin-left: 0;
