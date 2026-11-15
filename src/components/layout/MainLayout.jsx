@@ -286,6 +286,7 @@ const LeftRail = styled(Rail)`
   border-right: 1px solid var(--layout-line);
   ${media.mobile`
     border-right: none;
+    display: none;
 `}
 `;
 
@@ -315,7 +316,8 @@ const Center = styled.div`
 const MainContent = styled.main`
   position: relative;
   flex: 1;
-  padding-top: ${({ $isComingSoon }) => ($isComingSoon ? "0" : "calc(10rem + 2px)")};
+  padding-top: ${({ $isComingSoon }) =>
+    $isComingSoon ? "0" : "calc(10rem + 2px)"};
   min-height: 0;
   overflow: ${({ $isWorks, $isComingSoon }) =>
     $isWorks || $isComingSoon ? "hidden" : "visible"};

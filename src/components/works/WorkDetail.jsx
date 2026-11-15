@@ -200,9 +200,17 @@ const CompactBackRow = styled.div`
     padding: 2rem;
   `}
 
+  /* works 카테고리 화면의 이전으로 줄(MobileActionRow)과 같은 위치
+     → 위 padding 2rem + 높이 2.8rem 줄의 세로 가운데 */
   ${media.mobile`
     display: flex;
-    padding: 1.2rem 1rem 0;
+    align-items: center;
+    min-height: 4.8rem;
+    padding: 2rem 0 0;
+
+    > * {
+      align-self: center;
+    }
   `}
 `;
 
@@ -244,7 +252,7 @@ const Hero = styled.section`
     flex-direction: column;
     align-items: stretch;
     border-bottom: none;
-    padding: 4rem 1rem;
+    padding: 3.2rem 0rem 4rem 0;
   `}
 `;
 
@@ -285,7 +293,7 @@ const Meta = styled.div`
 
 const Title = styled.h1`
   margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
   line-height: normal;
 
   ${media.mobile`
@@ -351,7 +359,7 @@ const Copy = styled.div`
 
   ${media.mobile`
     border-bottom: none;
-    padding: 0 1rem;
+    padding: 0;
   `}
 `;
 
@@ -429,7 +437,7 @@ const TeamSection = styled.section`
     flex-direction: column;
     gap: 0;
     border-bottom: none;
-    padding: 6rem 1rem 2rem 1rem;
+    padding: 6rem 0 2rem 0;
   `}
 `;
 
