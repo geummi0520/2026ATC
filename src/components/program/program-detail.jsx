@@ -280,6 +280,10 @@ justify-content: center;
 align-items: center;
 gap: 0.6rem;
 border:none;
+/* <button>은 브라우저 기본 회색 배경·안쪽 여백이 있어서 직접 지워야 함 */
+background: transparent;
+padding: 0;
+cursor: pointer;
 white-space: nowrap;
 visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
 
