@@ -122,7 +122,7 @@ export default function StampReward() {
 
       <Content>
         <Scene>
-          <Tada src="/images/stamp/tada.svg" alt="" width={1115} height={714} />
+          <Tada src="/images/stamp/tada.svg" alt="" width={1223} height={732} />
           <Egg
             src="/images/stamp/rare_egg.webp"
             alt={t("stamp.rewardImage")}
@@ -228,11 +228,15 @@ const Scene = styled.div`
   aspect-ratio: 1115 / 760;
 `;
 
+// transform은 burst 애니메이션이 쓰므로, left 계산으로 크기와 관계없이 가로 중앙 정렬
 const Tada = styled(Image)`
+  --tada-size: 120%;
+
   position: absolute;
-  left: 0;
+  left: calc((100% - var(--tada-size)) / 2);
   bottom: 0;
-  width: 100%;
+  width: var(--tada-size);
+  max-width: none;
   height: auto;
   animation: ${burst} 500ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
 `;

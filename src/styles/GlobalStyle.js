@@ -57,6 +57,11 @@ const GlobalStyle = createGlobalStyle`
   body { color: ${({ theme }) => theme.text.primary}; background: ${({
   theme,
 }) => theme.background.primary}; font-family: "MaruBuri", serif; }
+  /* iOS Safari 하단 툴바·오버스크롤 영역에 보이는 배경을 페이지 배경과 맞춤 */
+  html:has([data-brand-dark="true"]),
+  html:has([data-brand-dark="true"]) body {
+    background: ${({ theme }) => theme.background.brandDark};
+  }
   button { color: inherit; font: inherit; }
   a { color: inherit; text-decoration: none; }
 `;
