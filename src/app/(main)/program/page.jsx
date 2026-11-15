@@ -41,6 +41,7 @@ export default function ProgramPage() {
         {programs.map((program, idx) => (
           <ProgramItem
             key={idx}
+            idx={idx}
             id={program.id}
             title={translate(program.title)}
             imgUrl={program.imgUrl}

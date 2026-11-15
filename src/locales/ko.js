@@ -83,6 +83,8 @@ const ko = {
     location: "장소",
     dateTime: "일시",
     backToList: "목록 보기",
+    prev: "이전",
+    next: "다음",
   },
   staff: {
     title: "스태프 크레딧"
