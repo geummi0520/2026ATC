@@ -78,6 +78,8 @@ const en = {
     location: "Location",
     dateTime: "Date & Time",
     backToList: "Back to List",
+    prev: "prev",
+    next: "next",
   },
   staff: {
     title: "Staff Credit"
