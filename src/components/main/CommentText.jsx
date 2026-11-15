@@ -65,6 +65,10 @@ export const CommentBody = styled.p`
   font-size: 1.4rem;
   line-height: 1.6;
   white-space: pre-line;
+  /* 한글도 단어(띄어쓰기) 단위로만 줄바꿈해서 한 단어가 중간에 끊기지 않게 함.
+     띄어쓰기 없이 아주 긴 글자열만 예외로 넘치지 않게 끊음 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
   color: ${({ theme }) => theme.text.brandInvert};
 `;
 
