@@ -11,7 +11,7 @@ export default function TeamNavigator({
     changeTeam,
 }) {
     const { translate } = useTranslation();
-    console.log(selectedTeam)
+
     return (
         <Container>
             {teamList.map((teamName, idx) => (
@@ -36,10 +36,7 @@ grid-template-columns: repeat(4,fit-content(100%));
 grid-auto-flow: row;
 
 ${media.mobile`
-    // display:none;
-    display:flex;
-    flex-direction:column;
-    height: auto; /* 고정 73px면 세로로 쌓인 버튼이 넘쳐서 아래 StaffStage에 가려짐 */
+    display:none;
     `}
 `;
 
@@ -56,7 +53,6 @@ justify-self: stretch;
 `;
 
 function TeamButton({ teamName, isSelected, changeTeam }) {
-    console.log(isSelected)
     return (
         <StyledButton
             $isSelected={isSelected}
