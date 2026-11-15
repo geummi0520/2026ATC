@@ -135,12 +135,17 @@ const Sheet = styled.div`
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
+  scrollbar-width: none;
   padding: 0 6%;
   color: ${({ theme }) => theme.text.brandInvert};
   background: ${({ theme }) => theme.background.brandDark};
   transform: translateX(${({ $open }) => ($open ? "0" : "-100%")});
   visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
   transition: transform 280ms ease, visibility 280ms;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   ${media.tablet`
     display: flex;
