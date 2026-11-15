@@ -22,9 +22,10 @@ const CONTACT_ICONS = {
 };
 
 export default function WorkDetail({ work }) {
-  const { translate } = useTranslation();
+  const { t, translate } = useTranslation();
   const title = translate(work.title);
   const location = translate(work.location);
+  const schedule = work.schedule ? translate(work.schedule) : null;
   const tags = work.tags.map(translate);
   const tagline = translate(work.tagline);
   const description = translate(work.description);
@@ -68,10 +69,17 @@ export default function WorkDetail({ work }) {
               />
             </HeroImage>
             <HeroInfo>
-              <Meta>
-                <span>Work No. #{String(work.id).padStart(2, "0")}</span>
-                <span>{location}</span>
-              </Meta>
+              <MetaGroup>
+                {schedule && (
+                  <Schedule>
+                    {t("works.schedule")}: {schedule}
+                  </Schedule>
+                )}
+                <Meta>
+                  <span>Work No. #{String(work.id).padStart(2, "0")}</span>
+                  <span>{location}</span>
+                </Meta>
+              </MetaGroup>
               <Title>{title}</Title>
               <Tags>{tags.map((tag) => `#${tag}`).join(" ")}</Tags>
             </HeroInfo>
@@ -281,6 +289,19 @@ const HeroInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+`;
+
+const MetaGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+`;
+
+const Schedule = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.text.quaternary};
+  font-size: ${({ theme }) => theme.typography.fontSize.textXs};
+  font-weight: 400;
 `;
 
 const Meta = styled.div`

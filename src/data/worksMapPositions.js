@@ -35,3 +35,37 @@ export const worksMapPositions = {
   33: { x: 222, y: 287 },
   34: { x: 177, y: 310 },
 };
+
+// 부스 아이콘 호버 영역 좌표 (floorplan.svg viewBox 600 x 664 기준, 아이콘 중심)
+export const boothMapPositions = [
+  {
+    id: "relation",
+    name: {
+      ko: "일상처방 X 2026 ATC\n(대외협력팀 부스)",
+      en: "Daily Prescription X 2026 ATC\n(External Relations Team Booth)",
+    },
+    x: 34,
+    y: 634,
+  },
+  {
+    id: "web",
+    name: { ko: "웹팀 부스", en: "Web Team Booth" },
+    x: 93.5,
+    y: 612,
+  },
+  {
+    id: "sensory",
+    name: {
+      ko: "달걀의 가능성\n(감각제작팀 전시)",
+      en: "Possibilities of the Egg\n(Sensory Production Team Exhibition)",
+    },
+    x: 190,
+    y: 468,
+  },
+  {
+    id: "archive",
+    name: { ko: "아카이빙팀 부스", en: "Archiving Team Booth" },
+    x: 537,
+    y: 326,
+  },
+];

@@ -78,6 +78,7 @@ const en = {
     prevSection: "Previous Section",
     nextSection: "Next Section",
     backToMap: "Back",
+    schedule: "Exhibition Period",
   },
   program: {
     location: "Location",

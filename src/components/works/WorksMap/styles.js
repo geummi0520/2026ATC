@@ -13,10 +13,15 @@ export const Container = styled.div`
   min-height: 0;
 `;
 
-// container-type: size -> ListPanel에서 100cqh로 스크롤 영역 높이 참조
+// 데스크탑 헤더는 배경이 없으므로 스크롤 영역을 헤더 아래까지 끌어올려, 스크롤한 내용이 헤더 뒤로 지나가게 함
+const HEADER_OFFSET = "calc(10rem + 2px)";
+
+// container-type: size -> ListPanel에서 100cqh로 스크롤 영역 높이 참조 (cqh는 padding을 뺀 높이라 HEADER_OFFSET과 무관)
 export const Scroll = styled.div`
   flex: 1;
   min-height: 0;
+  margin-top: calc(-1 * ${HEADER_OFFSET});
+  padding-top: ${HEADER_OFFSET};
   container-type: size;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -25,6 +30,11 @@ export const Scroll = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  ${media.tablet`
+    margin-top: 0;
+    padding-top: 0;
+  `}
 `;
 
 // footer 전까지의 본문이 스크롤 영역 높이를 꽉 채우도록 함
@@ -41,7 +51,7 @@ export const Content = styled.div`
   `}
 
   ${media.mobile`
-    padding: 2rem 0 4rem;
+    padding: 0rem 0 4rem;
   `}
 `;
 
@@ -63,6 +73,8 @@ export const BackRow = styled.div`
     > * {
       align-self: center;
     }
+
+    ${({ $hideOnMobile }) => $hideOnMobile && "display: none;"}
   `}
 `;
 
@@ -182,9 +194,14 @@ export const FloorBar = styled.div`
 
   @container ${STACKED_QUERY} {
     position: sticky;
-    top: 0;
+    top: ${HEADER_OFFSET};
     z-index: 1;
     margin-top: 4rem;
+
+    /* 태블릿에서 세로로 쌓일 때는 고정하지 않고 페이지와 함께 스크롤 */
+    ${media.tablet`
+      position: static;
+    `}
   }
 
   ${media.mobile`
@@ -294,16 +311,12 @@ export const ExpandedPlan = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   gap: 4rem;
 `;
 
-/*
- * 이전으로 버튼까지 한 화면에 보이도록 배치도 높이를 스크롤 영역 높이(100cqh)에 맞춤 (600 / 664 비율)
- * 30.6rem = 상하 padding(8rem) + 이전으로·제목(13.6rem) + gap·이전으로 버튼(9rem)
- */
+// 화면 높이와 관계없이 본문 너비를 꽉 채워 크게 보여줌 (넘치는 부분은 스크롤)
 export const ExpandedFrame = styled.div`
-  width: min(100%, max(36rem, calc((100cqh - 30.6rem) * 600 / 664)));
+  width: 80%;
 
   ${media.mobile`
     width: 100%;
@@ -313,26 +326,9 @@ export const ExpandedFrame = styled.div`
 `;
 
 export const CollapseButton = styled.button`
-  padding: 1.2rem 4rem;
-  border: 1px solid ${({ theme }) => theme.line.brand};
-  background: transparent;
-  color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
-  cursor: pointer;
-  transition: background-color 160ms ease;
-
-  &:hover,
-  &:focus-visible {
-    background: ${({ theme }) => theme.surface.brand};
-  }
-
-  ${media.mobile`
-    display: none;
-  `}
-`;
-
-export const MobileCollapseButton = styled.button`
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   padding: 0.8rem 3.2rem;
   border: 1px solid ${({ theme }) => theme.line.brand};
   border-radius: 999px;
@@ -341,10 +337,18 @@ export const MobileCollapseButton = styled.button`
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 160ms ease;
 
-  ${media.mobile`
-    display: block;
-  `}
+  &:hover,
+  &:focus-visible {
+    background: ${({ theme }) => theme.surface.brand};
+  }
+
+  img {
+    flex-shrink: 0;
+    width: 1.2em;
+    height: 1.2em;
+  }
 `;
 
 export const MobileView = styled.div`
