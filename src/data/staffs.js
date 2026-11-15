@@ -96,7 +96,7 @@ export const staffs = {
                 name: { ko: "진수한", en: "Jin, Suhan" },
                 img: '/images/staff/exhibition/전시팀_진수한.webp',
                 imgSize: [1285, 3629],
-                photo: { right: 153.64, top: 66.25, h: 280.5 },
+                photo: { right: 168.64, top: 66.25, h: 280.5 },
                 label: { side: 'top', gap: 0.4, right: 1.7 },
                 mobile: {
                     photo: { x: 75.4, w: 24.6, mt: -20.5 },
@@ -144,7 +144,7 @@ export const staffs = {
                 name: { ko: "김서인", en: "Kim, Seoin" },
                 img: '/images/staff/exhibition/전시팀_김서인.webp',
                 imgSize: [1262, 3693],
-                photo: { right: 354.38, top: 65.5, h: 275 },
+                photo: { right: 339.38, top: 65.5, h: 275 },
                 label: { side: 'bottom', gap: -0.1, right: 3.0 },
                 mobile: {
                     photo: { x: 76.2, w: 23.8, mt: -20.5 },
