@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import styled, { css, keyframes } from "styled-components";
 import { mainFood } from "@/data/mainFood";
@@ -55,9 +56,106 @@ const foodPopVars = (pop = {}) =>
   );
 
 
-export default function ClocheStage({ clocheFrame, foodIndex, onImageLoad }) {
+// next/image 최적화 주소(기본 deviceSizes 중 필요한 폭 이상인 것)로 받아서 용량은 그대로 작게 받음
+const IMAGE_WIDTHS = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+const optimizedSrc = (src, neededWidth) => {
+  const width = IMAGE_WIDTHS.find((w) => w >= neededWidth) ?? IMAGE_WIDTHS.at(-1);
+  return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=75`;
+};
 
-  const isFoodRevealed = clocheFrame >= FOOD_REVEAL_START_FRAME;
+// 뚜껑·접시 프레임을 캔버스 한 장에 그림.
+// 예전엔 큰 이미지 7장을 겹쳐 두고 투명도만 바꿨는데, 메모리가 빠듯하면 브라우저가 안 보이는
+// 이미지의 디코딩 결과를 버려서 다시 보여줄 때 다시 디코딩하느라 가끔 지지직 버벅였음.
+// 그래서 프레임을 미리 디코딩한 비트맵(ImageBitmap)으로 붙잡아 두고, 프레임이 바뀔 때 바로 그림.
+function FrameCanvas({ srcs, frame, readyKeyPrefix, onFrameReady, style }) {
+  const canvasRef = useRef(null);
+  const bitmapsRef = useRef([]);
+  const frameRef = useRef(frame);
+  // 준비 알림 함수는 최신 것을 쓰도록 ref로 들고 있음(프레임 받기는 처음 한 번만 시작해서)
+  const onFrameReadyRef = useRef(onFrameReady);
+  useEffect(() => {
+    onFrameReadyRef.current = onFrameReady;
+  }, [onFrameReady]);
+
+  const draw = () => {
+    const canvas = canvasRef.current;
+    const bitmap = bitmapsRef.current[frameRef.current - 1];
+    if (!canvas || !bitmap) return;
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    // 프레임 이미지와 캔버스는 비율(4095:4469)이 같아서 꽉 채워 그리면 됨
+    context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  };
+
+  // 화면 크기에 맞춰 캔버스 해상도(레티나 포함)를 맞추고 다시 그림
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const resize = () => {
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.round(canvas.clientWidth * ratio);
+      canvas.height = Math.round(canvas.clientHeight * ratio);
+      draw();
+    };
+    resize();
+    const observer = new ResizeObserver(resize);
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, []);
+
+  // 처음 한 번 모든 프레임을 받아 디코딩해 둠. 하나 준비될 때마다 onFrameReady로 알림
+  useEffect(() => {
+    let isCancelled = false;
+    const canvas = canvasRef.current;
+    const neededWidth = canvas.clientWidth * (window.devicePixelRatio || 1);
+
+    srcs.forEach((src, index) => {
+      const image = new window.Image();
+      image.decoding = "async";
+      image.src = optimizedSrc(src, neededWidth);
+      image
+        .decode()
+        .then(() =>
+          window.createImageBitmap ? window.createImageBitmap(image) : image,
+        )
+        .then((bitmap) => {
+          if (isCancelled) return;
+          bitmapsRef.current[index] = bitmap;
+          if (index === frameRef.current - 1) draw();
+        })
+        .catch(() => {})
+        .finally(() => {
+          // 실패해도 세서 재주문 버튼이 영영 막히지는 않게 함
+          if (!isCancelled) onFrameReadyRef.current?.(`${readyKeyPrefix}-${index + 1}`);
+        });
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+    // 프레임 목록은 고정이라 처음 한 번만 받음
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // 프레임이 바뀌면 화면에 그려지기 전에(useLayoutEffect) 바로 그림.
+  // useEffect로 그리면 뚜껑의 앞/뒤 위치(z-index)는 먼저 바뀌고 그림은 한 박자 늦게 바뀌어
+  // 그 사이 한 번 어긋난 화면이 보이며 지지직 깜빡임
+  useLayoutEffect(() => {
+    frameRef.current = frame;
+    draw();
+  }, [frame]);
+
+  return <FrameCanvasElement ref={canvasRef} style={style} aria-hidden="true" />;
+}
+
+const PLATE_SRCS = CLOCHE_FRAME_NUMBERS.map(plateFrameSrc);
+const LID_SRCS = CLOCHE_FRAME_NUMBERS.map(clocheFrameSrc);
+
+export default function ClocheStage({ clocheFrame, foodIndex, onImageLoad, onFrameReady }) {
+
+  // 요리마다 나타나기 시작하는 프레임을 따로 줄 수 있음(mainFood의 revealFrame).
+  // 키 큰 요리는 뚜껑이 더 들린 뒤에 나타나야 닫힌 뚜껑 위로 삐져나와 보이지 않음
+  const isFoodRevealed = (item) =>
+    clocheFrame >= (item.revealFrame ?? FOOD_REVEAL_START_FRAME);
 
   return (
     <Stage>
@@ -69,23 +167,13 @@ export default function ClocheStage({ clocheFrame, foodIndex, onImageLoad }) {
 
       {/* data-main-cloche: 온보딩이 메인이 화면에 떴는지 확인하는 표시 */}
       <ClocheStand data-main-cloche>
-        {CLOCHE_FRAME_NUMBERS.map((frameNumber) => (
-          <PlateImage
-            key={frameNumber}
-            src={plateFrameSrc(frameNumber)}
-            alt=""
-            fill
-            sizes="(max-width: 767px) 60vw, 40vw"
-            style={{
-              objectFit: "contain",
-              opacity: frameNumber === clocheFrame ? 1 : 0,
-            }}
-            priority
-            data-preload-key={`plate-${frameNumber}`}
-            onLoad={onImageLoad}
-            onError={onImageLoad}
-          />
-        ))}
+        <FrameCanvas
+          srcs={PLATE_SRCS}
+          frame={clocheFrame}
+          readyKeyPrefix="plate"
+          onFrameReady={onFrameReady}
+          style={{ zIndex: 0 }}
+        />
 
         <FoodLayer>
           {mainFood.map((item, index) => (
@@ -97,12 +185,12 @@ export default function ClocheStage({ clocheFrame, foodIndex, onImageLoad }) {
               sizes="(max-width: 767px) 50vw, 20vw"
               style={{
                 objectFit: "contain",
-                opacity: index === foodIndex && isFoodRevealed ? 1 : 0,
+                opacity: index === foodIndex && isFoodRevealed(item) ? 1 : 0,
                 ...foodPopVars(item.pop),
               }}
               loading="eager"
               data-preload-key={`food-${item.file}`}
-              data-popping={index === foodIndex && isFoodRevealed}
+              data-popping={index === foodIndex && isFoodRevealed(item)}
               onLoad={onImageLoad}
               onError={onImageLoad}
               $scale={item.scale}
@@ -110,24 +198,14 @@ export default function ClocheStage({ clocheFrame, foodIndex, onImageLoad }) {
             />
           ))}
         </FoodLayer>
-        {CLOCHE_FRAME_NUMBERS.map((frameNumber) => (
-          <ClocheImage
-            key={frameNumber}
-            src={clocheFrameSrc(frameNumber)}
-            alt=""
-            fill
-            sizes="(max-width: 767px) 60vw, 40vw"
-            style={{
-              objectFit: "contain",
-              opacity: frameNumber === clocheFrame ? 1 : 0,
-              zIndex: clocheFrame >= LID_BEHIND_FOOD_FRAME ? 0 : 2,
-            }}
-            priority
-            data-preload-key={`cloche-${frameNumber}`}
-            onLoad={onImageLoad}
-            onError={onImageLoad}
-          />
-        ))}
+        {/* 뚜껑은 프레임에 따라 요리 앞/뒤로 바뀜(LID_BEHIND_FOOD_FRAME 참고) */}
+        <FrameCanvas
+          srcs={LID_SRCS}
+          frame={clocheFrame}
+          readyKeyPrefix="cloche"
+          onFrameReady={onFrameReady}
+          style={{ zIndex: clocheFrame >= LID_BEHIND_FOOD_FRAME ? 0 : 2 }}
+        />
       </ClocheStand>
     </Stage>
   );
@@ -235,14 +313,12 @@ const ClocheStand = styled.div`
   `}
 `;
 
-const PlateImage = styled(Image)`
-  z-index: 0;
-  will-change: opacity;
-`;
-
-
-const ClocheImage = styled(Image)`
-  will-change: opacity;
+const FrameCanvasElement = styled.canvas`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 `;
 
 const FoodLayer = styled.div`
