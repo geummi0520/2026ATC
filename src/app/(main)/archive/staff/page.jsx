@@ -215,6 +215,9 @@ const NavButton = styled.button`
 border:none;
 /* 첫 팀엔 이전, 마지막 팀엔 다음 버튼 숨김. 자리는 남겨서 팀 이름이 가운데에서 안 밀림 */
 visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
+background: transparent;
+padding: 0;
+cursor: pointer;
 
 `;
 /* 이전/다음 버튼 + 팀 이름: 모바일에서만 표시 (데스크탑은 TeamNavigator 사용) */
@@ -227,6 +230,8 @@ ${media.mobile`
   align-items: center;
   gap: 2rem;
   align-self: stretch;
+  background: transparent;
+
 `}
 `;
 const StageSlot = styled.div`
