@@ -35,9 +35,10 @@ const groupByRoom = (floorWorks) =>
   );
 
 // 배치도 상태를 주소에 담아 상세에서 돌아오거나 뒤로가기 했을 때 그대로 복원
-const getMapHref = ({ floor, slideIndex, isExpanded }) => {
+const getMapHref = ({ floor, slideIndex, isExpanded, category }) => {
   const params = new URLSearchParams({ view: "map" });
 
+  if (category) params.set("category", category);
   if (floor !== FLOORS[0]) params.set("floor", floor);
   if (slideIndex > 0) params.set("section", slideIndex + 1);
   if (isExpanded) params.set("expanded", "1");
@@ -74,7 +75,14 @@ export default function WorksMap({ initialState = {} }) {
     floor: selectedFloor,
     slideIndex,
     isExpanded,
+    category: initialState.category,
   });
+  // 카테고리에서 들어온 경우 이전으로 시 그 카테고리 목록으로
+  const listHref = initialState.category
+    ? `${ROUTES.WORKS}?${new URLSearchParams({
+        category: initialState.category,
+      })}`
+    : ROUTES.WORKS;
 
   useEffect(() => {
     window.history.replaceState(null, "", mapHref);
@@ -224,9 +232,13 @@ export default function WorksMap({ initialState = {} }) {
   const header = (
     <S.Header>
       {isExpanded ? (
-        <BackButton onClick={() => toggleExpanded(false)} />
+        <S.BackRow>
+          <BackButton onClick={() => toggleExpanded(false)} />
+        </S.BackRow>
       ) : (
-        <BackButton href={ROUTES.WORKS} />
+        <S.BackRow>
+          <BackButton href={listHref} />
+        </S.BackRow>
       )}
       <S.Title>{title}</S.Title>
     </S.Header>

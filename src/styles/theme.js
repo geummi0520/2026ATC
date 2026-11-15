@@ -128,7 +128,7 @@ const theme = {
       headingSm: "2rem",
       textLg: "1.8rem",
       textMd: "1.4rem",
-      textSm: "1.2rem",
+      textSm: "1.4rem",
     },
   },
 

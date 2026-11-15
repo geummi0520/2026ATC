@@ -37,7 +37,7 @@ const Section = styled.section`
 
   ${media.mobile`
     display: block;
-    padding: 2rem 1rem;
+    padding: 2rem 0;
   `}
 `;
 

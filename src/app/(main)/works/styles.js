@@ -21,7 +21,7 @@ export const ScrollArea = styled.div`
 `;
 
 export const Content = styled.div`
-  padding: 4rem;
+  padding: 4rem 3.2rem;
 
   ${media.worksTablet`
     padding: 4rem 2rem;
@@ -36,11 +36,19 @@ export const Content = styled.div`
 export const MobileActionRow = styled.div`
   display: none;
 
+  /* works 기본 화면의 TitleRow(위 padding 2rem, 제목 줄 높이 2.8rem)와
+     같은 위치에 작품배치도 버튼이 오도록 맞춤
+     min-height = 위 padding 2rem + 줄 높이 2.8rem + 아래 padding 1.2rem */
   ${media.mobile`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1.2rem 0 3.2rem 0;
+    min-height: 6rem;
+    padding: 2rem 0 1.2rem 0;
+
+    > * {
+      align-self: center;
+    }
   `}
 `;
 
@@ -50,13 +58,13 @@ export const TitleRow = styled.div`
   justify-content: space-between;
   gap: 2rem;
   ${media.mobile`
-    padding: 2rem 1rem;
+    padding: 2rem 0;
   `}
 `;
 
 export const Title = styled.h1`
   margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
   line-height: 1.4;
 
   ${media.worksTablet`
@@ -78,7 +86,7 @@ export const Description = styled.p`
 
   ${media.mobile`
   /* display: none; */
-  margin: 0 1rem 2rem 1rem;
+  margin: 0 0 2rem 0;
   font-size: ${({ theme }) => theme.typography.fontSize.textSm};
   `}
 `;

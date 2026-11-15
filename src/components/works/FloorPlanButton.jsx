@@ -6,9 +6,13 @@ import { ROUTES } from "@/constants/routes";
 import { media } from "@/styles/media";
 import Image from "next/image";
 
-export default function FloorPlanButton({ label, hideOnMobile }) {
+export default function FloorPlanButton({ label, category, hideOnMobile }) {
+  // 카테고리에서 들어가면 배치도 주소에 카테고리를 담아, 이전으로 시 선택을 복원
+  const params = new URLSearchParams({ view: "map" });
+  if (category) params.set("category", category);
+
   return (
-    <Button href={`${ROUTES.WORKS}?view=map`} $hideOnMobile={hideOnMobile}>
+    <Button href={`${ROUTES.WORKS}?${params}`} $hideOnMobile={hideOnMobile}>
       <p>{label}</p>
       <Image
         src={"/icons/arrow_up_right.svg"}

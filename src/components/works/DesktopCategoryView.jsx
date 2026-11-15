@@ -13,6 +13,7 @@ export default function DesktopCategoryView({
   works,
   content,
   floorPlanLabel,
+  category,
 }) {
   const { translate } = useTranslation();
   const [activeWorkId, setActiveWorkId] = useState(null);
@@ -68,7 +69,10 @@ export default function DesktopCategoryView({
         <CategoryHeader>
           <CategoryHeading>
             <CategoryTitle>{translate(content.title)}</CategoryTitle>
-            <FloorPlanButton label={translate(floorPlanLabel)} />
+            <FloorPlanButton
+              label={translate(floorPlanLabel)}
+              category={category}
+            />
           </CategoryHeading>
           <CategoryDescription>
             {translate(content.description)}
@@ -103,7 +107,7 @@ const CategoryDesktop = styled.div`
   display: grid;
   grid-template-columns: calc(100dvh - 16.4rem) minmax(34rem, 1fr);
   align-items: start;
-  margin: -4rem;
+  margin: -4rem -3.2rem;
 
   /* 3열×4행 + 썸네일 3:4 -> 콜라주 가로 = 높이 × 9/16 */
   @media ${TALL_COLLAGE_QUERY} {
@@ -173,12 +177,12 @@ const CategoryHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
-  padding: 2.4rem;
+  padding: 4rem 3.2rem;
 `;
 
 const CategoryTitle = styled.h1`
   margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
   line-height: 1.4;
   /* white-space: nowrap; */
   word-break: keep-all;
