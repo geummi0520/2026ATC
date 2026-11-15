@@ -8,6 +8,9 @@ import { useState } from "react";
 import { media } from "@/styles/media";
 import useTranslation from "@/hooks/useTranslation";
 
+// 첫 화면에 보이는 아이템 수(이미지 높이 36.7rem 기준 약 2~3개)
+const EAGER_COUNT = 3;
+
 export default function ProgramItem({ title, imgUrl, dates, site, description, idx, id, isOpen, handleToggle }) {
     const { t, translate } = useTranslation();
 
@@ -23,12 +26,16 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
 
         <Container href={`/program/${id}`} onClick={handleClick} $isOpen={isOpen}>
 
-            {/* 좌측 프로그램 이미지 */}
+            {/* 좌측 프로그램 이미지
+                첫 화면에 보이는 위쪽 아이템은 바로 높은 우선순위로 받고,
+                나머지는 기본값(lazy)대로 스크롤해서 화면 가까이 올 때 받음 */}
             <ProgramImg
                 src={imgUrl}
                 alt="program image"
                 width={220}
                 height={293}
+                loading={idx < EAGER_COUNT ? "eager" : "lazy"}
+                fetchPriority={idx < EAGER_COUNT ? "high" : "auto"}
                 $desktop
             />
             {/* 우측 프로그램 정보 */}
@@ -71,7 +78,7 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                         <EventInfo>
 
                             <InfoLine>
-                                <StyledSpan>{t("program.dateTime")}</StyledSpan>
+                                <StyledSpan $bold>{t("program.dateTime")}</StyledSpan>
                                 <DateContainer>
                                     {dates.map((d, idx) => (
                                         <StyledSpan
@@ -85,7 +92,7 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
 
                             </InfoLine>
                             <InfoLine>
-                                <StyledSpan>{t("program.location")}</StyledSpan>
+                                <StyledSpan $bold>{t("program.location")}</StyledSpan>
                                 <StyledSpan>{site}</StyledSpan>
                             </InfoLine>
 
@@ -283,29 +290,31 @@ ${media.tablet`
 
 `;
 
+/*
+ * 2열 그리드: [레이블(일시/장소) | 내용]
+ * 레이블 열 폭을 두 줄이 공유 → 레이블 길이가 달라도 내용 시작점이 같음
+ */
 const EventInfo = styled.div`
-display: flex;
+display: grid;
+grid-template-columns: max-content minmax(0, 1fr);
+column-gap: 1.2rem;
 width: 100%;
-flex-direction: column;
-justify-content: center;
-align-items: flex-start;
+align-items: start;
 ${media.tablet`
 
-    gap:1.6rem;
+    row-gap:1.6rem;
     `};
 
 @media (max-width:550px) {
- gap:1rem;
+ row-gap:1rem;
 }
 
 
 
 `;
+/* 그리드 칸에 레이블/내용이 직접 들어가도록 줄 래퍼는 박스를 만들지 않음 */
 const InfoLine = styled.div`
-width:100%;
-display: flex;
-align-items: flex-start;
-gap: 1.2rem;
+display: contents;
 `
 const StyledSpan = styled.span`
 // color: ${({ theme }) => theme.text.primary};
@@ -313,7 +322,8 @@ const StyledSpan = styled.span`
 font-family: MaruBuri;
 font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
-font-weight: 400;
+font-weight: ${({ $bold }) => $bold ? "600" : "400"};
+
 line-height: 180%; 
 
 ${media.mobile`
