@@ -1,6 +1,14 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
@@ -55,7 +63,7 @@ function useClocheAnimation() {
   const [isAnimating, setIsAnimating] = useState(false);
   const animationRef = useRef(null);
 
-  const playClocheAnimation = useCallback(({ closeFirst = false, onClosed } = {}) => {
+  const playClocheAnimation = useCallback(({ closeFirst = false, onClosed, onOpened } = {}) => {
     window.clearTimeout(animationRef.current);
     setIsAnimating(true);
 
@@ -65,13 +73,13 @@ function useClocheAnimation() {
       : openFrames;
     let step = 0;
 
-
     const showFrame = () => {
       const frame = frames[step];
       setClocheFrame(frame);
       if (frame === 1) onClosed?.();
 
       if (step >= frames.length - 1) {
+        onOpened?.();
         animationRef.current = null;
         setIsAnimating(false);
         return;
@@ -91,6 +99,56 @@ function useClocheAnimation() {
   useEffect(() => () => window.clearTimeout(animationRef.current), []);
 
   return { clocheFrame, isAnimating, playClocheAnimation };
+}
+
+// 뚜껑이 열릴 때 나는 효과음
+const DING_SOUND_SRC = "/images/main/ddang.MP3";
+
+// 코멘트 박스를 줄바꿈된 가장 긴 줄 너비에 맞춤.
+// 단어 단위로 줄바꿈하면 줄 끝에 빈 공간이 남는데, CSS만으론 박스가 최대 너비(48rem) 그대로라
+// 화면에 그려진 뒤 실제 글자들의 가장 오른쪽 끝을 재서 그만큼만 남기고 줄임.
+// (더보기·접기 버튼 글자는 빼고 잼: 오른쪽 끝에 붙는 버튼이라 같이 재면 안 줄어듦)
+function useFitBoxToLongestLine(boxRef, deps) {
+  useLayoutEffect(() => {
+    const fit = () => {
+      const box = boxRef.current;
+      if (!box) return;
+      box.style.width = "";
+      // 태블릿·모바일처럼 박스가 숨겨져 있으면 잴 수 없어서 그냥 둠
+      if (!box.offsetParent) return;
+
+      const style = window.getComputedStyle(box);
+      const boxLeft = box.getBoundingClientRect().left;
+      const contentLeft =
+        boxLeft + parseFloat(style.borderLeftWidth) + parseFloat(style.paddingLeft);
+      let rightmost = contentLeft;
+      const range = document.createRange();
+      const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const textNode = walker.currentNode;
+        if (textNode.parentElement?.closest("button")) continue;
+        range.selectNodeContents(textNode);
+        for (const rect of range.getClientRects()) {
+          rightmost = Math.max(rightmost, rect.right);
+        }
+      }
+
+      const textWidth = rightmost - contentLeft;
+      const frame =
+        parseFloat(style.paddingLeft) +
+        parseFloat(style.paddingRight) +
+        parseFloat(style.borderLeftWidth) +
+        parseFloat(style.borderRightWidth);
+      box.style.width = `${Math.ceil(textWidth + frame)}px`;
+    };
+
+    fit();
+    // 웹폰트가 늦게 적용되면 글자 너비가 바뀌어서 한 번 더 맞춤
+    document.fonts?.ready.then(fit);
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 }
 
 export default function Main() {
@@ -126,6 +184,9 @@ export default function Main() {
 
   const commentKey = `${food.file}-${commentIndex}`;
   const [expandedCommentKey, setExpandedCommentKey] = useState(null);
+  const commentBoxRef = useRef(null);
+  useFitBoxToLongestLine(commentBoxRef, [comment, commentQuestion, expandedCommentKey]);
+
   const commentTextProps = {
     text: comment,
     clampLines: currentComment?.clampLines,
@@ -164,6 +225,39 @@ export default function Main() {
     }
   }, [collected, mainStamp]);
 
+
+  const dingRef = useRef(null);
+  useEffect(() => {
+    const ding = new Audio(encodeURI(DING_SOUND_SRC));
+    ding.preload = "auto";
+    dingRef.current = ding;
+  }, []);
+
+  const playDing = useCallback(() => {
+    const ding = dingRef.current;
+    if (!ding) return;
+    ding.currentTime = 0;
+
+    ding.play().catch(() => {});
+  }, []);
+
+
+  const unlockDing = () => {
+    const ding = dingRef.current;
+    if (!ding || !ding.paused) return;
+    ding.muted = true;
+    ding
+      .play()
+      .then(() => {
+        ding.pause();
+        ding.currentTime = 0;
+      })
+      .catch(() => {})
+      .finally(() => {
+        ding.muted = false;
+      });
+  };
+
   const tryAutoOpen = useCallback(() => {
     if (
       hasAutoOpenedRef.current ||
@@ -177,22 +271,30 @@ export default function Main() {
     setFoodIndex(firstFoodIndex);
     setCommentIndex(pickCommentIndex(firstFoodIndex));
     rollMainStamp();
-    playClocheAnimation();
-  }, [playClocheAnimation, rollMainStamp]);
+    // 처음 자동으로 열릴 땐 사용자가 누른 적이 없어 브라우저가 소리를 막을 수 있음(막히면 조용히 넘어감)
+    playClocheAnimation({ onOpened: playDing });
+  }, [playClocheAnimation, playDing, rollMainStamp]);
 
+  // 이미지 하나가 받아지고 디코딩까지 끝났을 때 준비된 걸로 셈(key: 이미지 구분 이름)
+  const markImageReady = useCallback(
+    (key) => {
+      readyImagesRef.current.add(key);
+      setReadyImageCount(readyImagesRef.current.size);
+      tryAutoOpen();
+    },
+    [tryAutoOpen],
+  );
+
+  // 요리 이미지(<img>)용: 받아지면 디코딩까지 끝낸 뒤 준비된 걸로 셈
   const handleImageLoad = useCallback(
     (event) => {
       const image = event.currentTarget;
       image
         .decode()
         .catch(() => {})
-        .then(() => {
-          readyImagesRef.current.add(image.dataset.preloadKey);
-          setReadyImageCount(readyImagesRef.current.size);
-          tryAutoOpen();
-        });
+        .then(() => markImageReady(image.dataset.preloadKey));
     },
-    [tryAutoOpen],
+    [markImageReady],
   );
 
 
@@ -200,10 +302,12 @@ export default function Main() {
 
   const handleReorder = () => {
     if (isAnimating || !isReady) return;
+    unlockDing();
 
-
+    // 뚜껑이 닫혔다가, 완전히 덮인 순간 새 요리·코멘트로 바꾸고, 다시 완전히 열리면 "땡!"
     playClocheAnimation({
       closeFirst: true,
+      onOpened: playDing,
       onClosed: () => {
         const nextFoodIndex = pickNextIndex(mainFood.length, foodIndex);
         setFoodIndex(nextFoodIndex);
@@ -234,7 +338,7 @@ export default function Main() {
         <TopRight style={{ opacity: isTitleShown ? 1 : 0 }}>
           <Headline>{food.name.ko}</Headline>
           <Subheadline>{food.name.en}</Subheadline>
-          <CommentBox>
+          <CommentBox ref={commentBoxRef}>
             {commentQuestion && <CommentTitle>{commentQuestion}</CommentTitle>}
             <CommentBody>
               <CommentText {...commentTextProps} />
@@ -247,6 +351,7 @@ export default function Main() {
         clocheFrame={clocheFrame}
         foodIndex={foodIndex}
         onImageLoad={handleImageLoad}
+        onFrameReady={markImageReady}
       />
 
       {/* 뚜껑이 다 열려 요리가 나온 뒤에만 스탬프 노출 */}
@@ -292,17 +397,20 @@ export default function Main() {
   );
 }
 
+// 푸터 없이 화면 한 장에 맞춤. --header-height: 헤더 높이(Header.jsx / MainLayout의 padding-top과 같은 값)
 const Wrapper = styled.section`
+  --header-height: calc(10rem + 2px);
+
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  height: calc(100dvh - 12rem);
+  height: calc(100dvh - var(--header-height));
   padding: 1.6rem 4rem;
   overflow: hidden;
 
   ${media.tablet`
-    height: calc(100dvh - 8.4rem);
+    --header-height: 8.4rem;
     padding: 1.6rem 2.4rem;
   `}
 
@@ -438,7 +546,9 @@ const CommentBox = styled.div`
   gap: 0.8rem;
   padding: 1.6rem;
   border: 1px solid ${({ theme }) => theme.primitives.green[900]};
-  background: #0F5535;
+  /* 더보기 버튼이 글 끝을 덮을 때 쓰는 배경색(CommentText의 InlineMoreButton) */
+  --comment-bg: #0f5535;
+  background: var(--comment-bg);
 
 
   ${media.tablet`
@@ -447,41 +557,49 @@ const CommentBox = styled.div`
 `;
 
 
+// 버튼과 양쪽 전시 정보는 높이를 따로 맞춤.
+// --button-lift: 버튼을 바닥에서 띄우는 높이(= 이 줄의 아래 여백)
+// --info-gap: 전시 정보 글씨를 바닥에서 띄우는 높이(버튼 높이와 상관없이 바닥 기준)
 const ButtonRow = styled.div`
+  --button-lift:6rem;
+  --info-gap: 2.4rem;
+
   position: relative;
   z-index: 1;
   flex: 0 0 auto;
   margin-top: -4rem;
-  margin-bottom: 4rem;
+  margin-bottom: var(--button-lift);
   display: flex;
   justify-content: center;
 
   ${shortDesktop`
-    margin-bottom: 6rem;
+    --button-lift: 8rem;
   `}
 
   ${media.tablet`
+    --button-lift: 12rem;
     gap: 4.8rem;
     margin-top: 0;
-    margin-bottom: 2.4rem;
   `}
 
   ${media.mobile`
+    --button-lift: 0rem;
     gap: 0.8rem;
-    margin-bottom: 0;
   `}
 `;
 
 
+// 버튼 줄의 아래 여백만큼 내려서 바닥 기준(--info-gap)으로 놓음
 const exhibitionInfoStyle = ({ theme }) => `
   position: absolute;
-  bottom: 0;
+  bottom: calc(var(--info-gap) - var(--button-lift));
   margin: 0;
   font-size: ${theme.typography.fontSize.textMd};
   line-height: 1.8;
   color: ${theme.text.brandInvertDisabled};
   white-space: nowrap;
 `;
+
 
 const ExhibitionName = styled.div`
   ${exhibitionInfoStyle}

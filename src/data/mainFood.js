@@ -1,3 +1,5 @@
+// revealFrame: 뚜껑이 열릴 때 이 요리가 나타나기 시작하는 프레임(1~7). 없으면 4.
+//   아이스크림·반신Yolk처럼 키 큰 요리는 닫힌 뚜껑 위로 삐져나와 보여서 더 늦게(5) 나타나게 함.
 export const mainFood = [
   {
     file: "a",
@@ -17,6 +19,7 @@ export const mainFood = [
     name: { ko: "🥚ㅏ🥚ㅣ스크림", en: "One Sc🥚🥚p Please!" },
     scale: 0.4,
     offsetY: 5,
+    revealFrame: 5,
     pop: {
       start: 0.45,
       peak: [1.2, 1.32],
@@ -56,6 +59,7 @@ export const mainFood = [
     name: { ko: "반신Yolk", en: "Egg n Soldier" },
     scale: 0.4,
     offsetY: 2,
+    revealFrame: 5,
     pop: {
       start: 0.45,
       peak: [1.2, 1.32],
