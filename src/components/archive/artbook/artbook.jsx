@@ -265,24 +265,32 @@ export default function Artbook() {
 }
 
 
+// 푸터를 뺀 화면 한 장에 맞춤. --header-height: 헤더 높이(Header.jsx / MainLayout의 padding-top과 같은 값).
+// --title-size: 제목 글씨 크기. 책 높이 계산(--book-max-height)에도 같은 값을 써서 둘이 어긋나지 않게 함
 const Content = styled.section`
-  --book-max-height: calc(100dvh - 12rem - 4rem * 2 - 3rem * 1.2 - 4.8rem);
+  --header-height: calc(10rem + 2px);
+  --title-size: ${({ theme }) => theme.typography.fontSize.headingMd};
+  --book-max-height: calc(
+    100dvh - var(--header-height) - 4rem * 2 - var(--title-size) * 1.2 - 4.8rem
+  );
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4.8rem;
-  height: calc(100dvh - 12rem);
+  height: calc(100dvh - var(--header-height));
   padding: 4rem;
   overflow: hidden;
 
   ${media.tablet`
-    --book-max-height: calc(100dvh - 8.4rem - 4rem * 2 - 3rem * 1.2 - 4.8rem);
-    height: calc(100dvh - 8.4rem);
+    --header-height: 8.4rem;
   `}
 
   ${media.mobile`
-    --book-max-height: calc(100dvh - 8.4rem - 2rem * 2 - 2rem * 1.2 - 2.4rem);
+    --title-size: 2rem;
+    --book-max-height: calc(
+      100dvh - var(--header-height) - 2rem * 2 - var(--title-size) * 1.2 - 2.4rem
+    );
     gap: 2.4rem;
     padding: 2rem 1rem;
   `}
@@ -292,13 +300,9 @@ const Title = styled.h1`
   flex-shrink: 0;
   margin: 0;
   line-height: 1.2;
-  font-size: ${({ theme }) => theme.typography.fontSize.headingMid};
+  font-size: var(--title-size);
   font-weight: 700;
   color: ${({ theme }) => theme.text.primary};
-
-  ${media.mobile`
-    font-size: 2rem;
-  `}
 `;
 
 
