@@ -22,6 +22,7 @@ export default function FloorPlanButton({ label, hideOnMobile }) {
 }
 
 const Button = styled(Link)`
+  white-space: nowrap;
   cursor: pointer;
   display: flex;
   align-items: center;

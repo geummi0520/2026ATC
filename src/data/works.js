@@ -2,7 +2,7 @@ export const works = [
   {
     id: 1,
     title: {
-      ko: "야미아이",
+      ko: "YUMMY EYE",
       en: "YUMMY EYE",
     },
     team: {
@@ -58,26 +58,29 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/1/thumbnail.7782d92f.webp",
+      thumbnail: "https://img.2026atc.com/works/1/thumbnail.14d35ed0.webp",
       detail: [
-        "https://img.2026atc.com/works/1/detail-01.0c0eae45.webp",
-        "https://img.2026atc.com/works/1/detail-02.ee65f0ba.webp",
+        "https://img.2026atc.com/works/1/detail-01.2395ec8c.webp",
+        "https://img.2026atc.com/works/1/detail-02.dd038ae7.webp",
       ],
     },
     video: null,
     links: [
       {
         type: "website",
+        label: "Website",
         value: "yummy-eye-intro.vercel.app",
         url: "https://yummy-eye-intro.vercel.app",
       },
       {
-        type: "website",
+        type: "taste test",
+        label: "Taste Test",
         value: "yummy-taste-test.vercel.app",
         url: "https://yummy-taste-test.vercel.app",
       },
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/art_ppuraki",
         url: "https://instagram.com/art_ppuraki",
       },
@@ -141,10 +144,10 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/2/thumbnail.3c6b2ca6.webp",
+      thumbnail: "https://img.2026atc.com/works/2/thumbnail.844600ba.webp",
       detail: [
-        "https://img.2026atc.com/works/2/detail-01.29cd6eb2.webp",
-        "https://img.2026atc.com/works/2/detail-02.67400062.webp",
+        "https://img.2026atc.com/works/2/detail-01.550d4477.webp",
+        "https://img.2026atc.com/works/2/detail-02.a983c33b.webp",
       ],
     },
     video: null,
@@ -218,11 +221,11 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/3/thumbnail.ab930970.webp",
+      thumbnail: "https://img.2026atc.com/works/3/thumbnail.1ec80592.webp",
       detail: [
-        "https://img.2026atc.com/works/3/detail-01.b5e53a4f.webp",
-        "https://img.2026atc.com/works/3/detail-02.1cef0b2c.webp",
-        "https://img.2026atc.com/works/3/detail-03.75d21a8a.webp",
+        "https://img.2026atc.com/works/3/detail-01.37d5ce38.webp",
+        "https://img.2026atc.com/works/3/detail-02.e2fac8c3.webp",
+        "https://img.2026atc.com/works/3/detail-03.2d8bf0d3.webp",
       ],
     },
     video: {
@@ -233,6 +236,7 @@ export const works = [
     links: [
       {
         type: "github",
+        label: "GitHub",
         value: "github.com/lee-chh/do-not-touch",
         url: "https://github.com/lee-chh/do-not-touch",
       },
@@ -296,8 +300,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/4/thumbnail.8c62ed5f.webp",
-      detail: ["https://img.2026atc.com/works/4/detail-01.cfbbca19.webp"],
+      thumbnail: "https://img.2026atc.com/works/4/thumbnail.421c0956.webp",
+      detail: ["https://img.2026atc.com/works/4/detail-01.71413570.webp"],
     },
     video: {
       id: "1245828431",
@@ -309,7 +313,7 @@ export const works = [
   {
     id: 5,
     title: {
-      ko: "모바",
+      ko: "MOVA",
       en: "MOVA",
     },
     team: {
@@ -406,8 +410,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/5/thumbnail.024c7d75.webp",
-      detail: ["https://img.2026atc.com/works/5/detail-01.638f5871.webp"],
+      thumbnail: "https://img.2026atc.com/works/5/thumbnail.02d6144a.webp",
+      detail: ["https://img.2026atc.com/works/5/detail-01.ccaea021.webp"],
     },
     video: null,
     links: [],
@@ -517,10 +521,10 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/6/thumbnail.6e2ee87f.webp",
+      thumbnail: "https://img.2026atc.com/works/6/thumbnail.ded11de7.webp",
       detail: [
-        "https://img.2026atc.com/works/6/detail-01.7c5abe28.webp",
-        "https://img.2026atc.com/works/6/detail-02.abba930e.webp",
+        "https://img.2026atc.com/works/6/detail-01.1faa2457.webp",
+        "https://img.2026atc.com/works/6/detail-02.c8dcf43d.webp",
       ],
     },
     video: {
@@ -599,11 +603,6 @@ export const works = [
             value: "instagram.com/leeyeonzh",
             url: "https://instagram.com/leeyeonzh",
           },
-          {
-            type: "github",
-            value: "github.com/yeonzhry",
-            url: "https://github.com/yeonzhry",
-          },
         ],
       },
       {
@@ -632,13 +631,14 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/7/thumbnail.736f756d.webp",
-      detail: ["https://img.2026atc.com/works/7/detail-01.8ce713a3.webp"],
+      thumbnail: "https://img.2026atc.com/works/7/thumbnail.9a9bd0a6.webp",
+      detail: ["https://img.2026atc.com/works/7/detail-01.c3d786ce.webp"],
     },
     video: null,
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/habity.app",
         url: "https://instagram.com/habity.app",
       },
@@ -716,11 +716,11 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/8/thumbnail.a8c9a7d4.webp",
+      thumbnail: "https://img.2026atc.com/works/8/thumbnail.73a05797.webp",
       detail: [
-        "https://img.2026atc.com/works/8/detail-01.33056ebf.webp",
-        "https://img.2026atc.com/works/8/detail-02.6cd6250f.webp",
-        "https://img.2026atc.com/works/8/detail-03.4fcae573.webp",
+        "https://img.2026atc.com/works/8/detail-01.0c126026.webp",
+        "https://img.2026atc.com/works/8/detail-02.4e1cd616.webp",
+        "https://img.2026atc.com/works/8/detail-03.4b65e2cb.webp",
       ],
     },
     video: null,
@@ -729,7 +729,7 @@ export const works = [
   {
     id: 9,
     title: {
-      ko: "만지시오!",
+      ko: "Touch!(만지시오!)",
       en: "Touch!",
     },
     team: {
@@ -789,8 +789,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/9/thumbnail.265cb4da.webp",
-      detail: ["https://img.2026atc.com/works/9/detail-01.441020d8.webp"],
+      thumbnail: "https://img.2026atc.com/works/9/thumbnail.202b9cd8.webp",
+      detail: ["https://img.2026atc.com/works/9/detail-01.3bd45535.webp"],
     },
     video: null,
     links: [],
@@ -853,8 +853,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/10/thumbnail.b0926f8f.webp",
-      detail: ["https://img.2026atc.com/works/10/detail-01.48dd30ea.webp"],
+      thumbnail: "https://img.2026atc.com/works/10/thumbnail.fa269dda.webp",
+      detail: ["https://img.2026atc.com/works/10/detail-01.87b505b3.webp"],
     },
     video: null,
     links: [],
@@ -922,8 +922,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/11/thumbnail.5816ebca.webp",
-      detail: ["https://img.2026atc.com/works/11/detail-01.2375c3ff.webp"],
+      thumbnail: "https://img.2026atc.com/works/11/thumbnail.63111dac.webp",
+      detail: ["https://img.2026atc.com/works/11/detail-01.c39eac3f.webp"],
     },
     video: {
       id: "1245531331",
@@ -948,7 +948,7 @@ export const works = [
     },
     location: {
       floor: "4F",
-      ko: "4F 신영균 스튜디오",
+      ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
     tagline: {
@@ -1018,12 +1018,12 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/12/thumbnail.977589dc.webp",
+      thumbnail: "https://img.2026atc.com/works/12/thumbnail.d8a5297e.webp",
       detail: [
-        "https://img.2026atc.com/works/12/detail-01.e9ceb725.webp",
-        "https://img.2026atc.com/works/12/detail-02.bb59b309.webp",
-        "https://img.2026atc.com/works/12/detail-03.91d45a6f.webp",
-        "https://img.2026atc.com/works/12/detail-04.fc0e0e3e.webp",
+        "https://img.2026atc.com/works/12/detail-01.b2e5e3ca.webp",
+        "https://img.2026atc.com/works/12/detail-02.f1a57458.webp",
+        "https://img.2026atc.com/works/12/detail-03.82c045a3.webp",
+        "https://img.2026atc.com/works/12/detail-04.cf8ed109.webp",
       ],
     },
     video: {
@@ -1036,7 +1036,7 @@ export const works = [
   {
     id: 13,
     title: {
-      ko: "너의 마음 안에 있어",
+      ko: "Who am I?(너의 마음 안에 있어)",
       en: "Who am I?",
     },
     team: {
@@ -1049,7 +1049,7 @@ export const works = [
     },
     location: {
       floor: "4F",
-      ko: "4F 신영균 스튜디오",
+      ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
     tagline: {
@@ -1118,16 +1118,17 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/13/thumbnail.91bc3dc1.webp",
+      thumbnail: "https://img.2026atc.com/works/13/thumbnail.d4e6431e.webp",
       detail: [
-        "https://img.2026atc.com/works/13/detail-01.0cbc8752.webp",
-        "https://img.2026atc.com/works/13/detail-02.72c4c2bd.webp",
+        "https://img.2026atc.com/works/13/detail-01.67714a99.webp",
+        "https://img.2026atc.com/works/13/detail-02.cb0bdca1.webp",
       ],
     },
     video: null,
     links: [
       {
         type: "github",
+        label: "GitHub",
         value: "github.com/JadeBlue333/WhoAmI",
         url: "https://github.com/JadeBlue333/WhoAmI",
       },
@@ -1149,7 +1150,7 @@ export const works = [
     },
     location: {
       floor: "4F",
-      ko: "4F 신영균 스튜디오",
+      ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
     tagline: {
@@ -1215,8 +1216,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/14/thumbnail.ae95f97a.webp",
-      detail: ["https://img.2026atc.com/works/14/detail-01.2c2adc80.webp"],
+      thumbnail: "https://img.2026atc.com/works/14/thumbnail.706e48e7.webp",
+      detail: ["https://img.2026atc.com/works/14/detail-01.c6654d10.webp"],
     },
     video: null,
     links: [],
@@ -1237,7 +1238,7 @@ export const works = [
     },
     location: {
       floor: "4F",
-      ko: "4F 신영균 스튜디오",
+      ko: "4F Shin Youngkyun Studio",
       en: "4F Shin Youngkyun Studio",
     },
     tagline: {
@@ -1321,8 +1322,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/15/thumbnail.c6079c93.webp",
-      detail: ["https://img.2026atc.com/works/15/detail-01.a261355e.webp"],
+      thumbnail: "https://img.2026atc.com/works/15/thumbnail.3791a601.webp",
+      detail: ["https://img.2026atc.com/works/15/detail-01.0d1f8be0.webp"],
     },
     video: null,
     links: [],
@@ -1343,7 +1344,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 계단 공간",
+      ko: "5F Staircase Space",
       en: "5F Staircase Space",
     },
     tagline: {
@@ -1414,16 +1415,17 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/16/thumbnail.cb4d293a.webp",
+      thumbnail: "https://img.2026atc.com/works/16/thumbnail.e05fd661.webp",
       detail: [
-        "https://img.2026atc.com/works/16/detail-01.6620833e.webp",
-        "https://img.2026atc.com/works/16/detail-02.c46fc301.webp",
+        "https://img.2026atc.com/works/16/detail-01.4045c008.webp",
+        "https://img.2026atc.com/works/16/detail-02.a346a16e.webp",
       ],
     },
     video: null,
     links: [
       {
         type: "youtube",
+        label: "Youtube",
         value: "youtu.be/D2sW4oIvaLM",
         url: "https://youtu.be/D2sW4oIvaLM",
       },
@@ -1445,7 +1447,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 사운드 스튜디오",
+      ko: "5F Sound Studio",
       en: "5F Sound Studio",
     },
     tagline: {
@@ -1529,13 +1531,14 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/17/thumbnail.0f1d2f31.webp",
-      detail: ["https://img.2026atc.com/works/17/detail-01.9517486f.webp"],
+      thumbnail: "https://img.2026atc.com/works/17/thumbnail.9cb68469.webp",
+      detail: ["https://img.2026atc.com/works/17/detail-01.04a90117.webp"],
     },
     video: null,
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/im.codi",
         url: "https://instagram.com/im.codi",
       },
@@ -1557,7 +1560,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F XR 스튜디오",
+      ko: "5F XR Studio",
       en: "5F XR Studio",
     },
     tagline: {
@@ -1613,8 +1616,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/18/thumbnail.cdf0910a.webp",
-      detail: ["https://img.2026atc.com/works/18/detail-01.98b78c79.webp"],
+      thumbnail: "https://img.2026atc.com/works/18/thumbnail.6ad2173c.webp",
+      detail: ["https://img.2026atc.com/works/18/detail-01.aa9aeba9.webp"],
     },
     video: null,
     links: [],
@@ -1635,7 +1638,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 세미나 룸",
+      ko: "5F Seminar Room",
       en: "5F Seminar Room",
     },
     tagline: {
@@ -1682,16 +1685,17 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/19/thumbnail.b68d5a99.webp",
+      thumbnail: "https://img.2026atc.com/works/19/thumbnail.3b962a26.webp",
       detail: [
-        "https://img.2026atc.com/works/19/detail-01.ebe9eccc.webp",
-        "https://img.2026atc.com/works/19/detail-02.fe6bf65a.webp",
+        "https://img.2026atc.com/works/19/detail-01.77b016f1.webp",
+        "https://img.2026atc.com/works/19/detail-02.6fbc9d54.webp",
       ],
     },
     video: null,
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/forieelee",
         url: "https://instagram.com/forieelee",
       },
@@ -1700,7 +1704,7 @@ export const works = [
   {
     id: 20,
     title: {
-      ko: "향",
+      ko: "KAO:RE(향)",
       en: "KAO:RE",
     },
     team: {
@@ -1713,7 +1717,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 세미나 룸",
+      ko: "5F Seminar Room",
       en: "5F Seminar Room",
     },
     tagline: {
@@ -1755,8 +1759,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/20/thumbnail.285e1f59.webp",
-      detail: ["https://img.2026atc.com/works/20/detail-01.fb238883.webp"],
+      thumbnail: "https://img.2026atc.com/works/20/thumbnail.41ba870c.webp",
+      detail: ["https://img.2026atc.com/works/20/detail-01.9321e651.webp"],
     },
     video: null,
     links: [],
@@ -1777,7 +1781,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 이머시브 홀",
+      ko: "5F Immersive Hall",
       en: "5F Immersive Hall",
     },
     tagline: {
@@ -1833,8 +1837,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/21/thumbnail.751d5a29.webp",
-      detail: ["https://img.2026atc.com/works/21/detail-01.fd66b8a3.webp"],
+      thumbnail: "https://img.2026atc.com/works/21/thumbnail.35fef3aa.webp",
+      detail: ["https://img.2026atc.com/works/21/detail-01.ebf52901.webp"],
     },
     video: null,
     links: [],
@@ -1855,7 +1859,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 이머시브 홀",
+      ko: "5F Immersive Hall",
       en: "5F Immersive Hall",
     },
     tagline: {
@@ -1953,10 +1957,10 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/22/thumbnail.15e26889.webp",
+      thumbnail: "https://img.2026atc.com/works/22/thumbnail.7a01e3cf.webp",
       detail: [
-        "https://img.2026atc.com/works/22/detail-01.f7d50dfb.webp",
-        "https://img.2026atc.com/works/22/detail-02.c54978e3.webp",
+        "https://img.2026atc.com/works/22/detail-01.e44718fe.webp",
+        "https://img.2026atc.com/works/22/detail-02.3b72d707.webp",
       ],
     },
     video: {
@@ -1982,7 +1986,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 아트 스튜디오",
+      ko: "5F Art Studio",
       en: "5F Art Studio",
     },
     tagline: {
@@ -2043,8 +2047,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/23/thumbnail.6c2745e2.webp",
-      detail: ["https://img.2026atc.com/works/23/detail-01.31c64a3a.webp"],
+      thumbnail: "https://img.2026atc.com/works/23/thumbnail.2d8d576e.webp",
+      detail: ["https://img.2026atc.com/works/23/detail-01.e1d31d1c.webp"],
     },
     video: null,
     links: [],
@@ -2065,7 +2069,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 아트 스튜디오",
+      ko: "5F Art Studio",
       en: "5F Art Studio",
     },
     tagline: {
@@ -2112,16 +2116,17 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/24/thumbnail.05e4efa5.webp",
+      thumbnail: "https://img.2026atc.com/works/24/thumbnail.7ad6ecbb.webp",
       detail: [
-        "https://img.2026atc.com/works/24/detail-01.485e30f9.webp",
-        "https://img.2026atc.com/works/24/detail-02.5e959400.webp",
+        "https://img.2026atc.com/works/24/detail-01.c2484e2f.webp",
+        "https://img.2026atc.com/works/24/detail-02.172d0fc2.webp",
       ],
     },
     video: null,
     links: [
       {
         type: "website",
+        label: "Website",
         value: "laqqone.org",
         url: "https://laqqone.org",
       },
@@ -2143,7 +2148,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 아트 스튜디오",
+      ko: "5F Art Studio",
       en: "5F Art Studio",
     },
     tagline: {
@@ -2214,8 +2219,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/25/thumbnail.2b8d91b9.webp",
-      detail: ["https://img.2026atc.com/works/25/detail-01.68bc85c8.webp"],
+      thumbnail: "https://img.2026atc.com/works/25/thumbnail.753ba1f3.webp",
+      detail: ["https://img.2026atc.com/works/25/detail-01.c85a7c75.webp"],
     },
     video: {
       id: "1245768901",
@@ -2225,6 +2230,7 @@ export const works = [
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/imn_0tar0b0t",
         url: "https://instagram.com/imn_0tar0b0t",
       },
@@ -2246,7 +2252,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 아트 스튜디오",
+      ko: "5F Art Studio",
       en: "5F Art Studio",
     },
     tagline: {
@@ -2306,13 +2312,14 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/26/thumbnail.2eef3bfe.webp",
-      detail: ["https://img.2026atc.com/works/26/detail-01.aa8a766c.webp"],
+      thumbnail: "https://img.2026atc.com/works/26/thumbnail.5e85b29f.webp",
+      detail: ["https://img.2026atc.com/works/26/detail-01.d1027598.webp"],
     },
     video: null,
     links: [
       {
         type: "website",
+        label: "Steam",
         value: "store.steampowered.com/app/4988160/BrainSplit",
         url: "https://store.steampowered.com/app/4988160/BrainSplit",
       },
@@ -2334,7 +2341,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2377,20 +2384,6 @@ export const works = [
       {
         role: "member",
         name: {
-          ko: "이다은",
-          en: "Lee, Daeun",
-        },
-        contacts: [
-          {
-            type: "instagram",
-            value: "instagram.com/city.rock7",
-            url: "https://instagram.com/city.rock7",
-          },
-        ],
-      },
-      {
-        role: "member",
-        name: {
           ko: "천성하",
           en: "Cheon, Sungha",
         },
@@ -2404,10 +2397,10 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/27/thumbnail.2d7101c9.webp",
+      thumbnail: "https://img.2026atc.com/works/27/thumbnail.35800803.webp",
       detail: [
-        "https://img.2026atc.com/works/27/detail-01.d96bb8f0.webp",
-        "https://img.2026atc.com/works/27/detail-02.ec7d5573.webp",
+        "https://img.2026atc.com/works/27/detail-01.e28d524e.webp",
+        "https://img.2026atc.com/works/27/detail-02.65ee1bf6.webp",
       ],
     },
     video: {
@@ -2418,6 +2411,7 @@ export const works = [
     links: [
       {
         type: "website",
+        label: "Notion",
         value: "app.notion.com/p/UNSPEC-D-DAY-3c18f43a40f680789bd2f52f30f4259f",
         url: "https://app.notion.com/p/UNSPEC-D-DAY-3c18f43a40f680789bd2f52f30f4259f",
       },
@@ -2439,7 +2433,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2486,21 +2480,23 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/28/thumbnail.0f1cea3a.webp",
+      thumbnail: "https://img.2026atc.com/works/28/thumbnail.a6015b9f.webp",
       detail: [
-        "https://img.2026atc.com/works/28/detail-01.c2514374.webp",
-        "https://img.2026atc.com/works/28/detail-02.3f25f60c.webp",
+        "https://img.2026atc.com/works/28/detail-01.f251067e.webp",
+        "https://img.2026atc.com/works/28/detail-02.ac64c280.webp",
       ],
     },
     video: null,
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/lagrang_studio",
         url: "https://instagram.com/lagrang_studio",
       },
       {
         type: "website",
+        label: "Website",
         value: "lagrangstudio.com",
         url: "https://lagrangstudio.com",
       },
@@ -2522,7 +2518,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2626,10 +2622,10 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/29/thumbnail.dad28781.webp",
+      thumbnail: "https://img.2026atc.com/works/29/thumbnail.2de8c4dd.webp",
       detail: [
-        "https://img.2026atc.com/works/29/detail-01.ccc68312.webp",
-        "https://img.2026atc.com/works/29/detail-02.6672ca35.webp",
+        "https://img.2026atc.com/works/29/detail-01.046135e5.webp",
+        "https://img.2026atc.com/works/29/detail-02.fe45d548.webp",
       ],
     },
     video: null,
@@ -2638,7 +2634,7 @@ export const works = [
   {
     id: 30,
     title: {
-      ko: "오브젝트런",
+      ko: "Object Run",
       en: "Object Run",
     },
     team: {
@@ -2651,7 +2647,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2710,16 +2706,17 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/30/thumbnail.9589f954.webp",
+      thumbnail: "https://img.2026atc.com/works/30/thumbnail.aea7e7c4.webp",
       detail: [
-        "https://img.2026atc.com/works/30/detail-01.952be5ec.webp",
-        "https://img.2026atc.com/works/30/detail-02.c862afc8.webp",
+        "https://img.2026atc.com/works/30/detail-01.5060aa06.webp",
+        "https://img.2026atc.com/works/30/detail-02.ebd4fc8e.webp",
       ],
     },
     video: null,
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/grdr_awi2025",
         url: "https://instagram.com/grdr_awi2025",
       },
@@ -2741,7 +2738,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 컴퓨터 랩",
+      ko: "5F Computer Lab",
       en: "5F Computer Lab",
     },
     tagline: {
@@ -2855,10 +2852,10 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/31/thumbnail.762cea20.webp",
+      thumbnail: "https://img.2026atc.com/works/31/thumbnail.aca8476d.webp",
       detail: [
-        "https://img.2026atc.com/works/31/detail-01.a9e0e1a1.webp",
-        "https://img.2026atc.com/works/31/detail-02.f7c32092.webp",
+        "https://img.2026atc.com/works/31/detail-01.68ae214c.webp",
+        "https://img.2026atc.com/works/31/detail-02.224d917f.webp",
       ],
     },
     video: null,
@@ -2880,7 +2877,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 패브리케이션 랩",
+      ko: "5F Fabrication Lab",
       en: "5F Fabrication Lab",
     },
     tagline: {
@@ -2936,8 +2933,8 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/32/thumbnail.78915f76.webp",
-      detail: ["https://img.2026atc.com/works/32/detail-01.6e5adec8.webp"],
+      thumbnail: "https://img.2026atc.com/works/32/thumbnail.1776a11a.webp",
+      detail: ["https://img.2026atc.com/works/32/detail-01.35e57e6c.webp"],
     },
     video: null,
     links: [],
@@ -2958,7 +2955,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 패브리케이션 랩",
+      ko: "5F Fabrication Lab",
       en: "5F Fabrication Lab",
     },
     tagline: {
@@ -3000,16 +2997,17 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/33/thumbnail.f4165c5b.webp",
+      thumbnail: "https://img.2026atc.com/works/33/thumbnail.a5a52356.webp",
       detail: [
-        "https://img.2026atc.com/works/33/detail-01.c9f5af69.webp",
-        "https://img.2026atc.com/works/33/detail-02.9644fc1b.webp",
+        "https://img.2026atc.com/works/33/detail-01.6f46da0d.webp",
+        "https://img.2026atc.com/works/33/detail-02.7aadc656.webp",
       ],
     },
     video: null,
     links: [
       {
         type: "instagram",
+        label: "Instagram",
         value: "instagram.com/misang.archive",
         url: "https://instagram.com/misang.archive",
       },
@@ -3031,7 +3029,7 @@ export const works = [
     },
     location: {
       floor: "5F",
-      ko: "5F 패브리케이션 랩",
+      ko: "5F Fabrication Lab",
       en: "5F Fabrication Lab",
     },
     tagline: {
@@ -3073,13 +3071,14 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/34/thumbnail.87a68520.webp",
-      detail: ["https://img.2026atc.com/works/34/detail-01.f90a9175.webp"],
+      thumbnail: "https://img.2026atc.com/works/34/thumbnail.c9dab561.webp",
+      detail: ["https://img.2026atc.com/works/34/detail-01.8471c47f.webp"],
     },
     video: null,
     links: [
       {
         type: "youtube",
+        label: "Youtube",
         value: "www.youtube.com/@Blenqve",
         url: "https://www.youtube.com/@Blenqve",
       },

@@ -19,7 +19,7 @@ export default function ComingSoon() {
 
       <VisualGroup>
         <Cloche
-          src="/images/works/closed_cloche.webp"
+          src="/images/works/comingsoon_cloche.webp"
           alt="은색 클로슈"
           width={600}
           height={437}
@@ -105,7 +105,7 @@ const rattle = keyframes`
 
 const Cloche = styled(Image)`
   flex: none;
-  width: 43rem;
+  width: 39rem;
   height: auto;
   transform-origin: 50% 100%;
   cursor: pointer;

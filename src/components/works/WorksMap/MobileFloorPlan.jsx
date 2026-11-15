@@ -51,15 +51,11 @@ export default function MobileFloorPlan({
         }}
         onTouchEnd={handleTouchEnd}
       >
-        <ExpandArea
-          type="button"
-          onClick={onExpand}
-          aria-label={t("works.fullMap")}
-        />
-
         <PlanLayer
           style={{
-            transform: `translate(${(-slide.view.x / PLAN_WIDTH) * 100}%, ${(-slide.view.y / PLAN_HEIGHT) * 100}%)`,
+            transform: `translate(${(-slide.view.x / PLAN_WIDTH) * 100}%, ${
+              (-slide.view.y / PLAN_HEIGHT) * 100
+            }%)`,
           }}
         >
           <FloorPlan works={works} alt={alt} />
@@ -131,19 +127,10 @@ const Frame = styled.div`
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.line.brand};
   background: ${({ theme }) => theme.background.primary};
-  touch-action: pan-y;
+  /* 지도 위에서 손가락을 움직여도 페이지가 스크롤되지 않도록 (좌우 스와이프는 touch 이벤트로 직접 처리) */
+  touch-action: none;
 `;
 
-const ExpandArea = styled.button`
-  position: absolute;
-  inset: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: zoom-in;
-`;
-
-// 번호 링크만 클릭되고 나머지 영역 클릭은 아래 ExpandArea로 전달
 const PlanLayer = styled.div`
   position: relative;
   width: ${(PLAN_WIDTH / VIEW_WIDTH) * 100}%;
@@ -196,7 +183,7 @@ const Arrow = styled.button`
 `;
 
 const ArrowImage = styled(Image)`
-  width: 1.2rem;
+  width: 1.7rem;
   height: auto;
   transform: rotate(${({ $rotation }) => $rotation}deg);
 `;
@@ -206,13 +193,14 @@ const FullMapButton = styled.button`
   z-index: 1;
   right: 0.8rem;
   bottom: 0.8rem;
-  padding: 0.6rem 1.6rem;
+  padding: 0.4rem 1.6rem;
   border: 1px solid ${({ theme }) => theme.line.brand};
   border-radius: 999px;
   background: ${({ theme }) => theme.background.primary};
   color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 700;
+  line-height: 180%; /* 2.52rem */
   cursor: pointer;
 `;
 
@@ -222,7 +210,7 @@ const SlideTitle = styled.h2`
   gap: 0.4rem 1.2rem;
   margin: 2.4rem 0 1.6rem;
   color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 400;
   line-height: 1.4;
 

@@ -27,8 +27,8 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
             <ProgramImg
                 src={imgUrl}
                 alt="program image"
-                width={1080}
-                height={1440}
+                width={220}
+                height={293}
                 $desktop
             />
             {/* 우측 프로그램 정보 */}
@@ -43,8 +43,8 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                             <ProgramImg
                                 src={imgUrl}
                                 alt="tablet program image"
-                                width={1080}
-                                height={1440}
+                                width={220}
+                                height={293}
                                 $tablet
                                 $isOpen={isOpen}
                             />
@@ -162,6 +162,11 @@ background: lightgray;
 
 ${media.mobile`
     display:none;
+    `};
+${media.tablet`
+    // width:100%;
+    // height:auto;
+    height: 30.7rem;
     `};
 
 

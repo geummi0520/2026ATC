@@ -1,4 +1,7 @@
 const en = {
+  common: {
+    back: "Back",
+  },
   navigation: {
     main: "Main",
     about: "About",
@@ -27,7 +30,8 @@ const en = {
   stamp: {
     collect: "Pick up the hidden stamp",
     card: "Stamp card",
-    cardMessage: "Collect every stamp and something good might happen..........",
+    cardMessage:
+      "Collect every stamp and something good might happen..........",
     close: "Close",
     rewardMessage: "Wow! You got an ultra-rare SSR egg.",
     rewardImage: "Ultra-rare egg dish",
@@ -39,8 +43,7 @@ const en = {
   },
   artistCredit: {
     heading: "Artist Credit",
-    subtitle:
-      "Click on a project title to view its details.",
+    subtitle: "Click on a project title to view its details.",
   },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
@@ -65,17 +68,19 @@ const en = {
     stationInfo: "Subway Information",
   },
   works: {
-    expandMap: "View larger",
-    fullMap: "View full map",
-    prevSection: "Previous section",
-    nextSection: "Next section",
+    expandMap: "View Larger",
+    fullMap: "Full Map",
+    prevSection: "Previous Section",
+    nextSection: "Next Section",
     backToMap: "Back",
   },
   program: {
     location: "Location",
     dateTime: "Date & Time",
-    back: "back",
     backToList: "Back to List",
+  },
+  staff: {
+    title: "Staff Credit"
   },
 };
 
