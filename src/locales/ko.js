@@ -65,6 +65,11 @@ const ko = {
     path: "오시는 길",
     map: "서강대학교 캠퍼스 지도",
     stationInfo: "지하철역 정보",
+    sponsor: "협력 및 후원",
+    sponsor1: "일상처방",
+    sponsor2: "스마일게이트",
+    sponsor3: "대학혁신 지원사업",
+    sponsor4: "서강퓨처랩",
   },
   works: {
     expandMap: "크게 보기",
@@ -72,6 +77,7 @@ const ko = {
     prevSection: "이전 섹션",
     nextSection: "다음 섹션",
     backToMap: "돌아가기",
+    supporting: "supporting"
   },
   program: {
     location: "장소",

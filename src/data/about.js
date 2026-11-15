@@ -32,8 +32,7 @@ export const topic_text = {
 
 2026 ATC는 자신의 감각, 경험, 취향에 집중한다. ATC의 작가는 모두 고유의 레시피를 토대로 창작한다. 공간과 사람을 맥락으로 하여 모인 이곳에서, 관람객은 창작물을 자유롭게 감각하고 해석한다. 창작도 감상도 이미 설계된 적당한 레시피를 따를 필요가 없다.
 
-  “레시피 바꾸지 말 것” 뒤에 무엇을 놓을지는 정해져 있지 않다. * 은 작가와 관람객이 직접 채워나간다. 이곳에서는 언제든 당신의 새로운 레시피를 만들어도 좋다. 그 과정에서 또다른 감각과 취향을 발견할 지도 모르니까. 이 전시와 함께하는 모두가 아이처럼 세계를 넓혀가는 기억을 되찾을 수 있기를 바란다. 순수하고 즐겁고 재미있게!
-  `,
+  “레시피 바꾸지 말 것” 뒤에 무엇을 놓을지는 정해져 있지 않다. * 은 작가와 관람객이 직접 채워나간다. 이곳에서는 언제든 당신의 새로운 레시피를 만들어도 좋다. 그 과정에서 또다른 감각과 취향을 발견할 지도 모르니까. 이 전시와 함께하는 모두가 아이처럼 세계를 넓혀가는 기억을 되찾을 수 있기를 바란다.`,
     en: `Following a recipe means experiencing a taste and a sensation someone else has already designed.
 
 If you measure exactly and follow the steps in order, you're guaranteed a certain feeling. In this way, we have long gone through things simply by following what someone else had already decided. The products completed by chasing after fixed, ready-made recipes became part of who we are. And we came to think of that accumulated, uniform feeling, simply, as our own taste.
@@ -42,9 +41,12 @@ But can something that piled up unintentionally really be called our own taste? 
 
 2026 ATC focuses on one's own senses, experiences, and tastes. Every artist at ATC creates based on their own unique recipe. Gathered here, in a space shaped by people and context, visitors are free to sense and interpret each work as they wish. Neither creation nor appreciation needs to follow an already-designed, convenient recipe.
 
-What comes after "Do Not Change the Recipe" is left undecided. The *(asterisk) is to be filled in by artists and visitors themselves. Here, you are always free to create your own new recipe — and along the way, you may discover yet another sense, another taste. We hope that everyone who joins this exhibition can rediscover the memory of expanding their world like a child. *Pure, joyful, and fun!*
-`,
+What comes after "Do Not Change the Recipe" is left undecided. The *(asterisk) is to be filled in by artists and visitors themselves. Here, you are always free to create your own new recipe — and along the way, you may discover yet another sense, another taste. We hope that everyone who joins this exhibition can rediscover the memory of expanding their world like a child.`,
 };
+
+export const topic_emphasis = { ko: "순수하고 즐겁고 재미있게!", en: "Pure, joyful, and fun!" };
+
+
 
 export const congrat_text = {
     ko: `서강대학교 아트&테크놀로지학과에서 《레시피 바꾸지 말 것 *》를 주제로 제15회 2026 Art & Technology Conference (ATC) 을 개최합니다.
@@ -68,7 +70,6 @@ ATC가 매년 이어져 온 이유도 여기에 있다고 생각합니다. ATC�
 여러분을 제15회 2026 ATC에 정중히 초대합니다.
 
 서강대학교 아트&테크놀로지학과 학과장
-
 최용순`,
     en: `The Department of Art & Technology at Sogang University is pleased to host the 15th Art & Technology Conference (2026 ATC) under the theme “Do Not Change the Recipe *”.
 
@@ -157,13 +158,13 @@ export const staffs = [
 ];
 
 export const station_info = {
-    ko: `대흥역 1번 출구 · 540m · 도보 10분(후문 인접)
-서강대역 1번 출구 · 880m · 도보 18분
-이대역 5번 출구 · 900m · 도보 14분
-신촌역 6번 출구 · 960m · 도보 18분`,
-    en: `Daeheung Station Exit 1 · 540 m · 10 - minute walk(near the rear gate)
-Sogang University Station Exit 1 · 880 m · 18 - minute walk
-Ewha Womans University Station Exit 5 · 900 m · 14 - minute walk
-Sinchon Station Exit 6 · 960 m · 18 - minute walk`,
+    ko: `6호선 대흥역 1번 출구 · 540m · 도보 10분(후문 인접)
+경의중앙선 서강대역 1번 출구 · 880m · 도보 18분
+2호선 이대역 5번 출구 · 900m · 도보 14분
+2호선 신촌역 6번 출구 · 960m · 도보 18분`,
+    en: `Line 6 Daeheung Station Exit 1 · 540 m · 10 - minute walk(near the rear gate)
+Gyeongui–Jungang Line Sogang University Station Exit 1 · 880 m · 18 - minute walk
+Line 2 Ewha Womans University Station Exit 5 · 900 m · 14 - minute walk
+Line 2 Sinchon Station Exit 6 · 960 m · 18 - minute walk`,
 };
 
