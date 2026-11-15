@@ -78,7 +78,7 @@ function useClocheAnimation() {
       setClocheFrame(frame);
       if (frame === 1) onClosed?.();
 
-      if (step >= frames.length - 1) {
+      if (step === frames.length -  2) {
         onOpened?.();
         animationRef.current = null;
         setIsAnimating(false);
@@ -488,7 +488,8 @@ const TopRight = styled.div`
   ${media.mobile`
     align-items: center;
     max-width: none;
-    /* margin-top: 1rem; */
+    /* 태블릿의 margin-top(2rem)을 그대로 받으면 너무 내려와서 모바일은 위로 붙임 */
+    margin-top: 0;
   `}
 `;
 
@@ -506,8 +507,12 @@ const Headline = styled.h1`
     font-size: 4rem;
   `}
 
+  /* 모바일은 가운데 정렬: 데스크톱용 오른쪽 여백을 빼고, 두 줄이 돼도 가운데로 */
   ${media.mobile`
+    justify-content: center;
+    margin-right: 0;
     font-size: 2rem;
+    text-align: center;
   `}
 `;
 
@@ -529,7 +534,10 @@ const Subheadline = styled.p`
   `}
 
   ${media.mobile`
+    justify-content: center;
+    margin-right: 0;
     font-size: 2rem;
+    text-align: center;
   `}
 `;
 
