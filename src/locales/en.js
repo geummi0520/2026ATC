@@ -66,6 +66,11 @@ const en = {
     path: "Directions",
     map: "Sogang University Campus Map",
     stationInfo: "Subway Information",
+    sponsor: "Collaboration & Sponsorship",
+    sponsor1: "Ilsang Cheobang",
+    sponsor2: "Smile Gate",
+    sponsor3: "University Innovation Supporting Business",
+    sponsor4: "Sogang Future Lab",
   },
   works: {
     expandMap: "View Larger",

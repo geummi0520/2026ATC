@@ -4,7 +4,7 @@ import { media } from "@/styles/media";
 import Link from 'next/link';
 import Image from "next/image";
 import useTranslation from "@/hooks/useTranslation";
-import { overview_text, topic_text, congrat_text, staffs, station_info } from "@/data/about"
+import { overview_text, topic_text, topic_emphasis, congrat_text, staffs, station_info } from "@/data/about"
 
 
 
@@ -19,12 +19,27 @@ export default function AboutPage() {
           <HeadTitle>&lt;{t("about.topicSentence")}&gt;</HeadTitle>
           <SubTitle>2026 Art & Technology Conference</SubTitle>
         </TitleContainer>
-        <PosterMain
-          src="/images/about/poster.webp"
-          alt="poster-main"
-          width={400}
-          height={567}
-        />
+        <PosterWrapper>
+          <PosterText >
+            <PosterTextSpan $left>
+              {`< 레시피 바꾸지 말것 *>
+              2026 Art & Technology Conference`}
+            </PosterTextSpan>
+          </PosterText>
+          <PosterMain
+            src="/images/about/poster.webp"
+            alt="poster-main"
+            width={400}
+            height={567}
+          />
+          <PosterText >
+            <PosterTextSpan $right>
+              {`11.26(목)  15:30 — 21:00
+              11.27(금) - 11.29(일)     10:00 — 21:00`}
+            </PosterTextSpan>
+          </PosterText>
+
+        </PosterWrapper>
       </Frame1>
 
       {/* 전시개요 */}
@@ -48,7 +63,10 @@ export default function AboutPage() {
         showLeftImage={true}
       >
         <Topic>{t("about.topicSentence")}</Topic>
-        {translate(topic_text)}
+        {/* 한 요소로 묶어야 부모(flex column)의 별도 줄로 갈라지지 않고 본문 끝에 이어붙음 */}
+        <div>
+          {translate(topic_text)} <em>"{translate(topic_emphasis)}"</em>
+        </div>
       </AboutContent>
 
       {/* 축사 */}
@@ -177,9 +195,155 @@ export default function AboutPage() {
           </InfoBox>
         </MapBox>
       </MapWrapper>
+      <SupportingBox>
+        <ContentTitle >{t("about.sponsor")}</ContentTitle>
+        <SponsorList>
+          <SponsorItem $left>
+            <Image
+              src="/icons/about/일상처방.svg"
+              alt="map-image"
+              width={61}
+              height={52}
+            />
+          </SponsorItem>
+          <SponsorItem $right>
+            <StyledLink href="./archive/staff" $left>
+              {t("about.sponsor1")}
+              <Image
+                src="/icons/about/arrow-up-right.svg"
+                alt="arrow-up-right"
+                width={18}
+                height={18}
+              />
+            </StyledLink>
+          </SponsorItem>
+          <SponsorItem $left>
+            <Image
+              src="/icons/about/스마일게이트.svg"
+              alt="map-image"
+              width={119}
+              height={23}
+            />
+          </SponsorItem>
+          <SponsorItem $right>
+            <StyledLink href="./archive/staff" $left>
+              {t("about.sponsor2")}
+              <Image
+                src="/icons/about/arrow-up-right.svg"
+                alt="arrow-up-right"
+                width={18}
+                height={18}
+              />
+            </StyledLink>
+          </SponsorItem>
+          <SponsorItem $left>
+            <Image
+              src="/icons/about/대학혁신지원사업.svg"
+              alt="map-image"
+              width={29}
+              height={42}
+            />
+          </SponsorItem>
+          <SponsorItem $right>
+            <StyledLink href="./archive/staff" $left>
+              {t("about.sponsor3")}
+              <Image
+                src="/icons/about/arrow-up-right.svg"
+                alt="arrow-up-right"
+                width={92}
+                height={27}
+              />
+            </StyledLink>
+          </SponsorItem>
+          <SponsorItem $left>
+            <Image
+              src="/icons/about/서강퓨처랩.svg"
+              alt="map-image"
+              width={61}
+              height={52}
+            />
+          </SponsorItem>
+          <SponsorItem $right>
+            <StyledLink href="./archive/staff" $left>
+              {t("about.sponsor4")}
+              <Image
+                src="/icons/about/arrow-up-right.svg"
+                alt="arrow-up-right"
+                width={18}
+                height={18}
+              />
+            </StyledLink>
+          </SponsorItem>
+        </SponsorList>
+      </SupportingBox>
     </Container>
   );
 }
+const SponsorItem = styled.div`
+display: flex;
+height: 8rem;
+flex-direction: column;
+justify-content: center;
+align-items: ${({ $right }) => $right ? " flex-start" : "flex-end"};
+gap: 1rem;
+grid-row: span 1;
+grid-column: span 1;
+justify-self: stretch;
+`;
+const SponsorList = styled.div`
+display: inline-grid;
+padding: 4rem 0;
+row-gap: 2rem;
+column-gap: 2rem;
+align-self: stretch;
+grid-template-rows:      fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0.00px;
+grid-template-columns: repeat(2,minmax(0,1fr));
+grid-auto-flow: row;
+`;
+const SupportingBox = styled.div`
+display: flex;
+padding: 2rem 4rem;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+align-self: stretch;
+`;
+const PosterWrapper = styled.div`
+display:flex;
+width:100%; /* Frame1이 align-items:center라 이게 없으면 내용 폭만큼 줄어서 양 끝에 못 붙음 */
+`;
+const PosterText = styled.div`
+flex:1;
+
+width:100%;
+display: flex;
+padding: 0 4rem;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+align-self: stretch;
+${media.tablet`
+  display:none;
+  `}
+`;
+
+const PosterTextSpan = styled.div`
+width:100%;
+color: ${({ theme }) => theme.text.brandInvertDisabled};
+
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+font-style: normal;
+font-weight: 700;
+line-height: 180%; /* 25.2px */
+
+white-space: pre-line;
+
+text-align: ${({ $right }) => ($right ? "right" : "left")};
+
+
+`;
+
+
 const StationInfo = styled.span`
 color: ${({ theme }) => theme.text.brandInvert};
 
@@ -266,6 +430,8 @@ gap:0.8rem;
 `
 
 const PosterMain = styled(Image)`
+flex:1;
+
 width:40rem;
 height:auto;
 
@@ -398,9 +564,14 @@ background: ${({ theme }) => theme.surface.brandDark};
 
 ${media.tablet`
   flex-direction:column;
+  padding:2rem;
+  gap:1.2rem;
+`}
+${media.mobile`
+  flex-direction:column;
   padding:1.2rem;
   gap:1.2rem;
-  `}
+`}
 
 
 `;
@@ -724,8 +895,8 @@ padding:0rem;
 
 `;
 const StyledLink = styled(Link)`
-margin-bottom:1rem;
-align-self:flex-end;
+margin-bottom:${({ $left }) => $left ? "0rem" : "1rem"};;
+align-self:${({ $left }) => $left ? " flex-start" : "flex-end"};
 
 display: flex;
 align-items: center;
@@ -739,10 +910,12 @@ img {
 border-bottom: 0.1rem solid ${({ theme }) => theme.line.brandInvert};
 color: ${({ theme }) => theme.text.brandInvert};
 
-font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+font-size: ${({ $left, theme }) => $left ? theme.typography.fontSize.textMd : theme.typography.fontSize.textSm};
+
 font-style: normal;
 font-weight: 700;
-line-height: 120%; /* 14.4px */
+line-height: ${({ $left }) => $left ? "180%" : "120%"};
+
 
 `;
 
