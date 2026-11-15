@@ -65,7 +65,7 @@ export default function AboutPage() {
         <Topic>{t("about.topicSentence")}</Topic>
         {/* 한 요소로 묶어야 부모(flex column)의 별도 줄로 갈라지지 않고 본문 끝에 이어붙음 */}
         <div>
-          {translate(topic_text)} <em>"{translate(topic_emphasis)}"</em>
+          {translate(topic_text)} <em>&quot;{translate(topic_emphasis)}&quot;</em>
         </div>
       </AboutContent>
 
