@@ -44,7 +44,17 @@ flex-direction: column;
 align-items: flex-end;
 gap: 1rem;
 
+/* 한 화면에서 끝나도록: 뷰포트 - MainContent 상단 여백(헤더 자리) → 스크롤하면 바로 푸터 */
+height: calc(100dvh - 12rem);
+min-height: 48rem;
+
+${media.tablet`
+  height: calc(100dvh - 8.4rem);
+`}
+
 ${media.mobile`
+  height: auto;
+  min-height: 0;
   padding-left: 0;
   padding-right: 0;
 `}
@@ -58,7 +68,7 @@ align-self: stretch;
 const PageName = styled.span`
 color: ${({ theme }) => theme.text.primary};
 
-font-size: ${({ theme }) => theme.typography.fontSize.headingLg};
+font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
 font-style: normal;
 font-weight: 700;
 line-height: normal;

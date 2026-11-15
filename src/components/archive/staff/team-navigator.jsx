@@ -73,7 +73,7 @@ const StyledButton = styled.button`
   color: ${({ $isSelected, theme }) =>
         $isSelected ? theme.text.brand : theme.text.quaternary};
   font-weight: ${({ $isSelected, theme }) => ($isSelected ? "700" : "400")};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 120%;
   cursor: pointer;
 `;
