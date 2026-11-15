@@ -19,17 +19,6 @@ export default function ProgramPage() {
 
   const { translate } = useTranslation();
 
-  // useEffect(() => {
-  //   if (!isModalOpen) return;
-
-  //   const prevOverflow = document.body.style.overflow;
-  //   document.body.style.overflow = "hidden";
-
-  //   return () => {
-  //     document.body.style.overflow = prevOverflow;
-  //   };
-  // }, [isModalOpen]);
-
   // 클릭시 아이템의 토글 변경 함수
   const handleToggle = (idx) => {
     // 열려진 토글 클릭 -> 토글 닫기

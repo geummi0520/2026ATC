@@ -77,6 +77,9 @@ const en = {
     back: "back",
     backToList: "Back to List",
   },
+  staff: {
+    title: "Staff Credit"
+  },
 };
 
 export default en;
