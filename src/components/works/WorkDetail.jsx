@@ -3,13 +3,28 @@
 import Image from "next/image";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
+import BackButton from "@/components/common/BackButton";
+import HiddenStamp from "@/components/stamp/HiddenStamp";
 import WorksRail from "@/components/works/WorksRail";
+import { STAMP_SLOTS } from "@/constants/stamps";
+import useStamp from "@/hooks/useStamp";
 import useTranslation from "@/hooks/useTranslation";
+import useWorksBackHref from "@/hooks/useWorksBackHref";
 import { media } from "@/styles/media";
+import { rollWorksStamp } from "@/utils/stampPlan";
+
+const CONTACT_ICONS = {
+  email: "/icons/works/email_icon.svg",
+  github: "/icons/works/github_icon.svg",
+  instagram: "/icons/works/instagram_icon.svg",
+  linkedin: "/icons/works/linkedin_icon.svg",
+  website: "/icons/works/link_icon.svg",
+};
 
 export default function WorkDetail({ work }) {
   const { translate } = useTranslation();
   const title = translate(work.title);
+  const location = translate(work.location);
   const tags = work.tags.map(translate);
   const tagline = translate(work.tagline);
   const description = translate(work.description);
@@ -18,77 +33,144 @@ export default function WorkDetail({ work }) {
   const detailImages = work.images.detail.length
     ? work.images.detail
     : [work.images.thumbnail];
+  const videoEmbedUrl = work.video?.embed
+    ? `${work.video.embed}?autoplay=1&muted=1`
+    : null;
+  const backHref = useWorksBackHref(work.id);
+  const { plan } = useStamp();
+  // 상세에 들어올 때마다 확률로 도장을 띄움(연속으로 안 나오면 일정 횟수 뒤 확정)
+  const isStampWork = Boolean(plan) && rollWorksStamp(work.id);
 
   return (
     <Container>
-      <WorksRail backHref="/works" />
+      <DesktopRail>
+        <WorksRail backHref={backHref} />
+      </DesktopRail>
 
       <DetailScroll data-works-scroll>
-        <Hero>
-          <HeroImage>
-            <Image
-              src={work.images.thumbnail}
-              alt={title}
-              fill
-              sizes="(min-width: 1124px) 22vw, (min-width: 768px) 28vw, 70vw"
-              priority
-            />
-          </HeroImage>
-          <HeroInfo>
-            <Meta>
-              <span>Work No. #{String(work.id).padStart(2, "0")}</span>
-              <span>4F X431</span>
-            </Meta>
-            <Title>{title}</Title>
-            <Tags>{tags.map((tag) => `#${tag}`).join(" ")}</Tags>
-          </HeroInfo>
-        </Hero>
+        <ScrollContent>
+          <HiddenStamp
+            key={work.id}
+            slot={STAMP_SLOTS.WORKS}
+            active={isStampWork}
+          />
+          <CompactBackRow>
+            <BackButton href={backHref} />
+          </CompactBackRow>
+          <Hero>
+            <HeroImage>
+              <Image
+                src={work.images.thumbnail}
+                alt={title}
+                fill
+                sizes="(min-width: 1124px) 22vw, (min-width: 768px) 28vw, 70vw"
+                priority
+              />
+            </HeroImage>
+            <HeroInfo>
+              <Meta>
+                <span>Work No. #{String(work.id).padStart(2, "0")}</span>
+                <span>{location}</span>
+              </Meta>
+              <Title>{title}</Title>
+              <Tags>{tags.map((tag) => `#${tag}`).join(" ")}</Tags>
+            </HeroInfo>
+          </Hero>
 
-        <Introduction>
-          <Copy>
-            <SectionTitle>작품 소개</SectionTitle>
-            <Lead>{tagline}</Lead>
-            <Paragraph>{description}</Paragraph>
-          </Copy>
-          <MediaList>
-            {detailImages.map((image, index) => (
-              <Media key={`${image}-${index}`}>
-                <Image
-                  src={image}
-                  alt={`${title} 상세 이미지 ${index + 1}`}
-                  fill
-                  sizes="(min-width: 1124px) 50vw, 100vw"
-                />
-              </Media>
-            ))}
-          </MediaList>
-        </Introduction>
-
-        <TeamSection>
-          <TeamCopy>
-            <SectionTitle>팀 소개</SectionTitle>
-            <TeamName>{team}</TeamName>
-            <Paragraph>{teamDescription}</Paragraph>
-          </TeamCopy>
-          <MemberList>
-            {work.members.map((member) => (
-              <li key={`${member.role}-${translate(member.name)}`}>
-                <span>{translate(member.name)}</span>
-                {member.contacts.map((contact) => (
-                  <ExternalLink
-                    key={`${contact.type}-${contact.url}`}
-                    href={contact.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {contact.type} ↗
-                  </ExternalLink>
+          <Body>
+            <Introduction>
+              <Copy>
+                <SectionTitle>작품 소개</SectionTitle>
+                <Lead>{tagline}</Lead>
+                <Paragraph>{description}</Paragraph>
+                {work.links.length > 0 && (
+                  <WorkLinks>
+                    {work.links.map((link) => (
+                      <WorkLink
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {link.label}
+                        <Image
+                          src="/icons/arrow_up_right.svg"
+                          alt=""
+                          width={18}
+                          height={18}
+                        />
+                      </WorkLink>
+                    ))}
+                  </WorkLinks>
+                )}
+              </Copy>
+              <MediaList>
+                {videoEmbedUrl && (
+                  <Video>
+                    <iframe
+                      src={videoEmbedUrl}
+                      title={`${title} 영상`}
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  </Video>
+                )}
+                {detailImages.map((image, index) => (
+                  <Image
+                    key={`${image}-${index}`}
+                    src={image}
+                    unoptimized
+                    alt={`${title} 상세 이미지 ${index + 1}`}
+                    width={1080}
+                    height={1440}
+                    sizes="(min-width: 1124px) 44vw, 88vw"
+                  />
                 ))}
-              </li>
-            ))}
-          </MemberList>
-        </TeamSection>
-        <Footer />
+              </MediaList>
+            </Introduction>
+
+            <TeamSection>
+              <TeamCopy>
+                <SectionTitle>팀 소개</SectionTitle>
+                <TeamName>{team}</TeamName>
+                <TeamParagraph>{teamDescription}</TeamParagraph>
+              </TeamCopy>
+              <MemberList>
+                {work.members.map((member) => (
+                  <li key={`${member.role}-${translate(member.name)}`}>
+                    <span>{translate(member.name)}</span>
+                    <Contacts>
+                      {member.contacts.map((contact) => (
+                        <ContactLink
+                          key={`${contact.type}-${contact.url}`}
+                          href={contact.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${translate(member.name)} ${
+                            contact.type
+                          }`}
+                        >
+                          <Image
+                            src={
+                              CONTACT_ICONS[contact.type] ??
+                              CONTACT_ICONS.website
+                            }
+                            alt=""
+                            width={24}
+                            height={24}
+                          />
+                        </ContactLink>
+                      ))}
+                    </Contacts>
+                  </li>
+                ))}
+              </MemberList>
+            </TeamSection>
+          </Body>
+          <Footer />
+        </ScrollContent>
       </DetailScroll>
     </Container>
   );
@@ -102,9 +184,34 @@ const Container = styled.article`
   min-height: 0;
 `;
 
+const DesktopRail = styled.div`
+  flex: none;
+
+  ${media.worksTablet`
+    display: none;
+  `}
+`;
+
+const CompactBackRow = styled.div`
+  display: none;
+
+  ${media.worksTablet`
+    display: flex;
+    padding: 2rem;
+  `}
+
+  ${media.mobile`
+    display: flex;
+    padding: 1.2rem 1rem 0;
+  `}
+`;
+
+// container-type: size -> 하위 요소에서 100cqh로 스크롤 영역(헤더, WorksRail 제외) 높이 참조
 const DetailScroll = styled.div`
+  position: relative;
   flex: 1;
   min-height: 0;
+  container-type: size;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -114,29 +221,37 @@ const DetailScroll = styled.div`
   }
 `;
 
+// 도장 위치(%)를 처음 보이는 한 화면이 아니라 스크롤되는 전체 콘텐츠 높이 기준으로 잡기 위한 래퍼
+const ScrollContent = styled.div`
+  position: relative;
+`;
+
 const Hero = styled.section`
   min-height: 41rem;
   display: flex;
   align-items: center;
-  gap: 3.2rem;
-  padding: 4.8rem 4rem;
+  gap: 2rem;
+  padding: 4rem;
   border-bottom: 1px solid var(--layout-line);
 
-  ${media.tablet`
+  ${media.worksTablet`
     min-height: auto;
-    padding: 4rem 2rem;
+    padding: 2rem;
+    border-bottom: none;
   `}
 
   ${media.mobile`
     flex-direction: column;
     align-items: stretch;
+    border-bottom: none;
+    padding: 4rem 1rem;
   `}
 `;
 
 const HeroImage = styled.div`
   position: relative;
-  flex: 0 0 min(28rem, 28vw);
-  width: min(28rem, 28vw);
+  width: 20rem;
+  height: 28.9rem;
   aspect-ratio: 3 / 4;
   overflow: hidden;
   background: ${({ theme }) => theme.surface.secondary};
@@ -146,27 +261,32 @@ const HeroImage = styled.div`
   }
 
   ${media.mobile`
-    width: min(70vw, 32rem);
+    width: min(24rem, 64vw);
+    height: auto;
     align-self: center;
-    flex-basis: auto;
+    margin: 2rem 0 2rem 0
   `}
 `;
 
 const HeroInfo = styled.div`
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 `;
 
 const Meta = styled.div`
   display: flex;
   gap: 3rem;
+  font-weight: 400;
   color: ${({ theme }) => theme.text.quaternary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 `;
 
 const Title = styled.h1`
-  margin: 2rem 0 1.6rem;
+  margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
-  line-height: 1.35;
+  line-height: normal;
 
   ${media.mobile`
     font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
@@ -176,17 +296,31 @@ const Title = styled.h1`
 const Tags = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
-  font-weight: 700;
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  font-weight: 400;
 `;
 
+const Body = styled.div`
+  ${media.worksTablet`
+    display: flex;
+    flex-direction: column;
+  `}
+
+  ${media.mobile`
+    margin-bottom: 2rem;
+  `}
+`;
+
+// desktop: 작품 소개가 스크롤 영역 상단에 닿으면 Copy가 고정되고,
+// 섹션 높이를 결정하는 MediaList가 끝까지 스크롤된 뒤 팀 소개로 넘어감
 const Introduction = styled.section`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 100cqh;
   border-bottom: 1px solid var(--layout-line);
 
-  ${media.tablet`
-    grid-template-columns: 1fr;
+  ${media.worksTablet`
+    display: contents;
   `}
 `;
 
@@ -194,65 +328,88 @@ const Copy = styled.div`
   position: sticky;
   top: 0;
   align-self: start;
+  height: 100cqh;
   padding: 4.8rem 4rem;
+  overflow-y: auto;
+  overscroll-behavior: auto;
+  scrollbar-width: none;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
 
-  ${media.tablet`
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  ${media.worksTablet`
     position: static;
-    padding: 4rem 2rem;
+    height: auto;
+    padding: 2rem;
+    overflow: visible;
+    border-bottom: 1px solid var(--layout-line);
+  `}
+
+  ${media.mobile`
+    border-bottom: none;
+    padding: 0 1rem;
   `}
 `;
 
 const SectionTitle = styled.h2`
-  margin: 0 0 2.8rem;
+  margin: 0 0 2rem 0;
   color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  font-weight: 400;
 `;
 
 const Lead = styled.p`
-  margin: 0 0 2.4rem;
+  margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 700;
   line-height: 1.8;
 `;
 
 const Paragraph = styled.p`
-  margin: 0 0 2.4rem;
+  margin: 0;
   color: ${({ theme }) => theme.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 1.8;
 `;
 
-const ExternalLink = styled.a`
-  padding: 0;
-  border: 0;
-  border-bottom: 1px solid currentColor;
-  background: transparent;
-  color: ${({ theme }) => theme.text.brand};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
-  font-weight: 700;
-`;
-
 const MediaList = styled.div`
   min-width: 0;
-`;
-
-const Media = styled.div`
-  position: relative;
-  min-height: 68rem;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: ${({ theme }) => theme.surface.secondary};
 
   img {
-    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
-  ${media.tablet`
-    min-height: 72rem;
+  ${media.worksTablet`
+    order: 2;
+    border-bottom: 1px solid var(--layout-line);
   `}
 
   ${media.mobile`
-    min-height: 48rem;
+    border-bottom: none;
   `}
+`;
+
+const Video = styled.div`
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: ${({ theme }) => theme.primitives.grey[950]};
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
 `;
 
 const TeamSection = styled.section`
@@ -260,32 +417,89 @@ const TeamSection = styled.section`
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4rem;
   padding: 4.8rem 4rem;
-  border-bottom: 1px solid var(--layout-line);
 
   ${media.tablet`
+    order: 1;
     grid-template-columns: 1fr;
     padding: 4rem 2rem;
   `}
+
+  ${media.mobile`
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-bottom: none;
+    padding: 6rem 1rem 2rem 1rem;
+  `}
 `;
 
-const TeamCopy = styled.div``;
+const TeamCopy = styled.div`
+  ${media.mobile`
+    display: contents;
+  `}
+`;
 
 const TeamName = styled.h3`
-  margin: 0 0 2rem;
-  font-size: ${({ theme }) => theme.typography.fontSize.textLg};
+  margin: 0 0 1.4rem 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
+  font-weight: 400;
+`;
+
+const TeamParagraph = styled(Paragraph)`
+  white-space: pre-line;
+
+  ${media.mobile`
+    order: 1;
+    margin: 3.2rem 0 0;
+  `}
 `;
 
 const MemberList = styled.ul`
+  white-space: nowrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 1.6rem 1.6rem;
   margin: 0;
   padding: 0;
   list-style: none;
   color: ${({ theme }) => theme.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  line-height: 1.8;
 
   li {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem 1.6rem;
+    align-items: center;
+    gap: 3.2rem;
+    width: 50%;
   }
+
+  ${media.mobile`
+    grid-template-columns: 1fr;
+  `}
+`;
+
+const WorkLinks = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.6rem;
+`;
+
+const WorkLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-bottom: 1px solid currentColor;
+  color: ${({ theme }) => theme.text.brand};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  font-weight: 700;
+  line-height: 150%;
+`;
+
+const Contacts = styled.div`
+  display: flex;
+  gap: 0.6rem;
+`;
+
+const ContactLink = styled.a`
+  display: inline-flex;
 `;

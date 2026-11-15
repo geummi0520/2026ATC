@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import Hamburger from "@/components/common/Hamburger";
 import LanguageToggle from "@/components/common/LanguageToggle";
+import StampButton from "@/components/stamp/StampButton";
 import { ROUTES, isBrandDarkPath } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
@@ -77,7 +78,10 @@ export default function Header() {
           </SubNavigation>
         </NavItem>
       </Navigation>
-      <Hamburger />
+      <MenuGroup>
+        <Hamburger />
+        <StampButton variant="header" />
+      </MenuGroup>
       <LanguageToggle />
     </Container>
   );
@@ -109,6 +113,16 @@ const Container = styled.header`
     justify-content: space-between;
     padding: 4rem 0 2rem 0;
     border-bottom: 0;
+  `}
+`;
+
+const MenuGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+
+  ${media.mobile`
+    gap: 1.6rem;
   `}
 `;
 

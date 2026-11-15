@@ -8,11 +8,12 @@ export default function MobileCategoryList({
   categories,
   selectedCategory,
   onSelectCategory,
+  ref,
 }) {
   const { translate } = useTranslation();
 
   return (
-    <Section>
+    <Section ref={ref}>
       <Label>작품 카테고리</Label>
       <List>
         {categories.map(({ id, label }) => (
@@ -43,7 +44,8 @@ const Section = styled.section`
 const Label = styled.strong`
   display: block;
   margin-bottom: 2rem;
-  color: ${({ theme }) => theme.text.secondary};
+  font-weight: 700;
+  color: ${({ theme }) => theme.text.tertiary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 `;
 
@@ -61,7 +63,8 @@ const CategoryButton = styled.button`
   background: transparent;
   color: ${({ $active, theme }) =>
     $active ? theme.text.brand : theme.text.quaternary};
+  font-weight: ${({ $active, theme }) => ($active ? "700" : "400")};
   font-size: ${({ theme }) => theme.typography.fontSize.textSm};
-  line-height: 1.5;
+  line-height: 120%;
   cursor: pointer;
 `;

@@ -6,7 +6,6 @@ import { media } from "@/styles/media";
 
 
 import ProgramItem from "@/components/program/program-item";
-import Modal from "@/components/program/modal";
 
 import useTranslation from "@/hooks/useTranslation";
 
@@ -19,17 +18,6 @@ export default function ProgramPage() {
   const isModalOpen = openIdx >= 0;
 
   const { translate } = useTranslation();
-
-  useEffect(() => {
-    if (!isModalOpen) return;
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [isModalOpen]);
 
   // 클릭시 아이템의 토글 변경 함수
   const handleToggle = (idx) => {
@@ -53,6 +41,7 @@ export default function ProgramPage() {
         {programs.map((program, idx) => (
           <ProgramItem
             key={idx}
+            id={program.id}
             title={translate(program.title)}
             imgUrl={program.imgUrl}
             description={translate(program.description)}
@@ -64,18 +53,7 @@ export default function ProgramPage() {
         ))}
       </ProgramList>
 
-      {/* 모바일에서만 띄울 모달 */}
-      {(openIdx >= 0) &&
-        <Modal
-          program={programs[openIdx]}
-          openIdx={openIdx}
-          closeModal={() => { setOpenIdx(-1) }}
-          nextProgram={() => { setOpenIdx(openIdx + 1) }}
-          prevProgram={() => { setOpenIdx(openIdx - 1) }}
-          n_programs={programs.length}
 
-        />
-      }
 
     </Container>
   );
@@ -91,20 +69,20 @@ gap: 4rem;
 
 box-sizing: border-box;
 max-width: 100%;
+
 ${media.tablet`
-  
-gap:0rem;
+  padding:0rem;
+  gap:0rem;
 `};
 
 `;
 const PageName = styled.div`
   width:100%;
   color: ${({ theme }) => theme.text.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.headingLg};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  letter-spacing: -0.144rem;
 
 ${media.tablet`
 
@@ -113,7 +91,7 @@ padding: 4rem 2rem;
 color: ${({ theme }) => theme.text.primary};
 
 /* heading/heading-medium-bold */
-font-size: ${({ theme }) => theme.typography.fontSize.headingMd}
+font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
@@ -122,16 +100,15 @@ line-height: normal;
 
 ${media.mobile`
 
-padding: 4rem 0;
+padding: 2rem 0;
 
-color: ${({ theme }) => theme.text.primary}
+color: ${({ theme }) => theme.text.primary};
 
-/* heading/heading-small-bold */
 font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-  `}
+  `};
 `;
 
 const ProgramList = styled.div`

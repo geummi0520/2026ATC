@@ -1,4 +1,7 @@
 const ko = {
+  common: {
+    back: "이전으로",
+  },
   navigation: {
     main: "Main",
     about: "About",
@@ -6,24 +9,40 @@ const ko = {
     program: "Program",
     archive: "Archive",
     workList: "작품리스트",
-    workMap: "작업배치도",
+    workMap: "작품배치도",
     staffCredit: "스태프 크레딧",
-    artistCredit: "아티스트 크레딧",
-    artbook: "아트북",
+    artistCredit: "작가 크레딧",
+    artbook: "아카이빙 북",
     menuOpen: "메뉴 열기",
     menuClose: "메뉴 닫기",
   },
   main: {
     conference: "Art&Technology Conference",
-    commentBoxTitle: "이 요리를 설명한다면?",
     reorder: "재주문하기!",
     stamp: "STAMP",
     detail: "자세히보기",
     close: "닫기",
+    scheduleOpeningDate: "11.26(목)",
+    scheduleOpeningTime: "15:30 – 21:00",
+    scheduleRegularDate: "11.27(금) - 11.29(일)",
+    scheduleRegularTime: "10:00 – 21:00",
+  },
+  stamp: {
+    collect: "숨겨진 도장 줍기",
+    card: "스탬프 카드",
+    cardMessage: "모든 스탬프를 다 모으면 좋은일이 있을지도..........",
+    close: "닫기",
+    rewardMessage: "우와! 초-레어 SSR 달걀을 얻었다.",
+    rewardImage: "초레어 달걀 요리",
+    save: "저장하기",
+    share: "공유하기",
+    shareTitle: "2026 ATC 스탬프 카드",
+    linkCopied: "링크를 복사했어요.",
+    actionFailed: "다시 시도해 주세요.",
   },
   artistCredit: {
-    heading: "Artist Credit",
-    subtitle: "대충 클릭하면 작품 상세보기로 이동할 수 있다는 글",
+    heading: "작가 크레딧",
+    subtitle: "작품명 클릭 시 작품 상세 페이지로 이동합니다.",
   },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
@@ -37,19 +56,31 @@ const ko = {
     fax: "Fax +82-2-3274-4826",
   },
   about: {
-    overview: "전시개요",
+    overview: "전시 개요",
     topic: "주제문",
-    topicSentence: "레시피 바꾸지 말 것*",
+    topicSentence: "레시피 바꾸지 말 것 *",
     congratulatory: "축사",
+    staffCredit: "스태프 크레딧",
     linkToStaffCredit: "스태프 크레딧 바로가기",
     path: "오시는 길",
     map: "서강대학교 캠퍼스 지도",
-    stationInfo: "지하철역 정보"
+    stationInfo: "지하철역 정보",
+  },
+  works: {
+    expandMap: "크게 보기",
+    fullMap: "전체 지도 보기",
+    prevSection: "이전 섹션",
+    nextSection: "다음 섹션",
+    backToMap: "돌아가기",
   },
   program: {
-    location: "위치",
+    location: "장소",
     dateTime: "일시",
+    backToList: "목록 보기",
   },
+  staff: {
+    title: "스태프 크레딧"
+  }
 };
 
 export default ko;

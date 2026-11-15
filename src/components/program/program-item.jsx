@@ -2,39 +2,49 @@
 
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 import { media } from "@/styles/media";
 import useTranslation from "@/hooks/useTranslation";
 
-export default function ProgramItem({ title, imgUrl, dates, site, description, idx, isOpen, handleToggle }) {
+export default function ProgramItem({ title, imgUrl, dates, site, description, idx, id, isOpen, handleToggle }) {
     const { t, translate } = useTranslation();
+
+    const handleClick = (e) => {
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+        if (!isMobile) {
+            e.preventDefault();
+            handleToggle();
+        }
+    };
     return (
 
-        <Container onClick={handleToggle} $isOpen={isOpen}>
+        <Container href={`/program/${id}`} onClick={handleClick} $isOpen={isOpen}>
 
             {/* 좌측 프로그램 이미지 */}
             <ProgramImg
                 src={imgUrl}
                 alt="program image"
-                width={164}
-                height={307}
+                width={220}
+                height={293}
                 $desktop
             />
             {/* 우측 프로그램 정보 */}
-            <ProgramInfo>
+            < ProgramInfo >
                 {/* 제목 */}
-                <Title>{title}</Title>
+                < Title > {title}</Title >
                 {/* 테블릿에서 토글 열었을 때 보이는 이미지 */}
-                <ContentContainer>
+                < ContentContainer >
                     <TabletImgWrap $isOpen={isOpen}>
                         {/* {isOpen && */}
                         <DescriptionInner>
                             <ProgramImg
                                 src={imgUrl}
                                 alt="tablet program image"
-                                width={164}
-                                height={307}
+                                width={220}
+                                height={293}
                                 $tablet
                                 $isOpen={isOpen}
                             />
@@ -59,10 +69,7 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
                         </DescriptionWrap>
                         {/* 날짜와 장소 */}
                         <EventInfo>
-                            <InfoLine>
-                                <StyledSpan>{t("program.location")}</StyledSpan>
-                                <StyledSpan>{site}</StyledSpan>
-                            </InfoLine>
+
                             <InfoLine>
                                 <StyledSpan>{t("program.dateTime")}</StyledSpan>
                                 <DateContainer>
@@ -77,12 +84,16 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
 
 
                             </InfoLine>
+                            <InfoLine>
+                                <StyledSpan>{t("program.location")}</StyledSpan>
+                                <StyledSpan>{site}</StyledSpan>
+                            </InfoLine>
 
                         </EventInfo>
                     </InfoBox>
 
-                </ContentContainer>
-            </ProgramInfo>
+                </ContentContainer >
+            </ProgramInfo >
 
         </Container >
 
@@ -91,7 +102,7 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
 
 
 
-const Container = styled.div`
+const Container = styled(Link)`
 
 width: 100%;
 // z-index: 10;
@@ -113,9 +124,9 @@ border-bottom: 0.1rem solid ${({ theme }) => theme.line.primary};
 cursor: pointer;
 
 ${media.mobile`
-    padding: 0.625rem;
     gap: 0.5rem;
     `}
+
 `;
 
 
@@ -140,7 +151,7 @@ ${media.mobile`
 `;
 const ProgramImg = styled(Image)`
 
-height: 30.7rem;
+height: 36.7rem;
 aspect-ratio: 3/4;
 width: auto;
 object-fit: cover;
@@ -151,6 +162,11 @@ background: lightgray;
 
 ${media.mobile`
     display:none;
+    `};
+${media.tablet`
+    // width:100%;
+    // height:auto;
+    height: 30.7rem;
     `};
 
 
@@ -193,7 +209,7 @@ min-width: 0;
 
 
 ${media.tablet`
-    padding:1rem;
+    padding:2rem;
     gap:0.8rem;
 `}
 
@@ -201,7 +217,12 @@ ${media.mobile`
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+    padding:1.2rem 0rem;
   `}
+@media (max-width:550px) {
+flex-direction: column;
+gap:0.8rem;
+}
 `;
 
 const Title = styled.div`
@@ -215,10 +236,11 @@ line-height: 180%;
 
 ${media.tablet`
 
-font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+font-size: ${({ theme }) => theme.typography.fontSize.textLg};
 font-weight: 700;
 `};
 ${media.mobile`
+    font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     width:20rem;
 `}
 
@@ -267,13 +289,14 @@ width: 100%;
 flex-direction: column;
 justify-content: center;
 align-items: flex-start;
-// gap: 10px;
 ${media.tablet`
 
     gap:1.6rem;
     `};
 
-// z-index:1;
+@media (max-width:550px) {
+ gap:1rem;
+}
 
 
 
@@ -334,12 +357,10 @@ transform: translateY(${({ $isOpen }) => ($isOpen ? "0" : "-24px")});
 transition: opacity 0.5s cubic-bezier(0.32, 0, 0.67, 0), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 
 color: ${({ theme }) => theme.text.brandDark};
-font-family: Hahmlet;
 font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
 line-height: 160%; 
-letter-spacing: -0.042rem;
 
 
 

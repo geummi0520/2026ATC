@@ -1,4 +1,7 @@
 const en = {
+  common: {
+    back: "Back",
+  },
   navigation: {
     main: "Main",
     about: "About",
@@ -9,22 +12,38 @@ const en = {
     workMap: "Floor Plan",
     staffCredit: "Staff Credit",
     artistCredit: "Artist Credit",
-    artbook: "Artbook",
+    artbook: "Archiving Book",
     menuOpen: "Open menu",
     menuClose: "Close menu",
   },
   main: {
     conference: "Art&Technology Conference",
-    commentBoxTitle: "How would you describe this dish?",
-    reorder: "Order again!",
+    reorder: "Order Again!",
     stamp: "STAMP",
-    detail: "See details",
+    detail: "See Details",
     close: "Close",
+    scheduleOpeningDate: "11.26(Thu)",
+    scheduleOpeningTime: "15:30 – 21:00",
+    scheduleRegularDate: "11.27(Fri) - 11.29(Sun)",
+    scheduleRegularTime: "10:00 – 21:00",
+  },
+  stamp: {
+    collect: "Pick up the hidden stamp",
+    card: "Stamp card",
+    cardMessage:
+      "Collect every stamp and something good might happen..........",
+    close: "Close",
+    rewardMessage: "Wow! You got an ultra-rare SSR egg.",
+    rewardImage: "Ultra-rare egg dish",
+    save: "Save",
+    share: "Share",
+    shareTitle: "2026 ATC Stamp Card",
+    linkCopied: "Link copied.",
+    actionFailed: "Please try again.",
   },
   artistCredit: {
     heading: "Artist Credit",
-    subtitle:
-      "A placeholder note that says you'll be able to click through to each work's details.",
+    subtitle: "Click on a project title to view its details.",
   },
   footer: {
     conferenceName: "2026 Art & Technology Conference",
@@ -40,16 +59,28 @@ const en = {
   about: {
     overview: "Exhibition Overview",
     topic: "Theme",
-    topicSentence: "Do Not Change the Recipe*",
+    topicSentence: "Do Not Change the Recipe *",
     congratulatory: "Congratulatory Message",
+    staffCredit: "Staff Credit",
     linkToStaffCredit: "View Staff Credits",
     path: "Directions",
     map: "Sogang University Campus Map",
-    stationInfo: "Subway Information"
+    stationInfo: "Subway Information",
+  },
+  works: {
+    expandMap: "View Larger",
+    fullMap: "Full Map",
+    prevSection: "Previous Section",
+    nextSection: "Next Section",
+    backToMap: "Back",
   },
   program: {
     location: "Location",
     dateTime: "Date & Time",
+    backToList: "Back to List",
+  },
+  staff: {
+    title: "Staff Credit"
   },
 };
 

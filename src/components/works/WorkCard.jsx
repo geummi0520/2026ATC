@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import styled from "styled-components";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
@@ -24,10 +25,12 @@ export default function WorkCard({ work }) {
         {work.id}. {title}
       </Title>
       <Tags>
-        {work.tags
-          .map(translate)
-          .map((tag) => `#${tag}`)
-          .join(" ")}
+        {work.tags.map(translate).map((tag, index) => (
+          <Fragment key={tag}>
+            {index > 0 && " "}
+            <Tag>#{tag}</Tag>
+          </Fragment>
+        ))}
       </Tags>
     </Card>
   );
@@ -67,13 +70,11 @@ const Thumbnail = styled.div`
 const Title = styled.strong`
   display: block;
   margin-top: 1.2rem;
-  overflow: hidden;
   color: ${({ theme }) => theme.text.brandDark};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 700;
   line-height: 180%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 
   ${media.mobile`
     font-size: ${({ theme }) => theme.typography.fontSize.textSm};
@@ -83,15 +84,20 @@ const Title = styled.strong`
 const Tags = styled.span`
   display: block;
   margin: 0.4rem 0 1.2rem 0;
-  overflow: hidden;
   color: ${({ theme }) => theme.text.tertiary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 400;
   line-height: 180%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 
   ${media.mobile`
     font-size: 1rem;
   `}
+`;
+
+// 태그는 한 덩어리로 다음 줄로 넘어가고, 태그 하나가 카드 너비보다 길 때만 그 태그 안에서 줄바꿈
+const Tag = styled.span`
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+  overflow-wrap: anywhere;
 `;
