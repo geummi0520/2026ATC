@@ -30,19 +30,23 @@ export default function Footer() {
 
       <EventInfo>
         <span>{t("footer.date")}</span>
-        <span>{t("footer.venue")}</span>
-        <span>{t("footer.address")}</span>
+        <InlineGroup>
+          <span>{t("footer.venue")}</span>
+          <span>{t("footer.address")}</span>
+        </InlineGroup>
         <TextLink href={MAP_URL} target="_blank" rel="noreferrer">
           <strong>{t("footer.mapLabel")} ↗</strong>
         </TextLink>
       </EventInfo>
 
       <ContactInfo>
-        <TextLink href={WEBSITE_URL} target="_blank" rel="noreferrer">
+        <WebsiteLink href={WEBSITE_URL} target="_blank" rel="noreferrer">
           {t("footer.website")}
-        </TextLink>
-        <a href={TELEPHONE_URL}>{t("footer.telephone")}</a>
-        <span>{t("footer.fax")}</span>
+        </WebsiteLink>
+        <InlineGroup>
+          <a href={TELEPHONE_URL}>{t("footer.telephone")}</a>
+          <span>{t("footer.fax")}</span>
+        </InlineGroup>
       </ContactInfo>
 
       <PartnerLogo
@@ -77,6 +81,13 @@ const Container = styled.footer`
     font-style: normal;
     border-top: none;
   `}
+
+  ${media.mobile`
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 1rem;
+    row-gap: 0;
+    padding: 2rem 0;
+  `}
 `;
 
 const Brand = styled.div`
@@ -86,6 +97,11 @@ const Brand = styled.div`
   min-width: 0;
 
   ${media.tablet`
+    grid-column: 1;
+    grid-row: 1;
+  `}
+
+  ${media.mobile`
     grid-column: 1;
     grid-row: 1;
   `}
@@ -108,6 +124,10 @@ const BrandCopy = styled.div`
   strong {
     font-weight: 700;
   }
+
+  ${media.mobile`
+    display: none;
+  `}
 `;
 
 const Info = styled.div`
@@ -125,6 +145,12 @@ const EventInfo = styled(Info)`
     grid-column: 1;
     grid-row: 2;
   `}
+
+  ${media.mobile`
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 4rem;
+  `}
 `;
 
 const ContactInfo = styled(Info)`
@@ -133,7 +159,26 @@ const ContactInfo = styled(Info)`
     grid-row: 2;
     align-items: flex-end;
     align-self: end;
+  `}
 
+  ${media.mobile`
+    grid-column: 1 / -1;
+    grid-row: 3;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-top: 2rem;
+  `}
+`;
+
+const InlineGroup = styled.span`
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+
+  ${media.mobile`
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 1.6rem;
   `}
 `;
 
@@ -146,6 +191,12 @@ const TextLink = styled.a`
   }
 `;
 
+const WebsiteLink = styled(TextLink)`
+  ${media.mobile`
+    order: 1;
+  `}
+`;
+
 const PartnerLogo = styled(Image)`
   width: 11.3rem;
   height: 5.5rem;
@@ -155,6 +206,13 @@ const PartnerLogo = styled(Image)`
     width: 7rem;
     height: 3.5rem;
     justify-self: end;
+    align-self: end;
+  `}
+
+  ${media.mobile`
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
     align-self: end;
   `}
 `;
