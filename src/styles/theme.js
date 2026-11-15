@@ -90,7 +90,7 @@ const theme = {
     tertiary: primitives.grey[600],
     quaternary: primitives.grey[300],
     brand: "#188653",
-    brandDark: "#115F3B",
+    brandDark: "#167A4C",
     brandLight: "#95C7B0",
     brandInvert: primitives.grey[50],
     brandInvertDisabled: "rgba(233, 234, 237, 0.5)",
