@@ -9,6 +9,11 @@ import { media } from "@/styles/media";
 const W = 1100; // 원래 909. 사진 크기는 그대로 두고 양옆 공간만 넓힘
 const H = 400;
 
+// 스테이지 최대 너비: 창 너비 GROW_FROM(px)까지는 BASE_MAX로 고정, 그 이상은 창에 비례해 LARGE_MAX까지 커짐
+const BASE_MAX = Math.round((840 * W) / 909); // ≈ 1017px
+const GROW_FROM = 1600;
+const LARGE_MAX = 1400;
+
 /**
  * 피그마 값(프레임 가장자리 ↔ 이미지 같은 쪽 가장자리 거리)을 그대로 CSS %로 변환
  * left/right 중 하나, top/bottom 중 하나만 사용
@@ -133,8 +138,17 @@ export default function StaffStage({ team }) {
 /* 페이지에서 헤더를 뺀 남은 공간을 채움. 그 안에서 프레임(W:H)을 비율 유지한 채 최대로 맞춤 */
 const Stage = styled.div`
   width: 100%;
-  /* 프레임 909 기준 840px였던 상한을 넓어진 W만큼 늘림 → 사진 최대 크기는 그대로, 양옆만 넓어짐 */
-  max-width: ${Math.round((840 * W) / 909)}px;
+  /*
+   * 최대 너비
+   * - 창 너비 1600px까지: BASE_MAX(프레임 909 기준 840px였던 상한을 넓어진 W만큼 늘린 값)로 고정
+   * - 1600px 넘으면: 창 너비에 비례해 같이 커짐 (1920px → 약 1.2배), 단 LARGE_MAX까지만
+   * - 높이 제한(cqh)은 그대로라 창 높이가 낮으면 더 커지지 않음
+   */
+  max-width: clamp(
+    ${BASE_MAX}px,
+    ${((BASE_MAX / GROW_FROM) * 100).toFixed(3)}vw,
+    ${LARGE_MAX}px
+  );
   align-self: center;
   flex: 1;
   min-height: 0;

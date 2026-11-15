@@ -195,6 +195,7 @@ export default function AboutPage() {
           </InfoBox>
         </MapBox>
       </MapWrapper>
+      {/* 협력과 후원 */}
       <SupportingBox>
         <ContentTitle >{t("about.sponsor")}</ContentTitle>
         <SponsorList>
@@ -207,7 +208,7 @@ export default function AboutPage() {
             />
           </SponsorItem>
           <SponsorItem $right>
-            <StyledLink href="./archive/staff" $left>
+            <StyledLink href="https://www.instagram.com/lyx.kr?cplk=MXhwc2JvbzlhYndhaw==" $left>
               {t("about.sponsor1")}
               <Image
                 src="/icons/about/arrow-up-right.svg"
@@ -226,7 +227,7 @@ export default function AboutPage() {
             />
           </SponsorItem>
           <SponsorItem $right>
-            <StyledLink href="./archive/staff" $left>
+            <StyledLink href="https://www.smilegate.com/ko/" $left>
               {t("about.sponsor2")}
               <Image
                 src="/icons/about/arrow-up-right.svg"
@@ -245,7 +246,7 @@ export default function AboutPage() {
             />
           </SponsorItem>
           <SponsorItem $right>
-            <StyledLink href="./archive/staff" $left>
+            <StyledLink href="https://uispc.org/main/index.php" $left>
               {t("about.sponsor3")}
               <Image
                 src="/icons/about/arrow-up-right.svg"
@@ -264,7 +265,7 @@ export default function AboutPage() {
             />
           </SponsorItem>
           <SponsorItem $right>
-            <StyledLink href="./archive/staff" $left>
+            <StyledLink href="https://creative.sogang.ac.kr/about/about_sogang-future-lab/" $left>
               {t("about.sponsor4")}
               <Image
                 src="/icons/about/arrow-up-right.svg"
@@ -307,10 +308,21 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 align-self: stretch;
+${media.tablet`
+  padding: 4rem 2rem;
+
+  `}
+${media.mobile`
+  padding:0rem;
+  `}
 `;
 const PosterWrapper = styled.div`
 display:flex;
 width:100%; /* Frame1이 align-items:center라 이게 없으면 내용 폭만큼 줄어서 양 끝에 못 붙음 */
+${media.tablet`
+  justify-content:center; /* 포스터만 남을 때 가운데 정렬 */
+  `}
+
 `;
 const PosterText = styled.div`
 flex:1;
@@ -434,7 +446,10 @@ flex:1;
 
 width:40rem;
 height:auto;
-
+${media.tablet`
+  /* 양옆 텍스트가 사라지면 혼자 남은 포스터가 flex로 늘어나 너비를 가득 채움 → 늘어나지 않게 고정 */
+  flex:none;
+  `}
 
 ${media.mobile`
   width:100%;
