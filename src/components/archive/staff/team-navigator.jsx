@@ -36,7 +36,10 @@ grid-template-columns: repeat(4,fit-content(100%));
 grid-auto-flow: row;
 
 ${media.mobile`
-    display:none;
+    // display:none;
+    display:flex;
+    flex-direction:column;
+    height: auto; /* 고정 73px면 세로로 쌓인 버튼이 넘쳐서 아래 StaffStage에 가려짐 */
     `}
 `;
 
@@ -73,7 +76,7 @@ const StyledButton = styled.button`
   color: ${({ $isSelected, theme }) =>
         $isSelected ? theme.text.brand : theme.text.quaternary};
   font-weight: ${({ $isSelected, theme }) => ($isSelected ? "700" : "400")};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 120%;
   cursor: pointer;
 `;

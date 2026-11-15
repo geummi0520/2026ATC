@@ -6,8 +6,8 @@ import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 // 피그마 프레임 크기
-const W = 909;
-const H = 514;
+const W = 1100; // 원래 909. 사진 크기는 그대로 두고 양옆 공간만 넓힘
+const H = 400;
 
 /**
  * 피그마 값(프레임 가장자리 ↔ 이미지 같은 쪽 가장자리 거리)을 그대로 CSS %로 변환
@@ -130,15 +130,33 @@ export default function StaffStage({ team }) {
   );
 }
 
+/* 페이지에서 헤더를 뺀 남은 공간을 채움. 그 안에서 프레임(W:H)을 비율 유지한 채 최대로 맞춤 */
 const Stage = styled.div`
   width: 100%;
+  /* 프레임 909 기준 840px였던 상한을 넓어진 W만큼 늘림 → 사진 최대 크기는 그대로, 양옆만 넓어짐 */
+  max-width: ${Math.round((840 * W) / 909)}px;
+  align-self: center;
+  flex: 1;
+  min-height: 0;
+  container-type: size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ${media.mobile`
+    flex: none;
+    container-type: normal;
+    display: block;
+  `}
 `;
 
 const PhotoArea = styled.div`
   position: relative;
   aspect-ratio: ${({ $ratio }) => $ratio};
+  width: min(100cqw, ${({ $ratio }) => `${100 * $ratio}cqh`});
 
   ${media.mobile`
+    width: 100%;
     aspect-ratio: auto;
     display: flex;
     flex-direction: column;
@@ -229,6 +247,12 @@ font-style: normal;
 font-weight: ${({ $cd }) => ($cd ? 700 : 400)};
 line-height: 180%; /* 21.6px */
 
+${media.mobile`
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+
+  
+  `}
+
 
 `;
 const NameKo = styled.span`
@@ -246,4 +270,10 @@ font-size: 1.2rem;
 font-style: normal;
 font-weight: 400;
 line-height: 180%; /* 21.6px */
+
+${media.mobile`
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+
+  
+  `}
 `;
