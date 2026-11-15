@@ -4,15 +4,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { ROUTES, isBrandDarkPath } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 export default function Hamburger() {
   const [open, setOpen] = useState(false);
+  // 닫힘 애니메이션이 끝날 때까지 true → 헤더가 그동안 레일 위에 머무르게 함
+  const [sheetActive, setSheetActive] = useState(false);
   const { t } = useTranslation();
   const isBrandDark = isBrandDarkPath(usePathname());
+  const theme = useTheme();
 
   useEffect(() => {
     const onKeyDown = (event) => event.key === "Escape" && setOpen(false);
@@ -27,7 +30,26 @@ export default function Hamburger() {
     };
   }, [open]);
 
+  // 시트가 열린 채로 데스크톱 너비가 되면 자동으로 닫음
+  useEffect(() => {
+    const desktopQuery = window.matchMedia(
+      `(min-width: ${theme.breakpoints.tablet}px)`
+    );
+    const closeOnDesktop = (event) => event.matches && setOpen(false);
+
+    desktopQuery.addEventListener("change", closeOnDesktop);
+    return () => desktopQuery.removeEventListener("change", closeOnDesktop);
+  }, [theme.breakpoints.tablet]);
+
   const close = () => setOpen(false);
+  const toggle = () => {
+    if (!open) setSheetActive(true);
+    setOpen(!open);
+  };
+  const handleSheetTransitionEnd = (event) => {
+    if (event.target !== event.currentTarget) return;
+    if (event.propertyName === "transform" && !open) setSheetActive(false);
+  };
 
   return (
     <>
@@ -37,7 +59,7 @@ export default function Hamburger() {
         aria-label={open ? t("navigation.menuClose") : t("navigation.menuOpen")}
         aria-expanded={open}
         aria-controls="mobile-menu"
-        onClick={() => setOpen((value) => !value)}
+        onClick={toggle}
       >
         <Icon
           src={
@@ -51,7 +73,13 @@ export default function Hamburger() {
           aria-hidden="true"
         />
       </Button>
-      <Sheet id="mobile-menu" $open={open} aria-hidden={!open}>
+      <Sheet
+        id="mobile-menu"
+        $open={open}
+        aria-hidden={!open}
+        data-sheet-active={sheetActive}
+        onTransitionEnd={handleSheetTransitionEnd}
+      >
         <Menu>
           <Group>
             <MainLink href={ROUTES.HOME} onClick={close}>
@@ -135,6 +163,7 @@ const Sheet = styled.div`
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
+  scrollbar-width: none;
   padding: 0 6%;
   color: ${({ theme }) => theme.text.brandInvert};
   background: ${({ theme }) => theme.background.brandDark};
@@ -142,35 +171,31 @@ const Sheet = styled.div`
   visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
   transition: transform 280ms ease, visibility 280ms;
 
-  ${media.tablet`
-    display: flex;
-  `}
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
+  /* 오른쪽 끝은 레일 너비(태블릿 6%, 모바일 2.4rem)에 맞춰 레일을 덮지 않게 */
   ${media.mobile`
     inset: 0 2.4rem 0 0;
     padding: 0 2.4rem;
-    `}
+  `}
 `;
 
 const Menu = styled.nav`
-  margin: auto 2rem 10rem;
+  margin: auto 2rem 4rem;
   border-bottom: 1px solid currentColor;
   ${media.mobile`
     margin: auto 0 4rem;
-    `}
+  `}
 `;
 
 const Group = styled.div`
-  padding: 4rem 0;
-
+  padding: 2rem 0;
   border-top: 1px solid ${({ theme }) => theme.primitives.green[100]};
   &:first-child {
     border-top: 0;
   }
-
-  ${media.mobile`
-    padding: 2rem 0;
-    `}
 `;
 
 const MainLink = styled(Link)`
@@ -186,12 +211,8 @@ const MainLink = styled(Link)`
 const SubContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
-  gap: 1.6rem;
-  ${media.mobile`
-    margin-top: 0.9rem;
-    gap: 0.9rem;
-  `}
+  margin-top: 0.9rem;
+  gap: 0.9rem;
 `;
 
 const SubLink = styled(Link)`

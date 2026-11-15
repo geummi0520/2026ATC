@@ -128,20 +128,34 @@ const Container = styled.header`
   color: var(--layout-text);
   transition: color 300ms ease;
 
+  /* iOS Safari는 화면 전체 너비의 상단 fixed 요소 배경으로 상태바·주소창 영역을 칠함
+     → 태블릿·모바일에서는 헤더를 양끝까지 넓히고, 콘텐츠 위치는 padding으로 유지 */
   ${media.tablet`
+    left: 0;
+    right: 0;
     height: 8.4rem;
     justify-content: space-between;
-    padding: 4rem 2rem 2rem 2rem;
+    padding: 4rem calc(6% + 2rem) 2rem;
     background-color: var(--layout-background);
     transition: color 300ms ease, background-color 300ms ease;
+
+    /* 햄버거 시트가 보이는 동안(닫힘 애니메이션 포함)은 레일(z-index 101)보다 위로 올리되,
+       오른쪽 레일의 스크롤 인디케이터는 가리지 않도록 오른쪽 끝을 레일 앞까지만 */
+    &:has([data-sheet-active="true"]) {
+      z-index: 102;
+      right: 6%;
+      padding-right: 2rem;
+    }
   `}
 
   ${media.mobile`
-    left: 2.4rem;
-    right: 2.4rem;
-    justify-content: space-between;
-    padding: 4rem 0 2rem 0;
+    padding: 4rem 2.4rem 2rem;
     border-bottom: 0;
+
+    &:has([data-sheet-active="true"]) {
+      right: 2.4rem;
+      padding-right: 0;
+    }
   `}
 `;
 
@@ -190,17 +204,10 @@ const Navigation = styled.nav`
   transition: color 160ms ease-in-out, background-color 160ms ease-in-out,
     border-color 160ms ease-in-out;
 
-  /* hover/focus 중인 메뉴가 있으면 현재 페이지 대신 그 메뉴만 강조 */
-  &:has(> div:hover, > div:focus-within) {
-    > div > a {
-      color: ${({ $isBrandDark, theme }) =>
-        $isBrandDark ? theme.text.brandInvertDisabled : theme.text.brandLight};
-    }
-
-    > div:hover > a,
-    > div:focus-within > a {
-      color: inherit;
-    }
+  /* 현재 페이지 메뉴는 그대로 두고, hover/focus 중인 메뉴도 함께 강조 */
+  > div:hover > a,
+  > div:focus-within > a {
+    color: inherit;
   }
 
   ${media.tablet`
