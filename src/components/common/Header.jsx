@@ -127,6 +127,12 @@ const Container = styled.header`
   padding: 0 4rem;
   color: var(--layout-text);
   transition: color 300ms ease;
+  /* 데스크탑 헤더는 배경이 없어 아래로 지나가는 콘텐츠가 보이므로, 빈 영역은 클릭·휠을 아래로 통과시킴 */
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
 
   /* iOS Safari는 화면 전체 너비의 상단 fixed 요소 배경으로 상태바·주소창 영역을 칠함
      → 태블릿·모바일에서는 헤더를 양끝까지 넓히고, 콘텐츠 위치는 padding으로 유지 */
@@ -138,6 +144,7 @@ const Container = styled.header`
     padding: 4rem calc(6% + 2rem) 2rem;
     background-color: var(--layout-background);
     transition: color 300ms ease, background-color 300ms ease;
+    pointer-events: auto;
 
     /* 햄버거 시트가 보이는 동안(닫힘 애니메이션 포함)은 레일(z-index 101)보다 위로 올리되,
        오른쪽 레일의 스크롤 인디케이터는 가리지 않도록 오른쪽 끝을 레일 앞까지만 */

@@ -129,6 +129,7 @@ const theme = {
       textLg: "1.8rem",
       textMd: "1.4rem",
       textSm: "1.4rem",
+      textXs: "1.2rem",
     },
   },
 

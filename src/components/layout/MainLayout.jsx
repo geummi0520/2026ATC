@@ -319,10 +319,12 @@ const MainContent = styled.main`
   padding-top: ${({ $isComingSoon }) =>
     $isComingSoon ? "0" : "calc(10rem + 2px)"};
   min-height: 0;
-  overflow: ${({ $isWorks, $isComingSoon }) =>
-    $isWorks || $isComingSoon ? "hidden" : "visible"};
+  /* 데스크탑 works는 스크롤 영역이 투명한 헤더 아래까지 올라가므로 여기서 자르지 않음 (Center가 화면 높이로 자름) */
+  overflow: ${({ $isComingSoon }) => ($isComingSoon ? "hidden" : "visible")};
 
   ${media.tablet`
     padding-top: ${({ $isComingSoon }) => ($isComingSoon ? "0" : "8.4rem")};
+    overflow: ${({ $isWorks, $isComingSoon }) =>
+      $isWorks || $isComingSoon ? "hidden" : "visible"};
   `}
 `;

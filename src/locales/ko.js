@@ -77,6 +77,7 @@ const ko = {
     prevSection: "이전 섹션",
     nextSection: "다음 섹션",
     backToMap: "돌아가기",
+    schedule: "전시기간",
     supporting: "supporting"
   },
   program: {

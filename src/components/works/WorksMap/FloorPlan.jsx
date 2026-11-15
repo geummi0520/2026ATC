@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
-import { worksMapPositions } from "@/data/worksMapPositions";
+import { boothMapPositions, worksMapPositions } from "@/data/worksMapPositions";
 import useTranslation from "@/hooks/useTranslation";
 
 // worksMapPositions의 x, y는 floorplan.svg viewBox(600 x 664) 기준 좌표
@@ -51,6 +51,14 @@ export default function FloorPlan({
         />
       ))}
 
+      {boothMapPositions.map((booth) => (
+        <Booth key={booth.id} style={toPosition(booth)} tabIndex={0}>
+          <BoothLabel $alignLeft={booth.x < PLAN_WIDTH / 2}>
+            {translate(booth.name)}
+          </BoothLabel>
+        </Booth>
+      ))}
+
       {activeWork && (
         <Preview style={toPosition(getPosition(activeWork.id))}>
           <Image src={activeWork.images.thumbnail} alt="" fill sizes="12rem" />
@@ -80,6 +88,38 @@ const Hotspot = styled(Link)`
 
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.line.brand};
+  }
+`;
+
+const Booth = styled.span`
+  position: absolute;
+  width: 3.5%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.line.brand};
+  }
+`;
+
+// 아이콘 위에 표시하고, 지도 밖으로 넘치지 않도록 지도 왼쪽 절반은 왼쪽 정렬, 오른쪽 절반은 오른쪽 정렬
+const BoothLabel = styled.span`
+  position: absolute;
+  bottom: calc(100% + 0.4rem);
+  ${({ $alignLeft }) => ($alignLeft ? "left: 0;" : "right: 0;")}
+  padding: 0.4rem 0.8rem;
+  background: ${({ theme }) => theme.background.brand};
+  color: ${({ theme }) => theme.text.brandInvert};
+  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  line-height: 1.4;
+  text-align: center;
+  white-space: pre;
+  opacity: 0;
+  pointer-events: none;
+
+  ${Booth}:hover > &,
+  ${Booth}:focus-visible > & {
+    opacity: 1;
   }
 `;
 
