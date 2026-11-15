@@ -1,11 +1,7 @@
-// pop: 뚜껑이 열릴 때 요리가 "짜잔!" 하고 튀는 단계별 크기(1 = 원래 크기).
-//   start: 처음 웅크린 크기 / peak: 위로 쭉 늘어나며 크게 튀는 순간 /
-//   squash: 납작하게 눌리는 순간 / rebound: 다시 늘어나는 순간 / settle: 자리잡기 직전
-//   숫자 하나면 가로세로 같이, [가로, 세로]로 따로 줄 수 있음. 빼먹은 단계는 기본값(main.jsx의 FOOD_POP_STEPS).
 export const mainFood = [
   {
     file: "a",
-    name: { ko: "어찌저찌 감싼 무스비", en: "Just Wrapped it" },
+    name: { ko: "어찌저찌 감싼 무스비", en: "Just Wrapped It" },
     scale: 0.34,
     offsetY: 10,
     pop: {
