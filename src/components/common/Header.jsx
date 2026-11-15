@@ -20,25 +20,44 @@ export default function Header() {
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
+  const active = {
+    home: isCurrent(ROUTES.HOME),
+    about: isCurrent(ROUTES.ABOUT),
+    works: isCurrent(ROUTES.WORKS),
+    program: isCurrent(ROUTES.PROGRAM),
+    archive: pathname.startsWith("/archive"),
+  };
+  const hasActive = Object.values(active).some(Boolean);
+  const isDimmed = (key) => hasActive && !active[key];
+
   const releaseFocus = (event) => event.currentTarget.blur();
 
   return (
     <Container>
       <Navigation $isBrandDark={isBrandDark}>
         <NavItem>
-          <NavLink href={ROUTES.HOME} $active={isCurrent(ROUTES.HOME)}>
+          <NavLink
+            href={ROUTES.HOME}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("home")}
+          >
             {t("navigation.main")}
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href={ROUTES.ABOUT} $active={isCurrent(ROUTES.ABOUT)}>
+          <NavLink
+            href={ROUTES.ABOUT}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("about")}
+          >
             {t("navigation.about")}
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink
             href={ROUTES.WORKS}
-            $active={isCurrent(ROUTES.WORKS)}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("works")}
             onClick={releaseFocus}
           >
             {t("navigation.works")}
@@ -53,14 +72,19 @@ export default function Header() {
           </SubNavigation>
         </NavItem>
         <NavItem>
-          <NavLink href={ROUTES.PROGRAM} $active={isCurrent(ROUTES.PROGRAM)}>
+          <NavLink
+            href={ROUTES.PROGRAM}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("program")}
+          >
             {t("navigation.program")}
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink
             href={ROUTES.ARCHIVE.STAFF}
-            $active={pathname.startsWith("/archive")}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("archive")}
             onClick={releaseFocus}
           >
             {t("navigation.archive")}
@@ -82,7 +106,9 @@ export default function Header() {
         <Hamburger />
         <StampButton variant="header" />
       </MenuGroup>
-      <LanguageToggle />
+      <ToggleArea>
+        <LanguageToggle />
+      </ToggleArea>
     </Container>
   );
 }
@@ -93,7 +119,8 @@ const Container = styled.header`
   left: 6%;
   right: 6%;
   z-index: 100;
-  height: 12rem;
+  /* nav(top 4rem + 높이 4rem + border 2px) 아래 2rem 여백 */
+  height: calc(10rem + 2px);
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -105,6 +132,8 @@ const Container = styled.header`
     height: 8.4rem;
     justify-content: space-between;
     padding: 4rem 2rem 2rem 2rem;
+    background-color: var(--layout-background);
+    transition: color 300ms ease, background-color 300ms ease;
   `}
 
   ${media.mobile`
@@ -123,6 +152,21 @@ const MenuGroup = styled.div`
 
   ${media.mobile`
     gap: 1.6rem;
+  `}
+`;
+
+/* 데스크톱에서 아일랜드 헤더(Navigation)와 같은 top·높이로 세로 중앙 정렬 */
+const ToggleArea = styled.div`
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+  height: calc(4rem + 2px);
+  margin-top: 4rem;
+
+  ${media.tablet`
+    align-self: auto;
+    height: auto;
+    margin-top: 0;
   `}
 `;
 
@@ -146,6 +190,19 @@ const Navigation = styled.nav`
   transition: color 160ms ease-in-out, background-color 160ms ease-in-out,
     border-color 160ms ease-in-out;
 
+  /* hover/focus 중인 메뉴가 있으면 현재 페이지 대신 그 메뉴만 강조 */
+  &:has(> div:hover, > div:focus-within) {
+    > div > a {
+      color: ${({ $isBrandDark, theme }) =>
+        $isBrandDark ? theme.text.brandInvertDisabled : theme.text.brandLight};
+    }
+
+    > div:hover > a,
+    > div:focus-within > a {
+      color: inherit;
+    }
+  }
+
   ${media.tablet`
     display: none;
   `}
@@ -168,19 +225,23 @@ const NavItem = styled.div`
 `;
 
 const NavLink = styled(Link)`
-  color: inherit;
+  color: ${({ $dimmed, $isBrandDark, theme }) => {
+    if (!$dimmed) return "inherit";
+    return $isBrandDark ? theme.text.brandInvertDisabled : theme.text.brandLight;
+  }};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 2;
   font-weight: 700;
   text-align: center;
   white-space: nowrap;
+  transition: color 160ms ease-in-out;
 `;
 
 const SubNavigation = styled.nav`
   display: flex;
   max-height: 0;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.8rem;
   margin-top: 0;
   overflow: hidden;
