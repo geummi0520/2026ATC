@@ -18,7 +18,6 @@ const onboardingSrc = (file) => `/images/onboarding/${file}`;
 const ITEM_FILES = [
   "계란박스.webp",
   "계란엽서.webp",
-  // "메뉴판.webp",
   "버터.webp",
   "영수증.webp",
   "카드.png",
@@ -26,26 +25,32 @@ const ITEM_FILES = [
   "포스터.webp",
 ];
 
-// 나머지는 랜덤 순서로 와리가리하고, 마지막엔 항상 이 소품으로 끝남
+
 const LAST_ITEM_FILE = "포스터.webp";
 
-// 소품마다 캔버스 안에서 그려진 크기가 달라서 따로 키우는 보정값(없으면 1)
+
 const ITEM_SCALE = {
   "메뉴판.webp": 1.25,
 };
 
-// 타임라인: 접시 등장 → 소품 와리가리 → 클로슈 뚜껑이 위에서 내려와 덮임
-//          → 한 박자 뒤 바로 메인(닫힌 클로슈)으로 넘어가고, 메인 뚜껑이 열림
+
 const INTRO_MS = 400;
 const SWAP_MS = 260;
 const SWAP_COUNT = ITEM_FILES.length;
 const LID_MS = 550;
-// 뚜껑이 덮인 채로 한 박자 머무는 시간
+
 const LID_HOLD_MS = 350;
 const LID_START_MS = INTRO_MS + SWAP_MS * SWAP_COUNT;
-const OUTRO_START_MS = LID_START_MS + LID_MS + LID_HOLD_MS;
+const PEEK_START_MS = LID_START_MS + LID_MS + LID_HOLD_MS;
+
+const PEEK_MS = 450;
+// 들리는 도중 이 시점부터 하얗게 번쩍이기 시작
+const FLASH_START_MS = PEEK_START_MS + PEEK_MS * 0.6;
+// 화면이 하얗게 차오르는 시간 / 메인으로 바뀐 뒤 하얀 빛이 걷히는 시간
+const FLASH_IN_MS = 500;
+const FLASH_OUT_MS = 1000;
 // 메인이 안 뜨는 등 문제가 생겨도 이 시간이 지나면 온보딩을 끝냄
-const FAILSAFE_MS = OUTRO_START_MS + 3000;
+const FAILSAFE_MS = FLASH_START_MS + FLASH_IN_MS + 3000;
 
 // 위에서 내려다본 클로슈 뚜껑. 원본(클로슈뚜껑.png)은 배경이 검은색이라 둥근 바깥을 투명하게 만든 사본을 씀
 const LID_FILE = "클로슈뚜껑_투명.webp";
@@ -85,6 +90,15 @@ const lidDrop = keyframes`
   }
 `;
 
+const lidPeek = keyframes`
+  from {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  to {
+    transform: translate(0, 0) scale(1.15) rotate(10deg);
+  }
+`;
+
 const plateDrop = keyframes`
   0% {
     opacity: 0;
@@ -121,8 +135,72 @@ const Overlay = styled.div`
   overflow: hidden;
   background: ${({ theme }) => theme.background.primary};
 
-  &[data-phase="outro"] {
+  /* 메인으로 바뀐 뒤엔 온보딩 장면을 치우고 하얀 빛(Flash)만 남겨 걷히게 함 */
+  &[data-phase="reveal"] {
     pointer-events: none;
+    background: transparent;
+  }
+
+  &[data-phase="reveal"] > :not([data-flash]) {
+    visibility: hidden;
+  }
+`;
+
+// 화면 전체를 덮는 하얀 섬광. 번쩍 차올랐다가 메인이 깔리면 걷힘
+const Flash = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity ${FLASH_OUT_MS}ms ease-out;
+
+  [data-phase="flash"] > & {
+    opacity: 1;
+    transition: opacity ${FLASH_IN_MS}ms ease-in;
+  }
+`;
+
+// 뚜껑을 살짝 들어 올리는 안쪽 레이어(바깥 Lid는 내려오는 애니메이션을 그대로 유지)
+const LidLift = styled.div`
+  position: absolute;
+  inset: 0;
+
+  [data-phase="peek"] &,
+  [data-phase="flash"] & {
+    animation: ${lidPeek} ${PEEK_MS}ms cubic-bezier(0.3, 0.7, 0.4, 1) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-phase="peek"] &,
+    [data-phase="flash"] & {
+      animation: none;
+    }
+  }
+`;
+
+// 뚜껑이 들린 틈으로 새어 나오는 빛(뚜껑 뒤에서 번짐)
+const LidGlow = styled.div`
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.95) 45%,
+    rgba(255, 255, 255, 0.5) 60%,
+    transparent 72%
+  );
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity ${PEEK_MS}ms ease-in,
+    transform ${PEEK_MS}ms ease-out;
+
+  [data-phase="peek"] &,
+  [data-phase="flash"] & {
+    opacity: 1;
+    transform: scale(1.05);
   }
 `;
 
@@ -152,7 +230,7 @@ const Lid = styled.div`
   position: absolute;
   left: 50.5%;
   top: 49.7%;
-  width: 70%;
+  width: 72%;
   aspect-ratio: 1;
   opacity: 0;
   transform: translate(-50%, -50%);
@@ -229,14 +307,16 @@ export default function Onboarding() {
     // 온보딩을 바로 걷어냄(빈 화면이 보이지 않게 메인이 뜰 때까지만 덮어 둠).
     // 메인에 끝났다고 알리면 닫혀 있던 메인 클로슈가 열림.
     // (cleanup에서 알리면 개발 모드에서 effect가 두 번 실행될 때 너무 일찍 알려짐)
+    // 화면이 하얗게 다 찬 뒤에 주소를 메인으로 바꾸고, 메인 클로슈가 뜨면 하얀 빛을 걷어냄.
+    // 빛이 다 걷히면 메인에 알려서 닫혀 있던 메인 클로슈가 열림.
     const switchToMain = () => {
-      setPhase("outro");
       router.replace(ROUTES.HOME);
 
       const waitForMain = () => {
         if (isCancelled) return;
         if (document.querySelector("[data-main-cloche]")) {
-          finishOnboarding();
+          setPhase("reveal");
+          timers.push(window.setTimeout(() => !isCancelled && finishOnboarding(), FLASH_OUT_MS));
           return;
         }
         frameId = window.requestAnimationFrame(waitForMain);
@@ -244,7 +324,9 @@ export default function Onboarding() {
       waitForMain();
     };
 
-    timers.push(window.setTimeout(switchToMain, OUTRO_START_MS));
+    timers.push(window.setTimeout(() => setPhase("peek"), PEEK_START_MS));
+    timers.push(window.setTimeout(() => setPhase("flash"), FLASH_START_MS));
+    timers.push(window.setTimeout(switchToMain, FLASH_START_MS + FLASH_IN_MS));
     timers.push(window.setTimeout(() => !isCancelled && finishOnboarding(), FAILSAFE_MS));
 
     return () => {
@@ -307,16 +389,20 @@ export default function Onboarding() {
           ))}
         </ItemsLayer>
         <Lid data-show={phase !== "swap"}>
-          <Image
-            src={onboardingSrc(LID_FILE)}
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 767px) 85vw, 55vw"
-            style={{ objectFit: "contain" }}
-          />
+          <LidGlow />
+          <LidLift>
+            <Image
+              src={onboardingSrc(LID_FILE)}
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 767px) 85vw, 55vw"
+              style={{ objectFit: "contain" }}
+            />
+          </LidLift>
         </Lid>
       </PlateBox>
+      <Flash data-flash />
     </Overlay>
   );
 }
