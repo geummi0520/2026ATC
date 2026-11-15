@@ -2384,20 +2384,6 @@ export const works = [
       {
         role: "member",
         name: {
-          ko: "이다은",
-          en: "Lee, Daeun",
-        },
-        contacts: [
-          {
-            type: "instagram",
-            value: "instagram.com/city.rock7",
-            url: "https://instagram.com/city.rock7",
-          },
-        ],
-      },
-      {
-        role: "member",
-        name: {
           ko: "천성하",
           en: "Cheon, Sungha",
         },
