@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
-import BackButton from "@/components/works/BackButton";
+import BackButton from "@/components/common/BackButton";
 import HiddenStamp from "@/components/stamp/HiddenStamp";
 import WorksRail from "@/components/works/WorksRail";
 import { STAMP_SLOTS } from "@/constants/stamps";
@@ -19,12 +19,6 @@ const CONTACT_ICONS = {
   instagram: "/icons/works/instagram_icon.svg",
   linkedin: "/icons/works/linkedin_icon.svg",
   website: "/icons/works/link_icon.svg",
-};
-
-const WORK_LINK_ICONS = {
-  github: "/icons/works/github_green.svg",
-  instagram: "/icons/works/instagram_green.svg",
-  youtube: "/icons/works/youtube_green.svg",
 };
 
 export default function WorkDetail({ work }) {
@@ -55,119 +49,127 @@ export default function WorkDetail({ work }) {
 
       <DetailScroll data-works-scroll>
         <ScrollContent>
-        <HiddenStamp key={work.id} slot={STAMP_SLOTS.WORKS} active={isStampWork} />
-        <CompactBackRow>
-          <BackButton href={backHref} />
-        </CompactBackRow>
-        <Hero>
-          <HeroImage>
-            <Image
-              src={work.images.thumbnail}
-              alt={title}
-              fill
-              sizes="(min-width: 1124px) 22vw, (min-width: 768px) 28vw, 70vw"
-              priority
-            />
-          </HeroImage>
-          <HeroInfo>
-            <Meta>
-              <span>Work No. #{String(work.id).padStart(2, "0")}</span>
-              <span>{location}</span>
-            </Meta>
-            <Title>{title}</Title>
-            <Tags>{tags.map((tag) => `#${tag}`).join(" ")}</Tags>
-          </HeroInfo>
-        </Hero>
+          <HiddenStamp
+            key={work.id}
+            slot={STAMP_SLOTS.WORKS}
+            active={isStampWork}
+          />
+          <CompactBackRow>
+            <BackButton href={backHref} />
+          </CompactBackRow>
+          <Hero>
+            <HeroImage>
+              <Image
+                src={work.images.thumbnail}
+                alt={title}
+                fill
+                sizes="(min-width: 1124px) 22vw, (min-width: 768px) 28vw, 70vw"
+                priority
+              />
+            </HeroImage>
+            <HeroInfo>
+              <Meta>
+                <span>Work No. #{String(work.id).padStart(2, "0")}</span>
+                <span>{location}</span>
+              </Meta>
+              <Title>{title}</Title>
+              <Tags>{tags.map((tag) => `#${tag}`).join(" ")}</Tags>
+            </HeroInfo>
+          </Hero>
 
-        <Body>
-          <Introduction>
-            <Copy>
-              <SectionTitle>작품 소개</SectionTitle>
-              <Lead>{tagline}</Lead>
-              <Paragraph>{description}</Paragraph>
-              {work.links.length > 0 && (
-                <Contacts>
-                  {work.links.map((link) => (
-                    <ContactLink
-                      key={`${link.type}-${link.url}`}
-                      href={link.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${title} ${link.type}`}
-                    >
-                      <Image
-                        src={WORK_LINK_ICONS[link.type] ?? CONTACT_ICONS.website}
-                        alt=""
-                        width={24}
-                        height={24}
-                      />
-                    </ContactLink>
-                  ))}
-                </Contacts>
-              )}
-            </Copy>
-            <MediaList>
-              {videoEmbedUrl && (
-                <Video>
-                  <iframe
-                    src={videoEmbedUrl}
-                    title={`${title} 영상`}
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                    allowFullScreen
-                    loading="lazy"
-                  />
-                </Video>
-              )}
-              {detailImages.map((image, index) => (
-                <Image
-                  key={`${image}-${index}`}
-                  src={image}
-                  alt={`${title} 상세 이미지 ${index + 1}`}
-                  width={1080}
-                  height={1440}
-                  sizes="(min-width: 1124px) 44vw, 88vw"
-                />
-              ))}
-            </MediaList>
-          </Introduction>
-
-          <TeamSection>
-            <TeamCopy>
-              <SectionTitle>팀 소개</SectionTitle>
-              <TeamName>{team}</TeamName>
-              <TeamParagraph>{teamDescription}</TeamParagraph>
-            </TeamCopy>
-            <MemberList>
-              {work.members.map((member) => (
-                <li key={`${member.role}-${translate(member.name)}`}>
-                  <span>{translate(member.name)}</span>
-                  <Contacts>
-                    {member.contacts.map((contact) => (
-                      <ContactLink
-                        key={`${contact.type}-${contact.url}`}
-                        href={contact.url}
+          <Body>
+            <Introduction>
+              <Copy>
+                <SectionTitle>작품 소개</SectionTitle>
+                <Lead>{tagline}</Lead>
+                <Paragraph>{description}</Paragraph>
+                {work.links.length > 0 && (
+                  <WorkLinks>
+                    {work.links.map((link) => (
+                      <WorkLink
+                        key={link.url}
+                        href={link.url}
                         target="_blank"
                         rel="noreferrer"
-                        aria-label={`${translate(member.name)} ${contact.type}`}
                       >
+                        {link.label}
                         <Image
-                          src={
-                            CONTACT_ICONS[contact.type] ?? CONTACT_ICONS.website
-                          }
+                          src="/icons/arrow_up_right.svg"
                           alt=""
-                          width={24}
-                          height={24}
+                          width={18}
+                          height={18}
                         />
-                      </ContactLink>
+                      </WorkLink>
                     ))}
-                  </Contacts>
-                </li>
-              ))}
-            </MemberList>
-          </TeamSection>
-        </Body>
-        <Footer />
+                  </WorkLinks>
+                )}
+              </Copy>
+              <MediaList>
+                {videoEmbedUrl && (
+                  <Video>
+                    <iframe
+                      src={videoEmbedUrl}
+                      title={`${title} 영상`}
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  </Video>
+                )}
+                {detailImages.map((image, index) => (
+                  <Image
+                    key={`${image}-${index}`}
+                    src={image}
+                    unoptimized
+                    alt={`${title} 상세 이미지 ${index + 1}`}
+                    width={1080}
+                    height={1440}
+                    sizes="(min-width: 1124px) 44vw, 88vw"
+                  />
+                ))}
+              </MediaList>
+            </Introduction>
+
+            <TeamSection>
+              <TeamCopy>
+                <SectionTitle>팀 소개</SectionTitle>
+                <TeamName>{team}</TeamName>
+                <TeamParagraph>{teamDescription}</TeamParagraph>
+              </TeamCopy>
+              <MemberList>
+                {work.members.map((member) => (
+                  <li key={`${member.role}-${translate(member.name)}`}>
+                    <span>{translate(member.name)}</span>
+                    <Contacts>
+                      {member.contacts.map((contact) => (
+                        <ContactLink
+                          key={`${contact.type}-${contact.url}`}
+                          href={contact.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${translate(member.name)} ${
+                            contact.type
+                          }`}
+                        >
+                          <Image
+                            src={
+                              CONTACT_ICONS[contact.type] ??
+                              CONTACT_ICONS.website
+                            }
+                            alt=""
+                            width={24}
+                            height={24}
+                          />
+                        </ContactLink>
+                      ))}
+                    </Contacts>
+                  </li>
+                ))}
+              </MemberList>
+            </TeamSection>
+          </Body>
+          <Footer />
         </ScrollContent>
       </DetailScroll>
     </Container>
@@ -415,7 +417,6 @@ const TeamSection = styled.section`
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4rem;
   padding: 4.8rem 4rem;
-  border-bottom: 1px solid var(--layout-line);
 
   ${media.tablet`
     order: 1;
@@ -454,6 +455,7 @@ const TeamParagraph = styled(Paragraph)`
 `;
 
 const MemberList = styled.ul`
+  white-space: nowrap;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
@@ -474,6 +476,23 @@ const MemberList = styled.ul`
   ${media.mobile`
     grid-template-columns: 1fr;
   `}
+`;
+
+const WorkLinks = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.6rem;
+`;
+
+const WorkLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-bottom: 1px solid currentColor;
+  color: ${({ theme }) => theme.text.brand};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+  font-weight: 700;
+  line-height: 150%;
 `;
 
 const Contacts = styled.div`

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Footer from "@/components/common/Footer";
-import BackButton from "@/components/works/BackButton";
+import BackButton from "@/components/common/BackButton";
 import WorkListItem from "@/components/works/WorkListItem";
 import { ROUTES } from "@/constants/routes";
 import { floorPlanSlides } from "@/data/floorPlanSlides";
@@ -10,10 +10,10 @@ import { works } from "@/data/works";
 import { worksPageContent } from "@/data/worksPageContent";
 import useTranslation from "@/hooks/useTranslation";
 import {
-  clearWorksMapReturn,
-  readWorksMapReturn,
-  saveWorksMapReturn,
-} from "@/utils/worksMapReturn";
+  clearWorksReturn,
+  readWorksReturn,
+  saveWorksReturn,
+} from "@/utils/worksReturn";
 import FloorPlan from "./FloorPlan";
 import MobileFloorPlan from "./MobileFloorPlan";
 import * as S from "./styles";
@@ -31,7 +31,7 @@ const groupByRoom = (floorWorks) =>
         room.works.push(work);
         return rooms.set(work.location.ko, room);
       }, new Map())
-      .values(),
+      .values()
   );
 
 // 배치도 상태를 주소에 담아 상세에서 돌아오거나 뒤로가기 했을 때 그대로 복원
@@ -52,11 +52,15 @@ const toSlideIndex = (section) => {
 
 export default function WorksMap({ initialState = {} }) {
   const { t, translate } = useTranslation();
-  const [floor, setFloor] = useState(
-    FLOORS.includes(initialState.floor) ? initialState.floor : FLOORS[0],
-  );
+  const initialFloor = FLOORS.includes(initialState.floor)
+    ? initialState.floor
+    : FLOORS[0];
+  // floor: 지금 리스트에 보이는 층 (도면 위 작품에 hover/focus하면 그 작품의 층으로 바뀜)
+  // selectedFloor: 사용자가 층 탭으로 직접 고른 층. 주소·돌아올 위치는 이 값을 기준으로 함
+  const [floor, setFloor] = useState(initialFloor);
+  const [selectedFloor, setSelectedFloor] = useState(initialFloor);
   const [slideIndex, setSlideIndex] = useState(() =>
-    toSlideIndex(initialState.section),
+    toSlideIndex(initialState.section)
   );
   const [activeWorkId, setActiveWorkId] = useState(null);
   const [isExpanded, setIsExpanded] = useState(initialState.expanded === "1");
@@ -66,7 +70,11 @@ export default function WorksMap({ initialState = {} }) {
   const floorTabsRef = useRef(null);
   const pendingRevealIdRef = useRef(null);
 
-  const mapHref = getMapHref({ floor, slideIndex, isExpanded });
+  const mapHref = getMapHref({
+    floor: selectedFloor,
+    slideIndex,
+    isExpanded,
+  });
 
   useEffect(() => {
     window.history.replaceState(null, "", mapHref);
@@ -74,19 +82,19 @@ export default function WorksMap({ initialState = {} }) {
 
   // 상세에서 돌아온 경우 저장해 둔 스크롤 위치 복원
   useEffect(() => {
-    const saved = readWorksMapReturn();
+    const saved = readWorksReturn();
     const currentHref = `${window.location.pathname}${window.location.search}`;
 
     if (saved?.href !== currentHref) return;
 
     scrollRef.current?.scrollTo({ top: saved.scrollTop });
     listRef.current?.scrollTo({ top: saved.listScrollTop });
-    clearWorksMapReturn();
+    clearWorksReturn();
   }, []);
 
   // 데스크탑: 리스트 밖에서 휠을 굴려도 리스트를 먼저 스크롤하고, 리스트 끝에 닿으면 페이지(footer)로 이어서 스크롤
   // 위로 올릴 때는 페이지를 먼저 맨 위로 되돌린 뒤 리스트를 스크롤
-  // 1124px 미만은 리스트가 내부 스크롤되지 않으므로(scrollHeight === clientHeight) 기본 스크롤 유지
+  // 리스트가 배치도 아래로 내려간 좁은 화면은 내부 스크롤되지 않으므로(scrollHeight === clientHeight) 기본 스크롤 유지
   useEffect(() => {
     const scroll = scrollRef.current;
 
@@ -122,17 +130,19 @@ export default function WorksMap({ initialState = {} }) {
 
     if (!workLink) return;
 
-    saveWorksMapReturn({
+    saveWorksReturn({
       workId: workLink.getAttribute("href").split("/").pop(),
       href: mapHref,
       scrollTop: scrollRef.current?.scrollTop ?? 0,
-      listScrollTop: listRef.current?.scrollTop ?? 0,
+      // 다른 층 리스트를 보던 중이면 그 스크롤 위치는 선택한 층과 무관하므로 맨 위로
+      listScrollTop:
+        floor === selectedFloor ? listRef.current?.scrollTop ?? 0 : 0,
     });
   };
 
   const title = translate(worksPageContent.floorPlanLabel);
   const rooms = groupByRoom(
-    works.filter((work) => work.location.floor === floor),
+    works.filter((work) => work.location.floor === floor)
   );
 
   const toggleExpanded = (nextExpanded) => {
@@ -141,13 +151,18 @@ export default function WorksMap({ initialState = {} }) {
     scrollRef.current?.scrollTo({ top: 0 });
   };
 
-  const selectFloor = (nextFloor) => {
+  const showFloor = (nextFloor) => {
     setFloor(nextFloor);
     listRef.current?.scrollTo({ top: 0 });
   };
 
+  const selectFloor = (nextFloor) => {
+    setSelectedFloor(nextFloor);
+    showFloor(nextFloor);
+  };
+
   // works 메인처럼 리스트 아이템이 보이는 영역 밖에 있을 때만 필요한 만큼 스크롤 (sticky 층 탭에 가리는 부분 제외)
-  // 1124px 미만은 배치도와 리스트가 같이 스크롤되어 배치도가 밀려나므로 스크롤하지 않음
+  // 리스트가 배치도 아래로 내려간 좁은 화면은 배치도와 리스트가 같이 스크롤되어 배치도가 밀려나므로 스크롤하지 않음
   const scrollWorkItemIntoView = (workId) => {
     const workItem = workItemRefs.current.get(workId);
     const list = listRef.current;
@@ -156,8 +171,10 @@ export default function WorksMap({ initialState = {} }) {
 
     const itemRect = workItem.getBoundingClientRect();
     const listRect = list.getBoundingClientRect();
-    const visibleTop =
-      floorTabsRef.current?.getBoundingClientRect().bottom ?? listRect.top;
+    const visibleTop = Math.max(
+      listRect.top,
+      floorTabsRef.current?.getBoundingClientRect().bottom ?? 0
+    );
 
     if (itemRect.top < visibleTop) {
       list.scrollBy({
@@ -187,7 +204,7 @@ export default function WorksMap({ initialState = {} }) {
 
     if (work.location.floor !== floor) {
       pendingRevealIdRef.current = work.id;
-      selectFloor(work.location.floor);
+      showFloor(work.location.floor);
       return;
     }
 
@@ -204,35 +221,42 @@ export default function WorksMap({ initialState = {} }) {
     />
   );
 
+  const header = (
+    <S.Header>
+      {isExpanded ? (
+        <BackButton onClick={() => toggleExpanded(false)} />
+      ) : (
+        <BackButton href={ROUTES.WORKS} />
+      )}
+      <S.Title>{title}</S.Title>
+    </S.Header>
+  );
+
   return (
     <S.Container onClickCapture={saveReturnState}>
       <S.Scroll ref={scrollRef} data-works-scroll>
         <S.Content>
           {isExpanded ? (
-            <BackButton onClick={() => toggleExpanded(false)} />
-          ) : (
-            <BackButton href={ROUTES.WORKS} />
-          )}
-          <S.Title>{title}</S.Title>
-
-          {isExpanded ? (
-            <S.ExpandedPlan>
-              <S.ExpandedFrame>{floorPlan}</S.ExpandedFrame>
-              <S.CollapseButton
-                type="button"
-                onClick={() => toggleExpanded(false)}
-              >
-                ← 이전으로
-              </S.CollapseButton>
-              <S.MobileCollapseButton
-                type="button"
-                onClick={() => toggleExpanded(false)}
-              >
-                {t("works.backToMap")}
-              </S.MobileCollapseButton>
-            </S.ExpandedPlan>
-          ) : (
             <>
+              {header}
+              <S.ExpandedPlan>
+                <S.ExpandedFrame>{floorPlan}</S.ExpandedFrame>
+                <S.CollapseButton
+                  type="button"
+                  onClick={() => toggleExpanded(false)}
+                >
+                  ← {t("common.back")}
+                </S.CollapseButton>
+                <S.MobileCollapseButton
+                  type="button"
+                  onClick={() => toggleExpanded(false)}
+                >
+                  {t("works.backToMap")}
+                </S.MobileCollapseButton>
+              </S.ExpandedPlan>
+            </>
+          ) : (
+            <S.Body>
               <S.MobileView>
                 <S.Description>
                   {translate(worksPageContent.floorPlanMobileDescription)}
@@ -244,23 +268,20 @@ export default function WorksMap({ initialState = {} }) {
                   alt={title}
                 />
               </S.MobileView>
-              <S.Body>
-                <S.PlanColumn>
-                  {floorPlan}
-                  <S.ExpandButton
-                    type="button"
-                    onClick={() => toggleExpanded(true)}
-                  >
-                    {t("works.expandMap")}
-                  </S.ExpandButton>
-                </S.PlanColumn>
+              <S.PlanColumn>
+                {floorPlan}
+                <S.ExpandButton
+                  type="button"
+                  onClick={() => toggleExpanded(true)}
+                >
+                  {t("works.expandMap")}
+                </S.ExpandButton>
+              </S.PlanColumn>
 
-                <S.ListPanel ref={listRef}>
-                  <S.FloorTabs
-                    ref={floorTabsRef}
-                    role="group"
-                    aria-label={title}
-                  >
+              <S.ListColumn>
+                {header}
+                <S.FloorBar ref={floorTabsRef}>
+                  <S.FloorTabs role="group" aria-label={title}>
                     {FLOORS.map((item) => (
                       <S.FloorTab
                         key={item}
@@ -273,7 +294,8 @@ export default function WorksMap({ initialState = {} }) {
                       </S.FloorTab>
                     ))}
                   </S.FloorTabs>
-
+                </S.FloorBar>
+                <S.ListPanel ref={listRef}>
                   {rooms.map((room) => (
                     <section key={room.location.ko}>
                       <S.RoomTitle>
@@ -297,8 +319,8 @@ export default function WorksMap({ initialState = {} }) {
                     </section>
                   ))}
                 </S.ListPanel>
-              </S.Body>
-            </>
+              </S.ListColumn>
+            </S.Body>
           )}
         </S.Content>
         <Footer />

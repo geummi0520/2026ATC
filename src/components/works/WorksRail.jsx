@@ -1,7 +1,7 @@
 "use client";
 
 import styled from "styled-components";
-import BackButton from "@/components/works/BackButton";
+import BackButton from "@/components/common/BackButton";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
@@ -43,7 +43,7 @@ export default function WorksRail({
 
 const Rail = styled.nav`
   flex: none;
-  min-height: 4.4rem;
+  height: 4.4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -74,6 +74,7 @@ const CategoryList = styled.div`
 `;
 
 const CategoryButton = styled.button`
+  white-space: nowrap;
   padding: 0;
   border: 0;
   border-bottom: 1px solid
@@ -82,7 +83,7 @@ const CategoryButton = styled.button`
   background: transparent;
   color: ${({ $active, theme }) =>
     $active ? theme.text.brand : theme.text.quaternary};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 120%;
   font-weight: ${({ $active, theme }) => ($active ? "700" : "400")};
   cursor: pointer;

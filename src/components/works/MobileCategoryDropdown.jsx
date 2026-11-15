@@ -12,22 +12,25 @@ export default function MobileCategoryDropdown({
   anchor,
 }) {
   const { translate } = useTranslation();
-  const [isVisible, setIsVisible] = useState(false);
+  const [hasScrolledPast, setHasScrolledPast] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
-  // 상단 카테고리 목록이 스크롤 영역 위쪽으로 완전히 벗어났을 때만 노출
+  // 상단 카테고리 목록이 없으면(카테고리 선택 상태) 항상 노출하고,
+  // 목록이 있으면 스크롤 영역 위쪽으로 완전히 벗어났을 때만 노출
+  const isVisible = !anchor || hasScrolledPast;
+
   useEffect(() => {
     if (!anchor) return undefined;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const hasScrolledPast =
+        const isPast =
           !entry.isIntersecting &&
           entry.boundingClientRect.bottom <= (entry.rootBounds?.top ?? 0);
 
-        setIsVisible(hasScrolledPast);
-        if (!hasScrolledPast) setIsOpen(false);
+        setHasScrolledPast(isPast);
+        if (!isPast) setIsOpen(false);
       },
       { root: anchor.closest("[data-works-scroll]") }
     );
@@ -65,7 +68,7 @@ export default function MobileCategoryDropdown({
   };
 
   return (
-    <StickyAnchor>
+    <StickyAnchor $visible={isVisible}>
       <Container
         ref={containerRef}
         $visible={isVisible}
@@ -109,7 +112,8 @@ export default function MobileCategoryDropdown({
   );
 }
 
-// 높이 0의 sticky 기준점을 스크롤 영역 하단에 고정하고, 드롭다운은 그 위로 펼쳐지도록 배치
+// sticky 기준점을 스크롤 영역 하단에 고정하고, 드롭다운은 그 위로 펼쳐지도록 배치.
+// 플로팅이 보일 때는 기준점에 높이를 줘서 Footer 아래 여백을 확보(Footer가 가려지지 않도록)
 const StickyAnchor = styled.div`
   display: none;
 
@@ -117,7 +121,8 @@ const StickyAnchor = styled.div`
     display: block;
     position: sticky;
     bottom: 0;
-    height: 0;
+    height: ${({ $visible }) => ($visible ? "8rem" : "0")};
+    pointer-events: none;
   `}
 `;
 

@@ -94,12 +94,23 @@ export default function DesktopCategoryView({
   );
 }
 
+// 콜라주 높이(100dvh - 16.4rem)가 900px을 넘는 세로로 긴 화면
+// -> 4열×3행이면 콜라주 가로가 너무 넓어져 오른쪽 패널이 잘리므로 3열×4행으로 전환
+const TALL_COLLAGE_QUERY = "(min-height: 1065px)";
+
 const CategoryDesktop = styled.div`
   min-height: calc(100dvh - 16.4rem);
   display: grid;
   grid-template-columns: calc(100dvh - 16.4rem) minmax(34rem, 1fr);
   align-items: start;
   margin: -4rem;
+
+  /* 3열×4행 + 썸네일 3:4 -> 콜라주 가로 = 높이 × 9/16 */
+  @media ${TALL_COLLAGE_QUERY} {
+    grid-template-columns:
+      calc((100dvh - 16.4rem) * 9 / 16)
+      minmax(34rem, 1fr);
+  }
 
   ${media.worksTablet`
     display: none;
@@ -114,6 +125,11 @@ const CategoryCollage = styled.div`
   grid-template-rows: repeat(3, minmax(0, 1fr));
   width: 100%;
   height: calc(100dvh - 16.4rem);
+
+  @media ${TALL_COLLAGE_QUERY} {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+  }
 `;
 
 const CollageLink = styled(Link)`
@@ -164,6 +180,8 @@ const CategoryTitle = styled.h1`
   margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
   line-height: 1.4;
+  /* white-space: nowrap; */
+  word-break: keep-all;
 `;
 
 const CategoryDescription = styled.p`

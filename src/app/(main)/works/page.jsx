@@ -1,8 +1,9 @@
 "use client";
 
 import { use, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Footer from "@/components/common/Footer";
-import BackButton from "@/components/works/BackButton";
+import BackButton from "@/components/common/BackButton";
 import DesktopCategoryView from "@/components/works/DesktopCategoryView";
 import FloorPlanButton from "@/components/works/FloorPlanButton";
 import MobileCategoryDropdown from "@/components/works/MobileCategoryDropdown";
@@ -13,18 +14,16 @@ import WorksRail from "@/components/works/WorksRail";
 import * as S from "@/app/(main)/works/styles";
 import { works } from "@/data/works";
 import { worksPageContent } from "@/data/worksPageContent";
+import { ROUTES } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
+import { saveWorksReturn } from "@/utils/worksReturn";
 
 export default function Page({ searchParams }) {
   const { view, floor, section, expanded } = use(searchParams);
   const { translate } = useTranslation();
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const categoryParam = useSearchParams().get("category");
   const [categoryListNode, setCategoryListNode] = useState(null);
   const scrollAreaRef = useRef(null);
-
-  useEffect(() => {
-    scrollAreaRef.current?.scrollTo({ top: 0 });
-  }, [selectedCategory]);
 
   const categories = useMemo(
     () =>
@@ -38,6 +37,35 @@ export default function Page({ searchParams }) {
       ),
     []
   );
+  // 선택한 카테고리는 주소(?category=)에 담아 상세에서 돌아오거나 뒤로가기 했을 때 그대로 복원
+  const selectedCategory = categories.some(({ id }) => id === categoryParam)
+    ? categoryParam
+    : null;
+
+  useEffect(() => {
+    scrollAreaRef.current?.scrollTo({ top: 0 });
+  }, [selectedCategory]);
+
+  const getListHref = (category) =>
+    category
+      ? `${ROUTES.WORKS}?${new URLSearchParams({ category })}`
+      : ROUTES.WORKS;
+
+  const setSelectedCategory = (category) => {
+    window.history.replaceState(null, "", getListHref(category));
+  };
+
+  const saveReturnState = (event) => {
+    const workLink = event.target.closest?.(`a[href^="${ROUTES.WORKS}/"]`);
+
+    if (!workLink) return;
+
+    saveWorksReturn({
+      workId: workLink.getAttribute("href").split("/").pop(),
+      href: getListHref(selectedCategory),
+    });
+  };
+
   const content = selectedCategory
     ? worksPageContent.categories[selectedCategory]
     : worksPageContent.default;
@@ -49,14 +77,12 @@ export default function Page({ searchParams }) {
     return <WorksMap initialState={{ floor, section, expanded }} />;
 
   return (
-    <S.Frame>
+    <S.Frame onClickCapture={saveReturnState}>
       <WorksRail
         categories={categories}
         selectedCategory={selectedCategory}
         onSelectCategory={(category) =>
-          setSelectedCategory((current) =>
-            current === category ? null : category
-          )
+          setSelectedCategory(category === selectedCategory ? null : category)
         }
         onBack={
           selectedCategory ? () => setSelectedCategory(null) : undefined
@@ -90,12 +116,6 @@ export default function Page({ searchParams }) {
                   />
                 </S.TitleRow>
                 <S.Description>{translate(content.description)}</S.Description>
-                <MobileCategoryList
-                  ref={setCategoryListNode}
-                  categories={categories}
-                  selectedCategory={selectedCategory}
-                  onSelectCategory={setSelectedCategory}
-                />
                 <WorkGrid works={visibleWorks} />
               </S.CategoryFallback>
             </>
