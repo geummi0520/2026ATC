@@ -161,10 +161,10 @@ export default function MainLayout({ children, isComingSoon = false }) {
       data-brand-dark={isBrandDark}
     >
       <LeftRail>
-        <RailSlot>
+        <LeftTopSlot>
           {!isComingSoon && <StampButton />}
           <LeftRailLabel>2026 ATC</LeftRailLabel>
-        </RailSlot>
+        </LeftTopSlot>
         <RailSlot />
       </LeftRail>
       <Center $isWorks={isWorks} $isComingSoon={isComingSoon}>
@@ -249,11 +249,30 @@ const RailLabel = styled.span`
 `}
 `;
 
+// STAMP 버튼(위)과 2026 ATC(아래)를 쌓는 칸
+// 평소엔 STAMP가 위에서 12.8rem, 화면이 낮아지면 위 여백(::before)부터 줄어들어
+// STAMP가 2026 ATC와 최소 4rem 간격(StampButton의 margin-bottom)을 유지하며 위로 밀림
+const LeftTopSlot = styled(RailSlot)`
+  display: flex;
+  flex-direction: column;
+  /* 공간이 부족하면 위쪽으로 넘치도록(아래 2026 ATC는 항상 칸 바닥에 고정) */
+  justify-content: flex-end;
+
+  &::before {
+    content: "";
+    flex: 0 1 12.8rem;
+  }
+`;
+
+// 회전(rotate) 대신 세로쓰기로 그려야 글자 길이만큼 실제 높이를 차지해 STAMP 위치 기준이 됨
 const LeftRailLabel = styled(RailLabel)`
-  left: 100%;
-  bottom: 0;
-  transform: rotate(-90deg);
-  transform-origin: bottom left;
+  position: static;
+  align-self: flex-end;
+  margin-top: auto;
+  padding: 1rem 0.8rem;
+  writing-mode: vertical-rl;
+  /* vertical-rl을 뒤집어 아래에서 위로 읽히게 함 */
+  transform: rotate(180deg);
 `;
 
 const RightRailLabel = styled(RailLabel)`
