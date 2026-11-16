@@ -9,7 +9,7 @@ import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 // 마지막 도장이 찍히는 모션을 보여준 뒤 보상 화면으로 넘어가기까지의 시간
-const REWARD_DELAY_MS = 2400;
+const REWARD_DELAY_MS = 2000;
 
 export default function StampCardModal() {
   const { t } = useTranslation();
@@ -53,13 +53,18 @@ export default function StampCardModal() {
         />
       </CardFrame>
       <Message>{t("stamp.cardMessage")}</Message>
-      <CloseButton
-        ref={closeButtonRef}
-        type="button"
-        onClick={closeStampModal}
-      >
-        <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-          <path d="M0.5 14.5L14.5 0.5M14.5 14.5L0.5 0.5" stroke="currentColor" />
+      <CloseButton ref={closeButtonRef} type="button" onClick={closeStampModal}>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 15 15"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M0.5 14.5L14.5 0.5M14.5 14.5L0.5 0.5"
+            stroke="currentColor"
+          />
         </svg>
         {t("stamp.close")}
       </CloseButton>
@@ -109,7 +114,7 @@ const Message = styled.p`
   margin: 0;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   text-align: center;
-
+  white-space: pre-line;
 `;
 
 const CloseButton = styled.button`

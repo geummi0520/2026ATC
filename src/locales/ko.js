@@ -78,7 +78,10 @@ const ko = {
     nextSection: "다음 섹션",
     backToMap: "돌아가기",
     schedule: "전시기간",
-    supporting: "supporting"
+    supporting: "supporting",
+    category: "작품 카테고리",
+    work: "작품 소개",
+    team: "팀 소개",
   },
   program: {
     location: "장소",
@@ -88,8 +91,8 @@ const ko = {
     next: "다음",
   },
   staff: {
-    title: "스태프 크레딧"
-  }
+    title: "스태프 크레딧",
+  },
 };
 
 export default ko;

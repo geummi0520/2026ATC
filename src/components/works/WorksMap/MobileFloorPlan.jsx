@@ -18,6 +18,8 @@ const ARROW_ROTATION = { right: 0, down: 90, left: 180, up: 270 };
 export default function MobileFloorPlan({
   slideIndex,
   onSlideChange,
+  canLoopBack,
+  onLoop,
   onExpand,
   alt,
 }) {
@@ -29,9 +31,19 @@ export default function MobileFloorPlan({
     .map((id) => works.find((work) => work.id === id))
     .filter(Boolean);
 
-  const goPrev = () => onSlideChange(Math.max(slideIndex - 1, 0));
-  // 마지막 섹션(5F)의 다음은 처음(4F)으로 돌아감
-  const goNext = () => onSlideChange((slideIndex + 1) % floorPlanSlides.length);
+  const lastIndex = floorPlanSlides.length - 1;
+  // 처음(4F) 섹션의 이전 화살표는 한 바퀴를 돈 뒤에만 생기고, 마지막(5F) 섹션으로 이동
+  const prevDirection = slide.prev ?? (canLoopBack ? slide.loopPrev : null);
+
+  const goPrev = () => {
+    if (slideIndex > 0) onSlideChange(slideIndex - 1);
+    else if (canLoopBack) onSlideChange(lastIndex);
+  };
+  // 마지막 섹션(5F)의 다음은 처음(4F)으로 돌아감 → 한 바퀴 돈 것으로 기록
+  const goNext = () => {
+    if (slideIndex === lastIndex) onLoop();
+    onSlideChange((slideIndex + 1) % floorPlanSlides.length);
+  };
 
   const handleTouchEnd = (event) => {
     if (touchStart.current === null) return;
@@ -44,7 +56,7 @@ export default function MobileFloorPlan({
     // 더 많이 움직인 축 기준으로 판단
     if (Math.abs(deltaX) >= Math.abs(deltaY)) {
       if (deltaX <= -SWIPE_THRESHOLD) goNext();
-      if (deltaX >= SWIPE_THRESHOLD && slideIndex > 0) goPrev();
+      if (deltaX >= SWIPE_THRESHOLD && prevDirection) goPrev();
       return;
     }
 
@@ -53,7 +65,7 @@ export default function MobileFloorPlan({
     // 세로: 지도를 끌어당기듯 손가락 반대쪽 화살표(up/down) 섹션으로 이동
     const direction = deltaY < 0 ? "down" : "up";
     if (slide.next === direction) goNext();
-    else if (slide.prev === direction) goPrev();
+    else if (prevDirection === direction) goPrev();
   };
 
   return (
@@ -75,14 +87,14 @@ export default function MobileFloorPlan({
           <FloorPlan works={works} alt={alt} />
         </PlanLayer>
 
-        {slide.prev && (
+        {prevDirection && (
           <Arrow
             type="button"
-            $direction={slide.prev}
+            $direction={prevDirection}
             onClick={goPrev}
             aria-label={t("works.prevSection")}
           >
-            <ArrowIcon direction={slide.prev} />
+            <ArrowIcon direction={prevDirection} />
           </Arrow>
         )}
         {slide.next && (
