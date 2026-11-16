@@ -328,7 +328,9 @@ ${media.tablet`
 
 ${media.mobile`
   height: auto;
-  min-height: 0;
+  /* 콘텐츠가 짧아도(크디는 사진 한 장) 최소 한 화면을 채워서 푸터는 스크롤해야 보이게
+     ⚠ 8.4rem = MainLayout MainContent의 tablet 이하 padding-top */
+  min-height: calc(100dvh - 8.4rem);
   padding:0rem;
   // padding-left: 0;
   // padding-right: 0;
