@@ -11,7 +11,7 @@ export default function MobileCategoryDropdown({
   onSelectCategory,
   anchor,
 }) {
-  const { translate } = useTranslation();
+  const { t, translate } = useTranslation();
   const [hasScrolledPast, setHasScrolledPast] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
@@ -69,11 +69,7 @@ export default function MobileCategoryDropdown({
 
   return (
     <StickyAnchor $visible={isVisible}>
-      <Container
-        ref={containerRef}
-        $visible={isVisible}
-        inert={!isVisible}
-      >
+      <Container ref={containerRef} $visible={isVisible} inert={!isVisible}>
         {isOpen && (
           <OptionList id="works-category-dropdown">
             {options.map(({ id, label }) => (
@@ -91,7 +87,9 @@ export default function MobileCategoryDropdown({
           aria-controls="works-category-dropdown"
           onClick={() => setIsOpen((current) => !current)}
         >
-          <span>{selectedLabel ? translate(selectedLabel) : "작품 카테고리"}</span>
+          <span>
+            {selectedLabel ? translate(selectedLabel) : t("works.category")}
+          </span>
           <Chevron
             $open={isOpen}
             width="16"

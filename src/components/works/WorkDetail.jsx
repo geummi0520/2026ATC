@@ -107,7 +107,7 @@ export default function WorkDetail({ work }) {
           <Body>
             <Introduction>
               <Copy>
-                <SectionTitle>작품 소개</SectionTitle>
+                <SectionTitle>{t("works.work")}</SectionTitle>
                 <Lead>{tagline}</Lead>
                 <Paragraph>{description}</Paragraph>
                 {work.links.length > 0 && (
@@ -160,7 +160,7 @@ export default function WorkDetail({ work }) {
 
             <TeamSection>
               <TeamCopy>
-                <SectionTitle>팀 소개</SectionTitle>
+                <SectionTitle>{t("works.team")}</SectionTitle>
                 <TeamName>{team}</TeamName>
                 <TeamParagraph>{teamDescription}</TeamParagraph>
               </TeamCopy>

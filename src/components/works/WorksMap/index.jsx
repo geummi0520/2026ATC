@@ -36,13 +36,20 @@ const groupByRoom = (floorWorks) =>
   );
 
 // 배치도 상태를 주소에 담아 상세에서 돌아오거나 뒤로가기 했을 때 그대로 복원
-const getMapHref = ({ floor, slideIndex, isExpanded, category }) => {
+const getMapHref = ({
+  floor,
+  slideIndex,
+  isExpanded,
+  hasLooped,
+  category,
+}) => {
   const params = new URLSearchParams({ view: "map" });
 
   if (category) params.set("category", category);
   if (floor !== FLOORS[0]) params.set("floor", floor);
   if (slideIndex > 0) params.set("section", slideIndex + 1);
   if (isExpanded) params.set("expanded", "1");
+  if (hasLooped) params.set("loop", "1");
 
   return `${ROUTES.WORKS}?${params}`;
 };
@@ -66,6 +73,9 @@ export default function WorksMap({ initialState = {} }) {
   );
   const [activeWorkId, setActiveWorkId] = useState(null);
   const [isExpanded, setIsExpanded] = useState(initialState.expanded === "1");
+  // 모바일 배치도를 한 바퀴 돌았는지. 주소에 담아 상세 다녀오기·뒤로가기·새로고침에도 유지하고,
+  // 목록이나 다른 페이지에서 새로 들어오면(주소에 loop 없음) 초기화됨
+  const [hasLooped, setHasLooped] = useState(initialState.loop === "1");
   const scrollRef = useRef(null);
   const listRef = useRef(null);
   const workItemRefs = useRef(new Map());
@@ -76,6 +86,7 @@ export default function WorksMap({ initialState = {} }) {
     floor: selectedFloor,
     slideIndex,
     isExpanded,
+    hasLooped,
     category: initialState.category,
   });
   // 카테고리에서 들어온 경우 이전으로 시 그 카테고리 목록으로
@@ -277,6 +288,8 @@ export default function WorksMap({ initialState = {} }) {
                 <MobileFloorPlan
                   slideIndex={slideIndex}
                   onSlideChange={setSlideIndex}
+                  canLoopBack={hasLooped}
+                  onLoop={() => setHasLooped(true)}
                   onExpand={() => toggleExpanded(true)}
                   alt={title}
                 />
