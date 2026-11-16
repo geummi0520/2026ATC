@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import styled from "styled-components";
+import { isBrandDarkPath } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
@@ -12,12 +14,14 @@ const TELEPHONE_URL = "tel:+82-2-705-8031";
 
 export default function Footer() {
   const { t } = useTranslation();
+  // 진한 초록 배경 페이지는 흰 로고, 그 외(밝은 배경)는 초록 로고
+  const isBrandDark = isBrandDarkPath(usePathname());
 
   return (
     <Container>
       <Brand>
         <FooterLogo
-          src="/logo/footer_logo.svg"
+          src={isBrandDark ? "/logo/footer_white.svg" : "/logo/footer_logo.svg"}
           alt="ATC"
           width={28}
           height={77}
@@ -30,23 +34,27 @@ export default function Footer() {
 
       <EventInfo>
         <span>{t("footer.date")}</span>
-        <span>{t("footer.venue")}</span>
-        <span>{t("footer.address")}</span>
+        <InlineGroup>
+          <span>{t("footer.venue")}</span>
+          <span>{t("footer.address")}</span>
+        </InlineGroup>
         <TextLink href={MAP_URL} target="_blank" rel="noreferrer">
           <strong>{t("footer.mapLabel")} ↗</strong>
         </TextLink>
       </EventInfo>
 
       <ContactInfo>
-        <TextLink href={WEBSITE_URL} target="_blank" rel="noreferrer">
+        <WebsiteLink href={WEBSITE_URL} target="_blank" rel="noreferrer">
           {t("footer.website")}
-        </TextLink>
-        <a href={TELEPHONE_URL}>{t("footer.telephone")}</a>
-        <span>{t("footer.fax")}</span>
+        </WebsiteLink>
+        <InlineGroup>
+          <a href={TELEPHONE_URL}>{t("footer.telephone")}</a>
+          <span>{t("footer.fax")}</span>
+        </InlineGroup>
       </ContactInfo>
 
       <PartnerLogo
-        src="/logo/axt_logo.svg"
+        src={isBrandDark ? "/logo/axt_white.svg" : "/logo/axt_green.svg"}
         alt="Art & Technology, Sogang University"
         width={113}
         height={54}
@@ -67,7 +75,7 @@ const Container = styled.footer`
   line-height: 1.8;
   font-weight: 400;
   transition: color 300ms ease, border-color 300ms ease;
-  margin-bottom: rem;
+  word-break: keep-all;
 
   ${media.tablet`
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -76,6 +84,13 @@ const Container = styled.footer`
     font-size: 1rem;
     font-style: normal;
     border-top: none;
+  `}
+
+  ${media.mobile`
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 1rem;
+    row-gap: 0;
+    padding: 2rem 0;
   `}
 `;
 
@@ -86,6 +101,11 @@ const Brand = styled.div`
   min-width: 0;
 
   ${media.tablet`
+    grid-column: 1;
+    grid-row: 1;
+  `}
+
+  ${media.mobile`
     grid-column: 1;
     grid-row: 1;
   `}
@@ -108,6 +128,10 @@ const BrandCopy = styled.div`
   strong {
     font-weight: 700;
   }
+
+  ${media.mobile`
+    display: none;
+  `}
 `;
 
 const Info = styled.div`
@@ -125,6 +149,12 @@ const EventInfo = styled(Info)`
     grid-column: 1;
     grid-row: 2;
   `}
+
+  ${media.mobile`
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 4rem;
+  `}
 `;
 
 const ContactInfo = styled(Info)`
@@ -133,7 +163,26 @@ const ContactInfo = styled(Info)`
     grid-row: 2;
     align-items: flex-end;
     align-self: end;
+  `}
 
+  ${media.mobile`
+    grid-column: 1 / -1;
+    grid-row: 3;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-top: 2rem;
+  `}
+`;
+
+const InlineGroup = styled.span`
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+
+  ${media.mobile`
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 1.6rem;
   `}
 `;
 
@@ -146,6 +195,12 @@ const TextLink = styled.a`
   }
 `;
 
+const WebsiteLink = styled(TextLink)`
+  ${media.mobile`
+    order: 1;
+  `}
+`;
+
 const PartnerLogo = styled(Image)`
   width: 11.3rem;
   height: 5.5rem;
@@ -155,6 +210,13 @@ const PartnerLogo = styled(Image)`
     width: 7rem;
     height: 3.5rem;
     justify-self: end;
+    align-self: end;
+  `}
+
+  ${media.mobile`
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
     align-self: end;
   `}
 `;

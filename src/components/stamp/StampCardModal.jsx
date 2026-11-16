@@ -124,6 +124,8 @@ const CloseButton = styled.button`
   color: inherit;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   cursor: pointer;
+  /* 브라우저 기본 파란 포커스 선 제거 (키보드 포커스는 배경색으로 표시) */
+  outline: none;
 
   &:hover,
   &:focus-visible {

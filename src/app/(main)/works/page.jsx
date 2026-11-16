@@ -74,7 +74,11 @@ export default function Page({ searchParams }) {
     : works;
 
   if (view === "map")
-    return <WorksMap initialState={{ floor, section, expanded }} />;
+    return (
+      <WorksMap
+        initialState={{ floor, section, expanded, category: selectedCategory }}
+      />
+    );
 
   return (
     <S.Frame onClickCapture={saveReturnState}>
@@ -84,9 +88,7 @@ export default function Page({ searchParams }) {
         onSelectCategory={(category) =>
           setSelectedCategory(category === selectedCategory ? null : category)
         }
-        onBack={
-          selectedCategory ? () => setSelectedCategory(null) : undefined
-        }
+        onBack={selectedCategory ? () => setSelectedCategory(null) : undefined}
       />
 
       <S.ScrollArea ref={scrollAreaRef} data-works-scroll>
@@ -96,6 +98,7 @@ export default function Page({ searchParams }) {
               <BackButton onClick={() => setSelectedCategory(null)} />
               <FloorPlanButton
                 label={translate(worksPageContent.floorPlanLabel)}
+                category={selectedCategory}
               />
             </S.MobileActionRow>
           )}
@@ -106,12 +109,14 @@ export default function Page({ searchParams }) {
                 works={visibleWorks}
                 content={content}
                 floorPlanLabel={worksPageContent.floorPlanLabel}
+                category={selectedCategory}
               />
               <S.CategoryFallback>
                 <S.TitleRow>
                   <S.Title>{translate(content.title)}</S.Title>
                   <FloorPlanButton
                     label={translate(worksPageContent.floorPlanLabel)}
+                    category={selectedCategory}
                     hideOnMobile
                   />
                 </S.TitleRow>

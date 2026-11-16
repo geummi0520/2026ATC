@@ -13,6 +13,7 @@ export default function DesktopCategoryView({
   works,
   content,
   floorPlanLabel,
+  category,
 }) {
   const { translate } = useTranslation();
   const [activeWorkId, setActiveWorkId] = useState(null);
@@ -68,7 +69,10 @@ export default function DesktopCategoryView({
         <CategoryHeader>
           <CategoryHeading>
             <CategoryTitle>{translate(content.title)}</CategoryTitle>
-            <FloorPlanButton label={translate(floorPlanLabel)} />
+            <FloorPlanButton
+              label={translate(floorPlanLabel)}
+              category={category}
+            />
           </CategoryHeading>
           <CategoryDescription>
             {translate(content.description)}
@@ -94,16 +98,17 @@ export default function DesktopCategoryView({
   );
 }
 
-// 콜라주 높이(100dvh - 16.4rem)가 900px을 넘는 세로로 긴 화면
-// -> 4열×3행이면 콜라주 가로가 너무 넓어져 오른쪽 패널이 잘리므로 3열×4행으로 전환
-const TALL_COLLAGE_QUERY = "(min-height: 1065px)";
+// 콜라주 높이(100dvh - 16.4rem)가 900px을 넘으면서 가로 비율이 좁은 화면(3:2 이하)
+// -> 4열×3행이면 콜라주 가로(= 높이)가 너무 넓어져 오른쪽 패널이 좁아지므로 3열×4행으로 전환
+// 아이맥처럼 높고 가로도 넓은 화면은 4열×3행을 유지해야 리스트가 과하게 넓어지지 않음
+const TALL_COLLAGE_QUERY = "(min-height: 1065px) and (max-aspect-ratio: 3 / 2)";
 
 const CategoryDesktop = styled.div`
   min-height: calc(100dvh - 16.4rem);
   display: grid;
   grid-template-columns: calc(100dvh - 16.4rem) minmax(34rem, 1fr);
   align-items: start;
-  margin: -4rem;
+  margin: -4rem -3.2rem;
 
   /* 3열×4행 + 썸네일 3:4 -> 콜라주 가로 = 높이 × 9/16 */
   @media ${TALL_COLLAGE_QUERY} {
@@ -173,12 +178,12 @@ const CategoryHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
-  padding: 2.4rem;
+  padding: 4rem 3.2rem;
 `;
 
 const CategoryTitle = styled.h1`
   margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.displayXs};
+  font-size: ${({ theme }) => theme.typography.fontSize.headingMd};
   line-height: 1.4;
   /* white-space: nowrap; */
   word-break: keep-all;

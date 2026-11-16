@@ -66,6 +66,11 @@ const en = {
     path: "Directions",
     map: "Sogang University Campus Map",
     stationInfo: "Subway Information",
+    sponsor: "Collaboration & Sponsorship",
+    sponsor1: "Ilsang Cheobang",
+    sponsor2: "Smile Gate",
+    sponsor3: "University Innovation Supporting Business",
+    sponsor4: "Sogang Future Lab",
   },
   works: {
     expandMap: "View Larger",
@@ -73,11 +78,14 @@ const en = {
     prevSection: "Previous Section",
     nextSection: "Next Section",
     backToMap: "Back",
+    schedule: "Exhibition Period",
   },
   program: {
     location: "Location",
     dateTime: "Date & Time",
     backToList: "Back to List",
+    prev: "prev",
+    next: "next",
   },
   staff: {
     title: "Staff Credit"

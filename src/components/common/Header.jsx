@@ -20,25 +20,44 @@ export default function Header() {
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
+  const active = {
+    home: isCurrent(ROUTES.HOME),
+    about: isCurrent(ROUTES.ABOUT),
+    works: isCurrent(ROUTES.WORKS),
+    program: isCurrent(ROUTES.PROGRAM),
+    archive: pathname.startsWith("/archive"),
+  };
+  const hasActive = Object.values(active).some(Boolean);
+  const isDimmed = (key) => hasActive && !active[key];
+
   const releaseFocus = (event) => event.currentTarget.blur();
 
   return (
     <Container>
       <Navigation $isBrandDark={isBrandDark}>
         <NavItem>
-          <NavLink href={ROUTES.HOME} $active={isCurrent(ROUTES.HOME)}>
+          <NavLink
+            href={ROUTES.HOME}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("home")}
+          >
             {t("navigation.main")}
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href={ROUTES.ABOUT} $active={isCurrent(ROUTES.ABOUT)}>
+          <NavLink
+            href={ROUTES.ABOUT}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("about")}
+          >
             {t("navigation.about")}
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink
             href={ROUTES.WORKS}
-            $active={isCurrent(ROUTES.WORKS)}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("works")}
             onClick={releaseFocus}
           >
             {t("navigation.works")}
@@ -53,14 +72,19 @@ export default function Header() {
           </SubNavigation>
         </NavItem>
         <NavItem>
-          <NavLink href={ROUTES.PROGRAM} $active={isCurrent(ROUTES.PROGRAM)}>
+          <NavLink
+            href={ROUTES.PROGRAM}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("program")}
+          >
             {t("navigation.program")}
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink
             href={ROUTES.ARCHIVE.STAFF}
-            $active={pathname.startsWith("/archive")}
+            $isBrandDark={isBrandDark}
+            $dimmed={isDimmed("archive")}
             onClick={releaseFocus}
           >
             {t("navigation.archive")}
@@ -82,7 +106,9 @@ export default function Header() {
         <Hamburger />
         <StampButton variant="header" />
       </MenuGroup>
-      <LanguageToggle />
+      <ToggleArea>
+        <LanguageToggle />
+      </ToggleArea>
     </Container>
   );
 }
@@ -93,26 +119,50 @@ const Container = styled.header`
   left: 6%;
   right: 6%;
   z-index: 100;
-  height: 12rem;
+  /* nav(top 4rem + 높이 4rem + border 2px) 아래 2rem 여백 */
+  height: calc(10rem + 2px);
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding: 0 4rem;
   color: var(--layout-text);
   transition: color 300ms ease;
+  /* 데스크탑 헤더는 배경이 없어 아래로 지나가는 콘텐츠가 보이므로, 빈 영역은 클릭·휠을 아래로 통과시킴 */
+  pointer-events: none;
 
+  > * {
+    pointer-events: auto;
+  }
+
+  /* iOS Safari는 화면 전체 너비의 상단 fixed 요소 배경으로 상태바·주소창 영역을 칠함
+     → 태블릿·모바일에서는 헤더를 양끝까지 넓히고, 콘텐츠 위치는 padding으로 유지 */
   ${media.tablet`
+    left: 0;
+    right: 0;
     height: 8.4rem;
     justify-content: space-between;
-    padding: 4rem 2rem 2rem 2rem;
+    padding: 4rem calc(6% + 2rem) 2rem;
+    background-color: var(--layout-background);
+    transition: color 300ms ease, background-color 300ms ease;
+    pointer-events: auto;
+
+    /* 햄버거 시트가 보이는 동안(닫힘 애니메이션 포함)은 레일(z-index 101)보다 위로 올리되,
+       오른쪽 레일의 스크롤 인디케이터는 가리지 않도록 오른쪽 끝을 레일 앞까지만 */
+    &:has([data-sheet-active="true"]) {
+      z-index: 102;
+      right: 6%;
+      padding-right: 2rem;
+    }
   `}
 
   ${media.mobile`
-    left: 2.4rem;
-    right: 2.4rem;
-    justify-content: space-between;
-    padding: 4rem 0 2rem 0;
+    padding: 4rem 2.4rem 2rem;
     border-bottom: 0;
+
+    &:has([data-sheet-active="true"]) {
+      right: 2.4rem;
+      padding-right: 0;
+    }
   `}
 `;
 
@@ -123,6 +173,21 @@ const MenuGroup = styled.div`
 
   ${media.mobile`
     gap: 1.6rem;
+  `}
+`;
+
+/* 데스크톱에서 아일랜드 헤더(Navigation)와 같은 top·높이로 세로 중앙 정렬 */
+const ToggleArea = styled.div`
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+  height: calc(4rem + 2px);
+  margin-top: 4rem;
+
+  ${media.tablet`
+    align-self: auto;
+    height: auto;
+    margin-top: 0;
   `}
 `;
 
@@ -146,6 +211,12 @@ const Navigation = styled.nav`
   transition: color 160ms ease-in-out, background-color 160ms ease-in-out,
     border-color 160ms ease-in-out;
 
+  /* 현재 페이지 메뉴는 그대로 두고, hover/focus 중인 메뉴도 함께 강조 */
+  > div:hover > a,
+  > div:focus-within > a {
+    color: inherit;
+  }
+
   ${media.tablet`
     display: none;
   `}
@@ -168,19 +239,23 @@ const NavItem = styled.div`
 `;
 
 const NavLink = styled(Link)`
-  color: inherit;
+  color: ${({ $dimmed, $isBrandDark, theme }) => {
+    if (!$dimmed) return "inherit";
+    return $isBrandDark ? theme.text.brandInvertDisabled : theme.text.brandLight;
+  }};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 2;
   font-weight: 700;
   text-align: center;
   white-space: nowrap;
+  transition: color 160ms ease-in-out;
 `;
 
 const SubNavigation = styled.nav`
   display: flex;
   max-height: 0;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.8rem;
   margin-top: 0;
   overflow: hidden;

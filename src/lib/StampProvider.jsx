@@ -71,13 +71,14 @@ export default function StampProvider({ children }) {
     saveStampPlan(createStampPlan());
   }, [plan]);
 
-  const collect = useCallback((slot) => {
+  const collect = useCallback((slot, workId) => {
     const currentPlan = parseStampPlan(getStampSnapshot());
     if (!currentPlan || currentPlan.collected.includes(slot)) return;
 
     saveStampPlan({
       ...currentPlan,
       collected: [...currentPlan.collected, slot],
+      ...(workId != null && { worksWorkId: workId }),
     });
     setModal({ view: "card", stampedSlot: slot });
   }, []);

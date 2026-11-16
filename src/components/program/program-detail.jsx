@@ -19,18 +19,17 @@ export default function ProgramDetail({ program }) {
     const topRef = useRef(null);
 
     const [currentId, setCurrentId] = useState(program.id);
-    const currentProgram = programs.find((item) => String(item.id) === String(currentId));
-    // console.log(typeof (currentId));
+    // id 계산(±1) 대신 배열 위치로 이전/다음을 찾음 → id가 문자열이거나 연속되지 않아도 안전
+    const currentIndex = programs.findIndex((item) => String(item.id) === String(currentId));
+    const currentProgram = programs[currentIndex];
+    const isFirst = currentIndex <= 0;
+    const isLast = currentIndex >= programs.length - 1;
 
     const PrevProgram = () => {
-        if (currentId > 1) {
-            setCurrentId(currentId - 1)
-        }
+        if (!isFirst) setCurrentId(programs[currentIndex - 1].id);
     }
     const NextProgram = () => {
-        if (currentId < programs.length) {
-            setCurrentId(currentId + 1)
-        }
+        if (!isLast) setCurrentId(programs[currentIndex + 1].id);
     }
 
 
@@ -55,7 +54,7 @@ export default function ProgramDetail({ program }) {
 
     return (
         <Container>
-            <BackLink ref={topRef} href={`/program`}>
+            {/* <BackLink ref={topRef} href={`/program`}>
                 <Image
                     alt="right-arrow-icon"
                     src="/icons/program/arrow-right.svg"
@@ -63,7 +62,7 @@ export default function ProgramDetail({ program }) {
                     height={18}
                 />
                 {t("program.back")}
-            </BackLink>
+            </BackLink> */}
 
 
             <ProgramImg
@@ -78,7 +77,7 @@ export default function ProgramDetail({ program }) {
             </Title>
             <EventInfo>
                 <InfoLine>
-                    <StyledSpan>{t("program.dateTime")}</StyledSpan>
+                    <StyledSpan $bold>{t("program.dateTime")}</StyledSpan>
                     <DateContainer>
                         {currentProgram.dates.map((d, idx) => (
                             <StyledSpan
@@ -92,7 +91,7 @@ export default function ProgramDetail({ program }) {
 
                 </InfoLine>
                 <InfoLine>
-                    <StyledSpan>{t("program.location")}</StyledSpan>
+                    <StyledSpan $bold>{t("program.location")}</StyledSpan>
                     <StyledSpan>{translate(currentProgram.site)}</StyledSpan>
                 </InfoLine>
 
@@ -102,23 +101,27 @@ export default function ProgramDetail({ program }) {
                 <StyledSpan>{translate(currentProgram.description)}</StyledSpan>
             </Description>
 
-            {showFloatingNav && (
-                <BottomNav>
-                    <StyledLink href={`/program`}>
-                        <Image alt="arrow" src="/icons/program/list_icon.svg" width={24} height={24} />
-                        {t("program.backToList")}
-                    </StyledLink>
-                    <NavButtons>
-                        <NavButton onClick={PrevProgram}>
-                            <NavButtonImage alt="arrow" src="/icons/program/polygon_left.svg" width={16} height={17} />
-                        </NavButton>
-                        <NavButton onClick={NextProgram}>
-                            <NavButtonImage alt="arrow" src="/icons/program/polygon_right.svg" width={16} height={17} />
-                        </NavButton>
-                    </NavButtons>
-                </BottomNav>
+            {/* {showFloatingNav && ( */}
+            <BottomNav>
+                <StyledLink href={`/program`}>
+                    <Image alt="arrow" src="/icons/program/list_icon.svg" width={24} height={24} />
+                    {t("program.backToList")}
+                </StyledLink>
+                <NavButtons>
+                    {/* 첫 프로그램엔 이전, 마지막 프로그램엔 다음 버튼 숨김
+                        자리는 남겨둬서(visibility) 다른 버튼 위치가 밀리지 않음 */}
+                    <NavButton onClick={PrevProgram} $hidden={isFirst} disabled={isFirst} aria-hidden={isFirst}>
+                        <NavButtonImage alt="arrow" src="/icons/program/arrow-left.svg" width={16} height={17} />
+                        {t("program.prev")}
+                    </NavButton>
+                    <NavButton onClick={NextProgram} $hidden={isLast} disabled={isLast} aria-hidden={isLast}>
+                        {t("program.next")}
+                        <NavButtonImage alt="arrow" src="/icons/program/arrow-right.svg" width={16} height={17} />
+                    </NavButton>
+                </NavButtons>
+            </BottomNav>
 
-            )}
+            {/* )} */}
 
         </Container>
     );
@@ -172,9 +175,9 @@ gap: 1rem;
 const StyledSpan = styled.span`
 color: ${({ theme }) => theme.text.tertiary};
 
-font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
-font-weight: 400;
+font-weight: ${({ $bold }) => $bold ? "600" : "400"};
 line-height: 180%; /* 1.35rem */
 
 `;
@@ -207,7 +210,7 @@ white-space: pre-line;
 
 color: ${({ theme }) => theme.text.secondary};
 
-font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;
 line-height: 180%; /* 1.35rem */
@@ -227,7 +230,7 @@ const slideUp = keyframes`
 
 const BottomNav = styled.div`
   position: sticky;
-  bottom: 1.5rem;
+  bottom: 0rem;
   left: 0;
   width: 100%;
   z-index: 10; 
@@ -236,50 +239,69 @@ const BottomNav = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  padding: 0.8rem 0 2.8rem 0;
+
   animation: ${slideUp} 0.15s ease-out;
+
+  background: ${({ theme }) => theme.background.primary};
+
+
 `;
 const NavButtons = styled.div`
 display:flex;
-gap:1rem;
+gap:2.4rem;
 
 `;
 const StyledLink = styled(Link)`
 
 display: inline-flex;
-padding: 0.4rem 1.2rem;
-justify-content: center;
-align-items: center;
-gap: 0.375rem;
-
-border-radius: 1.875rem;
-border: 1px solid ${({ theme }) => theme.line.brand};
-background: ${({ theme }) => theme.button.primary};
-
-color: ${({ theme }) => theme.text.brand};
-
-
-
-font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-font-style: normal;
-font-weight: 400;
-line-height: 180%; /* 1.575rem */
-
-`;
-const NavButton = styled.button`
-
-
-display: inline-flex;
-padding: 0.8rem;
+// padding: 0.4rem 1.2rem;
 justify-content: center;
 align-items: center;
 gap: 0.6rem;
 
-border-radius: 3rem;
-border: 1px solid ${({ theme }) => theme.line.brand};
-background: ${({ theme }) => theme.button.primary};
+// border-radius: 1.875rem;
+// border: 1px solid ${({ theme }) => theme.line.brand};
+// background: ${({ theme }) => theme.button.primary};
+
+color: ${({ theme }) => theme.text.brand};
+
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+font-style: normal;
+font-weight: 700;
+line-height: 180%; /* 1.575rem */
+
+
 `;
+const NavButton = styled.button`
+
+display: inline-flex;
+justify-content: center;
+align-items: center;
+gap: 0.6rem;
+border:none;
+/* <button>은 브라우저 기본 회색 배경·안쪽 여백이 있어서 직접 지워야 함 */
+background: transparent;
+padding: 0;
+cursor: pointer;
+white-space: nowrap;
+visibility: ${({ $hidden }) => ($hidden ? "hidden" : "visible")};
+
+
+color: ${({ theme }) => theme.text.brand};
+
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+font-style: normal;
+font-weight: 700;
+line-height: 180%; /* 25.2px */
+`;
+
 const NavButtonImage = styled(Image)`
-width:100%;
+/* width:100%면 아이콘이 버튼 폭 전체를 차지하려 해서 텍스트가 밀려 줄바꿈됨 */
+width: auto;
+height: 1.7rem;
+flex-shrink: 0;
 padding: 0.2rem 0.4rem;
+box-sizing: content-box;
 
 `;

@@ -8,6 +8,7 @@ import { ROUTES } from "@/constants/routes";
 import { works } from "@/data/works";
 import { media } from "@/styles/media";
 import useTranslation from "@/hooks/useTranslation";
+import { saveWorksReturn } from "@/utils/worksReturn";
 
 const PREVIEW_WIDTH = 400; 
 const PREVIEW_HEIGHT = (PREVIEW_WIDTH * 4) / 3; 
@@ -83,6 +84,12 @@ export default function ArtistCredit() {
                 <Work
                   key={work.workId}
                   href={`${ROUTES.WORKS}/${work.workId}`}
+                  onClick={() =>
+                    saveWorksReturn({
+                      workId: work.workId,
+                      href: ROUTES.ARCHIVE.ARTISTS,
+                    })
+                  }
                   $isLast={workIndex === artist.works.length - 1}
                   $active={
                     hovered?.personIndex === personIndex &&
@@ -219,10 +226,13 @@ const Work = styled(Link)`
       $isLast ? theme.line.primary : theme.line.secondary};
 `;
 
+// 미리보기 이미지가 작품 줄 위로 겹쳐 떠도 마우스를 가로채지 않게 함.
+// (가로채면 커서 아래 줄에서 마우스가 빠진 걸로 처리돼 이미지가 꺼졌다 켜지며 깜빡였음)
 const Preview = styled.div`
   position: fixed;
   z-index: 1;
   width: 40rem;
+  pointer-events: none;
 
   ${media.tablet`
     display: none;

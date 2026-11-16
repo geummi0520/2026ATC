@@ -11,7 +11,7 @@ export default function TeamNavigator({
     changeTeam,
 }) {
     const { translate } = useTranslation();
-    console.log(selectedTeam)
+
     return (
         <Container>
             {teamList.map((teamName, idx) => (
@@ -53,7 +53,6 @@ justify-self: stretch;
 `;
 
 function TeamButton({ teamName, isSelected, changeTeam }) {
-    console.log(isSelected)
     return (
         <StyledButton
             $isSelected={isSelected}
@@ -73,7 +72,7 @@ const StyledButton = styled.button`
   color: ${({ $isSelected, theme }) =>
         $isSelected ? theme.text.brand : theme.text.quaternary};
   font-weight: ${({ $isSelected, theme }) => ($isSelected ? "700" : "400")};
-  font-size: ${({ theme }) => theme.typography.fontSize.textSm};
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 120%;
   cursor: pointer;
 `;

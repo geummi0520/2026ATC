@@ -88,7 +88,8 @@ export default function StampReward() {
 
       if (navigator.share) {
         const file = await createImageFile();
-        const fileShareData = { ...shareData, files: [file] };
+        // 이미지만 넘겨야 인스타그램 등 이미지 앱이 공유 대상에 확실히 뜸 (문구·링크가 섞이면 빠지는 경우가 있음)
+        const fileShareData = { files: [file] };
         await navigator.share(
           navigator.canShare?.(fileShareData) ? fileShareData : shareData
         );
@@ -122,7 +123,7 @@ export default function StampReward() {
 
       <Content>
         <Scene>
-          <Tada src="/images/stamp/tada.svg" alt="" width={1115} height={714} />
+          <Tada src="/images/stamp/tada.svg" alt="" width={1223} height={732} />
           <Egg
             src="/images/stamp/rare_egg.webp"
             alt={t("stamp.rewardImage")}
@@ -200,6 +201,12 @@ const CloseButton = styled.button`
   background: transparent;
   color: inherit;
   cursor: pointer;
+  /* 브라우저 기본 파란 포커스 선 제거 (키보드 포커스는 배경색으로 표시) */
+  outline: none;
+
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.1);
+  }
 
   ${media.tablet`
     top: 1.6rem;
@@ -228,11 +235,15 @@ const Scene = styled.div`
   aspect-ratio: 1115 / 760;
 `;
 
+// transform은 burst 애니메이션이 쓰므로, left 계산으로 크기와 관계없이 가로 중앙 정렬
 const Tada = styled(Image)`
+  --tada-size: 120%;
+
   position: absolute;
-  left: 0;
+  left: calc((100% - var(--tada-size)) / 2);
   bottom: 0;
-  width: 100%;
+  width: var(--tada-size);
+  max-width: none;
   height: auto;
   animation: ${burst} 500ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
 `;
@@ -290,6 +301,8 @@ const ActionButton = styled.button`
   color: inherit;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   cursor: pointer;
+  /* 브라우저 기본 파란 포커스 선 제거 (키보드 포커스는 배경색으로 표시) */
+  outline: none;
 
   &:hover:not(:disabled),
   &:focus-visible {
