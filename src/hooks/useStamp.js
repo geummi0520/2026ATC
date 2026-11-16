@@ -9,7 +9,7 @@ import { StampContext } from "@/lib/StampProvider";
  *   collected       모은 도장 칸 목록 (모은 순서 = 카드에 찍히는 순서)
  *   isComplete      6개를 모두 모았는지
  *   modal           열린 스탬프 모달 상태
- *   collect         도장 수집 후 스탬프 카드 열기
+ *   collect         도장 수집 후 스탬프 카드 열기 (works 도장은 찾은 작품 번호도 함께 저장)
  *   openStampCard   STAMP 버튼으로 카드(또는 보상 화면) 열기
  *   showReward      보상 화면으로 전환
  *   closeStampModal 모달 닫기
