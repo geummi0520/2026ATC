@@ -88,7 +88,8 @@ export default function StampReward() {
 
       if (navigator.share) {
         const file = await createImageFile();
-        const fileShareData = { ...shareData, files: [file] };
+        // 이미지만 넘겨야 인스타그램 등 이미지 앱이 공유 대상에 확실히 뜸 (문구·링크가 섞이면 빠지는 경우가 있음)
+        const fileShareData = { files: [file] };
         await navigator.share(
           navigator.canShare?.(fileShareData) ? fileShareData : shareData
         );

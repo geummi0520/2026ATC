@@ -11,7 +11,8 @@ import { getRandomStampPosition } from "@/utils/stampPlan";
 
 // 가장 가까운 position: relative 부모 안의 랜덤한 위치에 숨겨진 도장.
 // 마운트될 때마다 위치를 새로 뽑으므로 페이지에 들어올 때마다 자리가 바뀜.
-export default function HiddenStamp({ slot, active = true }) {
+// workId: works 도장을 찾은 작품 번호 (저장 이미지 라벨에 WORKS #id로 표시)
+export default function HiddenStamp({ slot, active = true, workId }) {
   const { plan, collected, collect } = useStamp();
   const { t } = useTranslation();
   const [position] = useState(getRandomStampPosition);
@@ -25,7 +26,7 @@ export default function HiddenStamp({ slot, active = true }) {
     <Button
       type="button"
       aria-label={t("stamp.collect")}
-      onClick={() => collect(slot)}
+      onClick={() => collect(slot, workId)}
       style={{
         left: `${position.x}%`,
         top: `${position.y}%`,

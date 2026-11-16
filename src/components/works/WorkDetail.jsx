@@ -72,6 +72,7 @@ export default function WorkDetail({ work }) {
             key={work.id}
             slot={STAMP_SLOTS.WORKS}
             active={isStampWork}
+            workId={work.id}
           />
           <CompactBackRow ref={backRowRef}>
             <BackButton href={backHref} />
