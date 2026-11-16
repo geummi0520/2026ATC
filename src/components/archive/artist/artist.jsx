@@ -8,6 +8,7 @@ import { ROUTES } from "@/constants/routes";
 import { works } from "@/data/works";
 import { media } from "@/styles/media";
 import useTranslation from "@/hooks/useTranslation";
+import { saveWorksReturn } from "@/utils/worksReturn";
 
 const PREVIEW_WIDTH = 400; 
 const PREVIEW_HEIGHT = (PREVIEW_WIDTH * 4) / 3; 
@@ -83,6 +84,12 @@ export default function ArtistCredit() {
                 <Work
                   key={work.workId}
                   href={`${ROUTES.WORKS}/${work.workId}`}
+                  onClick={() =>
+                    saveWorksReturn({
+                      workId: work.workId,
+                      href: ROUTES.ARCHIVE.ARTISTS,
+                    })
+                  }
                   $isLast={workIndex === artist.works.length - 1}
                   $active={
                     hovered?.personIndex === personIndex &&

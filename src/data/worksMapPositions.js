@@ -41,15 +41,15 @@ export const boothMapPositions = [
   {
     id: "relation",
     name: {
-      ko: "일상처방 X 2026 ATC\n(대외협력팀 부스)",
-      en: "Daily Prescription X 2026 ATC\n(External Relations Team Booth)",
+      ko: "일상처방 x 2026 ATC\n(대외협력팀 부스)",
+      en: "ILSANG CHEOBANG\nx 2026 ATC",
     },
     x: 34,
     y: 634,
   },
   {
     id: "web",
-    name: { ko: "웹팀 부스", en: "Web Team Booth" },
+    name: { ko: "웹.zip\n(웹팀 부스)", en: "Web.zip\n(Web Booth)" },
     x: 93.5,
     y: 612,
   },
@@ -57,14 +57,14 @@ export const boothMapPositions = [
     id: "sensory",
     name: {
       ko: "달걀의 가능성\n(감각제작팀 전시)",
-      en: "Possibilities of the Egg\n(Sensory Production Team Exhibition)",
+      en: "Inside the Egg",
     },
     x: 190,
     y: 468,
   },
   {
     id: "archive",
-    name: { ko: "아카이빙팀 부스", en: "Archiving Team Booth" },
+    name: { ko: "2026 ATC\n아카이빙 북", en: "2026 ATC\nArchiving Book" },
     x: 537,
     y: 326,
   },
