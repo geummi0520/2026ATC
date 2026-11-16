@@ -9,7 +9,7 @@ import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
 // 마지막 도장이 찍히는 모션을 보여준 뒤 보상 화면으로 넘어가기까지의 시간
-const REWARD_DELAY_MS = 2400;
+const REWARD_DELAY_MS = 2000;
 
 export default function StampCardModal() {
   const { t } = useTranslation();

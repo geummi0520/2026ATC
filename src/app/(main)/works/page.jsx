@@ -19,7 +19,7 @@ import useTranslation from "@/hooks/useTranslation";
 import { saveWorksReturn } from "@/utils/worksReturn";
 
 export default function Page({ searchParams }) {
-  const { view, floor, section, expanded } = use(searchParams);
+  const { view, floor, section, expanded, loop } = use(searchParams);
   const { translate } = useTranslation();
   const categoryParam = useSearchParams().get("category");
   const [categoryListNode, setCategoryListNode] = useState(null);
@@ -76,7 +76,13 @@ export default function Page({ searchParams }) {
   if (view === "map")
     return (
       <WorksMap
-        initialState={{ floor, section, expanded, category: selectedCategory }}
+        initialState={{
+          floor,
+          section,
+          expanded,
+          loop,
+          category: selectedCategory,
+        }}
       />
     );
 

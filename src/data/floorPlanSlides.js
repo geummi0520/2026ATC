@@ -1,6 +1,7 @@
 // 모바일 작품배치도 섹션
 // view: floorplan.svg viewBox(600 x 664) 기준으로 보여줄 영역의 왼쪽 위 좌표 (영역 너비는 MobileFloorPlan의 VIEW_WIDTH)
 // prev / next: 지도 위 화살표가 놓이는 방향 (left | right | up | down)
+// loopPrev: 한 바퀴(5F 마지막 → 4F 처음)를 돈 뒤에만 생기는 이전 화살표 방향 (마지막 섹션으로 이동)
 export const floorPlanSlides = [
   {
     floor: "4F",
@@ -8,6 +9,7 @@ export const floorPlanSlides = [
     workIds: [1, 2, 3, 4, 5, 6],
     view: { x: 177, y: 272 },
     next: "right",
+    loopPrev: "up",
   },
   {
     floor: "4F",

@@ -79,6 +79,9 @@ const en = {
     nextSection: "Next Section",
     backToMap: "Back",
     schedule: "Exhibition Period",
+    category: "Category",
+    work: "About the Work",
+    team: "About the team",
   },
   program: {
     location: "Location",
