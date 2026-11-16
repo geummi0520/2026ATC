@@ -11,6 +11,7 @@ const MAP_URL =
   "https://www.google.com/maps/search/Seoul,+Mapo-gu,+Baekbeom-ro,+35,+Art+%26+Technology,+Sogang+Univ.?hl=ko&entry=ttu&g_ep=EgoyMDI2MDkzMC4wIKXMDSoASAFQAw%3D%3D";
 const WEBSITE_URL = "https://creative.sogang.ac.kr";
 const TELEPHONE_URL = "tel:+82-2-705-8031";
+const INSTAGRAM_URL = "https://www.instagram.com/atc.sogang";
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -20,12 +21,14 @@ export default function Footer() {
   return (
     <Container>
       <Brand>
-        <FooterLogo
-          src={isBrandDark ? "/logo/footer_white.svg" : "/logo/footer_logo.svg"}
-          alt="ATC"
-          width={28}
-          height={77}
-        />
+        <LogoLink href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+          <FooterLogo
+            src={isBrandDark ? "/logo/footer_white.svg" : "/logo/footer_logo.svg"}
+            alt="ATC 인스타그램"
+            width={28}
+            height={77}
+          />
+        </LogoLink>
         <BrandCopy>
           <strong>{t("footer.conferenceName")}</strong>
           <span>{t("footer.slogan")}</span>
@@ -53,12 +56,14 @@ export default function Footer() {
         </InlineGroup>
       </ContactInfo>
 
-      <PartnerLogo
-        src={isBrandDark ? "/logo/axt_white.svg" : "/logo/axt_green.svg"}
-        alt="Art & Technology, Sogang University"
-        width={113}
-        height={54}
-      />
+      <PartnerLink href={WEBSITE_URL} target="_blank" rel="noreferrer">
+        <PartnerLogo
+          src={isBrandDark ? "/logo/axt_white.svg" : "/logo/axt_green.svg"}
+          alt="Art & Technology, Sogang University"
+          width={113}
+          height={54}
+        />
+      </PartnerLink>
     </Container>
   );
 }
@@ -111,8 +116,13 @@ const Brand = styled.div`
   `}
 `;
 
-const FooterLogo = styled(Image)`
+const LogoLink = styled.a`
   flex: none;
+  display: block;
+`;
+
+const FooterLogo = styled(Image)`
+  display: block;
   width: 2.8rem;
   height: 7.7rem;
 `;
@@ -201,14 +211,12 @@ const WebsiteLink = styled(TextLink)`
   `}
 `;
 
-const PartnerLogo = styled(Image)`
-  width: 11.3rem;
-  height: 5.5rem;
+/* grid 위치는 링크(Container의 직접 자식)에, 크기는 이미지에 */
+const PartnerLink = styled.a`
+  display: block;
   justify-self: end;
 
   ${media.tablet`
-    width: 7rem;
-    height: 3.5rem;
     justify-self: end;
     align-self: end;
   `}
@@ -218,5 +226,16 @@ const PartnerLogo = styled(Image)`
     grid-row: 1;
     justify-self: start;
     align-self: end;
+  `}
+`;
+
+const PartnerLogo = styled(Image)`
+  display: block;
+  width: 11.3rem;
+  height: 5.5rem;
+
+  ${media.tablet`
+    width: 7rem;
+    height: 3.5rem;
   `}
 `;
