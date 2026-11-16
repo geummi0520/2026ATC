@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import styled from "styled-components";
+import { isBrandDarkPath } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 
@@ -12,12 +14,14 @@ const TELEPHONE_URL = "tel:+82-2-705-8031";
 
 export default function Footer() {
   const { t } = useTranslation();
+  // 진한 초록 배경 페이지는 흰 로고, 그 외(밝은 배경)는 초록 로고
+  const isBrandDark = isBrandDarkPath(usePathname());
 
   return (
     <Container>
       <Brand>
         <FooterLogo
-          src="/logo/footer_logo.svg"
+          src={isBrandDark ? "/logo/footer_white.svg" : "/logo/footer_logo.svg"}
           alt="ATC"
           width={28}
           height={77}
@@ -50,7 +54,7 @@ export default function Footer() {
       </ContactInfo>
 
       <PartnerLogo
-        src="/logo/axt_logo.svg"
+        src={isBrandDark ? "/logo/axt_white.svg" : "/logo/axt_green.svg"}
         alt="Art & Technology, Sogang University"
         width={113}
         height={54}
@@ -71,7 +75,7 @@ const Container = styled.footer`
   line-height: 1.8;
   font-weight: 400;
   transition: color 300ms ease, border-color 300ms ease;
-  margin-bottom: rem;
+  word-break: keep-all;
 
   ${media.tablet`
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
