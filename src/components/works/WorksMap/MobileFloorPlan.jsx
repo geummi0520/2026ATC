@@ -22,7 +22,7 @@ export default function MobileFloorPlan({
   alt,
 }) {
   const { t, translate } = useTranslation();
-  const touchStartX = useRef(null);
+  const touchStart = useRef(null);
 
   const slide = floorPlanSlides[slideIndex];
   const slideWorks = slide.workIds
@@ -34,20 +34,34 @@ export default function MobileFloorPlan({
   const goNext = () => onSlideChange((slideIndex + 1) % floorPlanSlides.length);
 
   const handleTouchEnd = (event) => {
-    if (touchStartX.current === null) return;
+    if (touchStart.current === null) return;
 
-    const deltaX = event.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
+    const { clientX, clientY } = event.changedTouches[0];
+    const deltaX = clientX - touchStart.current.x;
+    const deltaY = clientY - touchStart.current.y;
+    touchStart.current = null;
 
-    if (deltaX <= -SWIPE_THRESHOLD) goNext();
-    if (deltaX >= SWIPE_THRESHOLD && slideIndex > 0) goPrev();
+    // 더 많이 움직인 축 기준으로 판단
+    if (Math.abs(deltaX) >= Math.abs(deltaY)) {
+      if (deltaX <= -SWIPE_THRESHOLD) goNext();
+      if (deltaX >= SWIPE_THRESHOLD && slideIndex > 0) goPrev();
+      return;
+    }
+
+    if (Math.abs(deltaY) < SWIPE_THRESHOLD) return;
+
+    // 세로: 지도를 끌어당기듯 손가락 반대쪽 화살표(up/down) 섹션으로 이동
+    const direction = deltaY < 0 ? "down" : "up";
+    if (slide.next === direction) goNext();
+    else if (slide.prev === direction) goPrev();
   };
 
   return (
     <section>
       <Frame
         onTouchStart={(event) => {
-          touchStartX.current = event.touches[0].clientX;
+          const { clientX, clientY } = event.touches[0];
+          touchStart.current = { x: clientX, y: clientY };
         }}
         onTouchEnd={handleTouchEnd}
       >
@@ -127,7 +141,7 @@ const Frame = styled.div`
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.line.brand};
   background: ${({ theme }) => theme.background.primary};
-  /* 지도 위에서 손가락을 움직여도 페이지가 스크롤되지 않도록 (좌우 스와이프는 touch 이벤트로 직접 처리) */
+  /* 지도 위에서 손가락을 움직여도 페이지가 스크롤되지 않도록 (상하좌우 스와이프는 touch 이벤트로 직접 처리) */
   touch-action: none;
 `;
 

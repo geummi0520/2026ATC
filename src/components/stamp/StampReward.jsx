@@ -88,7 +88,8 @@ export default function StampReward() {
 
       if (navigator.share) {
         const file = await createImageFile();
-        const fileShareData = { ...shareData, files: [file] };
+        // 이미지만 넘겨야 인스타그램 등 이미지 앱이 공유 대상에 확실히 뜸 (문구·링크가 섞이면 빠지는 경우가 있음)
+        const fileShareData = { files: [file] };
         await navigator.share(
           navigator.canShare?.(fileShareData) ? fileShareData : shareData
         );
@@ -200,6 +201,12 @@ const CloseButton = styled.button`
   background: transparent;
   color: inherit;
   cursor: pointer;
+  /* 브라우저 기본 파란 포커스 선 제거 (키보드 포커스는 배경색으로 표시) */
+  outline: none;
+
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.1);
+  }
 
   ${media.tablet`
     top: 1.6rem;
@@ -294,6 +301,8 @@ const ActionButton = styled.button`
   color: inherit;
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   cursor: pointer;
+  /* 브라우저 기본 파란 포커스 선 제거 (키보드 포커스는 배경색으로 표시) */
+  outline: none;
 
   &:hover:not(:disabled),
   &:focus-visible {

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styled, { css } from "styled-components";
 import { isBrandDarkPath } from "@/constants/routes";
@@ -13,11 +12,6 @@ export default function StampButton({ variant = "rail" }) {
   const { t } = useTranslation();
   const { openStampCard, modal } = useStamp();
   const isBrandDark = isBrandDarkPath(usePathname());
-  // 흰 배경 위 데스크탑 레일 버튼만 초록 별, 나머지(다크 배경·초록 헤더 버튼)는 흰 별
-  const starSrc =
-    variant === "rail" && !isBrandDark
-      ? "/icons/star.svg"
-      : "/icons/star_white.svg";
 
   return (
     <Button
@@ -28,25 +22,21 @@ export default function StampButton({ variant = "rail" }) {
       aria-haspopup="dialog"
       aria-expanded={Boolean(modal)}
     >
-      <Asterisk
-        src={starSrc}
-        alt=""
-        width={17}
-        height={18}
-        aria-hidden="true"
-      />
+      <Asterisk aria-hidden="true" />
       {t("main.stamp")}
     </Button>
   );
 }
 
+// 세로 위치는 MainLayout의 왼쪽 레일 칸(LeftTopSlot)이 2026 ATC 기준으로 잡음
 const railStyle = css`
-  position: absolute;
-  top: 12.8rem;
-  /* 레일 라벨(2026 ATC)은 레일 오른쪽 끝에 붙어 회전돼 있어 폭 = headingMd + 위아래 padding 1.6rem.
+  /* 2026 ATC와 최소 4rem 간격 */
+  margin-bottom: 4rem;
+  /* 레일 라벨(2026 ATC)은 레일 오른쪽 끝에 붙어 있어,
      그 중심선에 맞춰야 레일 폭(6%)이 바뀌어도 같은 줄에 옴 */
-  left: calc(
-    100% - (${({ theme }) => theme.typography.fontSize.headingMd} + 3.8rem) / 2
+  align-self: flex-end;
+  margin-right: calc(
+    (${({ theme }) => theme.typography.fontSize.headingMd} + 3.8rem) / 2
   );
   display: flex;
   flex-direction: row;
@@ -57,12 +47,30 @@ const railStyle = css`
   background: var(--layout-background);
   font-size: ${({ theme }) => theme.typography.fontSize.textLg};
   /* vertical-rl을 뒤집어 아래에서 위로 읽히게 하고, 별은 아래쪽에 둠 */
-  transform: translateX(-50%) rotate(180deg);
+  transform: translateX(50%) rotate(180deg);
   gap: 1.2rem;
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--layout-background);
+      background: var(--layout-active-text);
+    }
+  }
+
+  &:focus-visible {
+    color: var(--layout-background);
+    background: var(--layout-active-text);
+  }
 
   ${media.tablet`
     display: none;
   `}
+`;
+
+const headerInverted = css`
+  color: ${({ $isBrandDark, theme }) =>
+    $isBrandDark ? "var(--layout-background)" : theme.background.brand};
+  background: ${({ theme }) => theme.text.brandInvert};
 `;
 
 const headerStyle = css`
@@ -81,6 +89,17 @@ const headerStyle = css`
   ${media.tablet`
     display: flex;
   `}
+
+  /* 반전: 밝은 배경 + 기존 배경색 글자 (다크 페이지는 페이지 배경색) */
+  @media (hover: hover) {
+    &:hover {
+      ${headerInverted}
+    }
+  }
+
+  &:focus-visible {
+    ${headerInverted}
+  }
 `;
 
 const Button = styled.button`
@@ -94,8 +113,11 @@ const Button = styled.button`
   ${({ $variant }) => ($variant === "rail" ? railStyle : headerStyle)}
 `;
 
-const Asterisk = styled(Image)`
+// 별을 마스크로 그려 글자색(currentColor)을 따라가게 함 → 호버 색반전 시 함께 반전
+const Asterisk = styled.span`
   flex: none;
   width: 1.6rem;
   height: 1.6rem;
+  background-color: currentColor;
+  mask: url("/icons/star.svg") center / contain no-repeat;
 `;
