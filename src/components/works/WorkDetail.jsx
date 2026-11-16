@@ -247,9 +247,13 @@ const DesktopRail = styled.div`
 const CompactBackRow = styled.div`
   display: none;
 
+  /* works 카테고리 화면의 WorksRail(높이 4.4rem, 좌우 padding 2rem)과 같은 위치 */
   ${media.worksTablet`
     display: flex;
-    padding: 2rem;
+    align-items: center;
+    height: 4.4rem;
+    padding: 1.2rem 2rem;
+    margin-top: 0.1rem
   `}
 
   /* works 카테고리 화면의 이전으로 줄(MobileActionRow)과 같은 위치
@@ -257,6 +261,7 @@ const CompactBackRow = styled.div`
   ${media.mobile`
     display: flex;
     align-items: center;
+    height: auto;
     min-height: 4.8rem;
     padding: 2rem 0 0;
 
@@ -417,7 +422,7 @@ const Copy = styled.div`
   ${media.worksTablet`
     position: static;
     height: auto;
-    padding: 2rem;
+    padding: 2rem 2rem 4rem 2rem;
     overflow: visible;
     border-bottom: 1px solid var(--layout-line);
   `}
@@ -429,7 +434,7 @@ const Copy = styled.div`
 `;
 
 const SectionTitle = styled.h2`
-  margin: 0 0 2rem 0;
+  margin: 0;
   color: ${({ theme }) => theme.text.brand};
   font-size: ${({ theme }) => theme.typography.fontSize.textLg};
   font-weight: 700;
@@ -513,7 +518,7 @@ const TeamCopy = styled.div`
 `;
 
 const TeamName = styled.h3`
-  margin: 0 0 1.4rem 0;
+  margin: 2rem 0 1.4rem 0;
   font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
   font-weight: 400;
 `;
@@ -527,12 +532,14 @@ const TeamParagraph = styled(Paragraph)`
   `}
 `;
 
+// 이름 | 아이콘 열을 목록 전체가 공유(li는 subgrid)
+// → 이름 길이가 달라도(영문) 같은 열의 아이콘이 세로로 정렬됨
 const MemberList = styled.ul`
   white-space: nowrap;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, max-content minmax(0, 1fr));
   align-content: start;
-  gap: 1.6rem 1.6rem;
+  gap: 1.6rem 3.2rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -540,14 +547,14 @@ const MemberList = styled.ul`
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 
   li {
-    display: flex;
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: subgrid;
     align-items: center;
-    gap: 3.2rem;
-    width: 50%;
   }
 
   ${media.mobile`
-    grid-template-columns: 1fr;
+    grid-template-columns: max-content minmax(0, 1fr);
   `}
 `;
 
