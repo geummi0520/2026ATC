@@ -98,9 +98,10 @@ export default function DesktopCategoryView({
   );
 }
 
-// 콜라주 높이(100dvh - 16.4rem)가 900px을 넘는 세로로 긴 화면
-// -> 4열×3행이면 콜라주 가로가 너무 넓어져 오른쪽 패널이 잘리므로 3열×4행으로 전환
-const TALL_COLLAGE_QUERY = "(min-height: 1065px)";
+// 콜라주 높이(100dvh - 16.4rem)가 900px을 넘으면서 가로 비율이 좁은 화면(3:2 이하)
+// -> 4열×3행이면 콜라주 가로(= 높이)가 너무 넓어져 오른쪽 패널이 좁아지므로 3열×4행으로 전환
+// 아이맥처럼 높고 가로도 넓은 화면은 4열×3행을 유지해야 리스트가 과하게 넓어지지 않음
+const TALL_COLLAGE_QUERY = "(min-height: 1065px) and (max-aspect-ratio: 3 / 2)";
 
 const CategoryDesktop = styled.div`
   min-height: calc(100dvh - 16.4rem);

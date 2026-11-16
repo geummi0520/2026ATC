@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import Footer from "@/components/common/Footer";
@@ -41,6 +42,23 @@ export default function WorkDetail({ work }) {
   const { plan } = useStamp();
   // 상세에 들어올 때마다 확률로 도장을 띄움(연속으로 안 나오면 일정 횟수 뒤 확정)
   const isStampWork = Boolean(plan) && rollWorksStamp(work.id);
+  const scrollRef = useRef(null);
+  const backRowRef = useRef(null);
+  const [showFloatingBack, setShowFloatingBack] = useState(false);
+
+  // 상단 이전으로가 스크롤 영역 밖으로 완전히 사라지면 플로팅 이전으로를 노출
+  useEffect(() => {
+    const backRow = backRowRef.current;
+    if (!backRow) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowFloatingBack(!entry.isIntersecting),
+      { root: scrollRef.current, threshold: 0 }
+    );
+    observer.observe(backRow);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <Container>
@@ -48,14 +66,14 @@ export default function WorkDetail({ work }) {
         <WorksRail backHref={backHref} />
       </DesktopRail>
 
-      <DetailScroll data-works-scroll>
+      <DetailScroll ref={scrollRef} data-works-scroll>
         <ScrollContent>
           <HiddenStamp
             key={work.id}
             slot={STAMP_SLOTS.WORKS}
             active={isStampWork}
           />
-          <CompactBackRow>
+          <CompactBackRow ref={backRowRef}>
             <BackButton href={backHref} />
           </CompactBackRow>
           <Hero>
@@ -180,16 +198,42 @@ export default function WorkDetail({ work }) {
           <Footer />
         </ScrollContent>
       </DetailScroll>
+
+      <FloatingBackButton href={backHref} $visible={showFloatingBack} />
     </Container>
   );
 }
 
 const Container = styled.article`
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   min-height: 0;
+`;
+
+// 레일을 제외한 상세 컨테이너 기준으로 오른쪽 하단에 고정(스크롤 영역 밖에 두어 함께 스크롤되지 않음)
+const FloatingBackButton = styled(BackButton)`
+  display: none;
+
+  ${media.worksTablet`
+    position: absolute;
+    right: 1.6rem;
+    bottom: 3rem;
+    z-index: 10;
+    display: inline-flex;
+    padding: 0.8rem 1.6rem;
+    border: 1px solid ${({ theme }) => theme.line.brand};
+    border-radius: 999px;
+    background: ${({ theme }) => theme.button.primary};
+    opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+    visibility: ${({ $visible }) => ($visible ? "visible" : "hidden")};
+    pointer-events: ${({ $visible }) => ($visible ? "auto" : "none")};
+    transform: translateY(${({ $visible }) => ($visible ? "0" : "1rem")});
+    transition: opacity 200ms ease, transform 200ms ease,
+      visibility 200ms ease;
+  `}
 `;
 
 const DesktopRail = styled.div`
@@ -203,9 +247,13 @@ const DesktopRail = styled.div`
 const CompactBackRow = styled.div`
   display: none;
 
+  /* works 카테고리 화면의 WorksRail(높이 4.4rem, 좌우 padding 2rem)과 같은 위치 */
   ${media.worksTablet`
     display: flex;
-    padding: 2rem;
+    align-items: center;
+    height: 4.4rem;
+    padding: 1.2rem 2rem;
+    margin-top: 0.1rem
   `}
 
   /* works 카테고리 화면의 이전으로 줄(MobileActionRow)과 같은 위치
@@ -213,6 +261,7 @@ const CompactBackRow = styled.div`
   ${media.mobile`
     display: flex;
     align-items: center;
+    height: auto;
     min-height: 4.8rem;
     padding: 2rem 0 0;
 
@@ -373,7 +422,7 @@ const Copy = styled.div`
   ${media.worksTablet`
     position: static;
     height: auto;
-    padding: 2rem;
+    padding: 2rem 2rem 4rem 2rem;
     overflow: visible;
     border-bottom: 1px solid var(--layout-line);
   `}
@@ -385,10 +434,10 @@ const Copy = styled.div`
 `;
 
 const SectionTitle = styled.h2`
-  margin: 0 0 2rem 0;
+  margin: 0;
   color: ${({ theme }) => theme.text.brand};
   font-size: ${({ theme }) => theme.typography.fontSize.textLg};
-  font-weight: 400;
+  font-weight: 700;
 `;
 
 const Lead = styled.p`
@@ -447,7 +496,7 @@ const TeamSection = styled.section`
   gap: 4rem;
   padding: 4.8rem 4rem;
 
-  ${media.tablet`
+  ${media.worksTablet`
     order: 1;
     grid-template-columns: 1fr;
     padding: 4rem 2rem;
@@ -469,7 +518,7 @@ const TeamCopy = styled.div`
 `;
 
 const TeamName = styled.h3`
-  margin: 0 0 1.4rem 0;
+  margin: 2rem 0 1.4rem 0;
   font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
   font-weight: 400;
 `;
@@ -483,12 +532,14 @@ const TeamParagraph = styled(Paragraph)`
   `}
 `;
 
+// 이름 | 아이콘 열을 목록 전체가 공유(li는 subgrid)
+// → 이름 길이가 달라도(영문) 같은 열의 아이콘이 세로로 정렬됨
 const MemberList = styled.ul`
   white-space: nowrap;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, max-content minmax(0, 1fr));
   align-content: start;
-  gap: 1.6rem 1.6rem;
+  gap: 1.6rem 3.2rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -496,14 +547,14 @@ const MemberList = styled.ul`
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 
   li {
-    display: flex;
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: subgrid;
     align-items: center;
-    gap: 3.2rem;
-    width: 50%;
   }
 
   ${media.mobile`
-    grid-template-columns: 1fr;
+    grid-template-columns: max-content minmax(0, 1fr);
   `}
 `;
 
