@@ -6,6 +6,7 @@ import {
   stampCardSrc,
   stampImageSrc,
 } from "@/constants/stamps";
+import { maruBuri } from "@/styles/fonts";
 import theme from "@/styles/theme";
 
 // 저장용 PNG(투명 배경): 도장이 찍힌 카드 + SSR 계란(폭죽·태그 포함, stamp_export.png) + 수집 라벨
@@ -19,7 +20,8 @@ const CANVAS_HEIGHT = Math.round(1144 * SCALE);
 const LABEL_LINE = theme.line.brand;
 const LABEL_TEXT = theme.primitives.green[700];
 const LABEL_BACKGROUND = "#F1F2F4";
-const FONT_FAMILY = '"MaruBuri", serif';
+// canvas는 CSS 변수를 못 읽으므로 next/font가 만든 실제 family 이름을 사용
+const FONT_FAMILY = maruBuri.style.fontFamily;
 
 // 시안 기준 배치 (center: 중심 좌표, rotate: 기울기 deg)
 const CARD = {

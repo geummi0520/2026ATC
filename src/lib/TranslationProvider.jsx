@@ -9,6 +9,7 @@ import {
 } from "react";
 import en from "@/locales/en";
 import ko from "@/locales/ko";
+import { trackEvent } from "@/utils/analytics";
 
 export const TranslationContext = createContext(null);
 
@@ -57,6 +58,8 @@ export default function TranslationProvider({ children }) {
         : nextLanguage;
 
     if (!SUPPORTED_LANGUAGES.includes(resolvedLanguage)) return;
+    if (resolvedLanguage !== currentLanguage)
+      trackEvent("language_change", { language: resolvedLanguage });
 
     try {
       window.localStorage.setItem(LANGUAGE_STORAGE_KEY, resolvedLanguage);

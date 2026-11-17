@@ -10,6 +10,7 @@ import {
   finishOnboarding,
   startOnboarding,
 } from "@/lib/onboardingStatus";
+import { maruBuri } from "@/styles/fonts";
 import { media } from "@/styles/media";
 
 const onboardingSrc = (file) => `/images/onboarding/${file}`;
@@ -46,6 +47,17 @@ const SHUTTER_START_MS = INTRO_MS + SWAP_MS * SWAP_COUNT + LAST_ITEM_HOLD_MS;
 const SHUTTER_MS = 1200;
 // 메인이 안 뜨는 등 문제가 생겨도 이 시간이 지나면 온보딩을 끝냄
 const FAILSAFE_MS = SHUTTER_START_MS + SHUTTER_MS + 3000;
+// 폰트가 늦게 오더라도 셔터를 이 시간 이상 붙잡지 않음
+const FONT_WAIT_MAX_MS = 1500;
+
+// 메인에서 주로 쓰는 굵기만 기다림(나머지는 swap으로 이어서 적용)
+const loadMainFonts = () => {
+  if (!document.fonts?.load) return Promise.resolve();
+  const family = maruBuri.style.fontFamily;
+  return Promise.all(
+    ["400", "700"].map((weight) => document.fonts.load(`${weight} 1em ${family}`)),
+  ).catch(() => {});
+};
 
 
 const shuffle = (list) => {
@@ -196,8 +208,20 @@ export default function Onboarding() {
       );
     let isCancelled = false;
     let frameId = null;
+    let isFontReady = false;
 
-    // 셔터 올리기 직전에 주소를 메인으로 바꿔 뒤에 메인을 깔고, 메인 클로슈가 뜨면 셔터를 올림.
+    // 소품 애니메이션이 도는 동안 폰트를 받아 두고, 셔터가 올라갈 때 메인 글자가
+    // 대체 폰트로 보였다가 바뀌지 않도록 폰트가 준비된 뒤에 셔터를 올림
+    Promise.race([
+      loadMainFonts(),
+      new Promise((resolve) => {
+        timers.push(window.setTimeout(resolve, SHUTTER_START_MS + FONT_WAIT_MAX_MS));
+      }),
+    ]).then(() => {
+      isFontReady = true;
+    });
+
+    // 셔터 올리기 직전에 주소를 메인으로 바꿔 뒤에 메인을 깔고, 메인 클로슈가 뜨고 폰트가 준비되면 셔터를 올림.
     // 다 올라가면 메인에 끝났다고 알려서 닫혀 있던 메인 클로슈가 열림.
     // (cleanup에서 알리면 개발 모드에서 effect가 두 번 실행될 때 너무 일찍 알려짐)
     const openShutter = () => {
@@ -205,7 +229,7 @@ export default function Onboarding() {
 
       const waitForMain = () => {
         if (isCancelled) return;
-        if (document.querySelector("[data-main-cloche]")) {
+        if (isFontReady && document.querySelector("[data-main-cloche]")) {
           setPhase("shutter");
           timers.push(window.setTimeout(() => !isCancelled && finishOnboarding(), SHUTTER_MS));
           return;

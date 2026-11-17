@@ -10,6 +10,7 @@ import { floorPlanSlides } from "@/data/floorPlanSlides";
 import { works } from "@/data/works";
 import { worksPageContent } from "@/data/worksPageContent";
 import useTranslation from "@/hooks/useTranslation";
+import { trackEvent } from "@/utils/analytics";
 import {
   clearWorksReturn,
   readWorksReturn,
@@ -150,8 +151,11 @@ export default function WorksMap({ initialState = {} }) {
 
     if (!workLink) return;
 
+    const workId = workLink.getAttribute("href").split("/").pop();
+
+    trackEvent("work_click", { work_id: workId, click_source: "map" });
     saveWorksReturn({
-      workId: workLink.getAttribute("href").split("/").pop(),
+      workId,
       href: mapHref,
       scrollTop: scrollRef.current?.scrollTop ?? 0,
       // 다른 층 리스트를 보던 중이면 그 스크롤 위치는 선택한 층과 무관하므로 맨 위로

@@ -13,6 +13,7 @@ import {
   STAMP_STORAGE_KEY,
   STAMP_TOTAL,
 } from "@/constants/stamps";
+import { trackEvent } from "@/utils/analytics";
 import { createStampPlan, isValidStampPlan } from "@/utils/stampPlan";
 
 export const StampContext = createContext(null);
@@ -75,11 +76,18 @@ export default function StampProvider({ children }) {
     const currentPlan = parseStampPlan(getStampSnapshot());
     if (!currentPlan || currentPlan.collected.includes(slot)) return;
 
+    const collected = [...currentPlan.collected, slot];
+
     saveStampPlan({
       ...currentPlan,
-      collected: [...currentPlan.collected, slot],
+      collected,
       ...(workId != null && { worksWorkId: workId }),
     });
+    trackEvent("stamp_collect", {
+      stamp_slot: slot,
+      stamp_count: collected.length,
+    });
+    if (collected.length === STAMP_TOTAL) trackEvent("stamp_complete");
     setModal({ view: "card", stampedSlot: slot });
   }, []);
 
