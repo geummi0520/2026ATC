@@ -44,8 +44,12 @@ export default function FloorPlan({
           href={`/works/${work.id}`}
           style={toPosition(getPosition(work.id))}
           aria-label={`${work.id}. ${translate(work.title)}`}
-          onMouseEnter={() => onActivate?.(work)}
-          onMouseLeave={onDeactivate}
+          onPointerEnter={(event) =>
+            event.pointerType === "mouse" && onActivate?.(work)
+          }
+          onPointerLeave={(event) =>
+            event.pointerType === "mouse" && onDeactivate?.()
+          }
           onFocus={() => onActivate?.(work)}
           onBlur={onDeactivate}
         />
@@ -117,9 +121,15 @@ const BoothLabel = styled.span`
   opacity: 0;
   pointer-events: none;
 
-  ${Booth}:hover > &,
-  ${Booth}:focus-visible > & {
+  /* 터치 기기는 hover가 없으므로 부스를 탭(focus)하면 라벨을 보여주고, 다른 곳을 탭하면 닫힘 */
+  ${Booth}:focus > & {
     opacity: 1;
+  }
+
+  @media (hover: hover) {
+    ${Booth}:hover > & {
+      opacity: 1;
+    }
   }
 `;
 

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import styled from "styled-components";
+import { useEffect, useRef, useState } from "react";
+import styled, { css } from "styled-components";
 import Hamburger from "@/components/common/Hamburger";
 import LanguageToggle from "@/components/common/LanguageToggle";
 import StampButton from "@/components/stamp/StampButton";
@@ -30,11 +31,64 @@ export default function Header() {
   const hasActive = Object.values(active).some(Boolean);
   const isDimmed = (key) => hasActive && !active[key];
 
-  const releaseFocus = (event) => event.currentTarget.blur();
+  const navigationRef = useRef(null);
+  const pointerTypeRef = useRef("mouse");
+  // 터치(호버 없음)에서 탭으로 연 하위 메뉴
+  const [openMenu, setOpenMenu] = useState(null);
+  // 마우스로 클릭해 이동한 메뉴는 커서가 그 위에 있어도 닫아 두고, 커서가 벗어나면 다시 호버로 열림
+  const [closedMenu, setClosedMenu] = useState(null);
+
+  useEffect(() => {
+    if (!openMenu) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (!navigationRef.current?.contains(event.target)) setOpenMenu(null);
+    };
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setOpenMenu(null);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [openMenu]);
+
+  const rememberPointerType = (event) => {
+    pointerTypeRef.current = event.pointerType;
+  };
+
+  // 페이지로 이동하면 하위 메뉴를 닫음
+  const closeAfterNavigate = (menu) => (event) => {
+    event.currentTarget.blur();
+    setOpenMenu(null);
+    setClosedMenu(menu);
+  };
+
+  // 하위 메뉴가 있는 상위 메뉴: 마우스는 클릭 시 이동, 터치는 탭할 때마다 하위 메뉴를 열고 닫음
+  const handleParentClick = (menu) => (event) => {
+    if (pointerTypeRef.current === "mouse") {
+      closeAfterNavigate(menu)(event);
+      return;
+    }
+
+    event.preventDefault();
+    event.currentTarget.blur();
+    setOpenMenu((current) => (current === menu ? null : menu));
+  };
+
+  const getMenuProps = (menu) => ({
+    $open: openMenu === menu,
+    $closed: closedMenu === menu,
+    onMouseLeave: () =>
+      setClosedMenu((current) => (current === menu ? null : current)),
+  });
 
   return (
     <Container>
-      <Navigation $isBrandDark={isBrandDark}>
+      <Navigation ref={navigationRef} $isBrandDark={isBrandDark}>
         <NavItem>
           <NavLink
             href={ROUTES.HOME}
@@ -53,20 +107,27 @@ export default function Header() {
             {t("navigation.about")}
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem
+          {...getMenuProps("works")}
+          onPointerDown={rememberPointerType}
+        >
           <NavLink
             href={ROUTES.WORKS}
             $isBrandDark={isBrandDark}
             $dimmed={isDimmed("works")}
-            onClick={releaseFocus}
+            aria-expanded={openMenu === "works"}
+            onClick={handleParentClick("works")}
           >
             {t("navigation.works")}
           </NavLink>
           <SubNavigation aria-label={t("navigation.works")}>
-            <SubLink href={ROUTES.WORKS} onClick={releaseFocus}>
+            <SubLink href={ROUTES.WORKS} onClick={closeAfterNavigate("works")}>
               {t("navigation.workList")}
             </SubLink>
-            <SubLink href={`${ROUTES.WORKS}?view=map`} onClick={releaseFocus}>
+            <SubLink
+              href={`${ROUTES.WORKS}?view=map`}
+              onClick={closeAfterNavigate("works")}
+            >
               {t("navigation.workMap")}
             </SubLink>
           </SubNavigation>
@@ -80,23 +141,36 @@ export default function Header() {
             {t("navigation.program")}
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem
+          {...getMenuProps("archive")}
+          onPointerDown={rememberPointerType}
+        >
           <NavLink
             href={ROUTES.ARCHIVE.STAFF}
             $isBrandDark={isBrandDark}
             $dimmed={isDimmed("archive")}
-            onClick={releaseFocus}
+            aria-expanded={openMenu === "archive"}
+            onClick={handleParentClick("archive")}
           >
             {t("navigation.archive")}
           </NavLink>
           <SubNavigation aria-label={t("navigation.archive")}>
-            <SubLink href={ROUTES.ARCHIVE.STAFF} onClick={releaseFocus}>
+            <SubLink
+              href={ROUTES.ARCHIVE.STAFF}
+              onClick={closeAfterNavigate("archive")}
+            >
               {t("navigation.staffCredit")}
             </SubLink>
-            <SubLink href={ROUTES.ARCHIVE.ARTISTS} onClick={releaseFocus}>
+            <SubLink
+              href={ROUTES.ARCHIVE.ARTISTS}
+              onClick={closeAfterNavigate("archive")}
+            >
               {t("navigation.artistCredit")}
             </SubLink>
-            <SubLink href={ROUTES.ARCHIVE.ARTBOOK} onClick={releaseFocus}>
+            <SubLink
+              href={ROUTES.ARCHIVE.ARTBOOK}
+              onClick={closeAfterNavigate("archive")}
+            >
               {t("navigation.artbook")}
             </SubLink>
           </SubNavigation>
@@ -212,9 +286,14 @@ const Navigation = styled.nav`
     border-color 160ms ease-in-out;
 
   /* 현재 페이지 메뉴는 그대로 두고, hover/focus 중인 메뉴도 함께 강조 */
-  > div:hover > a,
   > div:focus-within > a {
     color: inherit;
+  }
+
+  @media (hover: hover) {
+    > div:hover > a {
+      color: inherit;
+    }
   }
 
   ${media.tablet`
@@ -222,6 +301,14 @@ const Navigation = styled.nav`
   `}
 `;
 
+const subNavigationOpen = css`
+  max-height: 12rem;
+  margin-top: 0.8rem;
+  opacity: 1;
+  visibility: visible;
+`;
+
+// 하위 메뉴 열림: 터치로 연 상태, 또는 (클릭해 닫아 둔 상태가 아니면) 키보드 포커스·마우스 호버
 const NavItem = styled.div`
   display: flex;
   min-width: 0;
@@ -229,13 +316,27 @@ const NavItem = styled.div`
   flex-direction: column;
   align-items: center;
 
-  &:hover > nav,
-  &:focus-within > nav {
-    max-height: 12rem;
-    margin-top: 0.8rem;
-    opacity: 1;
-    visibility: visible;
-  }
+  ${({ $open }) =>
+    $open &&
+    css`
+      > nav {
+        ${subNavigationOpen}
+      }
+    `}
+
+  ${({ $closed }) =>
+    !$closed &&
+    css`
+      &:focus-within > nav {
+        ${subNavigationOpen}
+      }
+
+      @media (hover: hover) {
+        &:hover > nav {
+          ${subNavigationOpen}
+        }
+      }
+    `}
 `;
 
 const NavLink = styled(Link)`
@@ -272,8 +373,13 @@ const SubLink = styled(Link)`
   line-height: 1.8;
   white-space: nowrap;
 
-  &:hover,
   &:focus-visible {
     text-decoration: underline;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;

@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { preload } from "react-dom";
+import { getImageProps } from "next/image";
 import styled from "styled-components";
 import StampCard from "@/components/stamp/StampCard";
+import { STAMP_CARD_EGGS, stampCardSrc } from "@/constants/stamps";
 import useLockScroll from "@/hooks/useLockScroll";
 import useStamp from "@/hooks/useStamp";
 import useTranslation from "@/hooks/useTranslation";
@@ -10,6 +13,7 @@ import { media } from "@/styles/media";
 
 // 마지막 도장이 찍히는 모션을 보여준 뒤 보상 화면으로 넘어가기까지의 시간
 const REWARD_DELAY_MS = 2000;
+const CARD_SIZES = "(max-width: 767px) 90vw, 80vw";
 
 export default function StampCardModal() {
   const { t } = useTranslation();
@@ -20,6 +24,43 @@ export default function StampCardModal() {
   const stampedSlot = isOpen ? modal.stampedSlot : null;
 
   useLockScroll(isOpen, closeStampModal);
+
+  // 모달이 열린 뒤에야 카드 이미지를 받기 시작하면 모바일에서 늦게 뜨므로,
+  // 페이지가 한가할 때 지금 카드와 다음 도장을 찍었을 때의 카드를 모달과 같은 크기로 미리 받아 둠
+  const count = collected.length;
+
+  useEffect(() => {
+    if (!plan || isComplete) return undefined;
+
+    const preloadCards = () => {
+      [count, count + 1]
+        .filter((cardCount) => cardCount <= STAMP_CARD_EGGS.length)
+        .forEach((cardCount) => {
+          const { props } = getImageProps({
+            src: stampCardSrc(cardCount),
+            alt: "",
+            fill: true,
+            sizes: CARD_SIZES,
+          });
+
+          preload(props.src, {
+            as: "image",
+            imageSrcSet: props.srcSet,
+            imageSizes: props.sizes,
+            fetchPriority: "low",
+          });
+        });
+    };
+
+    // requestIdleCallback이 없는 브라우저(사파리 등)는 짧게 미룬 뒤 실행
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(preloadCards, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+
+    const timer = window.setTimeout(preloadCards, 1500);
+    return () => window.clearTimeout(timer);
+  }, [plan, isComplete, count]);
 
   useEffect(() => {
     if (isOpen) closeButtonRef.current?.focus();
@@ -49,7 +90,7 @@ export default function StampCardModal() {
           plan={plan}
           collected={collected}
           stampedSlot={stampedSlot}
-          sizes="(max-width: 767px) 90vw, 80vw"
+          sizes={CARD_SIZES}
         />
       </CardFrame>
       <Message>{t("stamp.cardMessage")}</Message>
@@ -131,11 +172,6 @@ const CloseButton = styled.button`
   cursor: pointer;
   /* 브라우저 기본 파란 포커스 선 제거 (키보드 포커스는 배경색으로 표시) */
   outline: none;
-
-  &:hover,
-  &:focus-visible {
-    background: rgba(255, 255, 255, 0.1);
-  }
 
   ${media.mobile`
     gap: 0.8rem;

@@ -105,9 +105,15 @@ const CategoryButton = styled.button`
   cursor: pointer;
   transition: color 160ms ease, border-color 160ms ease;
 
-  &:hover,
   &:focus-visible {
     color: ${({ theme }) => theme.text.brand};
     font-weight: 700;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: ${({ theme }) => theme.text.brand};
+      font-weight: 700;
+    }
   }
 `;

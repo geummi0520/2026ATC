@@ -309,11 +309,6 @@ const ActionButton = styled.button`
   /* 브라우저 기본 파란 포커스 선 제거 (키보드 포커스는 배경색으로 표시) */
   outline: none;
 
-  &:hover:not(:disabled),
-  &:focus-visible {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
   &:disabled {
     cursor: progress;
     opacity: 0.6;
