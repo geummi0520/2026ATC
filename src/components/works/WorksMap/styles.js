@@ -60,15 +60,15 @@ export const Header = styled.div`
   flex-direction: column;
 `;
 
-// 모바일: works 카테고리 화면의 이전으로 줄(MobileActionRow)과 같은 위치
-//   (Content 위 padding 2rem + 높이 2.8rem 줄의 세로 가운데, 왼쪽 1rem)
+// 모바일: works 카테고리·상세 화면의 이전으로 줄과 같은 위치
+//   (위 padding 2rem + 높이 2.8rem 줄의 세로 가운데)
 export const BackRow = styled.div`
   display: flex;
 
   ${media.mobile`
     align-items: center;
-    min-height: 2.8rem;
-    padding: 0;
+    min-height: 4.8rem;
+    padding: 2rem 0 0;
 
     > * {
       align-self: center;

@@ -82,6 +82,7 @@ const en = {
     backToMap: "Back",
     schedule: "Exhibition Period",
     category: "Category",
+    viewAll: "View All Works",
     work: "About the Work",
     team: "About the team",
   },
