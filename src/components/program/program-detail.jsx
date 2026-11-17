@@ -6,6 +6,7 @@ import { programs } from "@/data/program";
 
 import { media } from "@/styles/media";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 
@@ -37,6 +38,20 @@ export default function ProgramDetail({ program }) {
         window.scrollTo(0, 0);
     }
 
+
+    // 모바일에서 상세로 들어온 뒤 화면이 데스크탑 너비로 넓어지면 목록으로 돌아감
+    // (데스크탑은 목록에서 토글로 펼쳐 보는 방식이라 상세 페이지를 쓰지 않음)
+    // 기준은 program-item.jsx의 모바일 판정(max-width: 768px)과 같게 맞춤
+    // 처음부터 데스크탑으로 들어온 경우(링크 직접 접속 등)는 그대로 둠
+    const router = useRouter();
+    useEffect(() => {
+        const mql = window.matchMedia("(max-width: 768px)");
+        const onChange = (e) => {
+            if (!e.matches) router.replace("/program");
+        };
+        mql.addEventListener("change", onChange);
+        return () => mql.removeEventListener("change", onChange);
+    }, [router]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(

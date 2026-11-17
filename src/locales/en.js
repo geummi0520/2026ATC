@@ -70,9 +70,11 @@ const en = {
     stationInfo: "Subway Information",
     sponsor: "Collaboration & Sponsorship",
     sponsor1: "Ilsang Cheobang",
-    sponsor2: "Smile Gate",
+    sponsor2: "Smilegate",
     sponsor3: "University Innovation",
     sponsor4: "Sogang Future Lab",
+    map_url: "/images/about/오시는길_en.svg",
+
   },
   works: {
     expandMap: "View Larger",

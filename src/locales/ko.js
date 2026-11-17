@@ -72,6 +72,7 @@ const ko = {
     sponsor2: "스마일게이트",
     sponsor3: "대학혁신지원사업",
     sponsor4: "서강퓨처랩",
+    map_url: "/images/about/오시는길_kr.svg",
   },
   works: {
     expandMap: "크게 보기",
