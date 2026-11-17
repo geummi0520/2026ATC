@@ -146,10 +146,16 @@ export const ExpandButton = styled.button`
   cursor: pointer;
   transition: background-color 160ms ease, color 160ms ease;
 
-  &:hover,
   &:focus-visible {
     background: transparent;
     color: ${({ theme }) => theme.text.brand};
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: transparent;
+      color: ${({ theme }) => theme.text.brand};
+    }
   }
 
   /* 태블릿에서는 크게 보기를 제공하지 않음 (모바일은 MobileFloorPlan의 전체 지도 보기 사용) */
@@ -281,10 +287,16 @@ export const FloorTab = styled.button`
   cursor: pointer;
   transition: background-color 160ms ease, color 160ms ease;
 
-  &:hover,
   &:focus-visible {
     background: ${({ $active, theme }) =>
       $active ? theme.button.brandInvert : theme.surface.brand};
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: ${({ $active, theme }) =>
+        $active ? theme.button.brandInvert : theme.surface.brand};
+    }
   }
 `;
 
@@ -339,9 +351,14 @@ export const CollapseButton = styled.button`
   cursor: pointer;
   transition: background-color 160ms ease;
 
-  &:hover,
   &:focus-visible {
     background: ${({ theme }) => theme.surface.brand};
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: ${({ theme }) => theme.surface.brand};
+    }
   }
 
   img {

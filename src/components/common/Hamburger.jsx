@@ -243,8 +243,10 @@ const MainLink = styled(Link)`
   font-size: ${({ theme }) => theme.typography.fontSize.textLg};
   font-weight: 700;
   line-height: 180%;
-  &:hover {
-    text-decoration: underline;
+  @media (hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
@@ -260,7 +262,9 @@ const SubLink = styled(Link)`
   width: fit-content;
   color: ${({ theme }) => theme.primitives.green[100]};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  &:hover {
-    text-decoration: underline;
+  @media (hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;

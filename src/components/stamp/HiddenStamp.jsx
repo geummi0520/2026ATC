@@ -67,9 +67,14 @@ const Button = styled.button`
   animation: ${appear} 400ms ease-out backwards;
   transition: transform 200ms ease;
 
-  &:hover,
   &:focus-visible {
     transform: translate(-50%, -50%) rotate(var(--stamp-rotate)) scale(1.1);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translate(-50%, -50%) rotate(var(--stamp-rotate)) scale(1.1);
+    }
   }
 `;
 
