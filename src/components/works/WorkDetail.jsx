@@ -12,6 +12,7 @@ import useStamp from "@/hooks/useStamp";
 import useTranslation from "@/hooks/useTranslation";
 import useWorksBackHref from "@/hooks/useWorksBackHref";
 import { media } from "@/styles/media";
+import { trackEvent } from "@/utils/analytics";
 import { rollWorksStamp } from "@/utils/stampPlan";
 
 const CONTACT_ICONS = {
@@ -118,6 +119,12 @@ export default function WorkDetail({ work }) {
                         href={link.url}
                         target="_blank"
                         rel="noreferrer"
+                        onClick={() =>
+                          trackEvent("work_link_click", {
+                            work_id: String(work.id),
+                            link_label: link.label,
+                          })
+                        }
                       >
                         {link.label}
                         <Image

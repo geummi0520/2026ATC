@@ -694,7 +694,7 @@ const Staffspan = styled.span`
 color: ${({ theme }) => theme.text.brandInvert};
 
 /* text/text-medium */
-font-family: MaruBuri;
+font-family: var(--font-maruburi);
 font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;

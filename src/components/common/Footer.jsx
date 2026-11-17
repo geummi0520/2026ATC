@@ -23,7 +23,9 @@ export default function Footer() {
       <Brand>
         <LogoLink href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
           <FooterLogo
-            src={isBrandDark ? "/logo/footer_white.svg" : "/logo/footer_logo.svg"}
+            src={
+              isBrandDark ? "/logo/footer_white.svg" : "/logo/footer_logo.svg"
+            }
             alt="ATC 인스타그램"
             width={28}
             height={77}
@@ -86,7 +88,6 @@ const Container = styled.footer`
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 2rem;
     padding: 2rem;
-    font-size: 1rem;
     font-style: normal;
     border-top: none;
   `}
@@ -235,7 +236,7 @@ const PartnerLogo = styled(Image)`
   height: 5.5rem;
 
   ${media.tablet`
-    width: 7rem;
-    height: 3.5rem;
+    width: 8rem;
+    height: 4rem;
   `}
 `;

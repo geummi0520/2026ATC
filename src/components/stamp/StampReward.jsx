@@ -9,6 +9,7 @@ import useStamp from "@/hooks/useStamp";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
 import { createRewardImage } from "@/utils/createRewardImage";
+import { trackEvent } from "@/utils/analytics";
 
 const REWARD_FILE_NAME = "2026-atc-stamp-card.png";
 
@@ -75,6 +76,7 @@ export default function StampReward() {
       link.download = REWARD_FILE_NAME;
       link.click();
       URL.revokeObjectURL(url);
+      trackEvent("reward_download");
     });
 
   // 이미지 공유 → 링크 공유 → 링크 복사 순으로 브라우저가 지원하는 방식을 사용
@@ -90,13 +92,16 @@ export default function StampReward() {
         const file = await createImageFile();
         // 이미지만 넘겨야 인스타그램 등 이미지 앱이 공유 대상에 확실히 뜸 (문구·링크가 섞이면 빠지는 경우가 있음)
         const fileShareData = { files: [file] };
-        await navigator.share(
-          navigator.canShare?.(fileShareData) ? fileShareData : shareData
-        );
+        const canShareFile = navigator.canShare?.(fileShareData);
+        await navigator.share(canShareFile ? fileShareData : shareData);
+        trackEvent("reward_share", {
+          share_method: canShareFile ? "image" : "link",
+        });
         return;
       }
 
       await navigator.clipboard.writeText(shareData.url);
+      trackEvent("reward_share", { share_method: "copy_link" });
       setStatus(t("stamp.linkCopied"));
     });
 
