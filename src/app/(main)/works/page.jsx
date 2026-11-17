@@ -16,10 +16,11 @@ import { works } from "@/data/works";
 import { worksPageContent } from "@/data/worksPageContent";
 import { ROUTES } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
+import { trackEvent } from "@/utils/analytics";
 import { saveWorksReturn } from "@/utils/worksReturn";
 
 export default function Page({ searchParams }) {
-  const { view, floor, section, expanded } = use(searchParams);
+  const { view, floor, section, expanded, loop } = use(searchParams);
   const { translate } = useTranslation();
   const categoryParam = useSearchParams().get("category");
   const [categoryListNode, setCategoryListNode] = useState(null);
@@ -53,6 +54,7 @@ export default function Page({ searchParams }) {
 
   const setSelectedCategory = (category) => {
     window.history.replaceState(null, "", getListHref(category));
+    if (category) trackEvent("category_select", { category });
   };
 
   const saveReturnState = (event) => {
@@ -60,8 +62,14 @@ export default function Page({ searchParams }) {
 
     if (!workLink) return;
 
+    const workId = workLink.getAttribute("href").split("/").pop();
+
+    trackEvent("work_click", {
+      work_id: workId,
+      click_source: selectedCategory ? "category" : "gallery",
+    });
     saveWorksReturn({
-      workId: workLink.getAttribute("href").split("/").pop(),
+      workId,
       href: getListHref(selectedCategory),
     });
   };
@@ -76,7 +84,13 @@ export default function Page({ searchParams }) {
   if (view === "map")
     return (
       <WorksMap
-        initialState={{ floor, section, expanded, category: selectedCategory }}
+        initialState={{
+          floor,
+          section,
+          expanded,
+          loop,
+          category: selectedCategory,
+        }}
       />
     );
 

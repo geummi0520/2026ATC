@@ -4,6 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { ROUTES } from "@/constants/routes";
 import { media } from "@/styles/media";
+import { trackEvent } from "@/utils/analytics";
 import Image from "next/image";
 
 export default function FloorPlanButton({ label, category, hideOnMobile }) {
@@ -12,7 +13,16 @@ export default function FloorPlanButton({ label, category, hideOnMobile }) {
   if (category) params.set("category", category);
 
   return (
-    <Button href={`${ROUTES.WORKS}?${params}`} $hideOnMobile={hideOnMobile}>
+    <Button
+      href={`${ROUTES.WORKS}?${params}`}
+      $hideOnMobile={hideOnMobile}
+      onClick={() =>
+        trackEvent("works_view_change", {
+          view_mode: "map",
+          category: category ?? "all",
+        })
+      }
+    >
       <p>{label}</p>
       <Image
         src={"/icons/arrow_up_right.svg"}

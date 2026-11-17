@@ -1,3 +1,5 @@
+import { trackEvent } from "@/utils/analytics";
+
 // 온보딩이 재생 중인지 레이아웃·메인이 알 수 있게 하는 아주 작은 공용 상태.
 // - 레이아웃: 재생 중이면 주소가 메인(/)으로 바뀐 뒤에도 온보딩을 계속 띄워서 사라지는 모션이 끊기지 않게 함
 // - 메인: 재생 중이면 클로슈를 닫힌 채로 기다렸다가, 끝나면 열림
@@ -24,6 +26,7 @@ export const startOnboarding = () => {
 export const finishOnboarding = () => {
   if (!isPlaying) return;
   isPlaying = false;
+  trackEvent("onboarding_complete");
   notify();
 };
 

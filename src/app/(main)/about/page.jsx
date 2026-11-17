@@ -208,7 +208,7 @@ export default function AboutPage() {
             />
           </SponsorItem>
           <SponsorItem $right>
-            <StyledLink href="https://www.instagram.com/lyx.kr?cplk=MXhwc2JvbzlhYndhaw==" $left>
+            <StyledLink href="https://www.instagram.com/lyx.kr" $left>
               {t("about.sponsor1")}
               <Image
                 src="/icons/about/arrow-up-right.svg"
@@ -694,7 +694,7 @@ const Staffspan = styled.span`
 color: ${({ theme }) => theme.text.brandInvert};
 
 /* text/text-medium */
-font-family: MaruBuri;
+font-family: var(--font-maruburi);
 font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: 400;

@@ -31,7 +31,7 @@ const en = {
     collect: "Pick up the hidden stamp",
     card: "Stamp card",
     cardMessage:
-      "Collect every stamp and something good might happen..........",
+      "Collect every stamp and\nsomething good might happen..........",
     close: "Close",
     rewardMessage: "Wow! You got an ultra-rare SSR egg.",
     rewardImage: "Ultra-rare egg dish",
@@ -79,6 +79,9 @@ const en = {
     nextSection: "Next Section",
     backToMap: "Back",
     schedule: "Exhibition Period",
+    category: "Category",
+    work: "About the Work",
+    team: "About the team",
   },
   program: {
     location: "Location",
@@ -88,7 +91,7 @@ const en = {
     next: "next",
   },
   staff: {
-    title: "Staff Credit"
+    title: "Staff Credit",
   },
 };
 
