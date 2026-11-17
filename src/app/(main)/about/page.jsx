@@ -22,7 +22,7 @@ export default function AboutPage() {
         <PosterWrapper>
           <PosterText >
             <PosterTextSpan $left>
-              {`< 레시피 바꾸지 말것 *>
+              {`< ${t("about.topicSentence")}>
               2026 Art & Technology Conference`}
             </PosterTextSpan>
           </PosterText>
@@ -34,8 +34,7 @@ export default function AboutPage() {
           />
           <PosterText >
             <PosterTextSpan $right>
-              {`11.26(목)  15:30 — 21:00
-              11.27(금) - 11.29(일)     10:00 — 21:00`}
+              {t("about.dateTime")}
             </PosterTextSpan>
           </PosterText>
 
@@ -65,7 +64,7 @@ export default function AboutPage() {
         <Topic>{t("about.topicSentence")}</Topic>
         {/* 한 요소로 묶어야 부모(flex column)의 별도 줄로 갈라지지 않고 본문 끝에 이어붙음 */}
         <div>
-          {translate(topic_text)} <em>&quot;{translate(topic_emphasis)}&quot;</em>
+          {translate(topic_text)} <em>{translate(topic_emphasis)}</em>
         </div>
       </AboutContent>
 
@@ -187,10 +186,46 @@ export default function AboutPage() {
           />
           <InfoBox>
             <StationInfo>
+
               {t("about.stationInfo")}
             </StationInfo>
             <StationInfoText>
-              {translate(station_info)}
+              <StationLine>
+                <Image
+                  src="/icons/about/6호선.svg"
+                  alt="Lin6-image"
+                  width={16}
+                  height={16}
+                />
+                {translate(station_info[0])}
+              </StationLine>
+              <StationLine>
+                <Image
+                  src="/icons/about/경의중앙선.svg"
+                  alt="GyeongEuiJungAngLing-image"
+                  width={16}
+                  height={16}
+                />
+                {translate(station_info[1])}
+              </StationLine>
+              <StationLine>
+                <Image
+                  src="/icons/about/2호선.svg"
+                  alt="Lin6-image"
+                  width={16}
+                  height={16}
+                />
+                {translate(station_info[2])}
+              </StationLine>
+              <StationLine>
+                <Image
+                  src="/icons/about/2호선.svg"
+                  alt="Lin6-image"
+                  width={16}
+                  height={16}
+                />
+                {translate(station_info[3])}
+              </StationLine>
             </StationInfoText>
           </InfoBox>
         </MapBox>
@@ -588,6 +623,12 @@ ${media.mobile`
   gap:1.2rem;
 `}
 
+
+`;
+const StationLine = styled.div`
+display:flex;
+gap:0.5rem;
+align-items:center;
 
 `;
 const StationInfoText = styled.div`

@@ -60,6 +60,8 @@ const en = {
     overview: "Exhibition Overview",
     topic: "Theme",
     topicSentence: "Do Not Change the Recipe *",
+    dateTime: `11.26(Thu)  15:30 — 21:00
+              11.27(Fri) - 11.29(Sun)     10:00 — 21:00`,
     congratulatory: "Congratulatory Message",
     staffCredit: "Staff Credit",
     linkToStaffCredit: "View Staff Credits",

@@ -59,6 +59,8 @@ const ko = {
     overview: "전시 개요",
     topic: "주제문",
     topicSentence: "레시피 바꾸지 말 것 *",
+    dateTime: `11.26(목)  15:30 — 21:00
+              11.27(금) - 11.29(일)     10:00 — 21:00`,
     congratulatory: "축사",
     staffCredit: "스태프 크레딧",
     linkToStaffCredit: "스태프 크레딧 바로가기",
