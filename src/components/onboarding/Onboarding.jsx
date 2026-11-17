@@ -23,11 +23,11 @@ const ITEM_FILES = [
   "영수증.webp",
   "카드.png",
   "캔.webp",
-  "포스터.webp",
+  "최종포스터.webp",
 ];
 
 
-const LAST_ITEM_FILE = "포스터.webp";
+const LAST_ITEM_FILE = "최종포스터.webp";
 
 
 const ITEM_SCALE = {
