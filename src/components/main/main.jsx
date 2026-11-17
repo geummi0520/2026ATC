@@ -386,7 +386,11 @@ export default function Main() {
         </ReorderButton>
         <DetailButton
           type="button"
-          onClick={() => setIsDetailOpen((open) => !open)}
+          onClick={() => {
+            if (!isDetailOpen)
+              trackEvent("main_detail_open", { food_name: food.name.ko });
+            setIsDetailOpen((open) => !open);
+          }}
           disabled={!isReady}
           aria-expanded={isDetailOpen}
         >
