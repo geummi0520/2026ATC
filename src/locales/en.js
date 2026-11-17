@@ -71,7 +71,7 @@ const en = {
     sponsor: "Collaboration & Sponsorship",
     sponsor1: "Ilsang Cheobang",
     sponsor2: "Smile Gate",
-    sponsor3: "University Innovation Supporting Business",
+    sponsor3: "University Innovation",
     sponsor4: "Sogang Future Lab",
   },
   works: {

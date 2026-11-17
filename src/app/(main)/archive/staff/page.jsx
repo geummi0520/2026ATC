@@ -87,19 +87,6 @@ export default function StaffPage() {
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
 
-  // 슬라이드 영역 높이 = 지금 보고 있는 팀 슬라이드 높이
-  // (크디는 라벨 + 세로로 긴 사진이라 더 높음 → 크디일 때만 네비게이터가 아래로 내려감)
-  const slideRefs = useRef([]);
-  const [viewportHeight, setViewportHeight] = useState();
-  useEffect(() => {
-    const el = slideRefs.current[selectedTeam];
-    if (!el) return;
-    // 이미지 로딩·화면 회전 등으로 높이가 바뀌어도 따라가게 ResizeObserver 사용
-    const observer = new ResizeObserver(() => setViewportHeight(el.offsetHeight || undefined));
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [selectedTeam]);
-
   const onTouchStart = (e) => {
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     touch.current = {
@@ -146,7 +133,7 @@ export default function StaffPage() {
 
       <StaffHeader>
         <PageName>{t("staff.title")}</PageName>
-        <SlideViewport ref={viewportRef} style={{ height: viewportHeight }}>
+        <SlideViewport ref={viewportRef}>
           <SlideTrack
             style={{
               transform: `translateX(calc(${-selectedTeam * 100}% + ${dragX}px))`,
@@ -160,7 +147,7 @@ export default function StaffPage() {
               // 슬라이드 하나 = Slide 하나 (key는 map이 반환하는 가장 바깥 요소에)
               // 라벨을 SlideTrack에 바로 넣으면 별도 flex 아이템이 돼서 슬라이드 위치가 어긋남
               return (
-                <Slide key={fileName} ref={(el) => (slideRefs.current[idx] = el)}>
+                <Slide key={fileName}>
                   {team === staffs.director && <Label>
                     <NameKo>곽민서</NameKo>
                     <NameEn>Kwak, Minseo</NameEn>
@@ -312,13 +299,12 @@ ${media.mobile`
   display:block;
   width:100%;
   overflow:hidden;
-  transition: height 0.15s ease; /* 팀 바뀔 때 높이도 슬라이드와 같은 속도로 변함 */
   `}
 `;
 const SlideTrack = styled.div`
 display:flex;
-/* 슬라이드마다 자기 높이 유지 (가장 높은 크디 높이로 다 늘어나지 않게) */
-align-items:flex-start;
+/* 모든 슬라이드를 가장 높은 슬라이드(크디) 높이로 맞춤 → 팀이 바뀌어도 영역 높이 고정 */
+align-items:stretch;
 width:100%;
 will-change: transform;
 `;
@@ -356,10 +342,10 @@ user-select:none;
 -webkit-user-drag:none;
 
 /* 크디: 원본 비율(3227x2558) 그대로 가로 꽉 채워 크게 보여줌
-   → 슬라이드가 더 높아지고, SlideViewport 높이가 따라 늘어 네비게이터가 아래로 내려감 */
+   → 크디 슬라이드가 가장 높고, 나머지 팀 슬라이드도 이 높이에 맞춰짐(위쪽 여백) */
 ${({ $withLabel }) => $withLabel && `
   aspect-ratio: 3227 / 2558;
-  width: 80%; /* 크기 0.8배 (Slide가 align-items:center라 가운데 정렬, 높이는 비율 따라 같이 줄어듦) */
+  width: 64%; /* 크기 0.64배 (0.8배를 한 번 더 0.8배,Slide가 align-items:center라 가운데 정렬, 높이는 비율 따라 같이 줄어듦) */
 `}
 `;
 const PageContainer = styled.div`
@@ -429,6 +415,8 @@ const Slide = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* 크디보다 낮은 팀 사진은 아래쪽에 붙이고 남는 높이는 위쪽 여백으로 */
+  justify-content: flex-end;
 `;
 const Label = styled.div`
   white-space: nowrap;

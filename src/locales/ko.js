@@ -70,7 +70,7 @@ const ko = {
     sponsor: "협력 및 후원",
     sponsor1: "일상처방",
     sponsor2: "스마일게이트",
-    sponsor3: "대학혁신 지원사업",
+    sponsor3: "대학혁신지원사업",
     sponsor4: "서강퓨처랩",
   },
   works: {
