@@ -36,6 +36,7 @@ import {
   MAIN_STAMP_SLOTS,
 } from "@/constants/stamps";
 import useStamp from "@/hooks/useStamp";
+import { trackEvent } from "@/utils/analytics";
 import { rollWithPity } from "@/utils/stampPlan";
 
 
@@ -157,6 +158,8 @@ export default function Main() {
 
 
   const [foodIndex, setFoodIndex] = useState(0);
+  // 이 화면에서 재주문을 몇 번째 눌렀는지 (GA로 보내는 용도라 렌더링과 무관해서 ref로 셈)
+  const reorderCountRef = useRef(0);
   const [commentIndex, setCommentIndex] = useState(0);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const readyImagesRef = useRef(new Set());
@@ -303,6 +306,9 @@ export default function Main() {
   const handleReorder = () => {
     if (isAnimating || !isReady) return;
     unlockDing();
+
+    reorderCountRef.current += 1;
+    trackEvent("main_reorder", { reorder_count: reorderCountRef.current });
 
     // 뚜껑이 닫혔다가, 완전히 덮인 순간 새 요리·코멘트로 바꾸고, 다시 완전히 열리면 "땡!"
     playClocheAnimation({

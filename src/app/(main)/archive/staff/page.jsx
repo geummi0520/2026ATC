@@ -360,7 +360,7 @@ ${media.mobile`
 color: ${({ theme }) => theme.text.primary};
 
 /* text/text-large-bold */
-font-family: MaruBuri;
+font-family: var(--font-maruburi);
 font-size: ${({ theme }) => theme.typography.fontSize.headingSm};
 font-style: normal;
 font-weight: 700;

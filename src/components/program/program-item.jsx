@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import { media } from "@/styles/media";
 import useTranslation from "@/hooks/useTranslation";
+import { trackEvent } from "@/utils/analytics";
 
 // 첫 화면에 보이는 아이템 수(이미지 높이 36.7rem 기준 약 2~3개)
 const EAGER_COUNT = 3;
@@ -16,6 +17,9 @@ export default function ProgramItem({ title, imgUrl, dates, site, description, i
 
     const handleClick = (e) => {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+        // PC는 펼칠 때만, 모바일은 상세로 이동할 때 기록
+        if (isMobile || !isOpen) trackEvent("program_open", { program_id: String(id) });
 
         if (!isMobile) {
             e.preventDefault();
@@ -319,7 +323,7 @@ display: contents;
 const StyledSpan = styled.span`
 // color: ${({ theme }) => theme.text.primary};
 
-font-family: MaruBuri;
+font-family: var(--font-maruburi);
 font-size: ${({ theme }) => theme.typography.fontSize.textMd};
 font-style: normal;
 font-weight: ${({ $bold }) => $bold ? "600" : "400"};
