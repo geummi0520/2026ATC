@@ -27,7 +27,9 @@ export default function AboutContent({ children, title, showLeftImage }) {
           {title}
 
         </ContentTitle>
+        {/* <Content> */}
         {children}
+        {/* </Content> */}
       </RightContainer>
     </ContentContainer>
   );
@@ -87,8 +89,7 @@ ${media.tablet`
   padding:${({ $compact }) => $compact ? "4rem 2rem" : "8rem 2rem"};
 `};
 ${media.mobile`
-  padding:0;
-// padding:0 0.2rem;
+  padding:0 0.2rem;
 `};
 
 
@@ -131,6 +132,11 @@ flex-direction:column;
 
 }
 `;
+// const Content = styled.div`
+// ${media.mobile`
+//   padding:0rem 0.1rem;
+//   `}
+// `;
 const StyledLink = styled(Link)`
 margin-bottom:${({ $left }) => $left ? "0rem" : "1rem"};;
 align-self:${({ $left }) => $left ? " flex-start" : "flex-end"};

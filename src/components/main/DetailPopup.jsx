@@ -10,9 +10,9 @@ import { foodSrc } from "@/components/main/ClocheStage";
 
 
 const POPUP_FOOD_ZOOM = 2.2;
-// 팝업 박스는 최대 34rem(=340px)이라 이미지 영역은 310px을 넘지 않음.
-// 데스크탑에선 팝업이 안 뜨므로 1px로 둬서 미리 받기(preload)할 때 큰 이미지를 받지 않게 함
-const POPUP_FOOD_SIZES = "(max-width: 1123px) min(80vw, 310px), 1px";
+// 팝업 박스는 최대 34rem(=340px)이라 이미지 영역은 310px을 넘지 않음 (좁은 화면에선 약 80vw)
+// iOS Safari는 sizes 안의 min()을 못 읽어 마지막 값으로 떨어지므로, min() 없이 미디어쿼리로만 적음
+const POPUP_FOOD_SIZES = "(max-width: 387px) 80vw, 310px";
 
 const PopupFoodImage = ({ food }) => (
   <Image
