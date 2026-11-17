@@ -17,8 +17,10 @@ export default function WorkListItem({
     <CategoryWorkItem
       ref={itemRef}
       $active={active}
-      onMouseEnter={onActivate}
-      onMouseLeave={onDeactivate}
+      onPointerEnter={(event) => event.pointerType === "mouse" && onActivate()}
+      onPointerLeave={(event) =>
+        event.pointerType === "mouse" && onDeactivate()
+      }
       onFocus={onActivate}
       onBlur={onDeactivate}
     >
@@ -54,13 +56,15 @@ const CategoryWorkItem = styled.li`
     padding: 1.6rem 2.4rem;
   }
 
-  &:hover {
-    border-bottom-color: ${({ theme }) => theme.line.brand};
-    background: ${({ theme }) => theme.surface.brand};
-    h3,
-    h4,
-    span {
-      color: ${({ theme }) => theme.text.brandDark};
+  @media (hover: hover) {
+    &:hover {
+      border-bottom-color: ${({ theme }) => theme.line.brand};
+      background: ${({ theme }) => theme.surface.brand};
+      h3,
+      h4,
+      span {
+        color: ${({ theme }) => theme.text.brandDark};
+      }
     }
   }
 

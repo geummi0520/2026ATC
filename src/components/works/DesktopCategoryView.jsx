@@ -51,8 +51,12 @@ export default function DesktopCategoryView({
             key={work.id}
             href={`/works/${work.id}`}
             $dimmed={activeWorkId !== null && activeWorkId !== work.id}
-            onMouseEnter={() => revealWorkItem(work.id)}
-            onMouseLeave={() => setActiveWorkId(null)}
+            onPointerEnter={(event) =>
+              event.pointerType === "mouse" && revealWorkItem(work.id)
+            }
+            onPointerLeave={(event) =>
+              event.pointerType === "mouse" && setActiveWorkId(null)
+            }
             onFocus={() => revealWorkItem(work.id)}
             onBlur={() => setActiveWorkId(null)}
           >
