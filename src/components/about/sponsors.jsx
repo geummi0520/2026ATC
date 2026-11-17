@@ -155,7 +155,9 @@ font-style: normal;
 font-weight: 700;
 line-height: ${({ $left }) => $left ? "180%" : "120%"};
 
-
+@media (max-width:330px) {
+font-size: 1.2rem;
+}
 `;
 const SponsorItem = styled.div`
 display: flex;

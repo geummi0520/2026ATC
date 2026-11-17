@@ -232,7 +232,7 @@ ${media.mobile`
   `}
 @media (max-width:550px) {
 flex-direction: column;
-gap:0.8rem;
+gap:2rem;
 }
 `;
 
@@ -313,7 +313,8 @@ ${media.tablet`
     `};
 
 @media (max-width:550px) {
- row-gap:1rem;
+ row-gap:0.8rem;
+ column-gap:0.8rem;
 }
 
 
