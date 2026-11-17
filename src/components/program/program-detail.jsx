@@ -239,7 +239,7 @@ const BottomNav = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 0.8rem 0 2.8rem 0;
+  padding: 0.8rem 0 calc(2.8rem + env(safe-area-inset-bottom));
 
   animation: ${slideUp} 0.15s ease-out;
 
