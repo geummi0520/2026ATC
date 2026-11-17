@@ -63,12 +63,10 @@ export default function StaffPage() {
   const isLast = selectedTeam >= teams.length - 1;
 
 
-  // 단체사진 파일명: 팀 한글 이름(teamName.ko). 크리에이티브 디렉터만 "크디"로 찾음
-  // 팀 이름 문자열이 바뀌어도 깨지지 않게 이름 대신 데이터 객체(staffs.director)로 비교
-  // (selectedTeam은 숫자 인덱스라 경로에 직접 쓰면 안 됨 / 언어와 상관없이 파일명은 한글이라 translate 대신 .ko)
-  const groupPhotoName =
-    currentTeam === staffs.director ? "크디" : currentTeam.teamName.ko;
-  const groupPhotoNameEn = currentTeam.teamName.en;
+  // 모바일 팀 이름 표시: 크디도 원래 이름("크리에이티브 디렉터") 그대로 보여줌
+  // (단체사진 파일명은 아래 SlideTrack에서 크디만 "크디"로 따로 찾음)
+  const teamNameKo = currentTeam.teamName.ko;
+  const teamNameEn = currentTeam.teamName.en;
 
   const PrevTeam = () => {
     if (!isFirst) setSelectedTeam(selectedTeam - 1);
@@ -88,6 +86,19 @@ export default function StaffPage() {
   const viewportRef = useRef(null);
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
+
+  // 슬라이드 영역 높이 = 지금 보고 있는 팀 슬라이드 높이
+  // (크디는 라벨 + 세로로 긴 사진이라 더 높음 → 크디일 때만 네비게이터가 아래로 내려감)
+  const slideRefs = useRef([]);
+  const [viewportHeight, setViewportHeight] = useState();
+  useEffect(() => {
+    const el = slideRefs.current[selectedTeam];
+    if (!el) return;
+    // 이미지 로딩·화면 회전 등으로 높이가 바뀌어도 따라가게 ResizeObserver 사용
+    const observer = new ResizeObserver(() => setViewportHeight(el.offsetHeight || undefined));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [selectedTeam]);
 
   const onTouchStart = (e) => {
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
@@ -135,26 +146,36 @@ export default function StaffPage() {
 
       <StaffHeader>
         <PageName>{t("staff.title")}</PageName>
-        <SlideViewport ref={viewportRef}>
+        <SlideViewport ref={viewportRef} style={{ height: viewportHeight }}>
           <SlideTrack
             style={{
               transform: `translateX(calc(${-selectedTeam * 100}% + ${dragX}px))`,
               transition: dragging ? "none" : "transform 0.3s ease",
             }}
           >
+
             {teams.map((team, idx) => {
-              const name = team === staffs.director ? "크디" : team.teamName.ko;
+              // 사진 파일은 크디만 "크디"로 찾음. alt에는 원래 팀 이름 사용
+              const fileName = team === staffs.director ? "크디" : team.teamName.ko;
+              // 슬라이드 하나 = Slide 하나 (key는 map이 반환하는 가장 바깥 요소에)
+              // 라벨을 SlideTrack에 바로 넣으면 별도 flex 아이템이 돼서 슬라이드 위치가 어긋남
               return (
-                <TeamImg
-                  key={name}
-                  src={`/images/staff/스태크_단체사진/${name}.webp`}
-                  alt={`${name} 단체사진`}
-                  width={2890}
-                  height={1734}
-                  // 지금 팀과 양옆 팀만 바로 받고 나머지는 지연 로딩
-                  loading={Math.abs(idx - selectedTeam) <= 1 ? "eager" : "lazy"}
-                  draggable={false}
-                />
+                <Slide key={fileName} ref={(el) => (slideRefs.current[idx] = el)}>
+                  {team === staffs.director && <Label>
+                    <NameKo>곽민서</NameKo>
+                    <NameEn>Kwak, Minseo</NameEn>
+                  </Label>}
+                  <TeamImg
+                    $withLabel={team === staffs.director}
+                    src={`/images/staff/스태크_단체사진/${fileName}.webp`}
+                    alt={`${team.teamName.ko} 단체사진`}
+                    width={team === staffs.director ? 3227 : 2890}
+                    height={team === staffs.director ? 2558 : 1734}
+                    // 지금 팀과 양옆 팀만 바로 받고 나머지는 지연 로딩
+                    loading={Math.abs(idx - selectedTeam) <= 1 ? "eager" : "lazy"}
+                    draggable={false}
+                  />
+                </Slide>
               );
             })}
           </SlideTrack>
@@ -175,8 +196,8 @@ export default function StaffPage() {
             />
           </NavButton>
           <TeamName>
-            <TeamNameLine>{groupPhotoName}</TeamNameLine>
-            <TeamNameLine>{groupPhotoNameEn}</TeamNameLine>
+            <TeamNameLine>{teamNameKo}</TeamNameLine>
+            <TeamNameLine>{teamNameEn}</TeamNameLine>
           </TeamName>
           <NavButton onClick={NextTeam} $hidden={isLast} disabled={isLast} aria-hidden={isLast}>
             <Image
@@ -208,6 +229,28 @@ export default function StaffPage() {
     </PageContainer>
   );
 }
+const NameKo = styled.span`
+color: ${({ theme }) => theme.text.secondary};
+
+font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+font-style: normal;
+font-weight: 700;
+line-height: 180%; /* 25.2px */
+`;
+const NameEn = styled.span`
+color: ${({ theme }) => theme.text.secondary};
+
+font-size: 1.2rem;
+font-style: normal;
+font-weight: 400;
+line-height: 180%; /* 21.6px */
+
+${media.mobile`
+  font-size: ${({ theme }) => theme.typography.fontSize.textMd};
+
+  
+  `}
+`;
 const TeamNameLine = styled.span`
 text-align:center;
 `;
@@ -269,10 +312,13 @@ ${media.mobile`
   display:block;
   width:100%;
   overflow:hidden;
+  transition: height 0.15s ease; /* 팀 바뀔 때 높이도 슬라이드와 같은 속도로 변함 */
   `}
 `;
 const SlideTrack = styled.div`
 display:flex;
+/* 슬라이드마다 자기 높이 유지 (가장 높은 크디 높이로 다 늘어나지 않게) */
+align-items:flex-start;
 width:100%;
 will-change: transform;
 `;
@@ -299,15 +345,22 @@ cursor:pointer;
 /* 모든 팀 단체사진을 같은 비율(2890:1734) 박스로 렌더 → 높이 동일
    크디(3227x2558)처럼 세로가 긴 사진은 잘리지 않게 박스 높이에 맞춰 줄이고 가운데 정렬(contain) */
 const TeamImg = styled(Image)`
-flex: 0 0 100%;
+/* 세로 flex(Slide) 안이라 flex-basis를 주면 높이로 해석됨 → none으로 비율대로 높이 결정 */
+flex: none;
 width:100%;
-min-width:100%;
 height:auto;
 aspect-ratio: 2890 / 1734;
 object-fit: contain;
 object-position: center;
 user-select:none;
 -webkit-user-drag:none;
+
+/* 크디: 원본 비율(3227x2558) 그대로 가로 꽉 채워 크게 보여줌
+   → 슬라이드가 더 높아지고, SlideViewport 높이가 따라 늘어 네비게이터가 아래로 내려감 */
+${({ $withLabel }) => $withLabel && `
+  aspect-ratio: 3227 / 2558;
+  width: 80%; /* 크기 0.8배 (Slide가 align-items:center라 가운데 정렬, 높이는 비율 따라 같이 줄어듦) */
+`}
 `;
 const PageContainer = styled.div`
 display: flex;
@@ -357,6 +410,7 @@ font-weight: 700;
 line-height: normal;
 
 ${media.mobile`
+padding:2rem 0rem;
 color: ${({ theme }) => theme.text.primary};
 
 /* text/text-large-bold */
@@ -367,6 +421,23 @@ font-weight: 700;
 line-height: 180%; /* 32.4px */
   
   `};
+`;
+/* 슬라이드 한 칸: 트랙 폭 100%를 차지. 안에 (크디만) 라벨 + 단체사진 */
+const Slide = styled.div`
+  flex: 0 0 100%;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const Label = styled.div`
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: center;
+
+
 `;
 
 
