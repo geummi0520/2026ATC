@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 
@@ -22,6 +22,14 @@ import useStamp from "@/hooks/useStamp";
 
 import { media } from "@/styles/media";
 
+// 스크롤 인디케이터를 CSS 스크롤 연동 애니메이션으로 움직일 수 있는 브라우저인지
+// (works는 스크롤 영역이 레일의 조상이 아니라 이름 붙은 타임라인을 timeline-scope로 끌어올려 씀)
+const SCROLL_TIMELINE_QUERY =
+  "(animation-timeline: scroll()) and (timeline-scope: --works-scroll)";
+
+const supportsScrollTimeline = () =>
+  typeof CSS !== "undefined" && CSS.supports?.(SCROLL_TIMELINE_QUERY);
+
 const Layout = styled.div`
   --layout-background: ${({ $isBrandDark, theme }) =>
     $isBrandDark ? theme.background.brandDark : theme.background.primary};
@@ -38,6 +46,14 @@ const Layout = styled.div`
   color: var(--layout-text);
   background-color: var(--layout-background);
   transition: color 300ms ease, background-color 300ms ease;
+
+  @supports ${SCROLL_TIMELINE_QUERY} {
+    timeline-scope: --works-scroll;
+
+    [data-works-scroll] {
+      scroll-timeline: --works-scroll block;
+    }
+  }
 `;
 
 export default function MainLayout({ children, isComingSoon = false }) {
@@ -54,7 +70,7 @@ export default function MainLayout({ children, isComingSoon = false }) {
     () => false
   );
   const showOnboarding = isOnboardingPage || isOnboardingPlayingNow;
-  const rightRailRef = useRef(null);
+  const indicatorRef = useRef(null);
   const { plan } = useStamp();
   // MAIN·WORKS 도장은 각 페이지 컴포넌트에서 따로 띄움
   const pageStampSlot =
@@ -65,55 +81,117 @@ export default function MainLayout({ children, isComingSoon = false }) {
     (pathname === plan?.archivePath ? STAMP_SLOTS.ARCHIVE : null);
 
   useEffect(() => {
+    // 지원 브라우저는 CSS(ScrollIndicator)가 스크롤과 같은 프레임에 직접 움직임.
+    // JS는 이동 거리(칸 높이 - * 높이)만 크기가 바뀔 때 px로 재서 넘김
+    // (퍼센트·em 계산을 애니메이션에 넣으면 iOS에서 칸 끝을 지나쳐 내려가는 문제가 있음)
+    if (supportsScrollTimeline()) {
+      const indicator = indicatorRef.current;
+      const indicatorSlot = indicator?.parentElement;
+      if (!indicator || !indicatorSlot) return undefined;
+
+      const setTravel = () =>
+        indicator.style.setProperty(
+          "--indicator-travel",
+          `${Math.max(indicatorSlot.clientHeight - indicator.offsetHeight, 0)}px`
+        );
+
+      setTravel();
+      const travelObserver = new ResizeObserver(setTravel);
+      travelObserver.observe(indicatorSlot);
+      travelObserver.observe(indicator);
+      return () => travelObserver.disconnect();
+    }
+
     let frameId = null;
+    let needsMeasure = true;
+    let scrollableHeight = 0;
+    let travelDistance = 0;
+    let scrollTarget = null;
 
-    // 스크롤 인디케이터 -> 스크롤 위치 계산
-    const updateIndicator = () => {
-      frameId = null;
-
-      const rail = rightRailRef.current;
-      const indicatorSlot = rail?.firstElementChild;
-      const indicator = indicatorSlot?.firstElementChild;
-
-      if (!rail || !indicatorSlot || !indicator) return;
-
-      const scrollTarget = isWorks
+    // works는 같은 주소 안에서도 목록·배치도 전환 시 스크롤 영역 요소가 바뀌므로 매번 현재 요소를 확인
+    const getScrollTarget = () =>
+      isWorks
         ? document.querySelector("[data-works-scroll]")
         : document.documentElement;
-      const scrollableHeight = isWorks
+
+    // 스크롤 인디케이터
+    // 높이·이동 거리는 크기가 바뀔 때만 다시 재고(모바일 툴바 접힘 등),
+    // 스크롤 중에는 스크롤 위치만 읽어 인디케이터 transform을 직접 갱신
+    const measure = () => {
+      const indicator = indicatorRef.current;
+      const indicatorSlot = indicator?.parentElement;
+
+      if (!indicator || !indicatorSlot) return;
+
+      scrollableHeight = isWorks
         ? (scrollTarget?.scrollHeight ?? 0) - (scrollTarget?.clientHeight ?? 0)
         : document.documentElement.scrollHeight - window.innerHeight;
-      const progress =
-        scrollableHeight > 0
-          ? Math.min(
-              Math.max(
-                (isWorks ? scrollTarget?.scrollTop ?? 0 : window.scrollY) /
-                  scrollableHeight,
-                0
-              ),
-              1
-            )
-          : 1;
-      const travelDistance = Math.max(
+      travelDistance = Math.max(
         indicatorSlot.clientHeight - indicator.offsetHeight,
         0
       );
+    };
 
-      rail.style.setProperty(
-        "--scroll-indicator-y",
-        `${progress * travelDistance}px`
-      );
+    const updateIndicator = () => {
+      frameId = null;
+
+      const currentTarget = getScrollTarget();
+      if (currentTarget !== scrollTarget) {
+        scrollTarget = currentTarget;
+        observeScrollTarget();
+        needsMeasure = true;
+      }
+
+      if (needsMeasure) {
+        measure();
+        needsMeasure = false;
+      }
+
+      const indicator = indicatorRef.current;
+      if (!indicator) return;
+
+      const scrollTop = isWorks ? scrollTarget?.scrollTop ?? 0 : window.scrollY;
+      const progress =
+        scrollableHeight > 0
+          ? Math.min(Math.max(scrollTop / scrollableHeight, 0), 1)
+          : 1;
+
+      indicator.style.transform = `translate(-50%, ${
+        progress * travelDistance
+      }px)`;
     };
 
     const requestUpdate = () => {
       if (frameId === null)
         frameId = window.requestAnimationFrame(updateIndicator);
     };
+    const requestMeasure = () => {
+      needsMeasure = true;
+      requestUpdate();
+    };
+
+    const resizeObserver = new ResizeObserver(requestMeasure);
+    const mutationObserver = new MutationObserver(requestMeasure);
+
+    // 크기 변화 감지 대상: body, 인디케이터 칸, works 스크롤 영역과 그 자식
+    function observeScrollTarget() {
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
+
+      resizeObserver.observe(document.body);
+      if (indicatorRef.current?.parentElement)
+        resizeObserver.observe(indicatorRef.current.parentElement);
+
+      if (!isWorks || !(scrollTarget instanceof Element)) return;
+
+      resizeObserver.observe(scrollTarget);
+      Array.from(scrollTarget.children).forEach((child) =>
+        resizeObserver.observe(child)
+      );
+      mutationObserver.observe(scrollTarget, { childList: true, subtree: true });
+    }
 
     requestUpdate();
-    const observedScrollTarget = isWorks
-      ? document.querySelector("[data-works-scroll]")
-      : document.documentElement;
     document.addEventListener("scroll", requestUpdate, {
       passive: true,
       capture: true,
@@ -121,25 +199,8 @@ export default function MainLayout({ children, isComingSoon = false }) {
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("touchmove", requestUpdate, { passive: true });
     window.addEventListener("scrollend", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-    window.visualViewport?.addEventListener("resize", requestUpdate);
-
-    const resizeObserver = new ResizeObserver(requestUpdate);
-    resizeObserver.observe(document.body);
-    if (observedScrollTarget instanceof Element) {
-      resizeObserver.observe(observedScrollTarget);
-      Array.from(observedScrollTarget.children).forEach((child) =>
-        resizeObserver.observe(child)
-      );
-    }
-
-    const mutationObserver = new MutationObserver(requestUpdate);
-    if (observedScrollTarget instanceof Element) {
-      mutationObserver.observe(observedScrollTarget, {
-        childList: true,
-        subtree: true,
-      });
-    }
+    window.addEventListener("resize", requestMeasure);
+    window.visualViewport?.addEventListener("resize", requestMeasure);
 
     return () => {
       if (frameId !== null) window.cancelAnimationFrame(frameId);
@@ -147,8 +208,8 @@ export default function MainLayout({ children, isComingSoon = false }) {
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("touchmove", requestUpdate);
       window.removeEventListener("scrollend", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      window.visualViewport?.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("resize", requestMeasure);
+      window.visualViewport?.removeEventListener("resize", requestMeasure);
       resizeObserver.disconnect();
       mutationObserver.disconnect();
     };
@@ -180,9 +241,15 @@ export default function MainLayout({ children, isComingSoon = false }) {
         )}
       </Center>
       {showOnboarding && !isComingSoon && <Onboarding />}
-      <RightRail ref={rightRailRef}>
+      <RightRail>
         <RailSlot>
-          <ScrollIndicator aria-hidden="true">*</ScrollIndicator>
+          <ScrollIndicator
+            ref={indicatorRef}
+            $isWorks={isWorks}
+            aria-hidden="true"
+          >
+            *
+          </ScrollIndicator>
         </RailSlot>
         <RailSlot>
           <RightRailLabel>레시피 바꾸지 말 것</RightRailLabel>
@@ -282,6 +349,11 @@ const RightRailLabel = styled(RailLabel)`
   transform-origin: top right;
 `;
 
+const scrollIndicatorMove = keyframes`
+  from { transform: translate(-50%, 0); }
+  to { transform: translate(-50%, var(--indicator-travel, 0px)); }
+`;
+
 const ScrollIndicator = styled.span`
   position: absolute;
   top: 0;
@@ -290,14 +362,21 @@ const ScrollIndicator = styled.span`
   font-size: ${({ theme }) => theme.typography.fontSize.displaySm};
   font-weight: 200;
   line-height: 0.8;
-  transform: translate(-50%, var(--scroll-indicator-y, 0));
-  will-change: transform;
+  transform: translate(-50%, 0);
   margin-top: 1.2rem;
   transition: color 300ms ease;
   ${media.mobile`
     font-weight: 200;
     left: 1.1rem;
 `}
+
+  /* 스크롤할 곳이 없어 타임라인이 비활성일 때는 기존처럼 칸 맨 아래에 둠 */
+  @supports ${SCROLL_TIMELINE_QUERY} {
+    transform: translate(-50%, var(--indicator-travel, 0px));
+    animation: ${scrollIndicatorMove} auto linear both;
+    animation-timeline: ${({ $isWorks }) =>
+      $isWorks ? "--works-scroll" : "scroll(root block)"};
+  }
 `;
 
 const LeftRail = styled(Rail)`
