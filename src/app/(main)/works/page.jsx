@@ -21,7 +21,7 @@ import { saveWorksReturn } from "@/utils/worksReturn";
 
 export default function Page({ searchParams }) {
   const { view, floor, section, expanded, loop } = use(searchParams);
-  const { translate } = useTranslation();
+  const { t, translate } = useTranslation();
   const categoryParam = useSearchParams().get("category");
   const [categoryListNode, setCategoryListNode] = useState(null);
   const scrollAreaRef = useRef(null);
@@ -103,13 +103,17 @@ export default function Page({ searchParams }) {
           setSelectedCategory(category === selectedCategory ? null : category)
         }
         onBack={selectedCategory ? () => setSelectedCategory(null) : undefined}
+        backLabel={t("works.viewAll")}
       />
 
       <S.ScrollArea ref={scrollAreaRef} data-works-scroll>
         <S.Content>
           {selectedCategory && (
             <S.MobileActionRow>
-              <BackButton onClick={() => setSelectedCategory(null)} />
+              <BackButton
+                onClick={() => setSelectedCategory(null)}
+                label={t("works.viewAll")}
+              />
               <FloorPlanButton
                 label={translate(worksPageContent.floorPlanLabel)}
                 category={selectedCategory}

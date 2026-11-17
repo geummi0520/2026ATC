@@ -272,6 +272,7 @@ const CompactBackRow = styled.div`
     height: auto;
     min-height: 4.8rem;
     padding: 2rem 0 0;
+    margin: 0rem;
 
     > * {
       align-self: center;

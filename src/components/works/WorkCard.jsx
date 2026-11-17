@@ -70,7 +70,7 @@ const Thumbnail = styled.div`
 const Title = styled.strong`
   display: block;
   margin-top: 1.2rem;
-  color: ${({ theme }) => theme.text.brandDark};
+  color: ${({ theme }) => theme.text.primary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 700;
   line-height: 180%;
@@ -84,14 +84,10 @@ const Title = styled.strong`
 const Tags = styled.span`
   display: block;
   margin: 0.4rem 0 1.2rem 0;
-  color: ${({ theme }) => theme.text.tertiary};
+  color: ${({ theme }) => theme.text.brand};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   font-weight: 400;
   line-height: 180%;
-
-  ${media.mobile`
-    font-size: 1rem;
-  `}
 `;
 
 // 태그는 한 덩어리로 다음 줄로 넘어가고, 태그 하나가 카드 너비보다 길 때만 그 태그 안에서 줄바꿈
