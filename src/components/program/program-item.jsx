@@ -254,6 +254,9 @@ ${media.mobile`
     font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     width:20rem;
 `}
+@media (max-width:550px) {
+width:100%;
+}
 
 color: font-size: ${({ theme }) => theme.text.primary};
 

@@ -129,7 +129,7 @@ export const programs = [
         id: 6,
         title: {
             ko: "일상처방  X 2026 ATC",
-            en: "IlSANG CHEOBANG X 2026 ATC",
+            en: "ILSANG CHEOBANG X 2026 ATC",
         },
         imgUrl: "/images/program/program-6.webp",
         description: {
