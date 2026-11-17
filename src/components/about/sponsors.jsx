@@ -155,7 +155,7 @@ font-style: normal;
 font-weight: 700;
 line-height: ${({ $left }) => $left ? "180%" : "120%"};
 
-@media (max-width:330px) {
+@media (max-width:392px) {
 font-size: 1.2rem;
 }
 `;
