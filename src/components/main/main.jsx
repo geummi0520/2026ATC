@@ -25,7 +25,7 @@ import ClocheStage, {
   shortDesktop,
 } from "@/components/main/ClocheStage";
 import CommentText, { CommentBody, CommentTitle } from "@/components/main/CommentText";
-import DetailPopup from "@/components/main/DetailPopup";
+import DetailPopup, { DetailPopupPreload } from "@/components/main/DetailPopup";
 
 //스탬프
 import HiddenStamp from "@/components/stamp/HiddenStamp";
@@ -397,6 +397,8 @@ export default function Main() {
           {t("main.detail")}
         </DetailButton>
       </ButtonRow>
+
+      {isReady && !isDetailOpen && <DetailPopupPreload food={food} />}
 
       {isDetailOpen && (
         <DetailPopup food={food} question={commentQuestion} onClose={closeDetail}>
