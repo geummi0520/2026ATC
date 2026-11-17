@@ -70,7 +70,7 @@ const en = {
     stationInfo: "Subway Information",
     sponsor: "Collaboration & Sponsorship",
     sponsor1: "Ilsang Cheobang",
-    sponsor2: "Smile Gate",
+    sponsor2: "Smilegate",
     sponsor3: "University Innovation",
     sponsor4: "Sogang Future Lab",
   },
