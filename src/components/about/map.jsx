@@ -25,7 +25,7 @@ export default function Map({ station_info }) {
                     </StationInfo>
                     <StationInfoText>
                         <StationLine>
-                            <Image
+                            <LineIcon
                                 src="/icons/about/6호선.svg"
                                 alt="Lin6-image"
                                 width={16}
@@ -34,7 +34,7 @@ export default function Map({ station_info }) {
                             {translate(station_info[0])}
                         </StationLine>
                         <StationLine>
-                            <Image
+                            <LineIcon
                                 src="/icons/about/경의중앙선.svg"
                                 alt="GyeongEuiJungAngLing-image"
                                 width={16}
@@ -43,7 +43,7 @@ export default function Map({ station_info }) {
                             {translate(station_info[1])}
                         </StationLine>
                         <StationLine>
-                            <Image
+                            <LineIcon
                                 src="/icons/about/2호선.svg"
                                 alt="Lin6-image"
                                 width={16}
@@ -52,7 +52,7 @@ export default function Map({ station_info }) {
                             {translate(station_info[2])}
                         </StationLine>
                         <StationLine>
-                            <Image
+                            <LineIcon
                                 src="/icons/about/2호선.svg"
                                 alt="Lin6-image"
                                 width={16}
@@ -155,8 +155,7 @@ ${media.mobile`
 const StationLine = styled.div`
 display:flex;
 gap:0.5rem;
-align-items:center;
-
+align-items:flex-start;
 `;
 const StationInfoText = styled.div`
 color: ${({ theme }) => theme.text.brandInvert};
@@ -190,6 +189,11 @@ ${media.tablet`
 
   `}
 `;
+
+const LineIcon = styled(Image)`
+margin-top:0.4rem;
+`;
+
 const TextMdSpan = styled.span`
 color: ${({ theme }) => theme.text.brandInvert};
 
