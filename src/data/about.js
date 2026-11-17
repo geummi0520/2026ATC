@@ -156,14 +156,10 @@ export const staffs = [
 
 ];
 
-export const station_info = {
-    ko: `6호선 대흥역 1번 출구 · 540m · 도보 10분(후문 인접)
-경의중앙선 서강대역 1번 출구 · 880m · 도보 18분
-2호선 이대역 5번 출구 · 900m · 도보 14분
-2호선 신촌역 6번 출구 · 960m · 도보 18분`,
-    en: `Line 6 Daeheung Station Exit 1 · 540 m · 10 - minute walk(near the rear gate)
-Gyeongui–Jungang Line Sogang University Station Exit 1 · 880 m · 18 - minute walk
-Line 2 Ewha Womans University Station Exit 5 · 900 m · 14 - minute walk
-Line 2 Sinchon Station Exit 6 · 960 m · 18 - minute walk`,
-};
+export const station_info = [
+    { ko: "대흥역 1번 출구 · 540m · 도보 10분(후문 인접)", en: "Daeheung Station Exit 1 · 540 m · 10-minute walk (near the rear gate)" },
+    { ko: "서강대역 1번 출구 · 880m · 도보 18분", en: "Sogang University Station Exit 1 · 880 m · 18-minute walk" },
+    { ko: "이대역 5번 출구 · 900m · 도보 14분", en: "Ewha Womans University Station Exit 5 · 900 m · 14-minute walk" },
+    { ko: "신촌역 6번 출구 · 960m · 도보 18분", en: "Sinchon Station Exit 6 · 960 m · 18-minute walk" },
+];
 
