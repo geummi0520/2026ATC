@@ -31,7 +31,7 @@ export default function AboutPage() {
             </PosterTextSpan>
           </PosterText>
           <PosterMain
-            src="/images/about/poster.webp"
+            src="/images/about/poster-v2.webp"
             alt="poster-main"
             width={400}
             height={567}

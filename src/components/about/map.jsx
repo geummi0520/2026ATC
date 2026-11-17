@@ -13,7 +13,7 @@ export default function Map({ station_info }) {
             <TextMdSpan>{t("about.map")}</TextMdSpan>
             <MapBox>
                 <MapImage
-                    src="/icons/about/coming-path.svg"
+                    src={t("about.map_url")}
                     alt="map-image"
                     width={2728}
                     height={1766}
