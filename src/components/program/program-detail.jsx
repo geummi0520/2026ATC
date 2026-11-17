@@ -25,11 +25,16 @@ export default function ProgramDetail({ program }) {
     const isFirst = currentIndex <= 0;
     const isLast = currentIndex >= programs.length - 1;
 
+    // 이전/다음으로 바꾸면 새 프로그램을 처음(사진)부터 보도록 화면 맨 위로 이동
     const PrevProgram = () => {
-        if (!isFirst) setCurrentId(programs[currentIndex - 1].id);
+        if (isFirst) return;
+        setCurrentId(programs[currentIndex - 1].id);
+        window.scrollTo(0, 0);
     }
     const NextProgram = () => {
-        if (!isLast) setCurrentId(programs[currentIndex + 1].id);
+        if (isLast) return;
+        setCurrentId(programs[currentIndex + 1].id);
+        window.scrollTo(0, 0);
     }
 
 
@@ -72,6 +77,23 @@ export default function ProgramDetail({ program }) {
                 height={1440}
                 $desktop
             />
+            {/* 앞뒤 프로그램 이미지 미리 받아두기 (화면엔 안 보임)
+                - ProgramImg와 width/height를 똑같이 줘야 같은 /_next/image 주소로 요청됨 → 버튼 누를 때 캐시에서 바로 뜸
+                - next/image 기본값 lazy는 안 보이는 이미지를 안 받아서 eager로 지정 */}
+            <PreloadBox aria-hidden="true">
+                {[programs[currentIndex - 1], programs[currentIndex + 1]]
+                    .filter(Boolean)
+                    .map((p) => (
+                        <Image
+                            key={p.id}
+                            src={p.imgUrl}
+                            alt=""
+                            width={1080}
+                            height={1440}
+                            loading="eager"
+                        />
+                    ))}
+            </PreloadBox>
             <Title>
                 {translate(currentProgram.title)}
             </Title>
@@ -199,6 +221,15 @@ aspect-ratio: 3/4;
 
 
 `;
+/* 미리 받기용 이미지 상자: 자리 차지 없이 화면 밖에 숨김
+   (display:none이면 일부 브라우저가 이미지를 안 받아서 크기 0 + overflow hidden으로 숨김) */
+const PreloadBox = styled.div`
+position: absolute;
+width: 0;
+height: 0;
+overflow: hidden;
+pointer-events: none;
+`;
 const Description = styled.div`
 align-self:stretch;
 width: 100%;
@@ -244,7 +275,12 @@ const BottomNav = styled.div`
   animation: ${slideUp} 0.15s ease-out;
 
   background: ${({ theme }) => theme.background.primary};
-
+${media.tablet`
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+  `}
 
 `;
 const NavButtons = styled.div`

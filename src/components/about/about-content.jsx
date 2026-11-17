@@ -6,31 +6,31 @@ import { media } from "@/styles/media";
 import styled from "styled-components";
 
 export default function AboutContent({ children, title, showLeftImage }) {
-    const { t } = useTranslation();
-    return (
-        <ContentContainer>
-            <PaddingBox>
-                {showLeftImage &&
-                    <LeftImg
-                        src="/icons/about/left-stamps.svg"
-                        alt="left-img"
-                        width={326}
-                        height={807}
-                    />
-                }
-            </PaddingBox>
+  const { t } = useTranslation();
+  return (
+    <ContentContainer>
+      <PaddingBox>
+        {showLeftImage &&
+          <LeftImg
+            src="/icons/about/left-stamps.svg"
+            alt="left-img"
+            width={326}
+            height={807}
+          />
+        }
+      </PaddingBox>
 
-            <RightContainer
+      <RightContainer
 
-            >
-                <ContentTitle $compact>
-                    {title}
+      >
+        <ContentTitle $compact>
+          {title}
 
-                </ContentTitle>
-                {children}
-            </RightContainer>
-        </ContentContainer>
-    );
+        </ContentTitle>
+        {children}
+      </RightContainer>
+    </ContentContainer>
+  );
 }
 const ContentContainer = styled.div`
 display:flex;
@@ -87,7 +87,8 @@ ${media.tablet`
   padding:${({ $compact }) => $compact ? "4rem 2rem" : "8rem 2rem"};
 `};
 ${media.mobile`
-padding:0rem;
+  padding:0;
+// padding:0 0.2rem;
 `};
 
 
