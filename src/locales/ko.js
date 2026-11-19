@@ -30,7 +30,7 @@ const ko = {
   stamp: {
     collect: "숨겨진 도장 줍기",
     card: "스탬프 카드",
-    cardMessage: "모든 스탬프를 다 모으면 좋은일이 있을지도..........",
+    cardMessage: "모든 스탬프를 다 모으면 좋은 일이 있을지도..........",
     close: "닫기",
     rewardMessage: "우와! 초-레어 SSR 달걀을 얻었다.",
     rewardImage: "초레어 달걀 요리",

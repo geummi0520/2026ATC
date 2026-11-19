@@ -31,9 +31,7 @@ const getContactRank = (type) => {
 };
 
 const sortContacts = (contacts) =>
-  [...contacts].sort(
-    (a, b) => getContactRank(a.type) - getContactRank(b.type)
-  );
+  [...contacts].sort((a, b) => getContactRank(a.type) - getContactRank(b.type));
 
 export default function WorkDetail({ work }) {
   const { t, translate } = useTranslation();
@@ -490,6 +488,10 @@ const MediaList = styled.div`
 
   ${media.worksTablet`
     order: 2;
+    border-bottom: none;
+  `}
+
+  ${media.tablet`
     border-bottom: 1px solid var(--layout-line);
   `}
 

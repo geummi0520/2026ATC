@@ -1722,8 +1722,8 @@ export const works = [
   {
     id: 20,
     title: {
-      ko: "KAO:RE(향)",
-      en: "KAO:RE",
+      ko: "KAO:Re(향)",
+      en: "KAO:Re",
     },
     team: {
       ko: "1015",

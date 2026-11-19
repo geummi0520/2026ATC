@@ -13,6 +13,8 @@ const nextConfig = {
     },
   },
   images: {
+    // 기본 75 + 스태프 사진용 90 (Next 16부터 허용 목록에 있는 값만 사용 가능)
+    qualities: [75, 90],
     remotePatterns: [
       {
         protocol: "https",
