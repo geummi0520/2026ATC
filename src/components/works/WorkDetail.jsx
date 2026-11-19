@@ -37,7 +37,7 @@ export default function WorkDetail({ work }) {
     ? work.images.detail
     : [work.images.thumbnail];
   const videoEmbedUrl = work.video?.embed
-    ? `${work.video.embed}?autoplay=1&muted=1`
+    ? `${work.video.embed}?autoplay=1&portrait=0&byline=0`
     : null;
   const backHref = useWorksBackHref(work.id);
   const { plan } = useStamp();
@@ -140,7 +140,7 @@ export default function WorkDetail({ work }) {
               </Copy>
               <MediaList>
                 {videoEmbedUrl && (
-                  <Video>
+                  <Video $aspectRatio={work.video.aspectRatio}>
                     <iframe
                       src={videoEmbedUrl}
                       title={`${title} 영상`}
@@ -487,7 +487,7 @@ const MediaList = styled.div`
 
 const Video = styled.div`
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: ${({ $aspectRatio }) => $aspectRatio || "16 / 9"};
   background: ${({ theme }) => theme.primitives.grey[950]};
 
   iframe {

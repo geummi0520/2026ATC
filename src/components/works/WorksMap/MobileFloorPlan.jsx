@@ -239,7 +239,7 @@ const SlideTitle = styled.h2`
   margin: 2.4rem 0 1.6rem;
   color: ${({ theme }) => theme.text.brand};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
 
   strong {
@@ -273,6 +273,6 @@ const WorkList = styled.ol`
 
   em {
     color: ${({ theme }) => theme.text.quaternary};
-    font-style: normal;
+    font-style: italic;
   }
 `;
