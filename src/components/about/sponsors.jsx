@@ -36,7 +36,7 @@ export default function Sponsors({ }) {
                     <Image
                         src="/icons/about/스마일게이트.svg"
                         alt="map-image"
-                        width={119}
+                        width={114}
                         height={23}
                     />
                 </SponsorItem>
