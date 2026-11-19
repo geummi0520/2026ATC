@@ -23,7 +23,7 @@ export const works = [
       en: "The colors and shapes of restaurants and grocery stores, served as eyewear. A delicious makeover for your glasses!",
     },
     description: {
-      ko: "Yummy Eye는 아이웨어를 맛있게 재해석한 브랜딩 프로젝트입니다. 따분하게 느껴졌던 안경을 마트와 레스토랑 곳곳에 숨어 있는 모티브와 연결해, 우리가 매일 고르는 음식의 모양과 색을 안경 프레임과 케이스로 새롭게 빚었습니다. 관람객은 Deli, Beverage, Fresh 세 코너로 나뉜 아이웨어를 직접 써 보고 눈으로 즐길 수 있습니다. 또 YUMMY TASTE TEST에서 단맛·신맛·짠맛·쓴맛·매운맛 중 자신의 '맛'을 찾고, 그 맛에 어울리는 Yummy Eye 모델을 추천받습니다. \n\n안경을 고르는 일이 메뉴를 고르는 일만큼 즐거워지길 바라며 지피가 차린 한 상, Yummy Eye.",
+      ko: "Yummy Eye는 아이웨어를 맛있게 재해석한 브랜딩 프로젝트입니다. 따분하게 느껴졌던 안경을 마트와 레스토랑 곳곳에 숨어 있는 모티브와 연결해, 우리가 매일 고르는 음식의 모양과 색을 안경 프레임과 케이스로 새롭게 빚었습니다. 관람객은 Deli, Beverage, Fresh 세 코너로 나뉜 아이웨어를 직접 써 보고 눈으로 즐길 수 있습니다. 또 YUMMY TASTE TEST에서 단맛·신맛·짠맛·쓴맛·매운맛 중 자신의 ‘맛’을 찾고, 그 맛에 어울리는 Yummy Eye 모델을 추천받습니다. \n\n안경을 고르는 일이 메뉴를 고르는 일만큼 즐거워지길 바라며 지피가 차린 한 상, Yummy Eye.",
       en: "Yummy Eye is a branding project that reimagines eyewear as something delicious. Linking everyday glasses to motifs hidden in grocery stores and restaurants, it turns the shapes and colors of the food we pick daily into frames and cases. Visitors try on eyewear from three aisles (Deli, Beverage, and Fresh), then use the YUMMY TASTE TEST to find their own taste, from sweet to spicy, and the Yummy Eye model that matches it. \n\nA table set so that picking glasses feels as fun as picking from a menu.",
     },
     tags: [
@@ -37,7 +37,7 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: '안경원집 딸로 살아온 지 어언 25년. "사람들은 왜 안경을 지루하다고 생각할까? 안경은 우리를 더 맛깔나게 만드는 액세서리인데!"라는 물음에서 시작했습니다. \nYummy Eye는 서강대학교 아트앤테크놀로지학과·브랜딩설계 전공 김진서의 1인 프로젝트로, 브랜드 기획부터 안경·패키지·책자 디자인, 웹 개발까지 혼자 장을 보고 요리해 한 상을 차렸습니다. \n\n디자인과 기술, 비즈니스 사이에서 일상 속 키치함을 즐거운 제품과 경험으로 만드는 일에 관심이 있습니다.',
+      ko: "안경원집 딸로 살아온 지 어언 25년. “사람들은 왜 안경을 지루하다고 생각할까? 안경은 우리를 더 맛깔나게 만드는 액세서리인데!”라는 물음에서 시작했습니다. \nYummy Eye는 서강대학교 아트앤테크놀로지학과·브랜딩설계 전공 김진서의 1인 프로젝트로, 브랜드 기획부터 안경·패키지·책자 디자인, 웹 개발까지 혼자 장을 보고 요리해 한 상을 차렸습니다. \n\n디자인과 기술, 비즈니스 사이에서 일상 속 키치함을 즐거운 제품과 경험으로 만드는 일에 관심이 있습니다.",
       en: "Raised in an optical shop for 25 years, Jinseo Kim asked: “Why do people find glasses boring, when they can make us look tastier?” Yummy Eye is her solo project as an Art & Technology and Branding Design major at Sogang University. She shopped, cooked, and plated it all: branding, eyewear, packaging, booklet, and web. \n\nShe turns everyday kitsch into products where design, tech, and business meet.",
     },
     members: [
@@ -111,7 +111,7 @@ export const works = [
     },
     description: {
       ko: "생각이 길어지는 날이 있다. 이미 지나간 일을 다시 들춰보고, 오지도 않은 일을 미리 살아본다. 몇 번을 되짚어도 답이 나지 않는 일들. 그럴 때면 생각을 좀 덜 해야 하나 싶다가도, 그렇게 쉽게 접을 수 없는 아집이 피어오른다.\n 걱정은 어쩌면 무언가를 소중히 여긴다는 증거일지도 모른다. 그러니 당장 매듭짓지 못했다고 해서 그 시간을 모두 헛되다고 할 수는 없겠다. 다만 가끔은 잔뜩 쥐고 있던 생각을 잠깐 내려놓아도 좋겠다. 내일의 걱정은 내일 다시 꺼내 보자, 오늘의 시간까지 전부 내어줄 필요는 없으니까.",
-      en: "Some days, thoughts linger. The past returns, and the future is lived before it arrives. Some questions yield no answer, however often they are revisited. The wish to think less only stirs a stubbornness that won't let go.\n Perhaps worry is proof that something is held dear. Time spent on what remains unresolved is not necessarily wasted. Still, it may be all right to set down the thoughts held so tightly. Let tomorrow's worries wait until tomorrow. They need not take all of today.",
+      en: "Some days, thoughts linger. The past returns, and the future is lived before it arrives. Some questions yield no answer, however often they are revisited. The wish to think less only stirs a stubbornness that won’t let go.\n Perhaps worry is proof that something is held dear. Time spent on what remains unresolved is not necessarily wasted. Still, it may be all right to set down the thoughts held so tightly. Let tomorrow’s worries wait until tomorrow. They need not take all of today.",
     },
     tags: [
       {
@@ -191,7 +191,7 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "팀 '봉가니'는 이창현이 구성한 1인 팀이다. 봉가니는 남아프리카공화국 줄루족에게 흔히 쓰이는 남성 이름으로, ‘감사하라’, ‘감사하는 마음을 가져라’라는 뜻을 지닌다. 작가가 남아공에서 생활하던 시절 사용했던 이름이자, 창작 활동과 일상을 아우르는 삶의 모토를 담은 이름으로 팀명을 정했다. 프로스포츠 산업, 전시, 인터랙티브 아트, 역사 등에 관심을 두고 있다.",
+      ko: "팀 ‘봉가니’는 이창현이 구성한 1인 팀이다. 봉가니는 남아프리카공화국 줄루족에게 흔히 쓰이는 남성 이름으로, ‘감사하라’, ‘감사하는 마음을 가져라’라는 뜻을 지닌다. 작가가 남아공에서 생활하던 시절 사용했던 이름이자, 창작 활동과 일상을 아우르는 삶의 모토를 담은 이름으로 팀명을 정했다. 프로스포츠 산업, 전시, 인터랙티브 아트, 역사 등에 관심을 두고 있다.",
       en: "Bongani is a one-person creative team formed by Changhyun Lee. It takes its name from the name he used while living in South Africa: Bongani, a common Zulu male name meaning “be thankful.” This spirit of gratitude guides both his life and creative work. His interests span the professional sports industry, exhibitions, interactive art, and history.",
     },
     members: [
@@ -246,7 +246,7 @@ export const works = [
     id: 4,
     title: {
       ko: "감각의 좌표",
-      en: "Coordinates of One's Taste",
+      en: "Coordinates of One’s Taste",
     },
     team: {
       ko: "하나",
@@ -335,8 +335,8 @@ export const works = [
       en: "This project is an interactive AR game for kids to playfully experience orthopedic rehabilitation exercises.",
     },
     description: {
-      ko: "MOVA는 기존의 정적이고 반복적인 소아 재활 치료의 한계를 극복하고, 환아가 치료 과정을 놀이처럼 즐기며 스스로 몰입할 수 있는 환경을 조성해 주는 AR 게임이다. 60초의 제한 시간이 있는 3종의 미니게임을 통해 짧은 시간 안에 명확한 목표를 수행하도록 구성된다.\n'움직이고 싶은 마음'을 원동력으로 하는 마을 MOVA. MOVA의 활력을 빼앗는 '스틸러' 를 막고 MOVA를 되살리기 위해 플레이어는 열심히 몸을 움직여 마을에 활력을 불어넣어야 한다. \n본 프로젝트는 환아에게는 유희적 성취를, 의료 시스템에는 효율적인 맞춤형 재활 솔루션을 제공하는 전인적 재활 모델 구축을 목표로 한다.",
-      en: 'MOVA is an AR game designed to overcome the limitations of traditional, static, and repetitive pediatric rehabilitation. It creates an environment where pediatric patients can naturally engage in their treatment while enjoying it like play. \nSet in the village of MOVA, driven by the power of "the desire to move," players must move their bodies to restore vitality to the village and defend it against "Stealers" who drain its energy.',
+      ko: "MOVA는 기존의 정적이고 반복적인 소아 재활 치료의 한계를 극복하고, 환아가 치료 과정을 놀이처럼 즐기며 스스로 몰입할 수 있는 환경을 조성해 주는 AR 게임이다. 60초의 제한 시간이 있는 3종의 미니게임을 통해 짧은 시간 안에 명확한 목표를 수행하도록 구성된다.\n‘움직이고 싶은 마음’을 원동력으로 하는 마을 MOVA. MOVA의 활력을 빼앗는 ‘스틸러’ 를 막고 MOVA를 되살리기 위해 플레이어는 열심히 몸을 움직여 마을에 활력을 불어넣어야 한다. \n본 프로젝트는 환아에게는 유희적 성취를, 의료 시스템에는 효율적인 맞춤형 재활 솔루션을 제공하는 전인적 재활 모델 구축을 목표로 한다.",
+      en: "MOVA is an AR game designed to overcome the limitations of traditional, static, and repetitive pediatric rehabilitation. It creates an environment where pediatric patients can naturally engage in their treatment while enjoying it like play. \nSet in the village of MOVA, driven by the power of “the desire to move,” players must move their bodies to restore vitality to the village and defend it against “Stealers” who drain its energy.",
     },
     tags: [
       {
@@ -350,7 +350,7 @@ export const works = [
     ],
     teamDescription: {
       ko: "팀명 ‘닥터스톤(Dr.STONE)’은 전 인류가 석화된 원시 세계에서 과학 기술을 통해 문명을 재건하는 동명의 작품에서 영감을 받았다. 작중 인류를 구원한 매개체가 ‘사람을 살리는 생명의 돌’이었던 것처럼, 본 팀이 제안하는 ‘스마트 글래스 기반 소아 정형외과용 AR 재활 게임’의 목표 역시 환아의 자발적 참여를 통한 신체 기능 회복을 돕기 위함이다. 특히 게임을 통해 환아들에게 체계적인 재활 경험과 일상 복귀에 대한 동기를 부여하며, 단순한 기술 개발을 넘어 소아 재활의 새로운 패러다임을 제시하고자 한다.",
-      en: "Inspired by the series Dr. STONE our team name reflects our core mission. Just as the Stone of Life saved humanity in the story, our AR Pediatric Orthopedic Rehabilitation Game is designed to restore children's physical functions through active engagement. By combining rehabilitation with game-based motivation, we strive to redefine the future of pediatric rehabilitation beyond mere technology.",
+      en: "Inspired by the series Dr. STONE our team name reflects our core mission. Just as the Stone of Life saved humanity in the story, our AR Pediatric Orthopedic Rehabilitation Game is designed to restore children’s physical functions through active engagement. By combining rehabilitation with game-based motivation, we strive to redefine the future of pediatric rehabilitation beyond mere technology.",
     },
     members: [
       {
@@ -820,8 +820,8 @@ export const works = [
       en: "[You and I] is an interactive web-based installation that unfolds through phone calls.",
     },
     description: {
-      ko: "나와 너. 너는 누구이고 또 나는 누구일까요? <너와 나>는 전화기라는 매개체를 통해 다양한 '너'와 '나'들을 연결합니다. 걸려오는 전화를 받아보고, 전화번호부를 보며 이전 참여자들의 대화에 통화를 걸어보세요! 어떤 너와 함께한 통화는 새로운 전화번호가 되어 목록에 아카이빙됩니다. \n 전시물을 통해 모르는 사람과 대화를 나누며 나의 파편을 남겨보고, 누군가의 파편을 들어보세요. 나의 어떤 부분까지를 나라고 부를 수 있을까요? 또, 너의 어떤 부분까지를 너라고 부를 수 있을까요? 나와 너는 어떻게 다른 걸까요?\n  수화기 너머로 들려오는 목소리에 집중하며 누군가를 상상해보고, 또 내가 그 누군가가 되어 보는 경험. 겁내지 말고 수화기를 들어보세요!",
-      en: "You and I. Who are you, and who am I? Through a telephone, You and I connects us. Answer a call or browse the directory to hear past participants. Some calls become new numbers in the archive. Leave a fragment of yourself and listen to someone else's. What makes me 'me' and you 'you'? How are we different? Listen to the voice on the line, imagine who is speaking, and step into their shoes. Don't be afraid. Pick up the receiver!",
+      ko: "나와 너. 너는 누구이고 또 나는 누구일까요? <너와 나>는 전화기라는 매개체를 통해 다양한 ‘너’와 ‘나’들을 연결합니다. 걸려오는 전화를 받아보고, 전화번호부를 보며 이전 참여자들의 대화에 통화를 걸어보세요! 어떤 너와 함께한 통화는 새로운 전화번호가 되어 목록에 아카이빙됩니다. \n 전시물을 통해 모르는 사람과 대화를 나누며 나의 파편을 남겨보고, 누군가의 파편을 들어보세요. 나의 어떤 부분까지를 나라고 부를 수 있을까요? 또, 너의 어떤 부분까지를 너라고 부를 수 있을까요? 나와 너는 어떻게 다른 걸까요?\n  수화기 너머로 들려오는 목소리에 집중하며 누군가를 상상해보고, 또 내가 그 누군가가 되어 보는 경험. 겁내지 말고 수화기를 들어보세요!",
+      en: "You and I. Who are you, and who am I? Through a telephone, You and I connects us. Answer a call or browse the directory to hear past participants. Some calls become new numbers in the archive. Leave a fragment of yourself and listen to someone else’s. What makes me ‘me’ and you ‘you’? How are we different? Listen to the voice on the line, imagine who is speaking, and step into their shoes. Don’t be afraid. Pick up the receiver!",
     },
     tags: [
       {
@@ -835,7 +835,7 @@ export const works = [
     ],
     teamDescription: {
       ko: "나는 온전한 내가 맞을까?라는 질문을 재료로 1인 프로젝트를 기획하여 출품하게 되었습니다. 나는 너가 될 수 없죠. 온전한 공감이라는 것도 존재하지 않는다는 생각이 들 때가 있습니다. 무수히 많은 사람들과 함께 웃고 떠들어도 외로움이라는 것이 스며들듯 찾아오는 때가 그러하죠. 하지만 그럼에도 인간이라는 종은 다른 인간과 함께 살아갈 수밖에 없습니다. 그럼 우리는 서로 완전히 이해할 수 없음에도 어떻게 함께 공존할 수 있을까요? 그런 질문을 요즘 하고 있습니다.",
-      en: 'I created this solo project around the question, "Am I wholly myself?" I cannot be you. Sometimes I doubt that complete empathy exists, especially when loneliness creeps in amid laughter and conversation. Yet we humans must live with one another. How, then, can we coexist without fully understanding each other? This is the question I have been asking lately.',
+      en: "I created this solo project around the question, “Am I wholly myself?” I cannot be you. Sometimes I doubt that complete empathy exists, especially when loneliness creeps in amid laughter and conversation. Yet we humans must live with one another. How, then, can we coexist without fully understanding each other? This is the question I have been asking lately.",
     },
     members: [
       {
@@ -937,7 +937,7 @@ export const works = [
     id: 12,
     title: {
       ko: "_____의 방",
-      en: "_____'s Room",
+      en: "_____’s Room",
     },
     team: {
       ko: "TAco",
@@ -962,7 +962,7 @@ export const works = [
     },
     description: {
       ko: "관람객은 주인공의 방을 탐색하며 설치물 곳곳에 숨겨진 비밀번호를 찾아 주인공의 이야기를 하나씩 발견할 예정입니다. \n\n비밀번호를 입력하면 일기장의 일부가 공개되고, 각 공간에서 마주하는 선택은 시스템에 기록되어 서로 다른 결말로 이어집니다. 작품 속 시스템의 음성은 침착하고 친절한 목소리로 성희롱 사건을 축소하고 주인공에게 침묵을 유도합니다. \n\n친구와 학교, 주변 사람들이나 의지가 되어야할 존재인 어른들 조차도 주인공을 외면하는 모습을 통해 작품은 성희롱 이후에도 사건을 제대로 마주하지 않고 침묵과 외면을 선택하는 사회의 태도를 질문하는데, 당신은 이 상황에서 어떠한 선택을 내릴건가요?",
-      en: "Visitors explore the protagonist's room, finding passcodes hidden in the installations to uncover fragments of her journal. \n\nTheir choices are recorded by a system and shape the ending. Speaking in a calm, friendly voice, the system downplays the sexual harassment and encourages the protagonist to remain silent. \n\nThrough the reactions of her friends, school, and community, the work questions a society that turns away from sexual harassment and chooses silence over accountability.",
+      en: "Visitors explore the protagonist’s room, finding passcodes hidden in the installations to uncover fragments of her journal. \n\nTheir choices are recorded by a system and shape the ending. Speaking in a calm, friendly voice, the system downplays the sexual harassment and encourages the protagonist to remain silent. \n\nThrough the reactions of her friends, school, and community, the work questions a society that turns away from sexual harassment and chooses silence over accountability.",
     },
     tags: [
       {
@@ -1063,7 +1063,7 @@ export const works = [
     },
     tagline: {
       ko: "누군가의 기억을 재료 삼아 당신만의 맛을 만드세요",
-      en: "Someone's memory is the recipe. Smell it, hear it, touch it, then taste what it becomes in you.",
+      en: "Someone’s memory is the recipe. Smell it, hear it, touch it, then taste what it becomes in you.",
     },
     description: {
       ko: "주방에는 ‘미장플라스’라는 말이 있습니다. 요리를 시작하기 전 재료를 가지런히 준비해 두는 일입니다. 이 작업은 그 준비를 감정에 적용합니다. 관람객은 정체를 알 수 없는 레시피 카드 한 장을 고르고 세 개의 스테이션 중 하나로 걸어갑니다. 그곳에는 빛과 소리, 온도, 질감, 향이 재료처럼 놓여 있습니다. 모두 경험한 뒤에야 이 레시피가 누구의 어떤 기억이었는지 알게 됩니다. 같은 재료로 당신은 어떤 맛을 만들었나요?",
@@ -1081,7 +1081,7 @@ export const works = [
     ],
     teamDescription: {
       ko: "루멘(Lumen)은 아트&테크놀로지(아텍) 전공 유학생 악비(4학년)와 소피아(3학년)로 이루어진 팀입니다. 말로 옮기기 어려운 기억의 온도와 냄새, 소리를 공간으로 불러내는 작업을 합니다. 이번 전시에서는 기억을 레시피로 바꾸어 관람객이 직접 감정을 맛보고 서로 다른 맛을 발견하게 합니다.",
-      en: "Lumen is a team of two international students majoring in Art & Technology: Akbayan (fourth year) and Sofiia (third year). We are interested in how memory lives in the senses: the temperature, smell and sound of moments that are hard to put into words. For this exhibition we turned memories into recipes, so visitors can taste a feeling and discover that everyone's dish is different.",
+      en: "Lumen is a team of two international students majoring in Art & Technology: Akbayan (fourth year) and Sofiia (third year). We are interested in how memory lives in the senses: the temperature, smell and sound of moments that are hard to put into words. For this exhibition we turned memories into recipes, so visitors can taste a feeling and discover that everyone’s dish is different.",
     },
     members: [
       {
@@ -1172,7 +1172,7 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "팀명 '노나메(nonamé)'는 '이름 없음'을 뜻하는 말로, 흔히 공란이나 미정 상태를 가리킬 때 쓰인다. 특정한 이름이 없다는 것은 곧 누구나 될 수 있다는 의미이기도 하다. 우리는 이 이름을 통해 외모 강박과 자존감 문제가 특정 개인이나 집단만의 일이 아니라, 사회 구성원 모두가 마주하는 보편적인 문제임을 말하고자 한다. 또한 이 단어를 '노네임'이 아닌 '노나메'로 새롭게 읽음으로써, 이미 정해진 틀에 물음표를 던지고 익숙한 주제를 낯선 시선으로 탐구하고자 한다.",
+      ko: "팀명 ‘노나메(nonamé)’는 ‘이름 없음’을 뜻하는 말로, 흔히 공란이나 미정 상태를 가리킬 때 쓰인다. 특정한 이름이 없다는 것은 곧 누구나 될 수 있다는 의미이기도 하다. 우리는 이 이름을 통해 외모 강박과 자존감 문제가 특정 개인이나 집단만의 일이 아니라, 사회 구성원 모두가 마주하는 보편적인 문제임을 말하고자 한다. 또한 이 단어를 ‘노네임’이 아닌 ‘노나메’로 새롭게 읽음으로써, 이미 정해진 틀에 물음표를 던지고 익숙한 주제를 낯선 시선으로 탐구하고자 한다.",
       en: "Our team name, nonamé (No Name), usually marks a blank or undecided space. Having no name also means it could be anyone. Through it, we suggest that appearance obsession and low self-esteem are not one person’s problem but a universal one. By reading it as “No-na-me” instead of “No Name,” we question fixed frames and explore familiar themes from a fresh angle.",
     },
     members: [
@@ -1264,8 +1264,8 @@ export const works = [
       en: "Spritzing myself beyond the frames",
     },
     description: {
-      ko: "베니스에서 경험한 두 음식은 하나의 이야기가 되었다. 식빵의 테두리를 잘라 만든 샌드위치 트라메치노(Tramezzino), 뿌리거나 섞는다는 의미를 가진 칵테일 스프리츠(Spritz). 식빵의 프레임은 내 속의 테두리와 닮았고, 나를 이루는 수많은 감각들은 흩뿌려져 제각기 다른 모양과 색을 만들어낸다.\n\n트라메치노 스프리츠는 '테두리'와 '분사'를 통해 스스로를 확장시키는 경험을 제공한다. 사진과 영상으로 구성된 트라메치노 섹션은 누군가의 시선에서 자신을 둘러싼 경계를 인식하게 하고, 설치와 인터랙티브 웹을 활용한 스프리츠 섹션은 각기 다른 모양과 형태로의 확장을 유도한다. 이 프로젝트를 통해 감각의 분사를 경험하기를, 누군가의 테두리에만 매몰되지 않기를 바란다.",
-      en: 'Two foods from Venice became one story: Tramezzino, a crustless sandwich, and Spritz, meaning to spray or mix. The bread\'s frame mirrors my boundaries, while my senses scatter into shapes and colors.\n\nTramezzino Spritz explores the self through "frame" and "spraying." Photography and video reveal boundaries through another\'s gaze, while installations and an interactive website invite new forms. We hope you experience the scattering of the senses and never remain confined by another\'s frame.',
+      ko: "베니스에서 경험한 두 음식은 하나의 이야기가 되었다. 식빵의 테두리를 잘라 만든 샌드위치 트라메치노(Tramezzino), 뿌리거나 섞는다는 의미를 가진 칵테일 스프리츠(Spritz). 식빵의 프레임은 내 속의 테두리와 닮았고, 나를 이루는 수많은 감각들은 흩뿌려져 제각기 다른 모양과 색을 만들어낸다.\n\n트라메치노 스프리츠는 ‘테두리’와 ‘분사’를 통해 스스로를 확장시키는 경험을 제공한다. 사진과 영상으로 구성된 트라메치노 섹션은 누군가의 시선에서 자신을 둘러싼 경계를 인식하게 하고, 설치와 인터랙티브 웹을 활용한 스프리츠 섹션은 각기 다른 모양과 형태로의 확장을 유도한다. 이 프로젝트를 통해 감각의 분사를 경험하기를, 누군가의 테두리에만 매몰되지 않기를 바란다.",
+      en: "Two foods from Venice became one story: Tramezzino, a crustless sandwich, and Spritz, meaning to spray or mix. The bread’s frame mirrors my boundaries, while my senses scatter into shapes and colors.\n\nTramezzino Spritz explores the self through “frame” and “spraying.” Photography and video reveal boundaries through another’s gaze, while installations and an interactive website invite new forms. We hope you experience the scattering of the senses and never remain confined by another’s frame.",
     },
     tags: [
       {
@@ -1278,8 +1278,8 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "우리는 각자만의 공간을 게시하고 보여주는 행위에 익숙한 사회에 살고 있다. 내 안의 틀은 더욱 견고해지고, 나의 행복은 신경 쓸 겨를도 없이 전시된 행복을 뒤쫓는다. 나는 섬처럼 떠돌다가 어디에도 존재하지 않는 듯한 기분을 느낀다. 인스타그램 속 피드도, 카메라의 프레임도, 스스로 만들어 낸 기준도. 우리는 무수한 테두리에 갇혀 있다.\n\n우리는 이 틀을 흐릿하게 만들고 싶다. '특별한' 이들은 누구며, '아무것도 아닌' 것은 또 무엇인가. 어떠한 형태의 테라도 괜찮다. 각자의 테두리가 영원하지 않음을 인식했으면 한다.",
-      en: 'We live in a society that displays its spaces. Inner frames harden as we chase displayed happiness. Like drifting islands, we feel nowhere. We are trapped by countless borders: Insatgram feeds, frames, and our own standards.\n\nWe want to blur these frames. Who is "special," and what is "nothing"? Any border or form is okay. We hope everyone sees that no boundary is eternal.',
+      ko: "우리는 각자만의 공간을 게시하고 보여주는 행위에 익숙한 사회에 살고 있다. 내 안의 틀은 더욱 견고해지고, 나의 행복은 신경 쓸 겨를도 없이 전시된 행복을 뒤쫓는다. 나는 섬처럼 떠돌다가 어디에도 존재하지 않는 듯한 기분을 느낀다. 인스타그램 속 피드도, 카메라의 프레임도, 스스로 만들어 낸 기준도. 우리는 무수한 테두리에 갇혀 있다.\n\n우리는 이 틀을 흐릿하게 만들고 싶다. ‘특별한’ 이들은 누구며, ‘아무것도 아닌’ 것은 또 무엇인가. 어떠한 형태의 테라도 괜찮다. 각자의 테두리가 영원하지 않음을 인식했으면 한다.",
+      en: "We live in a society that displays its spaces. Inner frames harden as we chase displayed happiness. Like drifting islands, we feel nowhere. We are trapped by countless borders: Insatgram feeds, frames, and our own standards.\n\nWe want to blur these frames. Who is “special,” and what is “nothing”? Any border or form is okay. We hope everyone sees that no boundary is eternal.",
     },
     members: [
       {
@@ -1381,7 +1381,7 @@ export const works = [
     ],
     teamDescription: {
       ko: "안녕하세요. 2026 Art With Impact 프로그램에 참여하는 팀 REMORY입니다.\n\n저희는 예술과 기술을 통해 사회의 다양한 이야기를 새로운 방식으로 전달하고, 익숙한 문제를 낯선 시선으로 바라보는 방법을 고민합니다. 특히 타인의 고통을 단순히 동정하는 데 그치지 않고, 그들의 삶을 이해하며 지속적으로 마음을 기울이려면 어떻게 해야하는가에 집중합니다. 이번 활동을 통해 일본군 ‘위안부’ 문제를 바라보는 우리의 시선을 돌아보고, 일시적인 공감을 넘어 기억과 관심을 이어가는 경험을 만들어가고자 합니다.",
-      en: 'Hello! We are REMORY, participating in the 2026 Art With Impact program.\n\nThrough art and technology, we explore new ways to tell social stories and inspire fresh perspectives. We aim to move beyond sympathy toward understanding others and sustaining our attention to their experiences. Through this project, we hope to encourage lasting remembrance of the Japanese military "comfort women."',
+      en: "Hello! We are REMORY, participating in the 2026 Art With Impact program.\n\nThrough art and technology, we explore new ways to tell social stories and inspire fresh perspectives. We aim to move beyond sympathy toward understanding others and sustaining our attention to their experiences. Through this project, we hope to encourage lasting remembrance of the Japanese military “comfort women.”",
     },
     members: [
       {
@@ -1453,7 +1453,7 @@ export const works = [
     id: 17,
     title: {
       ko: "일렁",
-      en: "illeong",
+      en: "Illeong",
     },
     team: {
       ko: "임종 코디네이터",
@@ -1473,7 +1473,7 @@ export const works = [
       en: "So That What Has Passed May Ripple Again",
     },
     description: {
-      ko: "내일 죽는다면, 우리는 세상에 무엇을 남길 수 있을까?\n\n손끝에 닿던 감촉, 귓가에 맴돌던 소리, 눈앞에 선명했던 장면들. 말로는 꺼내지 못했던 기억들이 감각을 따라 다시 떠오른다. 우리는 청각·촉각·시각이 차례로 쌓이는 어두운 공간 안에서 ‘일렁'과의 대화를 시작한다. 기억의 촉감에 집중하고, 이야기의 소리를 겹겹이 쌓으며, 평소라면 꺼내기 어려웠던 감정과 기억을 되살린다.\n\n이는 떠나보낼 사람을 위한 기록이 아니라, 지금 살아있는 나 자신을 위한 시간이다. 흘러간 것들이, 다시 일렁이게끔!",
+      ko: "내일 죽는다면, 우리는 세상에 무엇을 남길 수 있을까?\n\n손끝에 닿던 감촉, 귓가에 맴돌던 소리, 눈앞에 선명했던 장면들. 말로는 꺼내지 못했던 기억들이 감각을 따라 다시 떠오른다. 우리는 청각·촉각·시각이 차례로 쌓이는 어두운 공간 안에서 ‘일렁’과의 대화를 시작한다. 기억의 촉감에 집중하고, 이야기의 소리를 겹겹이 쌓으며, 평소라면 꺼내기 어려웠던 감정과 기억을 되살린다.\n\n이는 떠나보낼 사람을 위한 기록이 아니라, 지금 살아있는 나 자신을 위한 시간이다. 흘러간 것들이, 다시 일렁이게끔!",
       en: "If we were to die tomorrow, what could we leave behind?\n\nThe texture at our fingertips, the sounds in our ears, the scene vivid before our eyes. Unspoken memories come back to us through the senses. In a dark space where sound, touch, and sight build up, we begin a conversation with Illeong, bringing back emotions and memories we would usually find hard to share.\n\nThis is not a record for those we leave behind but time for ourselves, alive right now. So that what has passed may ripple once more!",
     },
     tags: [
@@ -1487,7 +1487,7 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "임종코디네이터는 '좋은 죽음, 좋은 이별' 을 함께 고민하는 팀이다. \n \n죽음을 준비하는 제도는 조금씩 갖춰지고 있지만, 삶을 돌아보고 죽음을 받아들이도록 돕는 상담은 여전히 시간과 비용, 거동의 벽에 막혀 있다. 그래서 우리는 '일렁'을 만들었다. ai에 익숙치 않은 노년층도 쉽게 쓸 수 있는 인터페이스를 설계했다. 우리는 웰다잉을, 삶을 돌이켜보고 스스로를 이해하는 것으로 정의한다.",
+      ko: "임종코디네이터는 ‘좋은 죽음, 좋은 이별’ 을 함께 고민하는 팀이다. \n \n죽음을 준비하는 제도는 조금씩 갖춰지고 있지만, 삶을 돌아보고 죽음을 받아들이도록 돕는 상담은 여전히 시간과 비용, 거동의 벽에 막혀 있다. 그래서 우리는 ‘일렁’을 만들었다. ai에 익숙치 않은 노년층도 쉽게 쓸 수 있는 인터페이스를 설계했다. 우리는 웰다잉을, 삶을 돌이켜보고 스스로를 이해하는 것으로 정의한다.",
       en: "Imjong Coordinator explores what makes a “good death, good farewell.”\n\nEnd-of-life systems are emerging, but counseling that helps people reflect on life and accept death is still limited by time, cost, and mobility. So we made Illeong, an easy interface for older adults new to AI. To us, well-dying means reflecting on life and understanding oneself.",
     },
     members: [
@@ -1664,7 +1664,7 @@ export const works = [
       en: "Take a photo of one and only you(r voice)",
     },
     description: {
-      ko: "출근길 지하철에서, 횡단보도 위에서, 일상 속에서 우리는 모두 비슷해 보입니다. 비슷한 시간에 학교와 일터로 향하고, 비슷한 표정을 짓고 있죠. 그러다 문득 군중 속의 1인일 뿐인 것 같아 빛이 바랜 기분이 들기도 해요.\n\n하지만 우리는 모두 다릅니다. 각자의 성격과 추억, 사랑하는 사람, 항상 듣는 음악과 자주 가는 카페가 있듯, 저마다의 방식으로 빛나고 있으니까요. 목소리는 그 고유함이 가장 잘 드러나는 흔적입니다.\n\n목소리의 기본 높이, 코와 입의 빈 공간에서 일어나는 공명, 성대의 떨림을 측정해 당신만의 '목소리 사진'을 남겨드립니다. 같은 결과물은 단 하나도 없어요. 오로지 당신만을 위한, One and only for you!",
+      ko: "출근길 지하철에서, 횡단보도 위에서, 일상 속에서 우리는 모두 비슷해 보입니다. 비슷한 시간에 학교와 일터로 향하고, 비슷한 표정을 짓고 있죠. 그러다 문득 군중 속의 1인일 뿐인 것 같아 빛이 바랜 기분이 들기도 해요.\n\n하지만 우리는 모두 다릅니다. 각자의 성격과 추억, 사랑하는 사람, 항상 듣는 음악과 자주 가는 카페가 있듯, 저마다의 방식으로 빛나고 있으니까요. 목소리는 그 고유함이 가장 잘 드러나는 흔적입니다.\n\n목소리의 기본 높이, 코와 입의 빈 공간에서 일어나는 공명, 성대의 떨림을 측정해 당신만의 ‘목소리 사진’을 남겨드립니다. 같은 결과물은 단 하나도 없어요. 오로지 당신만을 위한, One and only for you!",
       en: "On our daily commutes and at busy crosswalks, we all seem to look alike, just another face in the crowd. Yet each of us shines in our own way, carrying our own memories, loved ones, go-to songs, and favorite cafes. Your voice is the proof. \n\nBy measuring your pitch, natural resonance, and vocal vibrations, we capture a “voice photo” made only from you. No two are ever the same, because you are the one and only in the world. \n\nOne and only for you!",
     },
     tags: [
@@ -1678,8 +1678,8 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "로지'는 본 전시를 기획한 작가의 이름입니다.\n\n현재 해외 워킹홀리데이 중인 작가는 낯선 환경에 홀로 부딪히는 과정에서 비로소 자신만이 지닌 고유한 정체성을 마주하게 되었습니다. 저마다 가진 개별적인 존재감과 특별함을 시각 매체로 나누고자 이번 전시를 기획했으며, 팀명 '로지'는 작가 자신의 이름이자 고유성 그 자체를 상징합니다.",
-      en: "Rosie' is the name of the artist. \n\nLiving abroad in an unfamiliar environment, she came face-to-face with her unique identity (one somewhat blurred in daily life). She curated this exhibition to share the distinct presence and uniqueness we all hold through visual media. Naturally, 'Rosie' became both her name and a symbol of that singular uniqueness.",
+      ko: "‘로지’는 본 전시를 기획한 작가의 이름입니다.\n\n현재 해외 워킹홀리데이 중인 작가는 낯선 환경에 홀로 부딪히는 과정에서 비로소 자신만이 지닌 고유한 정체성을 마주하게 되었습니다. 저마다 가진 개별적인 존재감과 특별함을 시각 매체로 나누고자 이번 전시를 기획했으며, 팀명 ‘로지’는 작가 자신의 이름이자 고유성 그 자체를 상징합니다.",
+      en: "‘Rosie’ is the name of the artist. \n\nLiving abroad in an unfamiliar environment, she came face-to-face with her unique identity (one somewhat blurred in daily life). She curated this exhibition to share the distinct presence and uniqueness we all hold through visual media. Naturally, ‘Rosie’ became both her name and a symbol of that singular uniqueness.",
     },
     members: [
       {
@@ -1757,7 +1757,7 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "1015는 서울을 기반으로 활동하는 Media Artist로\n여러 애니메이션과 영화, 음학과 문학에서 영감을 얻고 마음에 새겨진 장면과 감각을 이용하여\n드로잉, Creative Coding,TouchDesigner를 이용해 \n실시간으로 변화하는 시각적 요소와 인터랙티브한 경험을 만들어간다.\n\n기술을 하나의 표현 도구로 삼아 예술과 기술의 경계를 탐구하며\n그 움직임이 만들어지는 원리를 탐구하며 작업을 이어가고 있다.",
+      ko: "1015는 서울을 기반으로 활동하는 Media Artist로\n여러 애니메이션과 영화, 음학과 문학에서 영감을 얻고 마음에 새겨진 장면과 감각을 이용하여\n드로잉, Creative Coding, TouchDesigner를 이용해 \n실시간으로 변화하는 시각적 요소와 인터랙티브한 경험을 만들어간다.\n\n기술을 하나의 표현 도구로 삼아 예술과 기술의 경계를 탐구하며\n그 움직임이 만들어지는 원리를 탐구하며 작업을 이어가고 있다.",
       en: "1015 is a Seoul-based media artist inspired by anime, film, music, and literature. Through drawing, creative coding, and TouchDesigner, he turns memorable scenes and sensations into real-time visuals and interactive experiences.\nBy treating technology as an artistic medium, he explores the boundary between art and technology and the principles behind movement.",
     },
     members: [
@@ -1791,7 +1791,7 @@ export const works = [
     },
     team: {
       ko: "공상",
-      en: "day dream",
+      en: "Day dream",
     },
     category: {
       ko: "물음표 너머의,",
@@ -1894,7 +1894,7 @@ export const works = [
     },
     description: {
       ko: "‘EARTH KOREA(얼쑤 코리아)’는 세계의 날씨와 선율을 일월오봉도와 국악으로 풀어내는 참여형 미디어아트다. 해와 달, 다섯 봉우리가 어우러져 질서와 조화를 이루는 일월오봉도에 세계의 날씨와 사계절을 담아, 전통이 오늘날의 자연과 문화를 품는 살아 있는 풍경이 될 수 있음을 보여준다. 관람객이 바닥 세계지도 위에 머무르면 선택한 나라의 대표 지역 날씨와 현지 시각에 따라 풍경이 변하고, 그 나라의 선율을 국악기로 편곡한 음악이 흐른다. 서로 다른 지역의 비와 눈, 낮과 밤은 한국적 조형과 음색 안에서 새로운 감각으로 펼쳐진다. “얼쑤”, “좋다”라는 추임새는 AI로 변환되어 소리와 움직임으로 이어진다. 관람객의 발걸음과 목소리가 한국과 세계가 만나는 장면을 함께 완성한다.",
-      en: "EARTH KOREA reimagines Irworobongdo, a Korean royal landscape painting, through global weather, seasons, and music. By embracing the world's changing nature, the painting becomes a living meeting place for tradition and the present. On the floor map, a visitor’s steps reveal a location's weather and local time, with its melodies played on Korean instruments. AI transforms visitor’s calls of “Eolssu!” into sound and motion. Visitor’s  steps and voice bring Korea and the world together.",
+      en: "EARTH KOREA reimagines Irworobongdo, a Korean royal landscape painting, through global weather, seasons, and music. By embracing the world’s changing nature, the painting becomes a living meeting place for tradition and the present. On the floor map, a visitor’s steps reveal a location’s weather and local time, with its melodies played on Korean instruments. AI transforms visitor’s calls of “Eolssu!” into sound and motion. Visitor’s  steps and voice bring Korea and the world together.",
     },
     tags: [
       {
@@ -2018,10 +2018,10 @@ export const works = [
     },
     tagline: {
       ko: "냉장고 틈 사이의 진짜를 뚫어지게 바라보자.",
-      en: "Peer through the fridge's gap at what is truly there.",
+      en: "Peer through the fridge’s gap at what is truly there.",
     },
     description: {
-      ko: "모델링'은 가상공간에 입체를 만드는 일이자, 복잡한 현실을 이해 가능한 모형으로 단순화하는 일이다. 이 작업은 두 의미의 경계에서 '나'라는 경험을 세우는 재료를 묻는다. 관객은 두 가지 방식으로 입체를 재현한다. 꽉 찬 공간을 깎거나, 공허 속에 단면을 돌려가며 쌓는 것. 깎기는 원본보다 더 깎지 못하고, 쌓기는 원본보다 더 쌓지 못한다. 둘은 우극한과 좌극한처럼 원본에 다가갈 뿐, 그 사이의 원본 자체에는 끝내 닿지 않는다. 냉장고 불빛이 꺼지는 순간을 보려 문틈을 아무리 좁혀도, 먼저 닫히는 것은 언제나 문인 것처럼. 작품 속 도넛은 바로 그 틈을 대신한다. 아무리 주물러도 사라지지 않는 도넛의 구멍처럼, 흔들리지 않는 '나'의 모양을 설치된 냉장고와 웹사이트에서 직접 빚어보길 제안한다.",
+      ko: "‘모델링’은 가상공간에 입체를 만드는 일이자, 복잡한 현실을 이해 가능한 모형으로 단순화하는 일이다. 이 작업은 두 의미의 경계에서 ‘나’라는 경험을 세우는 재료를 묻는다. 관객은 두 가지 방식으로 입체를 재현한다. 꽉 찬 공간을 깎거나, 공허 속에 단면을 돌려가며 쌓는 것. 깎기는 원본보다 더 깎지 못하고, 쌓기는 원본보다 더 쌓지 못한다. 둘은 우극한과 좌극한처럼 원본에 다가갈 뿐, 그 사이의 원본 자체에는 끝내 닿지 않는다. 냉장고 불빛이 꺼지는 순간을 보려 문틈을 아무리 좁혀도, 먼저 닫히는 것은 언제나 문인 것처럼. 작품 속 도넛은 바로 그 틈을 대신한다. 아무리 주물러도 사라지지 않는 도넛의 구멍처럼, 흔들리지 않는 ‘나’의 모양을 설치된 냉장고와 웹사이트에서 직접 빚어보길 제안한다.",
       en: "Modeling means building 3D forms in virtual space and simplifying reality into models. Between them, the work asks: what can we draw from within to know who we are, beyond external definitions? Visitors carve a solid or stack and rotate cross-sections. Like left and right limits, both near the original but never reach it, like watching a fridge light go out: the door always shuts first. The doughnut is that gap; its hole persists as its form shifts. Via the fridge and site, seek an elusive self.",
     },
     tags: [
@@ -2035,7 +2035,7 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "준소기업은 준이 기획하고 혜림이 만들어내는 2인 사업장이다. 물론 수익은 나지 않으며 대 적자 상황을 겪고 있다. 이미 행해졌거나 논의되었던 생각이라도 ’지금‘, ’이곳에서‘ ’우리가‘하기에 존재하는 의미가 있다고 믿으며 그래픽과 인터렉션 등을 기획하고 만든다. 기존 작업물은 없으며 2026ATC로 데뷔 예정이다.",
+      ko: "준소기업은 준이 기획하고 혜림이 만들어내는 2인 사업장이다. 물론 수익은 나지 않으며 대 적자 상황을 겪고 있다. 이미 행해졌거나 논의되었던 생각이라도 ‘지금’, ‘이곳에서’ ‘우리가’하기에 존재하는 의미가 있다고 믿으며 그래픽과 인터렉션 등을 기획하고 만든다. 기존 작업물은 없으며 2026 ATC로 데뷔 예정이다.",
       en: "Jun So Corp is a two-person studio where Jun plans and Hyerim makes. Naturally, it turns no profit and is running deep in the red. Believing that even ideas already done or discussed gain meaning because we do them, here, now, the studio plans and creates graphics and interactions. With no prior works, Jun So Corp will make its debut at 2026 ATC.",
     },
     members: [
@@ -2105,7 +2105,7 @@ export const works = [
     },
     description: {
       ko: "오늘날 인공지능은 대규모 데이터를 기반으로 인간의 행동과 사고에 관한 패턴을 학습하고 예측하며, 이는 인간 고유의 영역이 무엇인가라는 질문을 불러일으킨다. 가상공간에서 참여자가 현재 느끼는 주관적 감각은 움직임을 통해 인공지능의 예측 과정에 반영된다. 시스템은 우주 이미지에서 추출한 밝은 점들로 이루어진 곡선 패턴을 학습한 트랜스포머 모델을 사용한다. 이 모델은 참여자의 움직임과 유사한 패턴을 검색하고, 이를 바탕으로 예측된 형태를 생성한다. 이 과정에서 참여자의 감각은 생성되는 패턴의 다양성을 형성하는 주요 요인으로 작용한다. 이를 통해 본 작업은 주관적 감각으로부터 발현되는 미래의 가능성을 성찰한다.",
-      en: "Today, AI learns and predicts human behavior from large data, questioning what remains uniquely human. In virtual space, a participant's present sensation is reflected in AI's predictive process through movement. The system uses a Transformer trained on curve patterns of bright points in cosmic imagery. It retrieves similar patterns and generates predicted forms. The sensation shapes the diversity of generated forms. The artwork reflects on possible futures emerging from subjective sensation.",
+      en: "Today, AI learns and predicts human behavior from large data, questioning what remains uniquely human. In virtual space, a participant’s present sensation is reflected in AI’s predictive process through movement. The system uses a Transformer trained on curve patterns of bright points in cosmic imagery. It retrieves similar patterns and generates predicted forms. The sensation shapes the diversity of generated forms. The artwork reflects on possible futures emerging from subjective sensation.",
     },
     tags: [
       {
@@ -2288,7 +2288,7 @@ export const works = [
     },
     description: {
       ko: "어느 날 머리가 좌우로 쪼개져버린 김잠비씨. 양쪽 몸이 따로따로 움직이는데요! 브레인/스플릿에서는 2명의 플레이어가 잠비의 좌반신과 우반신을 맡아 움직여야 합니다. 친구와 합심하여 온갖 미션을 해결해 보세요!\n\n마우스만 사용해 여러가지 퍼즐을 푸세요! 2명이 한 몸을 조종하려니, 일상적인 일조차 긴장감 넘치는 챌린지로 탈바꿈합니다.\n\n오로지 우반신을 담당하는 플레이어만 말을 할 수 있습니다! 우반신은 모든 걸 잘 설명해야 하고, 좌반신 플레이어는 잘 듣고 이해해야 합니다.",
-      en: "One day, Zambee's head split open from side to side. Both bodies are moving separately! In Brain/Split, two players must control Zambee's left and right hind legs. Team up with your friends and solve all kinds of missions!\n\nSolve different puzzles using only your mouse! With two people controlling a single body, even everyday tasks turn into a tense challenge.\n\nOnly the player controlling the right side can speak! Right-side players must explain everything, while left-side players listen!",
+      en: "One day, Zambee’s head split open from side to side. Both bodies are moving separately! In Brain/Split, two players must control Zambee’s left and right hind legs. Team up with your friends and solve all kinds of missions!\n\nSolve different puzzles using only your mouse! With two people controlling a single body, even everyday tasks turn into a tense challenge.\n\nOnly the player controlling the right side can speak! Right-side players must explain everything, while left-side players listen!",
     },
     tags: [
       {
@@ -2376,8 +2376,8 @@ export const works = [
       en: "A game about a labor robot who dreams of becoming human through love and seeks to escape oppression",
     },
     description: {
-      ko: "로봇의 권리가 보장되지 않는 근미래 사회. 당신은' 플루토스 공업'에서 반품된 불량 모터를 검수하며 하루치 연료비만 받고 간신히 작동을 유지하는 하자 검수용 로봇이다. 유일한 낙은 정체를 모르는 상대 ‘크로노스’와의 랜덤 채팅이다. 그를 통해 사랑을 배우던 당신은 어느 날, 인간이 될 수 있다는 소문과 암상인을 접하게 되고, 인간이 되어 작업장을 탈출해 '크로노스'를 만나는 날을 꿈꾸게 된다. 결국 당신은 정해진 기간 불량 모터를 검수해 돈을 벌고, 연료와 신뢰도를 관리하며 탈출을 준비하게 되는데...\n\n로봇 주인공의 인간적인 면모와 인간 사장의 비인간적 행보의 대비, 그리고 로봇의 시각으로 바라본 인간 사회에 대한 분석을 통해 미래 사회의 진정한 인간다움과 자유에 대해 질문을 던진다.",
-      en: "In a near-future society where robots are denied basic rights, you play as a defective inspection robot struggling to survive on barely enough fuel. When rumors emerge that robots can become human, you dream of escaping the factory and meeting your anonymous lover, 'Kronos'. Inspect faulty motors, and earn money to prepare for your escape.\n\nThrough the contrast between the robot’s humanity and its human employer’s cruelty, the game explores what it truly means to be human and free.",
+      ko: "로봇의 권리가 보장되지 않는 근미래 사회. 당신은 ‘플루토스 공업’에서 반품된 불량 모터를 검수하며 하루치 연료비만 받고 간신히 작동을 유지하는 하자 검수용 로봇이다. 유일한 낙은 정체를 모르는 상대 ‘크로노스’와의 랜덤 채팅이다. 그를 통해 사랑을 배우던 당신은 어느 날, 인간이 될 수 있다는 소문과 암상인을 접하게 되고, 인간이 되어 작업장을 탈출해 ‘크로노스’를 만나는 날을 꿈꾸게 된다. 결국 당신은 정해진 기간 불량 모터를 검수해 돈을 벌고, 연료와 신뢰도를 관리하며 탈출을 준비하게 되는데...\n\n로봇 주인공의 인간적인 면모와 인간 사장의 비인간적 행보의 대비, 그리고 로봇의 시각으로 바라본 인간 사회에 대한 분석을 통해 미래 사회의 진정한 인간다움과 자유에 대해 질문을 던진다.",
+      en: "In a near-future society where robots are denied basic rights, you play as a defective inspection robot struggling to survive on barely enough fuel. When rumors emerge that robots can become human, you dream of escaping the factory and meeting your anonymous lover, ‘Kronos’. Inspect faulty motors, and earn money to prepare for your escape.\n\nThrough the contrast between the robot’s humanity and its human employer’s cruelty, the game explores what it truly means to be human and free.",
     },
     tags: [
       {
@@ -2438,7 +2438,7 @@ export const works = [
     links: [
       {
         type: "website",
-        label: "Notion",
+        label: "Website",
         value: "app.notion.com/p/UNSPEC-D-DAY-3c18f43a40f680789bd2f52f30f4259f",
         url: "https://app.notion.com/p/UNSPEC-D-DAY-3c18f43a40f680789bd2f52f30f4259f",
       },
@@ -2568,7 +2568,7 @@ export const works = [
     ],
     teamDescription: {
       ko: "저희는 일상 속에서 마주하는 사소하지만 익숙한 불편함에 주목했습니다. SNS에서 화제가 되는 각종 공공장소의 빌런부터 팀원들이 직접 경험한 일상의 민폐까지, 현실에서는 참고 지나쳤던 순간들을 게임이라는 새로운 방식으로 풀어보고자 했습니다. 게임 개발 경험이 없는 1학년 학생들이 모여 기획부터 디자인, 개발까지 모든 과정을 함께 고민하고 부딪히며 완성했습니다. 현실에서는 참았더라도, 게임에서만큼은 참지 말자는 마음으로!",
-      en: "We focus on everyday frustrations, from viral troublemakers on social media to our own experiences. We wanted to turn moments we usually endure or ignore into a playful gaming experience. As first-year students with no prior game development experience, we brought the game to life together, from planning and design to development. Don't put up with it in the game!",
+      en: "We focus on everyday frustrations, from viral troublemakers on social media to our own experiences. We wanted to turn moments we usually endure or ignore into a playful gaming experience. As first-year students with no prior game development experience, we brought the game to life together, from planning and design to development. Don’t put up with it in the game!",
     },
     members: [
       {
@@ -2683,7 +2683,7 @@ export const works = [
     },
     description: {
       ko: "외계인이 점령한 퇴근 시간의 사무실! 동료들과 함께 탈출하세요. 바퀴벌레나 의자를 타고 질주하고, 물건을 던져 외계인을 기절시키고, 짜증나는 부장님을 괴롭히는 등, 정전·화재·침공 여러 재난상황에서 바보같은 상상을 하며 탈출하는 3D 협동 탈출 게임.",
-      en: "It's quitting time, and aliens have taken over the office! Team up with your coworkers and break out. Race around on cockroaches and office chairs, knock aliens out cold with flying furniture, and mess with your annoying boss — a 3D co-op escape game where you let your silliest imagination run wild through blackouts, fires, and an alien invasion.",
+      en: "It’s quitting time, and aliens have taken over the office! Team up with your coworkers and break out. Race around on cockroaches and office chairs, knock aliens out cold with flying furniture, and mess with your annoying boss — a 3D co-op escape game where you let your silliest imagination run wild through blackouts, fires, and an alien invasion.",
     },
     tags: [
       {
@@ -2753,7 +2753,7 @@ export const works = [
     id: 31,
     title: {
       ko: "빤히...",
-      en: "wait and see",
+      en: "Wait and See",
     },
     team: {
       ko: "맷돌 스튜디오",
@@ -2774,7 +2774,7 @@ export const works = [
     },
     description: {
       ko: "유학을 마치고 돌아온 고향은 어딘가 다르게 바뀌어 있고, 친구는 괴물이 되어버렸다. 마을을 돌아다니며 NPC와 이야기하고, 수집한 증거를 바탕으로 추리해서 친구의 저주를 풀어주자.\n\n마을의 진실을 파헤치는 퍼즐형 추리게임 ⟪빤히…⟫",
-      en: "After returning home from studying abroad, you find that your hometown has changed in strange ways—and your friend has turned into a monster.\nExplore the village, talk to NPCs, and use the evidence you collect to piece together the clues and break your friend's curse.\n\nUncover the truth behind the village in ⟪wait and see⟫, a puzzle-based mystery game.",
+      en: "After returning home from studying abroad, you find that your hometown has changed in strange ways—and your friend has turned into a monster.\nExplore the village, talk to NPCs, and use the evidence you collect to piece together the clues and break your friend’s curse.\n\nUncover the truth behind the village in ⟪wait and see⟫, a puzzle-based mystery game.",
     },
     tags: [
       {
@@ -2909,7 +2909,7 @@ export const works = [
     },
     tagline: {
       ko: "소리들이 서로를 끌어당기며 자신들의 목표를 찾아가는 유기적인 오르간",
-      en: 'The "Organic Organ" where sounds pull one another while each searches for its goal',
+      en: "The “Organic Organ” where sounds pull one another while each searches for its goal",
     },
     description: {
       ko: "화면을 누르면 그 자리에 오르간 소리가 하나 태어납니다. 세로축은 위로 갈수록 고음이며, 가로축은 공간입니다. 공간적으로 가까운 소리들은 서로의 옥타브, 5도, 4도, 장3도 지점을 목표 삼아 끌려가며 서서히 화음을 이룹니다. 소리는 최대 16개까지 존재하며, 이를 넘으면 가장 오래된 소리부터 차례로 소멸합니다. 목표에 닿아 가만히 안주하는 소리는 점점 사그라들어 생을 마감하며, 목표를 좇아 움직이는 소리만 살아남습니다. 오른쪽 클릭으로 세상이 뒤집히면 소리와 화면이 함께 바뀝니다. PID 제어에서 착안해, 밝은 배경에서는 미래를 내다보는 마음(D)을, 회색 배경에서는 과거를 기억하는 마음(I)을 아래 눈금으로 조절할 수 있습니다. 마우스 휠로 노이즈를 더해 소리를 흔들 수도 있습니다.",
@@ -2927,7 +2927,7 @@ export const works = [
     ],
     teamDescription: {
       ko: "범과겸은 따뜻한 삶과 세상을 꿈꾸는 음악 듀오입니다. 서강대학교에서 밴드 활동으로 처음 만난 저희는 자유로운 음악을 더 이어가고 싶어 듀오로 앨범을 준비하고 있습니다. 앨범에 담을 새로운 사운드를 구상하다 악기 소프트웨어를 만들기로 했고, 깊은 주제의 앨범인 만큼 그에 걸맞게 동작하길 바랐습니다. 사람은 생명체이면서 기계에 생명을 불어넣어 숨 쉬게 하는 독특한 존재라고 생각했고, 인간만이 가진 이 가치를 담고자 했습니다. 손에서 태어나 손을 떠나서도 스스로 살아 움직이는 Organic Organ으로 ATC에 참여하게 되었습니다.",
-      en: "Beom & Kyeom is a music duo dreaming of a warmer life and world. We met in a band at Sogang University and wanted to keep making music freely, so we're now preparing an album. While imagining its sound, we decided to build our own software instrument. We believe humans are unique: living beings who can make machines breathe. So we made an organic organ that, born from our hands, lives on its own.",
+      en: "Beom & Kyeom is a music duo dreaming of a warmer life and world. We met in a band at Sogang University and wanted to keep making music freely, so we’re now preparing an album. While imagining its sound, we decided to build our own software instrument. We believe humans are unique: living beings who can make machines breathe. So we made an organic organ that, born from our hands, lives on its own.",
     },
     members: [
       {
@@ -3005,7 +3005,7 @@ export const works = [
     ],
     teamDescription: {
       ko: "효소처리 스테비아라는 이름에 특별한 의미는 없습니다. 그저 어감이 좋아 선택했습니다. 뚜렷한 이유도, 명확한 설명도 어렵지만 왠지 마음이 가는 단어를 이렇게라도 사용해보고 싶었습니다. 좋아하는 것들을 많이 만듭시다. 그 이유가 막연할지라도.",
-      en: "The name \"glucosyl stevia\" has no particular meaning. I simply liked the way it sounded. I couldn't quite explain why, but I wanted to find a way to use a word that somehow drew me in. Let's fill our lives with things we love, even if we can't quite put into words why.",
+      en: "The name “glucosyl stevia” has no particular meaning. I simply liked the way it sounded. I couldn’t quite explain why, but I wanted to find a way to use a word that somehow drew me in. Let’s fill our lives with things we love, even if we can’t quite put into words why.",
     },
     members: [
       {
@@ -3048,7 +3048,7 @@ export const works = [
     },
     team: {
       ko: "눈꽃",
-      en: "snowflake",
+      en: "Snowflake",
     },
     category: {
       ko: "그래서 난!",
@@ -3078,8 +3078,8 @@ export const works = [
       },
     ],
     teamDescription: {
-      ko: "눈꽃이 흩날리는 겨울이 오기 전까지 작품을 무사히 완성하겠다는 의지를 담아 '눈꽃'이라고 이름 지었습니다.",
-      en: "The team was named 'Snowflake' to reflect the determination to successfully complete the project before the winter snow begins to fall.",
+      ko: "눈꽃이 흩날리는 겨울이 오기 전까지 작품을 무사히 완성하겠다는 의지를 담아 ‘눈꽃’이라고 이름 지었습니다.",
+      en: "The team was named ‘Snowflake’ to reflect the determination to successfully complete the project before the winter snow begins to fall.",
     },
     members: [
       {
