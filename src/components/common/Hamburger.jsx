@@ -3,11 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled, { useTheme } from "styled-components";
 import { ROUTES, isBrandDarkPath } from "@/constants/routes";
 import useTranslation from "@/hooks/useTranslation";
 import { media } from "@/styles/media";
+
+const SWIPE_THRESHOLD = 50;
 
 export default function Hamburger() {
   const [open, setOpen] = useState(false);
@@ -16,6 +18,7 @@ export default function Hamburger() {
   const { t } = useTranslation();
   const isBrandDark = isBrandDarkPath(usePathname());
   const theme = useTheme();
+  const touchStart = useRef(null);
 
   useEffect(() => {
     const onKeyDown = (event) => event.key === "Escape" && setOpen(false);
@@ -45,6 +48,18 @@ export default function Hamburger() {
   const toggle = () => {
     if (!open) setSheetActive(true);
     setOpen(!open);
+  };
+  // 시트는 왼쪽에서 열리므로, 가로로 더 많이 움직인 왼쪽 스와이프면 닫음
+  const handleTouchEnd = (event) => {
+    if (touchStart.current === null) return;
+
+    const { clientX, clientY } = event.changedTouches[0];
+    const deltaX = clientX - touchStart.current.x;
+    const deltaY = clientY - touchStart.current.y;
+    touchStart.current = null;
+
+    if (deltaX <= -SWIPE_THRESHOLD && Math.abs(deltaX) > Math.abs(deltaY))
+      close();
   };
   const handleSheetTransitionEnd = (event) => {
     if (event.target !== event.currentTarget) return;
@@ -79,6 +94,11 @@ export default function Hamburger() {
         aria-hidden={!open}
         data-sheet-active={sheetActive}
         onTransitionEnd={handleSheetTransitionEnd}
+        onTouchStart={(event) => {
+          const { clientX, clientY } = event.touches[0];
+          touchStart.current = { x: clientX, y: clientY };
+        }}
+        onTouchEnd={handleTouchEnd}
       >
         <Menu>
           <Group>
@@ -127,6 +147,8 @@ export default function Hamburger() {
           </Group>
         </Menu>
       </Sheet>
+      {/* 시트가 열려 있는 동안 오른쪽 레일을 누르면 닫힘 (닫기 버튼과 중복이라 탭 순서·스크린리더에서는 제외) */}
+      {open && <RailCloser aria-hidden="true" tabIndex={-1} onClick={close} />}
     </>
   );
 }
@@ -182,6 +204,24 @@ const Sheet = styled.div`
   `}
 `;
 
+// 오른쪽 레일(태블릿 6%, 모바일 2.4rem)을 덮는 투명 영역. 레일(z-index 101)보다 위
+const RailCloser = styled.button`
+  position: fixed;
+  z-index: 102;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 6%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  ${media.mobile`
+    width: 2.4rem;
+  `}
+`;
+
 const Menu = styled.nav`
   margin: auto 2rem 4rem;
   border-bottom: 1px solid currentColor;
@@ -203,8 +243,10 @@ const MainLink = styled(Link)`
   font-size: ${({ theme }) => theme.typography.fontSize.textLg};
   font-weight: 700;
   line-height: 180%;
-  &:hover {
-    text-decoration: underline;
+  @media (hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
@@ -220,7 +262,9 @@ const SubLink = styled(Link)`
   width: fit-content;
   color: ${({ theme }) => theme.primitives.green[100]};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  &:hover {
-    text-decoration: underline;
+  @media (hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;

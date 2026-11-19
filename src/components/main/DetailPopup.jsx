@@ -10,6 +10,32 @@ import { foodSrc } from "@/components/main/ClocheStage";
 
 
 const POPUP_FOOD_ZOOM = 2.2;
+// 팝업 박스는 최대 34rem(=340px)이라 이미지 영역은 310px을 넘지 않음 (좁은 화면에선 약 80vw)
+// iOS Safari는 sizes 안의 min()을 못 읽어 마지막 값으로 떨어지므로, min() 없이 미디어쿼리로만 적음
+const POPUP_FOOD_SIZES = "(max-width: 387px) 80vw, 310px";
+
+const PopupFoodImage = ({ food }) => (
+  <Image
+    src={foodSrc(food.file)}
+    alt=""
+    fill
+    sizes={POPUP_FOOD_SIZES}
+    loading="eager"
+    style={{
+      objectFit: "contain",
+      transform: `scale(${food.scale * POPUP_FOOD_ZOOM})`,
+    }}
+  />
+);
+
+// 팝업을 열기 전에 같은 크기의 이미지를 미리 받아둬서, 자세히보기를 누르면 바로 뜨게 함
+export function DetailPopupPreload({ food }) {
+  return (
+    <PreloadBox aria-hidden="true">
+      <PopupFoodImage food={food} />
+    </PreloadBox>
+  );
+}
 
 
 export default function DetailPopup({ food, question, onClose, children }) {
@@ -30,16 +56,7 @@ export default function DetailPopup({ food, question, onClose, children }) {
         onClick={(event) => event.stopPropagation()}
       >
         <PopupFood>
-          <Image
-            src={foodSrc(food.file)}
-            alt=""
-            fill
-            sizes="80vw"
-            style={{
-              objectFit: "contain",
-              transform: `scale(${food.scale * POPUP_FOOD_ZOOM})`,
-            }}
-          />
+          <PopupFoodImage food={food} />
         </PopupFood>
         {question && <PopupTitle>{question}</PopupTitle>}
         <PopupBody>{children}</PopupBody>
@@ -60,6 +77,15 @@ const CloseIcon = () => (
     />
   </svg>
 );
+
+const PreloadBox = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+`;
 
 const PopupBackdrop = styled.div`
   display: none;

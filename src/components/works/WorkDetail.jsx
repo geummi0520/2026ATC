@@ -23,6 +23,18 @@ const CONTACT_ICONS = {
   website: "/icons/works/link_icon.svg",
 };
 
+const CONTACT_ORDER = ["email", "instagram", "github", "linkedin"];
+
+const getContactRank = (type) => {
+  const rank = CONTACT_ORDER.indexOf(type);
+  return rank === -1 ? CONTACT_ORDER.length : rank;
+};
+
+const sortContacts = (contacts) =>
+  [...contacts].sort(
+    (a, b) => getContactRank(a.type) - getContactRank(b.type)
+  );
+
 export default function WorkDetail({ work }) {
   const { t, translate } = useTranslation();
   const title = translate(work.title);
@@ -37,7 +49,7 @@ export default function WorkDetail({ work }) {
     ? work.images.detail
     : [work.images.thumbnail];
   const videoEmbedUrl = work.video?.embed
-    ? `${work.video.embed}?autoplay=1&muted=1`
+    ? `${work.video.embed}?autoplay=1&portrait=0&byline=0`
     : null;
   const backHref = useWorksBackHref(work.id);
   const { plan } = useStamp();
@@ -140,7 +152,7 @@ export default function WorkDetail({ work }) {
               </Copy>
               <MediaList>
                 {videoEmbedUrl && (
-                  <Video>
+                  <Video $aspectRatio={work.video.aspectRatio}>
                     <iframe
                       src={videoEmbedUrl}
                       title={`${title} 영상`}
@@ -176,7 +188,7 @@ export default function WorkDetail({ work }) {
                   <li key={`${member.role}-${translate(member.name)}`}>
                     <span>{translate(member.name)}</span>
                     <Contacts>
-                      {member.contacts.map((contact) => (
+                      {sortContacts(member.contacts).map((contact) => (
                         <ContactLink
                           key={`${contact.type}-${contact.url}`}
                           href={contact.url}
@@ -272,6 +284,7 @@ const CompactBackRow = styled.div`
     height: auto;
     min-height: 4.8rem;
     padding: 2rem 0 0;
+    margin: 0rem;
 
     > * {
       align-self: center;
@@ -460,6 +473,7 @@ const Paragraph = styled.p`
   color: ${({ theme }) => theme.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
   line-height: 1.8;
+  white-space: pre-line;
 `;
 
 const MediaList = styled.div`
@@ -486,7 +500,7 @@ const MediaList = styled.div`
 
 const Video = styled.div`
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: ${({ $aspectRatio }) => $aspectRatio || "16 / 9"};
   background: ${({ theme }) => theme.primitives.grey[950]};
 
   iframe {

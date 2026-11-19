@@ -11,6 +11,7 @@ export default function WorksRail({
   onSelectCategory,
   onBack,
   backHref,
+  backLabel,
 }) {
   const { translate } = useTranslation();
 
@@ -19,7 +20,7 @@ export default function WorksRail({
       {backHref ? (
         <BackButton href={backHref} />
       ) : onBack ? (
-        <BackButton onClick={onBack} />
+        <BackButton onClick={onBack} label={backLabel} />
       ) : null}
 
       {categories.length > 0 && (
@@ -53,6 +54,13 @@ const Rail = styled.nav`
   border-bottom: 1px solid var(--layout-line);
   background: var(--layout-background);
 
+  /* 폭이 모자랄 때 이전으로 버튼은 줄바꿈 없이 유지하고 카테고리 목록만 스크롤 */
+  > a,
+  > button {
+    flex: none;
+    white-space: nowrap;
+  }
+
   ${media.worksTablet`
     padding: 1.2rem 2rem;
   `}
@@ -62,11 +70,19 @@ const Rail = styled.nav`
   `}
 `;
 
+// 영문 등으로 카테고리가 레일 폭보다 길어지면 이전으로 버튼은 두고 이 영역만 가로 스크롤
 const CategoryList = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  min-width: 0;
   margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   ${media.mobile`
     display: none;
@@ -89,9 +105,15 @@ const CategoryButton = styled.button`
   cursor: pointer;
   transition: color 160ms ease, border-color 160ms ease;
 
-  &:hover,
   &:focus-visible {
     color: ${({ theme }) => theme.text.brand};
     font-weight: 700;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: ${({ theme }) => theme.text.brand};
+      font-weight: 700;
+    }
   }
 `;

@@ -59,6 +59,8 @@ const ko = {
     overview: "전시 개요",
     topic: "주제문",
     topicSentence: "레시피 바꾸지 말 것 *",
+    dateTime: `11.26(목)  15:30 — 21:00
+              11.27(금) - 11.29(일)     10:00 — 21:00`,
     congratulatory: "축사",
     staffCredit: "스태프 크레딧",
     linkToStaffCredit: "스태프 크레딧 바로가기",
@@ -68,8 +70,9 @@ const ko = {
     sponsor: "협력 및 후원",
     sponsor1: "일상처방",
     sponsor2: "스마일게이트",
-    sponsor3: "대학혁신 지원사업",
+    sponsor3: "대학혁신지원사업",
     sponsor4: "서강퓨처랩",
+    map_url: "/images/about/오시는길_kr.svg",
   },
   works: {
     expandMap: "크게 보기",
@@ -80,6 +83,7 @@ const ko = {
     schedule: "전시기간",
     supporting: "supporting",
     category: "작품 카테고리",
+    viewAll: "전체 작품 보기",
     work: "작품 소개",
     team: "팀 소개",
   },

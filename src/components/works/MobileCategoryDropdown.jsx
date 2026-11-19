@@ -126,9 +126,9 @@ const StickyAnchor = styled.div`
 
 const Container = styled.div`
   position: absolute;
-  right: 1rem;
+  right: 0;
   bottom: 2rem;
-  left: 1rem;
+  left: 0;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.line.brand};
   border-radius: 2.4rem;

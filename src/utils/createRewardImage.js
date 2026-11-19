@@ -9,41 +9,72 @@ import {
 import { maruBuri } from "@/styles/fonts";
 import theme from "@/styles/theme";
 
-// 저장용 PNG(투명 배경): 도장이 찍힌 카드 + SSR 계란(폭죽·태그 포함, stamp_export.png) + 수집 라벨
-// 아래 좌표·크기는 모두 시안(2000 x 1144) 기준 px이며, SCALE로 키워서 그림
-// 시안의 카드 너비(1347)가 카드 원본(1700px)과 같아지도록 키움 → 카드를 줄이지 않아 선이 깨지지 않음
-const CARD_DESIGN_WIDTH = 1347;
-const SCALE = STAMP_CARD_SIZE.width / CARD_DESIGN_WIDTH;
-const CANVAS_WIDTH = Math.round(2000 * SCALE);
-const CANVAS_HEIGHT = Math.round(1144 * SCALE);
-
 const LABEL_LINE = theme.line.brand;
 const LABEL_TEXT = theme.primitives.green[700];
 const LABEL_BACKGROUND = "#F1F2F4";
 // canvas는 CSS 변수를 못 읽으므로 next/font가 만든 실제 family 이름을 사용
 const FONT_FAMILY = maruBuri.style.fontFamily;
 
-// 시안 기준 배치 (center: 중심 좌표, rotate: 기울기 deg)
-const CARD = {
-  center: { x: 1294, y: 456 },
-  width: CARD_DESIGN_WIDTH,
-  rotate: 2.7,
-};
-// 폭죽 + 계란 + <초-레어 SSR 계란> 태그가 한 장으로 묶인 시안 export (1211 x 1205)
-const EGG_EXPORT = {
-  src: "/images/stamp/stamp_export.png",
-  x: 55,
-  y: 136,
-  width: 980,
-  height: 980 * (1205 / 1211),
-};
-const LABEL = {
-  center: { x: 1497, y: 909 },
-  width: 856,
-  rotate: 11.66,
+// 레이아웃별 배치. 좌표·크기는 각 시안 기준 px이며 scale을 곱해 캔버스에 그림
+// (center: 중심 좌표, rotate: 기울기 deg)
+// landscape(저장용, 투명 배경): 시안 2000 x 1144.
+//   시안의 카드 너비(1347)가 카드 원본(1700px)과 같아지도록 키움 → 카드를 줄이지 않아 선이 깨지지 않음
+// story(공유용, 인스타 스토리 9:16): 시안 1080 x 1920을 1800 x 3200으로 키움
+//   (tada_export_story.png 원본 너비 1800에 맞춤). 위 ~250px, 아래 ~300px은 인스타 UI에 가려짐
+const LANDSCAPE_CARD_WIDTH = 1347;
+const LANDSCAPE_SCALE = STAMP_CARD_SIZE.width / LANDSCAPE_CARD_WIDTH;
+const STORY_SCALE = 1800 / 1080;
+
+const LAYOUTS = {
+  landscape: {
+    scale: LANDSCAPE_SCALE,
+    width: Math.round(2000 * LANDSCAPE_SCALE),
+    height: Math.round(1144 * LANDSCAPE_SCALE),
+    card: {
+      center: { x: 1294, y: 456 },
+      width: LANDSCAPE_CARD_WIDTH,
+      rotate: 2.7,
+    },
+    label: { center: { x: 1497, y: 909 }, width: 856, rotate: 11.66 },
+    // 폭죽 + 계란 + <초-레어 SSR 계란> 태그가 한 장으로 묶인 시안 export (1211 x 1205)
+    eggExport: {
+      src: "/images/stamp/stamp_export.png",
+      x: 55,
+      y: 136,
+      width: 980,
+      height: 980 * (1205 / 1211),
+    },
+  },
+  story: {
+    scale: STORY_SCALE,
+    width: 1800,
+    height: 3200,
+    background: theme.background.brand,
+    card: {
+      center: { x: 420, y: 480 },
+      width: 640,
+      rotate: -9,
+      shadow: { color: "rgba(0, 0, 0, 0.18)", blur: 24, offsetY: 8 },
+    },
+    label: { center: { x: 775, y: 1330 }, width: 540, rotate: 8.7 },
+    // 화면 너비에 꽉 차는 폭죽 (1800 x 1929). 위쪽 좌표만 지정
+    tada: {
+      src: "/images/stamp/tada_export_story.png",
+      top: 600,
+      ratio: 1929 / 1800,
+    },
+    // 계란 받침 (542 x 902). 가로 중심 + 위쪽 좌표 + 높이
+    egg: {
+      src: "/images/stamp/rare_egg.webp",
+      centerX: 555,
+      top: 540,
+      height: 1060,
+      ratio: 542 / 902,
+    },
+  },
 };
 
-// 라벨 내부 배치는 stamp_label.svg 사각형(409 x 104.77) 단위로 잡고 LABEL.width에 맞춰 늘림
+// 라벨 내부 배치는 stamp_label.svg 사각형(409 x 104.77) 단위로 잡고 레이아웃의 label.width에 맞춰 늘림
 const LABEL_UNIT = { width: 409, height: 104.77 };
 const LABEL_ROWS = [25, 52, 79];
 const LABEL_COLUMNS = [
@@ -90,9 +121,9 @@ const loadFonts = () =>
 const toRadian = (degree) => (degree * Math.PI) / 180;
 
 // 중심 좌표로 이동 + 회전한 좌표계에서 draw 실행
-const withTransform = (context, { x, y }, rotate, draw) => {
+const withTransform = (context, scale, { x, y }, rotate, draw) => {
   context.save();
-  context.translate(x * SCALE, y * SCALE);
+  context.translate(x * scale, y * scale);
   context.rotate(toRadian(rotate));
   draw();
   context.restore();
@@ -118,12 +149,20 @@ const drawStar = (context, centerX, centerY, radius) => {
   context.fill();
 };
 
-const drawCard = (context, card, stampImages, plan, collected) => {
-  const width = CARD.width * SCALE;
+const drawCard = (context, layout, card, stampImages, plan, collected) => {
+  const { scale, card: placement } = layout;
+  const width = placement.width * scale;
   const height = width * (STAMP_CARD_SIZE.height / STAMP_CARD_SIZE.width);
 
-  withTransform(context, CARD.center, CARD.rotate, () => {
+  withTransform(context, scale, placement.center, placement.rotate, () => {
+    // 그림자는 카드에만 주고 도장에는 겹쳐 생기지 않게 바로 끔
+    if (placement.shadow) {
+      context.shadowColor = placement.shadow.color;
+      context.shadowBlur = placement.shadow.blur * scale;
+      context.shadowOffsetY = placement.shadow.offsetY * scale;
+    }
     context.drawImage(card, -width / 2, -height / 2, width, height);
+    context.shadowColor = "transparent";
 
     stampImages.forEach((stampImage, index) => {
       const egg = STAMP_CARD_EGGS[index];
@@ -166,13 +205,14 @@ const getLabelColumns = (plan) => {
   ];
 };
 
-const drawLabel = (context, plan) => {
+const drawLabel = (context, layout, plan) => {
+  const { scale, label: placement } = layout;
   // 라벨 단위(stamp_label.svg) → 캔버스 px
-  const unit = (LABEL.width * SCALE) / LABEL_UNIT.width;
+  const unit = (placement.width * scale) / LABEL_UNIT.width;
   const width = LABEL_UNIT.width * unit;
   const height = LABEL_UNIT.height * unit;
 
-  withTransform(context, LABEL.center, LABEL.rotate, () => {
+  withTransform(context, scale, placement.center, placement.rotate, () => {
     context.translate(-width / 2, -height / 2);
 
     context.fillStyle = LABEL_BACKGROUND;
@@ -218,7 +258,67 @@ const drawLabel = (context, plan) => {
   });
 };
 
-export const createRewardImage = async ({ plan, collected }) => {
+// 가로(저장용): 카드 → 계란 묶음(폭죽이 카드 위로 겹침) → 라벨
+const drawLandscape = async (context, layout, drawCardLayer, drawLabelLayer) => {
+  const { scale, eggExport } = layout;
+  const eggImage = await loadImage(eggExport.src);
+
+  drawCardLayer();
+  context.drawImage(
+    eggImage,
+    eggExport.x * scale,
+    eggExport.y * scale,
+    eggExport.width * scale,
+    eggExport.height * scale
+  );
+  drawLabelLayer();
+};
+
+// 스토리(공유용): 배경 → 폭죽 → 계란 받침 → 카드(계란 끝에 걸침) → 라벨
+const drawStory = async (context, layout, drawCardLayer, drawLabelLayer) => {
+  const { scale, tada, egg } = layout;
+  const [tadaImage, eggImage] = await Promise.all([
+    loadImage(tada.src),
+    loadImage(egg.src),
+  ]);
+
+  context.fillStyle = layout.background;
+  context.fillRect(0, 0, layout.width, layout.height);
+
+  context.drawImage(
+    tadaImage,
+    0,
+    tada.top * scale,
+    layout.width,
+    layout.width * tada.ratio
+  );
+
+  const eggHeight = egg.height * scale;
+  const eggWidth = eggHeight * egg.ratio;
+  context.drawImage(
+    eggImage,
+    egg.centerX * scale - eggWidth / 2,
+    egg.top * scale,
+    eggWidth,
+    eggHeight
+  );
+
+  drawCardLayer();
+  drawLabelLayer();
+};
+
+const DRAW_LAYOUT = {
+  landscape: drawLandscape,
+  story: drawStory,
+};
+
+// layout: "landscape"(저장용, 투명 배경 가로) | "story"(공유용, 인스타 스토리 세로)
+export const createRewardImage = async ({
+  plan,
+  collected,
+  layout: layoutName = "landscape",
+}) => {
+  const layout = LAYOUTS[layoutName];
   const stampImages = await Promise.all(
     collected.map((slot) => {
       const { width, height } = STAMP_IMAGES[plan.images[slot]];
@@ -229,29 +329,24 @@ export const createRewardImage = async ({ plan, collected }) => {
       );
     })
   );
-  const [card, eggExport] = await Promise.all([
+  const [card] = await Promise.all([
     loadImage(stampCardSrc(collected.length)),
-    loadImage(EGG_EXPORT.src),
     loadFonts(),
   ]);
 
   const canvas = document.createElement("canvas");
-  canvas.width = CANVAS_WIDTH;
-  canvas.height = CANVAS_HEIGHT;
+  canvas.width = layout.width;
+  canvas.height = layout.height;
   const context = canvas.getContext("2d");
   // 기울이거나 크기를 바꿔 그릴 때 기본(low) 보정은 얇은 선이 깨져 보여서 최고 품질로
   context.imageSmoothingQuality = "high";
 
-  // 시안 순서: 카드 → 계란 묶음(폭죽이 카드 위로 겹침) → 라벨
-  drawCard(context, card, stampImages, plan, collected);
-  context.drawImage(
-    eggExport,
-    EGG_EXPORT.x * SCALE,
-    EGG_EXPORT.y * SCALE,
-    EGG_EXPORT.width * SCALE,
-    EGG_EXPORT.height * SCALE
+  await DRAW_LAYOUT[layoutName](
+    context,
+    layout,
+    () => drawCard(context, layout, card, stampImages, plan, collected),
+    () => drawLabel(context, layout, plan)
   );
-  drawLabel(context, plan);
 
   return new Promise((resolve, reject) => {
     canvas.toBlob(

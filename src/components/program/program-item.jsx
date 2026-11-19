@@ -126,9 +126,11 @@ background: transparent;
 
 // 호버 효과
 transition: all 0.3s ease-in-out;
-&:hover {
+@media (hover: hover) {
+    &:hover {
         background: ${({ theme }) => theme.surface.brand};
     }
+}
 background: ${({ $isOpen, theme }) => ($isOpen ? theme.surface.brand : "transparent")};
 border-bottom: 0.1rem solid ${({ theme }) => theme.line.primary};
 
@@ -232,7 +234,7 @@ ${media.mobile`
   `}
 @media (max-width:550px) {
 flex-direction: column;
-gap:0.8rem;
+gap:2rem;
 }
 `;
 
@@ -254,6 +256,9 @@ ${media.mobile`
     font-size: ${({ theme }) => theme.typography.fontSize.textMd};
     width:20rem;
 `}
+@media (max-width:550px) {
+width:100%;
+}
 
 color: font-size: ${({ theme }) => theme.text.primary};
 
@@ -310,7 +315,8 @@ ${media.tablet`
     `};
 
 @media (max-width:550px) {
- row-gap:1rem;
+ row-gap:0.8rem;
+ column-gap:0.8rem;
 }
 
 

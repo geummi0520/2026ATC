@@ -95,12 +95,13 @@ export default function ArtistCredit() {
                     hovered?.personIndex === personIndex &&
                     hovered?.workIndex === workIndex
                   }
-                  onMouseEnter={handleWorkEnter(
-                    personIndex,
-                    workIndex,
-                    work.image,
-                  )}
-                  onMouseLeave={handleWorkLeave}
+                  onPointerEnter={(event) =>
+                    event.pointerType === "mouse" &&
+                    handleWorkEnter(personIndex, workIndex, work.image)()
+                  }
+                  onPointerLeave={(event) =>
+                    event.pointerType === "mouse" && handleWorkLeave()
+                  }
                 >
                   {translate(work.team)} - {translate(work.title)}
                 </Work>

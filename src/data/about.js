@@ -49,7 +49,7 @@ export const topic_emphasis = { ko: "순수하고 즐겁고 재미있게!", en: 
 
 
 export const congrat_text = {
-    ko: `서강대학교 아트&테크놀로지학과에서 《레시피 바꾸지 말 것 *》을 주제로 제 15회 2026 Art & Technology Conference (ATC) 를 개최합니다.
+    ko: `서강대학교 아트&테크놀로지학과에서 《레시피 바꾸지 말 것 *》을 주제로 제15회 2026 Art & Technology Conference (ATC) 를 개최합니다.
 
 2012년부터 매년 학생들이 직접 기획하고, 작품을 제작하며, 전시와 행사 운영에 이르기까지 모든 과정을 만들어 온 ATC는 차세대 크리에이터들이 예술과 기술의 경계를 넘나들며 새로운 가능성을 탐색하는 창작의 장이자 축제입니다. 동시에 서로 다른 생각과 감각을 나누고, 함께 시도하고 실패하며 배우는 아텍의 중요한 교육의 장이기도 합니다.
 
@@ -67,7 +67,7 @@ ATC가 매년 이어져 온 이유도 여기에 있다고 생각합니다. ATC�
 
 이번 ATC 2026 《레시피 바꾸지 말 것 *》에서 정해진 답을 벗어난 자유로운 실험과 예측할 수 없는 감각의 만남을 경험해 보시기 바랍니다. 익숙한 레시피를 잠시 내려놓고, 아이처럼 순수한 호기심으로 세상을 바라보며 자신만의 새로운 레시피를 만들어 보는 즐거움을 함께 나누었으면 합니다.
 
-여러분을 제 15회 2026 ATC에 정중히 초대합니다.
+여러분을 제15회 2026 ATC에 정중히 초대합니다.
 
 서강대학교 아트&테크놀로지학과 학과장
 최용순`,
@@ -156,14 +156,10 @@ export const staffs = [
 
 ];
 
-export const station_info = {
-    ko: `6호선 대흥역 1번 출구 · 540m · 도보 10분(후문 인접)
-경의중앙선 서강대역 1번 출구 · 880m · 도보 18분
-2호선 이대역 5번 출구 · 900m · 도보 14분
-2호선 신촌역 6번 출구 · 960m · 도보 18분`,
-    en: `Line 6 Daeheung Station Exit 1 · 540 m · 10 - minute walk(near the rear gate)
-Gyeongui–Jungang Line Sogang University Station Exit 1 · 880 m · 18 - minute walk
-Line 2 Ewha Womans University Station Exit 5 · 900 m · 14 - minute walk
-Line 2 Sinchon Station Exit 6 · 960 m · 18 - minute walk`,
-};
+export const station_info = [
+    { ko: "대흥역 1번 출구 · 540m · 도보 10분(후문 인접)", en: "Daeheung Station Exit 1 · 540 m · 10-minute walk (near the back gate)" },
+    { ko: "서강대역 1번 출구 · 880m · 도보 18분", en: "Sogang University Station Exit 1 · 880 m · 18-minute walk" },
+    { ko: "이대역 5번 출구 · 900m · 도보 14분", en: "Ewha Womans University Station Exit 5 · 900 m · 14-minute walk" },
+    { ko: "신촌역 6번 출구 · 960m · 도보 18분", en: "Sinchon Station Exit 6 · 960 m · 18-minute walk" },
+];
 

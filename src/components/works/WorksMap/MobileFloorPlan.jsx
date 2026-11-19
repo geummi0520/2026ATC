@@ -54,9 +54,11 @@ export default function MobileFloorPlan({
     touchStart.current = null;
 
     // 더 많이 움직인 축 기준으로 판단
+    // 4F는 섹션이 오른쪽으로 이어져 왼쪽 스와이프가 다음, 5F는 왼쪽으로 이어져 오른쪽 스와이프가 다음
     if (Math.abs(deltaX) >= Math.abs(deltaY)) {
-      if (deltaX <= -SWIPE_THRESHOLD) goNext();
-      if (deltaX >= SWIPE_THRESHOLD && prevDirection) goPrev();
+      const swipeX = slide.floor === "5F" ? -deltaX : deltaX;
+      if (swipeX <= -SWIPE_THRESHOLD) goNext();
+      if (swipeX >= SWIPE_THRESHOLD && prevDirection) goPrev();
       return;
     }
 
@@ -237,7 +239,7 @@ const SlideTitle = styled.h2`
   margin: 2.4rem 0 1.6rem;
   color: ${({ theme }) => theme.text.brand};
   font-size: ${({ theme }) => theme.typography.fontSize.textMd};
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.4;
 
   strong {
@@ -271,6 +273,6 @@ const WorkList = styled.ol`
 
   em {
     color: ${({ theme }) => theme.text.quaternary};
-    font-style: normal;
+    font-style: italic;
   }
 `;

@@ -60,15 +60,15 @@ export const Header = styled.div`
   flex-direction: column;
 `;
 
-// 모바일: works 카테고리 화면의 이전으로 줄(MobileActionRow)과 같은 위치
-//   (Content 위 padding 2rem + 높이 2.8rem 줄의 세로 가운데, 왼쪽 1rem)
+// 모바일: works 카테고리·상세 화면의 이전으로 줄과 같은 위치
+//   (위 padding 2rem + 높이 2.8rem 줄의 세로 가운데)
 export const BackRow = styled.div`
   display: flex;
 
   ${media.mobile`
     align-items: center;
-    min-height: 2.8rem;
-    padding: 0;
+    min-height: 4.8rem;
+    padding: 2rem 0 0;
 
     > * {
       align-self: center;
@@ -146,10 +146,16 @@ export const ExpandButton = styled.button`
   cursor: pointer;
   transition: background-color 160ms ease, color 160ms ease;
 
-  &:hover,
   &:focus-visible {
     background: transparent;
     color: ${({ theme }) => theme.text.brand};
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: transparent;
+      color: ${({ theme }) => theme.text.brand};
+    }
   }
 
   /* 태블릿에서는 크게 보기를 제공하지 않음 (모바일은 MobileFloorPlan의 전체 지도 보기 사용) */
@@ -281,10 +287,16 @@ export const FloorTab = styled.button`
   cursor: pointer;
   transition: background-color 160ms ease, color 160ms ease;
 
-  &:hover,
   &:focus-visible {
     background: ${({ $active, theme }) =>
       $active ? theme.button.brandInvert : theme.surface.brand};
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: ${({ $active, theme }) =>
+        $active ? theme.button.brandInvert : theme.surface.brand};
+    }
   }
 `;
 
@@ -339,9 +351,14 @@ export const CollapseButton = styled.button`
   cursor: pointer;
   transition: background-color 160ms ease;
 
-  &:hover,
   &:focus-visible {
     background: ${({ theme }) => theme.surface.brand};
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: ${({ theme }) => theme.surface.brand};
+    }
   }
 
   img {
