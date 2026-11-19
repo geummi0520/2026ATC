@@ -352,7 +352,12 @@ const TeaserContainer = styled.div`
   align-items: center;
 
   position: sticky;
-  top: 2rem;
+  /* fixed 헤더 높이 + 2rem 아래에 고정되어 헤더에 가려지지 않도록 */
+  top: calc(10rem + 2px + 2rem);
+
+  ${media.tablet`
+  top: calc(8.4rem + 2rem);
+  `};
 
   ${media.mobile`
   position:static;
