@@ -124,6 +124,7 @@ export default function StaffStage({ team }) {
                   width={m.imgSize[0]}
                   height={m.imgSize[1]}
                   sizes={getPhotoSizes(m)}
+                  quality={90}
                   style={{ transform: m.photo.flip ? "scaleX(-1)" : undefined }}
                 />
 
