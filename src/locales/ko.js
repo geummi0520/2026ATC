@@ -83,7 +83,7 @@ const ko = {
     schedule: "전시기간",
     supporting: "supporting",
     category: "작품 카테고리",
-    viewAll: "작품 전체 보기",
+    viewAll: "전체 작품 보기",
     work: "작품 소개",
     team: "팀 소개",
   },
