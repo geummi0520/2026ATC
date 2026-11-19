@@ -56,8 +56,8 @@ export const boothMapPositions = [
   {
     id: "sensory",
     name: {
-      ko: "달걀의 가능성\n(감각제작팀 전시)",
-      en: "Inside the Egg",
+      ko: "달걀의 가능성\n(에피타이저 작품)",
+      en: "Inside the Egg\n(Appetizer Work)",
     },
     x: 190,
     y: 468,

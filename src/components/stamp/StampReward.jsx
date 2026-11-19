@@ -11,14 +11,24 @@ import { media } from "@/styles/media";
 import { createRewardImage } from "@/utils/createRewardImage";
 import { trackEvent } from "@/utils/analytics";
 
-const REWARD_FILE_NAME = "2026-atc-stamp-card.png";
+// 저장은 가로 투명 이미지, 공유는 인스타 스토리용 세로 이미지
+const REWARD_FILES = {
+  save: { layout: "landscape", name: "2026-atc-stamp-card.png" },
+  share: { layout: "story", name: "2026-atc-stamp-story.png" },
+};
+
+const createRewardFile = async (kind, plan, collected) => {
+  const { layout, name } = REWARD_FILES[kind];
+  const blob = await createRewardImage({ plan, collected, layout });
+  return new File([blob], name, { type: "image/png" });
+};
 
 export default function StampReward() {
   const { t } = useTranslation();
   const { plan, collected, modal, closeStampModal } = useStamp();
   const [status, setStatus] = useState("");
   const [isBusy, setIsBusy] = useState(false);
-  const [rewardFile, setRewardFile] = useState(null);
+  const [rewardFiles, setRewardFiles] = useState({});
   const isOpen = modal?.view === "reward";
   const rewardMessage = t("stamp.rewardMessage");
 
@@ -29,12 +39,12 @@ export default function StampReward() {
     if (!isOpen || !plan) return undefined;
 
     let isCancelled = false;
-    createRewardImage({ plan, collected })
-      .then((blob) => {
-        if (isCancelled) return;
-        setRewardFile(
-          new File([blob], REWARD_FILE_NAME, { type: "image/png" })
-        );
+    Promise.all([
+      createRewardFile("save", plan, collected),
+      createRewardFile("share", plan, collected),
+    ])
+      .then(([save, share]) => {
+        if (!isCancelled) setRewardFiles({ save, share });
       })
       .catch(() => {});
 
@@ -45,12 +55,8 @@ export default function StampReward() {
 
   if (!isOpen) return null;
 
-  const createImageFile = async () => {
-    if (rewardFile) return rewardFile;
-
-    const blob = await createRewardImage({ plan, collected });
-    return new File([blob], REWARD_FILE_NAME, { type: "image/png" });
-  };
+  const getRewardFile = (kind) =>
+    rewardFiles[kind] ?? createRewardFile(kind, plan, collected);
 
   const runAction = async (action) => {
     if (isBusy) return;
@@ -69,11 +75,11 @@ export default function StampReward() {
 
   const handleSave = () =>
     runAction(async () => {
-      const file = await createImageFile();
+      const file = await getRewardFile("save");
       const url = URL.createObjectURL(file);
       const link = document.createElement("a");
       link.href = url;
-      link.download = REWARD_FILE_NAME;
+      link.download = file.name;
       link.click();
       URL.revokeObjectURL(url);
       trackEvent("reward_download");
@@ -89,7 +95,7 @@ export default function StampReward() {
       };
 
       if (navigator.share) {
-        const file = await createImageFile();
+        const file = await getRewardFile("share");
         // 이미지만 넘겨야 인스타그램 등 이미지 앱이 공유 대상에 확실히 뜸 (문구·링크가 섞이면 빠지는 경우가 있음)
         const fileShareData = { files: [file] };
         const canShareFile = navigator.canShare?.(fileShareData);
