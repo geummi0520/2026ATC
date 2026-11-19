@@ -363,6 +363,7 @@ const TeaserContainer = styled.div`
   position:static;
   order:-1;  
   padding:0rem;
+  margin-bottom: 4rem;
 `};
 `;
 const TeaserVideo = styled.iframe`

@@ -93,6 +93,19 @@ const labelProps = (label, mobileLabel) => ({
   $mAlign: mobileLabel?.side ? defaultAlign(mobileLabel) : null,
 });
 
+/*
+ * next/image가 고를 해상도 힌트(표시 크기에는 영향 없음)
+ * - 데스크탑: 사진 실제 폭 = 높이(photo.h) × 이미지 비율, 프레임(W) 대비 비율 × 스테이지 최대 폭
+ * - 모바일: mobile.photo.w(콘텐츠 폭 대비 %)
+ * 사진마다 폭이 달라 고정값(15vw)을 쓰면 가로로 넓은 사진이 작은 파일로 늘어나 흐려짐
+ */
+const getPhotoSizes = (m) => {
+  const [imgW, imgH] = m.imgSize;
+  const desktopPx = Math.ceil(((m.photo.h * imgW) / imgH / W) * LARGE_MAX);
+  const mobileVw = m.mobile?.photo?.w ?? 55;
+  return `(max-width: 768px) ${Math.ceil(mobileVw)}vw, ${desktopPx}px`;
+};
+
 export default function StaffStage({ team }) {
   const { translate } = useTranslation();
 
@@ -110,7 +123,7 @@ export default function StaffStage({ team }) {
                   alt={translate(m.name)}
                   width={m.imgSize[0]}
                   height={m.imgSize[1]}
-                  sizes="(max-width: 768px) 55vw, 15vw"
+                  sizes={getPhotoSizes(m)}
                   style={{ transform: m.photo.flip ? "scaleX(-1)" : undefined }}
                 />
 
