@@ -58,7 +58,7 @@ export const works = [
       },
     ],
     images: {
-      thumbnail: "https://img.2026atc.com/works/1/thumbnail.14d35ed0.webp",
+      thumbnail: "https://img.2026atc.com/works/1/thumbnail.df1f0957.webp",
       detail: [
         "https://img.2026atc.com/works/1/detail-01.2395ec8c.webp",
         "https://img.2026atc.com/works/1/detail-02.dd038ae7.webp",
@@ -642,6 +642,12 @@ export const works = [
         label: "Instagram",
         value: "instagram.com/habity.app",
         url: "https://instagram.com/habity.app",
+      },
+      {
+        type: "appstore",
+        label: "App Store",
+        value: "apps.apple.com/kr/app/habity/id6837300940",
+        url: "https://apps.apple.com/kr/app/habity/id6837300940",
       },
     ],
   },
